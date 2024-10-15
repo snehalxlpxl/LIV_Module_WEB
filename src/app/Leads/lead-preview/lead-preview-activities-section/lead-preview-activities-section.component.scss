@@ -1,0 +1,49 @@
+.card {
+    min-width: 1122px; /* Adjust as needed */
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+
+  }
+.content-wrapper, .content-body, .activities-list-wrapper, .card {
+    width: 100%;
+}
+.ngx-datatable {
+    width: 100% !important;
+}
+.activities-list-wrapper {
+    .card {
+    //   margin-bottom: 1.5rem; /* Adjust margin as needed */
+
+      .ngx-datatable.bootstrap {
+        width: 100%; /* Ensure datatable takes full width */
+        
+        .datatable-body {
+          overflow-x: auto; /* Handle horizontal overflow */
+        }
+
+        .datatable-header {
+          width: 100%; /* Ensure header takes full width */
+        }
+
+        .datatable-footer {
+          width: 100%; /* Ensure footer takes full width */
+        }
+      }
+    }
+}
+.fixheader {
+  position: fixed;
+  top: 62px;
+  width: 100%;
+  max-width: 85%; /* Default max-width for smaller screens */
+  z-index: 21;
+  background-color: white;
+  margin-bottom: 15px;
+  box-shadow: 0 12px 28px -12px rgba(34, 41, 47, 0.1);
+  padding-left: 7px;
+  padding-bottom: 0px;
+  margin-left: -19px;
+  margin-bottom: 0px;
+
+}

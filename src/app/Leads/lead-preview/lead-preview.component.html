@@ -1,0 +1,61 @@
+
+
+
+<div class="p-0 m-0">
+  <div class="">
+    <section class="lead-list-wrapper">
+      <!-- <div class=""> -->
+        <div class="row">
+          <div class="fixheader">
+            <app-lead-preview-header></app-lead-preview-header>
+            <div class="pl-1 f-pills">
+              <div class="overview">
+                <ul ngbNav #nav="ngbNav" class="nav nav-pills fixed-nav-pills p-0">
+                  <li ngbNavItem>
+                    <a ngbNavLink (click)="setComponent('overview')"
+                      [class.active]="currentComponent === 'overview'">Overview</a>
+                  </li>
+                  <li ngbNavItem>
+                    <a ngbNavLink (click)="setComponent('timeLine')"
+                      [class.active]="currentComponent === 'timeLine'">TimeLine</a>
+                  </li>
+                  <li ngbNavItem>
+                    <a ngbNavLink (click)="setComponent('activities')"
+                      [class.active]="currentComponent === 'activities'">Activities</a>
+                  </li>
+                  <li ngbNavItem>
+                    <a ngbNavLink (click)="setComponent('products')"
+                      [class.active]="currentComponent === 'products'">Products</a>
+                  </li>
+                  <li ngbNavItem>
+                    <a ngbNavLink (click)="setComponent('notes')"
+                      [class.active]="currentComponent === 'notes'">Notes</a>
+                  </li>
+                  <li ngbNavItem>
+                    <a ngbNavLink (click)="setComponent('documents')"
+                      [class.active]="currentComponent === 'documents'">Documents</a>
+                  </li>
+                  <li ngbNavItem>
+                    <a ngbNavLink (click)="setComponent('reports')"
+                      [class.active]="currentComponent === 'reports'">Reports</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-1 f-preview-overview-content">
+            <app-lead-preview-overview-section *ngIf="currentComponent === 'overview'"
+              @fade></app-lead-preview-overview-section>
+              <app-lead-preview-activities-section *ngIf="currentComponent === 'activities'"
+              @fade></app-lead-preview-activities-section>
+            <app-transaction *ngIf="currentComponent === 'transaction'" @fade></app-transaction>
+            <app-sales *ngIf="currentComponent === 'sales'" @fade></app-sales>
+            <app-documents *ngIf="currentComponent === 'documents'" @fade></app-documents>
+            <app-reports *ngIf="currentComponent === 'reports'" @fade></app-reports>
+          </div>
+        </div>
+      <!-- </div> -->
+    </section>
+  </div>
+</div>

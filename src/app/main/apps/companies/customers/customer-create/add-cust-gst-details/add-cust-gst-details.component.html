@@ -1,0 +1,99 @@
+<div class="modal-header">
+    <h6 class="modal-title"><i class="feather icon-list">&nbsp;</i>Tax Details</h6>
+    <p class="btn-close" aria-label="Close" (click)="closeModal()" aria-hidden="true" class="cursor-pointer"> <span aria-hidden="true">&times;</span></p>
+  
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="taxDetailsForm" (ngSubmit)="onSubmit()">
+      <input type="hidden" formControlName="companyId" [value]="companyId"/>
+      <input type="hidden" formControlName="gstid" />
+      <div class="form-group">
+        <label>GST Registration Type</label>
+        <ng-select
+          formControlName="gst"
+          [items]="getGstRegType"
+          bindLabel="gstregType"
+          bindValue="gsttypeId"
+          (change)="onGstRegistrTypeChange($event)"
+          placeholder="Registered, Unregistered, Overseas etc"
+          [ngClass]="{
+            'ng-touched': taxDetailsForm.get('gst').touched,
+            error:
+            taxDetailsForm.get('gst').invalid &&
+              taxDetailsForm.get('gst').touched
+          }">
+        </ng-select>
+        <div *ngIf="taxDetailsForm.get('gst').invalid && taxDetailsForm.get('gst').touched" class="text-danger">
+          GST Type is required for Registered GST Type.
+        </div>
+        <input type="hidden" formControlName="GSTTypeValue" />
+      </div>
+    
+      <div class="form-group">
+        <label for="gstin">GSTIN (GST Registration Number)</label>
+        <input type="text" formControlName="gstin" id="gstin" class="form-control" placeholder="GSTIN (GST Registration Number)" [ngClass]="{
+          'ng-touched': taxDetailsForm.get('gstin').touched,
+          error:
+          taxDetailsForm.get('gstin').invalid &&
+            taxDetailsForm.get('gstin').touched
+        }" />
+        <div *ngIf="taxDetailsForm.get('gstin').invalid && taxDetailsForm.get('gstin').touched" class="text-danger">
+          GSTIN is required for Registered GST Type.
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <label>Source of Supply</label>
+        <ng-select formControlName="sop" bindLabel="label" bindValue="value" placeholder="Source of Supply" [ngClass]="{
+          'ng-touched': taxDetailsForm.get('sop').touched,
+          error:
+          taxDetailsForm.get('sop').invalid &&
+            taxDetailsForm.get('sop').touched
+        }" 
+        [items]="sourcOfSupply"
+        (change)="onSourceOfSuppTypeChange($event)"
+        >
+          <!-- <ng-option value="FCL">xlpxl</ng-option>
+          <ng-option value="LCL">fretrack</ng-option>
+          <ng-option value="AIR">abc</ng-option> -->
+        </ng-select>
+
+        <div *ngIf="taxDetailsForm.get('sop').invalid && taxDetailsForm.get('sop').touched" class="text-danger">
+          Source of Supply is required for Registered GST Type.
+        </div>
+        <input type="hidden" formControlName="SopTypeValue" />
+      </div>
+    
+      <div class="form-group">
+        <label for="bln">Business Legal Name</label>
+        <input type="text" formControlName="bln" id="bln" class="form-control" placeholder="Business Legal Name" [ngClass]="{
+          'ng-touched': taxDetailsForm.get('bln').touched,
+          error:
+          taxDetailsForm.get('bln').invalid &&
+            taxDetailsForm.get('bln').touched
+        }"/>
+        <div *ngIf="taxDetailsForm.get('bln').invalid && taxDetailsForm.get('bln').touched" class="text-danger">
+          Business Legal Name is required for Registered GST Type.
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <label for="businessTrad">Business Trade Name</label>
+        <input formControlName="businessTrad" type="text" id="businessTrad" class="form-control" placeholder="Business Trade Name" [ngClass]="{
+          'ng-touched': taxDetailsForm.get('businessTrad').touched,
+          error:
+          taxDetailsForm.get('businessTrad').invalid &&
+            taxDetailsForm.get('businessTrad').touched
+        }"/>
+        <div *ngIf="taxDetailsForm.get('businessTrad').invalid && taxDetailsForm.get('businessTrad').touched" class="text-danger">
+          Business Trade Name is required for Registered GST Type.
+        </div>
+      </div>
+    
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" (click)="closeModal()">Close</button>
+        <button type="submit" class="btn btn-success">Save</button>
+      </div>
+    </form>
+  </div>
+  

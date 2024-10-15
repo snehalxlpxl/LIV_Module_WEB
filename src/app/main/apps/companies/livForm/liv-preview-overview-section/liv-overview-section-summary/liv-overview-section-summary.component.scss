@@ -1,0 +1,79 @@
+.scroll-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin-left: -13px;
+    height: 230px;
+    margin-top: -13px;
+}
+
+.scroll-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for webkit browsers */
+}
+
+.scroll-container .d-flex {
+    flex-wrap: nowrap; /* Prevent wrapping to new lines */
+}
+.rounded-corners{
+    border-radius: 9px;
+    background-color: white;
+}
+.totalsale {
+    height: 214px;
+    box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
+    padding: 17px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.avatar-content, .avatar-content-red {
+    width: 50px; /* Size of the avatar container */
+    height: 50px; /* Size of the avatar container */
+    border-radius: 8px; /* Rounded corners to make it square with slight rounding */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-content {
+    background-color: rgb(221, 247, 231); /* Parrot green background color */
+    color: green;
+}
+
+.avatar-content-red {
+    background-color: rgb(249, 217, 217);
+    color: red;
+}
+
+h4 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+h6 {
+    font-size: 12px;
+    color: #777;
+}
+
+.value, .percentage, .percentage-red {
+    text-align: left;
+}
+
+.percentage {
+    font-size: 12px;
+    background-color: rgb(218, 251, 230);
+    color: green;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.percentage-red {
+    font-size: 12px;
+    background-color: rgb(249, 217, 217);
+    color: red;
+    padding: 8px 12px;
+    border-radius: 8px;
+}

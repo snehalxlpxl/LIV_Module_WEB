@@ -1,0 +1,77 @@
+.overviewsection {
+    height: 800px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px; /* Optional: Add some padding */
+}
+
+/* Hide scrollbar for Webkit browsers (e.g., Chrome, Safari) */
+.overviewsection::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* Make scrollbar transparent */
+}
+
+/* Hide scrollbar for Firefox */
+.overviewsection {
+    scrollbar-width: none; /* Firefox */
+}
+
+/* For Internet Explorer, Microsoft Edge */
+.overviewsection {
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.fixed-nav-pills {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: white;
+    padding: 10px 0;
+}
+
+.nav-pills {
+    display: flex;
+    background-color: white;
+}
+
+.nav-pills a {
+    padding: 10px 15px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.nav-pills a.active {
+    background-color: #7467f0;
+    color: white;
+}
+
+.nav-pills a:hover {
+    background-color: #7467f0;
+    color: white;
+}
+
+.card-body {
+    padding-top: 50px; /* Adjust based on the height of your fixed header and pills */
+}
+
+//
+.content-wrapper .content-body {
+    padding-top: 20px;
+}
+
+// .card {
+//     box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1) !important;
+// }
+
+.nav-pills .nav-link.active {
+    background-color: #7467f0;
+    color: white;
+}
+
+// section.customer-list-wrapper[_ngcontent-glw-c240]{
+//     margin-top:10rem !important;
+// }
+
+app-customer-preview-overview-section {
+    width: 100%;
+    display: block; /* Ensure it behaves as a block-level element */
+}

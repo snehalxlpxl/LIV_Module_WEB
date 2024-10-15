@@ -1,0 +1,154 @@
+<div class="content-wrapper container-xxl p-0">
+  <!-- Invoice List -->
+  <section class="invoice-list-wrapper">
+    <div class="content-body">
+      <section class="invoice-list-wrapper">
+        <div class="card">
+          <!-- Invoice List Header -->
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <div class="d-flex justify-content-between align-items-center m-1">
+                <div class="d-flex align-items-center">
+                  <h4 class="d-flex align-items-center">Current Shipment</h4>
+                </div>
+              </div>
+            </div>
+            <div class="
+                col-md-6 col-lg-4 col-12
+                d-flex
+                justify-content-start justify-content-md-end
+                align-items-center
+                offset-lg-2
+              ">
+              <div class="text-right pr-1 pb-1 pb-md-0 align-items-center">
+                <div class="col-10 col-md-12 pr-0">
+                  <label class="d-flex align-items-end mb-0 ml-1 ml-md-0">
+                    <input
+                      name="searchValue"
+                      type="search"
+                      class="form-control"
+                      placeholder="Search..."
+                      (keyup)="filterUpdate2($event)"
+                      (search)="filterUpdate2($event)"
+                    />
+                  </label>
+                </div>
+                <!-- <div class="col-10 col-md-6 mt-2 ml-1 ml-md-0 mt-md-0"> -->
+                  <!-- Optional: Add New Invoice Button or Other Controls -->
+                <!-- </div> -->
+              </div>
+            </div>
+          </div>
+          <!--/ Invoice List Header -->
+
+          <!-- Invoice List Table -->
+          <!-- <ngx-datatable
+            [rows]="rows"
+            [rowHeight]="50"
+            class="bootstrap core-bootstrap"
+            [columnMode]="'force'"
+            [limit]="selectedOption"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [scrollbarH]="true"
+          > -->
+          <ngx-datatable
+          class="bootstrap core-bootstrap"
+        [rows]="shipments"
+        [count]="totalRecords"
+        [offset]="pageNumber - 1"
+        [limit]="pageSize"
+        [loadingIndicator]="loading"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="50"
+        [footerHeight]="30"
+        [scrollbarH]="true"
+        >
+          <ngx-datatable-column name="Job Number #" prop="jobNo" [width]="150">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <a routerLink="" class="font-weight-bold f-invoice">
+                <ng-container *ngIf="row.modeOfTransport === 'Ocean'; else airIcon">
+                  <i class="fa fa-ship">&nbsp;</i> {{ row.jobNo }}
+                </ng-container>
+                <ng-template #airIcon>
+                  <i class="fa fa-plane">&nbsp;</i> {{ row.jobNo }}
+                </ng-template>
+              </a>
+            </ng-template>
+          </ngx-datatable-column>
+
+            <ngx-datatable-column name="POL" prop="pol" [width]="200">
+              <ng-template let-pol="value" ngx-datatable-cell-template>
+                {{pol}}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="POD" prop="pod" [width]="200">
+              <ng-template let-pod="value" ngx-datatable-cell-template>
+                {{pod}}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="ETD" prop="etd" [width]="150">
+              <ng-template let-etd="value" ngx-datatable-cell-template>
+                {{ etd | date:'yyyy-MM-dd' }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="ETA" prop="eta" [width]="100">
+              <ng-template let-eta="value" ngx-datatable-cell-template>
+                {{ eta | date:'yyyy-MM-dd' }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Status" prop="status" [width]="100">
+              <ng-template let-invoiceApprovalStatus="value" ngx-datatable-cell-template>
+                <span class="badge badge-success">
+                  {{ status || 'noStatus'}}
+                </span>
+               
+              </ng-template>
+            </ngx-datatable-column>
+
+          </ngx-datatable>
+          <!--/ Invoice List Table -->
+      <!-- Pagination Controls -->
+      <ul class="pagination justify-content-end pr-1">
+        <li class="page-item" [class.disabled]="pageNumber === 1">
+          <a class="page-link" (click)="goToPreviousPage()">Previous</a>
+        </li>
+
+        <!-- Display page numbers with ellipsis -->
+        <li *ngIf="pages[0] > 1" class="page-item">
+          <a class="page-link" (click)="goToPage(1)">1</a>
+        </li>
+        
+        <li *ngIf="pages[0] > 2" class="page-item disabled">
+          <span class="page-link">...</span>
+        </li>
+
+        <li *ngFor="let page of pages" class="page-item" [class.active]="page === pageNumber">
+          <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
+        </li>
+
+        <li *ngIf="pages[pages.length - 1] < totalPages - 1" class="page-item disabled">
+          <span class="page-link">...</span>
+        </li>
+
+        <li *ngIf="pages[pages.length - 1] < totalPages" class="page-item">
+          <a class="page-link" (click)="goToPage(totalPages)">{{ totalPages }}</a>
+        </li>
+
+        <li class="page-item" [class.disabled]="pageNumber === totalPages">
+          <a class="page-link" (click)="goToNextPage()">Next</a>
+        </li>
+      </ul>
+        <!--/ Customer List Table -->
+          
+        </div>
+      </section>
+
+      
+    </div>
+  </section>
+</div>

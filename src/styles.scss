@@ -1,0 +1,81 @@
+@import '@core/scss/core.scss';
+@import './assets/scss/styles';
+@import '@core/scss/base/pages/app-invoice.scss';
+@import '@core/scss/angular/libs/datatables.component.scss';
+@import '@core/scss/angular/libs/select.component.scss';
+@import '~ngx-toastr/toastr.css';
+@import '@core/scss/base/bootstrap-extended/_include'; // Components includes
+
+// invoice list
+.invoice-list-wrapper {
+  .col-actions {
+    a {
+      &:not(.dropdown-item) {
+        color: $body-color;
+      }
+    }
+  }
+}
+i.code-icon {
+  display: none!important;
+  }
+  .f-pills>core-card-snippet>.card>.card-header{
+    display: none!important;
+  }
+  .navbar-container.d-flex.content{
+    padding: 0 15px !important;
+  }
+
+
+  // fretrack
+
+  .fixheader {
+    position: fixed;
+    top: 62px;
+    width: 100%;
+    z-index: 21;
+    background-color: white;
+    margin-bottom: 15px;
+    box-shadow: 0 12px 28px -12px rgba(34, 41, 47, 0.1);
+    padding-left: 18px;
+    margin-left: -19px;
+    // height: fit-content;
+  }
+  
+.f-preview-overview-content {
+    margin-top: 8rem !important;
+    padding: 0 10px;
+    width: 100%;
+}
+.close-big {
+  float: right;
+  font-size: 37px;
+  font-weight: 400;
+  line-height: 1;
+  color: #5e5873;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.5;
+}
+.rounded-corner-accordian {
+  background-color: white;
+  border-radius: 9px;
+  box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
+  padding: 2px;
+}
+.f-adrress-btn{
+  padding: 9px !important;
+  font-size: 13px;
+}
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input{
+  top:9px!important;
+}
+.ng-dropdown-panel{
+  z-index: 9!important;
+}
+.ng-select.ng-select-opened .ng-select-container {
+  z-index: 9!important;
+}
+//to keep accordian open
+.collapse:not(.show) {
+  display: block!important;
+}

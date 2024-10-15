@@ -1,0 +1,53 @@
+<!-- Accordion Basic start -->
+<div class="rounded-corner-accordian">
+<section id="accordion ">
+  <div class="row">
+    <div class="col-sm-12">
+      <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+        <!-- <core-card-snippet [snippetCode]="_snippetCodeAccordion"> -->
+
+        <div class="card-body collapse-icon p-0">
+
+          <div class="collapse-default">
+            <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" activeIds="panelBorderBottom1">
+              <ngb-panel id="panelBorderBottom1">
+                <ng-template ngbPanelTitle>
+                  <div class="panel-title">
+                    <span class="icon-left">
+                      <i class="feather icon-map-pin"></i>
+                       
+                    </span>
+                    <span class="padd-add">Address</span>
+                    <span class="icon-right">
+                      <i class="feather icon-plus-square"></i>
+                      
+                    </span>
+                  </div>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="row" *ngFor="let addr of addrDetail;">
+                    <div class="col-md-8">
+                      <div class=""><b>{{addr.addressTypeNick || 'N/A'}} Address</b></div>
+                      <div class="pt-1">{{addr.addressLine1 || 'N/A'}}, {{addr.addressLine2 || 'N/A'}}, {{addr.cityName || 'N/A'}}, {{addr.zipcode || 'N/A'}}, {{addr.country || 'N/A'}}</div>
+                    </div>
+                    <div class="col-md-4 text-right">
+                      <div class="badge badge-light-success mr-1">{{addr.addressTypeNick || 'N/A'}}</div>
+                      <span class="cursor-pointer" (click)="copyAddress($event, addr)"><i class="feather icon-copy"></i></span>
+                      <i data-feather="copy" width="24" height="24"></i>
+                    </div>
+                    <hr>
+                  </div>
+
+                </ng-template>
+              </ngb-panel>
+
+            </ngb-accordion>
+          </div>
+        </div>
+        <!-- </core-card-snippet> -->
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+<!-- Accordion Basic end -->

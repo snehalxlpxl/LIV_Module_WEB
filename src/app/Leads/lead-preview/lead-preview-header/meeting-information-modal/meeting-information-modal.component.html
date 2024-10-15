@@ -1,0 +1,111 @@
+<div class="modal-header">
+    <h4 class="modal-title text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+          <line x1="10" y1="2" x2="10" y2="6" />
+          <line x1="14" y1="2" x2="14" y2="6" />
+        </svg>
+        <span class="ml-1">Meeting Information</span>
+      </h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button> -->
+    <p class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true"
+        class="cursor-pointer"> × </p>
+</div>
+<div class="modal-body">
+    <form [formGroup]="meetingInformationForm" (ngSubmit)="save()">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="text-left">
+                <span>Make this an online meeting</span>
+            </div>
+            <div class="custom-control custom-control-primary custom-switch">
+                <input type="checkbox" class="custom-control-input" id="onlineMeeting" formControlName="onlineMeeting">
+                <label class="custom-control-label" for="onlineMeeting"></label>
+            </div>
+        </div>
+
+        <div class="form-group mt-1">
+            <label for="title">Title</label>
+            <input type="text" id="title" class="form-control" formControlName="title"
+                placeholder="Enter Meeting Title">
+                <span *ngIf="meetingInformationForm.get('title').invalid && (meetingInformationForm.get('title').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Title is required</small>
+                </span>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="startTime">Start Time</label>
+                <input type="datetime-local" id="startTime" class="form-control" formControlName="startTime">
+                <span *ngIf="meetingInformationForm.get('startTime').invalid && (meetingInformationForm.get('startTime').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Start Time is required</small>
+                </span>
+                <!-- <input type="time" id="startTime" class="form-control" formControlName="startTime"> -->
+            </div>
+            <div class="form-group col-md-6">
+                <label for="endTime">End Time</label>
+                <input type="datetime-local" id="endTime" class="form-control" formControlName="endTime">
+                <span *ngIf="meetingInformationForm.get('endTime').invalid && (meetingInformationForm.get('endTime').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">End Time is required</small>
+                </span>
+                <!-- <input type="time" id="endTime" class="form-control" formControlName="endTime"> -->
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="status">Status</label>
+                <ng-select id="status" formControlName="status" [items]="meetingStatuses" bindLabel="name"
+                    placeholder="Select Status">
+                </ng-select>
+                <span *ngIf="meetingInformationForm.get('status').invalid && (meetingInformationForm.get('status').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Status is required</small>
+                </span>
+        </div>
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" class="form-control" formControlName="location"
+                placeholder="Enter Location">
+                <span *ngIf="meetingInformationForm.get('location').invalid && (meetingInformationForm.get('location').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Location is required</small>
+                </span>
+        </div>
+        <div class="form-group">
+            <label for="participants">Participants</label>
+            <input type="text" id="participants" class="form-control" formControlName="participants"
+                placeholder="Enter Participants">
+                <span *ngIf="meetingInformationForm.get('participants').invalid && (meetingInformationForm.get('participants').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Participants are required</small>
+                </span>
+        </div>
+        <div class="form-group">
+            <label for="agenda">Agenda</label>
+            <input type="text" id="agenda" class="form-control" formControlName="agenda" placeholder="Enter Agenda">
+            <span *ngIf="meetingInformationForm.get('agenda').invalid && (meetingInformationForm.get('agenda').touched || submitted)" class="invalid-form">
+                <small class="form-text text-danger">Agenda is required</small>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            <input type="text" id="location" class="form-control" formControlName="notes" placeholder="Enter Notes">
+            <span *ngIf="meetingInformationForm.get('notes').invalid && (meetingInformationForm.get('notes').touched || submitted)" class="invalid-form">
+                <small class="form-text text-danger">Notes are required</small>
+            </span>
+        </div>
+        <!-- <div *ngIf="errorMessage" class="alert-danger">
+            {{ errorMessage }}
+        </div> -->
+
+        <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+                (click)="activeModal.dismiss('cancel click')">Cancel</button>
+            <button type="submit" class="btn btn-success">Save</button>
+        </div> -->
+        <hr>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary mr-2"
+                    (click)="activeModal.dismiss('cancel click')">Cancel</button>
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+    </form>
+</div>

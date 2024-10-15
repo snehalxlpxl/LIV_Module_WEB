@@ -1,0 +1,17 @@
+
+.fixheader {
+    position: fixed;
+    top: 62px;
+    width: 100%;
+    max-width: 85%; /* Default max-width for smaller screens */
+    z-index: 21;
+    background-color: white;
+    margin-bottom: 15px;
+    box-shadow: 0 12px 28px -12px rgba(34, 41, 47, 0.1);
+    padding-left: 7px;
+    padding-bottom: 0px;
+    margin-left: -19px;
+    margin-bottom: 0px;
+  
+  }
+  

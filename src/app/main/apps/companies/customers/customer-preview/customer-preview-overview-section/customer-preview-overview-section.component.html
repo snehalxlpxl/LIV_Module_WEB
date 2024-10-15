@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-7 col-lg-6 col-xl-6">
+        <div class="overviewsection">
+            <div class="mb-2">
+                <app-customer-preview-overview-basic-detail [customerBAsicData]="basicDetail" [gstData]="gstDetail"></app-customer-preview-overview-basic-detail>
+            </div>
+            <div class=" mb-2">
+                <app-customer-preview-overview-address [addrData]="addrDetail"></app-customer-preview-overview-address>
+            </div>
+            <div class=" mb-2">
+                <app-customer-preview-overview-contacts [contactData]="contactDetail"></app-customer-preview-overview-contacts>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 col-lg-6 col-xl-6">
+        <div class="">
+            <app-customer-preview-overview-total-sales-profit></app-customer-preview-overview-total-sales-profit>
+            <app-customer-preview-overview-timeline></app-customer-preview-overview-timeline>
+        </div>
+    </div>
+</div>

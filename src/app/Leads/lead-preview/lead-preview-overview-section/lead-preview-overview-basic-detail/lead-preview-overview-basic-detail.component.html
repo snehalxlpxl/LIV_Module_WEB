@@ -1,0 +1,108 @@
+<!-- Accordion Basic start -->
+<div class="rounded-corner-accordian">
+  <section id="accordion p-5">
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+          <div class="collapse-icon p-0">
+            <div class="collapse-default">
+              <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" activeIds="panelBorderBottom1">
+                <ngb-panel id="panelBorderBottom1">
+                  <ng-template ngbPanelTitle>
+                    <span>Basic Details</span>
+                  </ng-template>
+                  <ng-template ngbPanelContent> -->
+        <div class="row">
+          <div class="col-md-12">
+            <h5><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-list">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+              Basic Details</h5>
+          </div>
+        </div>
+        <div class="row pt-1">
+          <div class="col-md-4">Lead Owner</div>
+          <div class="col-md-8"><b>{{ capitalizeFirstLetter(leadOwnerName) }}</b></div>
+        </div>
+        <!-- <div class="row pt-1">
+          <div class="col-md-4">Customer Type</div>
+          <div class="col-md-8"><b>Company(not get)</b></div>
+        </div>
+        <hr> -->
+        <div class="row pt-1">
+          <div class="col-md-4">Contact</div>
+          <div class="col-md-8"><b>{{leadDetails?.firstName}}</b></div>
+        </div>
+        <!-- <div class="row pt-1">
+          <div class="col-md-4">Designation</div>
+          <div class="col-md-8"><b>Logistics Manager - West Region(not get)</b></div>
+        </div> -->
+        <div class="row pt-1">
+          <div class="col-md-4">Email</div>
+          <div class="col-md-8">
+            <b>
+              <span class="mr-1 pointer-cursor" (click)="copyToClipboard(leadDetails?.email)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-copy">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </span>
+              {{leadDetails?.email}}    
+            </b>
+          </div>
+        </div>
+        <div class="row pt-1">
+          <div class="col-md-4">Mobile</div>
+          <div class="col-md-8">
+            <b>
+              <span class="mr-1 pointer-cursor"(click)="copyToClipboard(leadDetails?.phone1)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-copy">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </span>
+             {{leadDetails?.phone1}}
+            </b>
+          </div>
+        </div>
+        <div class="row pt-1">
+          <div class="col-md-4">Website</div>
+          <div class="col-md-8"><b>    
+            <a [href]="leadDetails?.website" target="_blank" rel="noopener noreferrer">{{ leadDetails?.website }}</a>          
+          </b></div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-4">Lead Source</div>
+          <div class="col-md-8"><b>{{ leadSourceName }}</b></div>
+        </div>
+        <div class="row pt-1">
+          <div class="col-md-4">Lead Status</div>
+          <div class="col-md-8"><b>{{ leadStatusName }}</b></div>
+        </div>
+        <!-- <div class="row pt-1">
+          <div class="col-md-4">Notes</div>
+          <div class="col-md-8"><b></b></div>
+        </div> -->
+        <!-- </ng-template>
+                </ngb-panel>
+              </ngb-accordion> -->
+        <!-- </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </section>
+</div>
+<!-- Accordion Basic end -->

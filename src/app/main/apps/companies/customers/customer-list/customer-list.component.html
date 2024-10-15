@@ -1,0 +1,189 @@
+
+    <div class="content-body">
+      <!-- Customer List -->
+       <div class="f-listmargin">
+        <section class="customer-list-wrapper">
+          <div class="card">
+            <!-- Customer List Header -->
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="d-flex justify-content-between align-items-center m-1">
+                  <div class="d-flex align-items-center">
+                    <h4 class="d-flex align-items-center">Customers</h4>
+                    <!-- Add other controls if necessary -->
+                  </div>
+                </div>
+              </div>
+              <div
+                class="
+                  col-md-6 col-lg-4 col-12
+                  d-flex
+                  justify-content-start justify-content-md-end
+                  align-items-center
+                  offset-lg-2
+                "
+              >
+                <div class="row pr-1 pb-1 pb-md-0 align-items-center w-100">
+                  <div class="col-10 col-md-6 pr-0">
+                    <label class="d-flex align-items-center mb-0 ml-1 ml-md-0">
+                      <input
+                        [(ngModel)]="searchValue"
+                        name="searchValue"
+                        type="search"
+                        class="form-control"
+                        placeholder="Search..."
+                        (keyup)="filterUpdate($event)"
+                        (search)="filterUpdate($event)"
+                      />
+                      <!-- <input type="text" class="form-control" (keyup)="filterUpdate($event)" placeholder="Search..."> -->
+
+                    </label>
+                  </div>
+                  <div class="col-10 col-md-6 mt-2 ml-1 ml-md-0 mt-md-0">
+                    <button class="btn btn-primary ml-2" routerLink="/customer/create" rippleEffect><span [data-feather]="'plus'" [class]="'mr-50'"></span>New</button>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <!--/ Customer List Header -->
+    
+            <!-- Customer List Table -->
+            <!-- <ngx-datatable
+              [rows]="rows"
+              [rowHeight]="50"
+              class="bootstrap core-bootstrap"
+              [limit]="selectedOption"
+              [columnMode]="ColumnMode.force"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [scrollbarH]="true"
+            > -->
+            <ngx-datatable
+            class="bootstrap core-bootstrap"
+          [rows]="companies"
+          [count]="totalRecords"
+          [offset]="pageNumber - 1"
+          [limit]="pageSize"
+          [loadingIndicator]="loading"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="50"
+          [footerHeight]="30"
+          [scrollbarH]="true"
+          (page)='onPage($event)'>
+              <!-- <ngx-datatable-column name="ID" prop="companyId" [width]="50">
+                <ng-template let-companyId="value" ngx-datatable-cell-template>
+                  <a routerLink="/customer/edit/{{companyId}}" class="font-weight-bold">#{{ companyId }}</a>
+                </ng-template>
+              </ngx-datatable-column>
+              -->
+              
+              <ngx-datatable-column name="Company Name" prop="companyName" [width]="200">
+                <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                  <a [routerLink]="['/customer/preview/', row['companyId']]" class="font-weight-bold">
+                    {{ value | ellipsis:20}}
+                  </a>
+                </ng-template>
+              </ngx-datatable-column>
+    
+              <ngx-datatable-column name="Email" prop="email" [width]="200">
+                <ng-template let-email="value" ngx-datatable-cell-template>
+                  {{ email }}
+                </ng-template>
+              </ngx-datatable-column>
+    
+              <ngx-datatable-column name="Website" prop="website" [width]="150">
+                <ng-template let-website="value" ngx-datatable-cell-template>
+                  <a [href]="'https://' + website" target="_blank">{{ website }}</a>
+                </ng-template>
+              </ngx-datatable-column>
+    
+              <ngx-datatable-column name="Status" prop="companyApprovalStatus" [width]="100">
+                <ng-template let-companyApprovalStatus="value" ngx-datatable-cell-template>
+                  <span class="badge badge-success">
+                    {{ companyApprovalStatus }}
+                  </span>
+                </ng-template>
+              </ngx-datatable-column>
+    
+              <ngx-datatable-column name="Actions" [width]="100" [sortable]="false">
+                <ng-template ngx-datatable-cell-template let-row="row">
+                  <div class="d-flex align-items-center col-actions">
+                    <a class="mr-1" href="javascript:void(0);" container="body" placement="top" ngbTooltip="Send Mail">
+                      <i size="18" data-feather="send"></i>
+                    </a>
+                 
+                    <a
+                    class="mr-1"
+                    routerLink="/customer/preview/{{row.companyId}}"
+                    
+                    container="body"
+                    placement="top"
+                    ngbTooltip="Preview Company" 
+                  >
+                      <i size="18" data-feather="eye"></i>
+                    </a>
+                    <div ngbDropdown container="body">
+                      <button ngbDropdownToggle type="button" class="btn icon-btn btn-sm hide-arrow px-0" rippleEffect>
+                        <i data-feather="more-vertical" size="18" class="cursor-pointer"></i>
+                      </button>
+                      <div ngbDropdownMenu>
+                        <!-- <a href="javascript:void(0)" ngbDropdownItem>
+                          <i data-feather="download" class="mr-1"></i>Download
+                        </a> -->
+                        <!-- <a routerLink="/Customer/create/{{ row.companyId }}" ngbDropdownItem> -->
+                          <a routerLink="/customer/edit/{{row.companyId}}" ngbDropdownItem>
+                          <i data-feather="edit" class="mr-1"></i>Edit
+                        </a>
+                        <a (click)="deleteCustomerByID(row.companyId)" href="javascript:void(0)" ngbDropdownItem>
+                          <i data-feather="trash" class="mr-1"></i>Delete
+                        </a>
+                        <!-- <a href="javascript:void(0)" ngbDropdownItem>
+                          <i data-feather="copy" class="mr-1"></i>Duplicate
+                        </a> -->
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+            <!-- Pagination Controls -->
+           <!-- Pagination Controls -->
+          <ul class="pagination justify-content-end pr-1">
+            <li class="page-item" [class.disabled]="pageNumber === 1">
+              <a class="page-link" (click)="goToPreviousPage()">Previous</a>
+            </li>
+
+            <!-- Display page numbers with ellipsis -->
+            <li *ngIf="pages[0] > 1" class="page-item">
+              <a class="page-link" (click)="goToPage(1)">1</a>
+            </li>
+            <li *ngIf="pages[0] > 2" class="page-item disabled">
+              <span class="page-link">...</span>
+            </li>
+
+            <li *ngFor="let page of pages" class="page-item" [class.active]="page === pageNumber">
+              <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
+            </li>
+
+            <li *ngIf="pages[pages.length - 1] < totalPages - 1" class="page-item disabled">
+              <span class="page-link">...</span>
+            </li>
+            <li *ngIf="pages[pages.length - 1] < totalPages" class="page-item">
+              <a class="page-link" (click)="goToPage(totalPages)">{{ totalPages }}</a>
+            </li>
+
+            <li class="page-item" [class.disabled]="pageNumber === totalPages">
+              <a class="page-link" (click)="goToNextPage()">Next</a>
+            </li>
+          </ul>
+            <!--/ Customer List Table -->
+          </div>
+        </section>
+        <!--/ Customer List -->
+       </div>
+      
+    </div>
+ 
+
+

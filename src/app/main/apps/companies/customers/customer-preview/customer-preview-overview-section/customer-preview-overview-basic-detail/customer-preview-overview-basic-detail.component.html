@@ -1,0 +1,74 @@
+<!-- Accordion Basic start -->
+<div class="rounded-corner-accordian">
+  <section id="accordion p-5">
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+          <div class="collapse-icon p-0">
+            <div class="collapse-default">
+              <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" activeIds="panelBorderBottom1">
+                <ngb-panel id="panelBorderBottom1">
+                  <ng-template ngbPanelTitle>
+                    <span>Basic Details</span>
+                  </ng-template>
+                  <ng-template ngbPanelContent> -->
+                    <div class="row"> <div class="col-md-12"><h5><i class="feather icon-list"></i>&nbsp;Basic Details</h5></div></div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-4">Sales Person</div>
+                      <div class="col-md-8"><b>{{basicDetail.salesPersonName||blankvalue}}</b></div>
+                    </div>
+                    <div class="row pt-1">
+                      <div class="col-md-4">Customer Type</div>
+                      <div class="col-md-8"><b>{{basicDetail.companyTypeName||blankvalue}}</b></div>
+                    </div>
+                    <hr>
+                    <div *ngFor="let gstd of gstDetail;">
+                      <div class="row">
+                        <div class="col-md-4">GST Type</div>
+                        <div class="col-md-8"><b>{{gstd.gstregisType||blankvalue}}</b></div>
+                      </div>
+                      <div class="row pt-1" >
+                        <div class="col-md-4">GSTIN</div>
+                        <div class="col-md-8">
+                          <b>
+                            <span class="mr-1 cursor-pointer" (click)="copyAddress($event, gstd.gstNum)">
+                              <i class="feather icon-copy"></i>
+                            </span>
+                            {{gstd.gstNum||blankvalue}}
+                          </b>
+                        </div>
+                      </div>
+                  </div>
+                    <div class="row pt-1">
+                      <div class="col-md-4">Credit Available</div>
+                      <div class="col-md-8"><b><span>&#8377;</span> 3,75,455 /- (Total Limit <span>&#8377;</span> 10,00,000)</b></div>
+                    </div>
+                    <div class="row pt-1">
+                      <div class="col-md-4">Payment Term</div>
+                      <div class="col-md-8"><b>30 Days</b></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-4">Website</div>
+                      <div class="col-md-8"><b><a href="{{ 'http://' + (basicDetail.website || blankvalue) }}" target="_blank">{{basicDetail.website||blankvalue}}</a></b></div>
+                    </div>
+                    <div class="row pt-1">
+                      <div class="col-md-4">Email</div>
+                      <div class="col-md-8"><b>{{basicDetail.email||blankvalue}}</b></div>
+                    </div>
+                    <div class="row pt-1">
+                      <div class="col-md-4">Notes</div>
+                      <div class="col-md-8"><b></b></div>
+                    </div>
+                  <!-- </ng-template>
+                </ngb-panel>
+              </ngb-accordion> -->
+            <!-- </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </section>
+</div>
+<!-- Accordion Basic end -->

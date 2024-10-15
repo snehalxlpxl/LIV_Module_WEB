@@ -1,0 +1,128 @@
+
+
+.f-preview-overview-content-new {
+  margin-top: 4.9rem !important;
+  padding: 0 10px;
+}
+span.padd-add.ng-star-inserted {
+  padding-top: 3px;
+}
+.panel-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-left, .padd-add {
+  display: flex;
+  align-items: center;
+}
+
+.icon-right {
+  margin-left: auto;
+  margin-right: 20px;
+}
+// input.ng-touched{
+//   border: 1px solid red;
+// }
+.f-autocomplet-wrapper{
+position: relative;
+}
+
+.dropdown {
+display: none; /* Hidden by default */
+position: absolute;
+background-color: #fff;
+width: 100%; /* Match the input width */
+border: 1px solid #ddd;
+z-index: 1000;
+height: 500px; /* Set max height for the dropdown */
+overflow-y: scroll; /* Enable vertical scrolling */
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-item {
+padding: 8px 16px;
+cursor: pointer;
+}
+
+.dropdown-item:hover {
+background-color: rgba(115, 103, 240, 0.12) !important;
+}
+
+/* Show the dropdown when input is focused */
+input:focus + .dropdown {
+display: block;
+}  
+.icon-left, .padd-add {
+  display: flex;
+  align-items: center;
+}     
+.fixheader {
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+
+  .row {
+    margin: 0;
+  }
+
+  h1 {
+    margin: 0;
+  }
+
+  .btn {
+    white-space: nowrap; /* Prevent buttons from breaking lines */
+  }
+
+  @media (max-width: 768px) {
+    .offset-lg-2 {
+      margin-left: 0;
+    }
+    .d-flex {
+      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    }
+    .col-10, .col-md-12 {
+      margin-top: 1rem;
+    }
+
+  }
+}
+
+
+.rounded-corner-accordian, .collapse-icon, .collapse-default {
+  overflow: visible;
+}
+ngb-accordion .panel-title {
+  overflow: visible !important;
+}
+
+.ng-clear-wrapper, .ng-arrow-wrapper {
+  display: inline-block;
+  vertical-align: middle;
+}
+.form-group.f-autocomplet-wrapper {
+  white-space: nowrap;
+}
+
+.nav-pills a {
+  padding: 10px 15px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.fixheader {
+  position: fixed;
+  top: 62px;
+  width: 100%;
+  max-width: 83%; /* Default max-width for smaller screens */
+  z-index: 21;
+  background-color: white;
+  margin-bottom: 15px;
+  box-shadow: 0 12px 28px -12px rgba(34, 41, 47, 0.1);
+  // padding-left: 20px;
+  padding-left: 7px;
+  // padding-bottom: 0px;
+  margin-left: -19px;
+  // margin-bottom: 0px;
+
+}

@@ -1,0 +1,87 @@
+<div class="content-wrapper container-xxl p-0"  style="margin-top: -30px;">
+
+  <div class="content-body">
+    <section class="activities-list-wrapper">
+      <!-- Open Activities Section -->
+      <div class="card mb-3">
+        <h4 class="card-header">Open Activities</h4>
+        <ngx-datatable [rows]="openActivities" class="bootstrap core-bootstrap" [rowHeight]="50" [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true"  style="width: 100%;">
+          <ngx-datatable-column name="Activity Info" prop="title" [width]="300">
+           <ng-template let-row="row" ngx-datatable-cell-template>
+            <a href="javascript:void(0)" class="font-weight-bold" (click)="logRowAndOpenModal(row)">
+              <!-- {{ row.title }}  -->
+              {{ row.title.length > 20 ? (row.title | slice:0:20) + '...' : row.title }}
+
+            </a>
+      </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Date & Time" prop="dateAndTime" [width]="200">
+            <ng-template let-dateAndTime="value" ngx-datatable-cell-template>
+              <!-- {{ dateAndTime | date: 'dd:MM:yyyy HH:mm:ss' }} -->
+              {{ dateAndTime | date: 'dd:MM:yyyy hh:mm a' }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Responsible" prop="responsible" [width]="150">
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Status" prop="status" [width]="100">
+            <ng-template let-status="value" ngx-datatable-cell-template>
+              <span [ngClass]="{
+                  'badge-success badge-light-success': status === 'Completed',
+                  'badge-warning badge-light-warning': status === 'Pending' 
+                }" class="badge">
+                {{ status }}
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Actions" [width]="120" [sortable]="false" prop="id">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <button class="btn btn-gradient-danger ml-1" (click)="onDelete(row.activityId, row.activityType)">
+                <span class="d-none d-sm-inline-block">Delete</span>
+               </button>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+
+      <!-- Closed Activities Section -->
+      <div class="card">
+        <h4 class="card-header">Closed Activities</h4>
+        <ngx-datatable [rows]="closedActivities" class="bootstrap core-bootstrap" [rowHeight]="50" [limit]="selectedOption"  [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+          <ngx-datatable-column name="Activity Info" prop="title" [width]="300">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <a href="javascript:void(0)" class="font-weight-bold" (click)="logRowAndOpenModal(row)">
+                {{ row.title.length > 20 ? (row.title | slice:0:20) + '...' : row.title }}
+              </a>
+            </ng-template>
+            
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Date & Time" prop="dateAndTime" [width]="200">
+            <ng-template let-dateAndTime="value" ngx-datatable-cell-template>
+              <!-- {{ dateAndTime | date: 'dd:MM:yyyy HH:mm:ss' }} -->
+              {{ dateAndTime | date: 'dd:MM:yyyy hh:mm a' }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Responsible" prop="responsible" [width]="150">
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Status" prop="status" [width]="100">
+            <ng-template let-status="value" ngx-datatable-cell-template>
+              <span [ngClass]="{
+                  'badge-success badge-light-success': status === 'Completed',
+                  'badge-warning badge-light-warning': status === 'Pending' 
+                }" class="badge">
+                {{ status }}
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Actions" [width]="120" [sortable]="false" prop="id">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <button class="btn btn-gradient-danger ml-1" (click)="onDelete(row.activityId, row.activityType)">
+                <span class="d-none d-sm-inline-block">Delete</span>
+               </button>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,126 @@
+<div class="modal-header">
+    <h4 class="modal-title"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
+            clip-rule="evenodd">
+            <path
+                d="M16 22.621l-3.521-6.795c-.007.004-1.974.97-2.064 1.011-2.24 1.086-6.799-7.82-4.609-8.994l2.082-1.026-3.492-6.817-2.106 1.039c-1.639.855-2.313 2.666-2.289 4.916.075 6.948 6.809 18.071 12.309 18.045.541-.003 1.07-.113 1.58-.346.121-.055 2.102-1.029 2.11-1.033zm-2.5-13.621c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5zm-4.5 0c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5z" />
+        </svg>
+
+        <span>Log a Call</span>
+    </h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button> -->
+    <p class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true"
+        class="cursor-pointer"> × </p>
+</div>
+<div class="modal-body">
+    <form [formGroup]="callLogForm" (ngSubmit)="save()">
+      
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="text-left">
+                <span>Mark as complete</span>
+            </div>
+            <div class="custom-control custom-control-primary custom-switch">
+                <input type="checkbox" class="custom-control-input" id="markAsComplete"
+                    formControlName="markAsComplete">
+                <label class="custom-control-label" for="markAsComplete"></label>
+            </div>
+        </div>
+
+        <div class="form-group mt-1">
+            <label for="title">Title</label>
+            <input type="text" id="title" class="form-control" formControlName="title"
+                placeholder="Enter Meeting Title">
+            
+            <span *ngIf="callLogForm.get('title').invalid && (callLogForm.get('title').touched || submitted)" class="invalid-form">
+                <small class="form-text text-danger">Title is required</small>
+            </span>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="callStatus">Call Status</label>
+              
+                <ng-select id="callStatus" [items]="callStatuses" bindLabel="name" bindValue="value"
+                    formControlName="callStatus">
+                </ng-select>
+                <span *ngIf="callLogForm.get('callStatus').invalid && (callLogForm.get('callStatus').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Call Status is required</small>
+                </span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="callType">Call Type</label>
+                
+                <ng-select id="callType" [items]="callTypes" bindLabel="name" bindValue="value"
+                    formControlName="callType">
+                </ng-select>
+                <span *ngIf="callLogForm.get('callType').invalid && (callLogForm.get('callType').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Call Type is required</small>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" class="form-control" formControlName="subject"
+                placeholder="Enter Meeting Location">
+        </div>
+
+        <div class="form-row">  
+            <div class="form-group col-md-6">
+                <label for="startTime">Call Start Time</label>
+                <input type="datetime-local" id="startTime" class="form-control" formControlName="startTime">
+                <span *ngIf="callLogForm.get('startTime').invalid && (callLogForm.get('startTime').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Start Time is required</small>
+                </span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="endTime">Call Duration</label>
+                <input type="datetime-local" id="endTime" class="form-control" formControlName="endTime">
+                <span *ngIf="callLogForm.get('endTime').invalid && (callLogForm.get('endTime').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">End Time is required</small>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="callPurpose">Call Purpose</label>
+            
+            <ng-select id="callPurpose" formControlName="callPurpose" [items]="callPurposes" bindLabel="name"
+                placeholder="Select Call Purpose">
+            </ng-select>
+            <span *ngIf="callLogForm.get('callPurpose').invalid && (callLogForm.get('callPurpose').touched || submitted)" class="invalid-form">
+                <small class="form-text text-danger">Call Purpose is required</small>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="callResult">Call Result</label>
+          
+            <ng-select id="callResult" formControlName="callResult" [items]="callResults"
+                bindLabel="name" placeholder="Select Call Result">
+            </ng-select>
+            <span *ngIf="callLogForm.get('callResult').invalid && (callLogForm.get('callResult').touched || submitted)" class="invalid-form">
+                <small class="form-text text-danger">Call Result is required</small>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="callResultDetails">Call Result Details</label>
+            <textarea id="callResultDetails" class="form-control" rows="3" formControlName="callResultDetails"
+                placeholder="Enter description of the outcome"></textarea>
+                <span *ngIf="callLogForm.get('callResultDetails').invalid && (callLogForm.get('callResultDetails').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Call Result Details are required</small>
+                </span>
+        </div>
+        <!-- <div *ngIf="errorMessage" class="alert-danger">
+            {{ errorMessage }}
+        </div> -->
+        <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+                (click)="activeModal.dismiss('cancel click')">Cancel</button>
+            <button type="submit" class="btn btn-success">Save</button>
+        </div> -->
+        <hr>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary mr-2"
+                    (click)="activeModal.dismiss('cancel click')">Cancel</button>
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+    </form>
+</div>

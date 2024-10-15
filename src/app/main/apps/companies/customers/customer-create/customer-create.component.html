@@ -1,0 +1,1033 @@
+<section class="customer-list-wrapper">
+  <div class="">
+    <div class="row">
+      <form [formGroup]="newCustomerCreate" (ngSubmit)="saveCustomer(newCustomerCreate)">
+        <div class="fixheader">
+          <!-- Customer List Header -->
+          <div class="row">
+            <div class="col-md-5 col-12">
+              <div class="d-flex justify-content-between align-items-center m-1">
+                <div class="d-flex align-items-center">
+                  <h1 class=""><b>{{custEditCreatestring}}</b></h1>
+                  <!-- Add other controls if necessary -->
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-md-7 col-lg-4 col-12 d-flex justify-content-start justify-content-md-end align-items-center offset-lg-2">
+              <div class="row pr-1 pb-1 pb-md-0 align-items-center w-100 mr-left-30">
+                <div
+                  class="col-10 col-md-12 mt-2 ml-1 ml-md-0 mt-md-0 d-flex justify-content-start justify-content-md-end">
+                  <button type="button" class="btn btn-outline-danger mr-2 cursor-pointer" rippleEffect (click)="cancelPreview()">
+                    Cancel
+                  </button>
+                  <button class="btn btn-success" type="submit" rippleEffect>
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!--/ Customer List Header -->
+          </div>
+        </div>
+        <!--fix header end-->
+        <div class="f-preview-overview-content-new">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="overviewsection">
+                <div class="mb-2">
+                  <!-- <app-customer-create-basic-detail
+                                            (customerBasicDetailChild)="customerBasicDetailChild($event)"></app-customer-create-basic-detail> -->
+                  <!-- Accordion Basic start -->
+                  <div class="rounded-corner-accordian">
+                    <section id="accordion">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+                            <div class="collapse-icon p-0">
+                              <div class="collapse-default">
+                                <!-- <ngb-accordion
+                                      [destroyOnHide]="false"
+                                      [closeOthers]="true"
+                                      activeIds="panelBorderBottom1"
+                                    >
+                                      <ngb-panel id="panelBorderBottom1">
+                                        <ng-template ngbPanelTitle>
+                                          <span>Basic Details</span>
+                                        </ng-template>
+                                        <ng-template ngbPanelContent> -->
+                                <div class="card">
+                                  <div class="card-header">
+                                    
+                                    <h6><i class="feather icon-list"></i>&nbsp;Basic Details</h6>
+                                  </div>
+                                  <div class="row p-1">
+                                    <div class="col-md-12">
+                                      <div class="row">
+                                        <input type="hidden" formControlName="customerId" [value]="customerId" />
+                                        <div class="col-12">
+                                          <div class="form-group">
+                                            <label>Account Owner (Sales Person)
+                                            </label>
+
+                                            <ng-select id="salesPerson" formControlName="salesPerson" [ngClass]="{
+                                                    'ng-touched':
+                                                      newCustomerCreate.get(
+                                                        'salesPerson'
+                                                      ).touched,
+                                                    error:
+                                                      newCustomerCreate.get(
+                                                        'salesPerson'
+                                                      ).invalid &&
+                                                      newCustomerCreate.get(
+                                                        'salesPerson'
+                                                      ).touched
+                                                  }" [items]="salesPerson" bindValue="userId"
+                                              bindLabel="userDisplayName" placeholder="Select Sales Person"
+                                              (change)="onChangeSalePerson($event)"
+                                              >
+                                              <ng-option *ngFor="
+                                                      let person of salesPerson
+                                                    " [value]="person.userId">{{
+                                                person.userDisplayName
+                                                }}</ng-option>
+                                            </ng-select>
+
+                                            <span *ngIf="
+                                                    newCustomerCreate.get(
+                                                      'salesPerson'
+                                                    ).invalid &&
+                                                    newCustomerCreate.get(
+                                                      'salesPerson'
+                                                    ).touched
+                                                  " class="invalid-form">
+                                              <small class="form-text text-danger">Please Select Sales
+                                                Person</small>
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <input formControlName="salesPersonName" type="hidden"/>
+
+                                        <!-- <div class="col-12">
+                                          <div class="form-group">
+                                            <label for="custName">Customer Name</label>
+                                            <input type="text" id="custName" formControlName="custName"
+                                              class="form-control" [ngClass]="{
+                                                    'ng-touched':
+                                                      newCustomerCreate.get(
+                                                        'custName'
+                                                      ).touched,
+                                                    error:
+                                                      newCustomerCreate.get(
+                                                        'custName'
+                                                      ).invalid &&
+                                                      newCustomerCreate.get(
+                                                        'custName'
+                                                      ).touched
+                                                  }" placeholder="Customer Name" />
+                                            <span *ngIf="
+                                                    newCustomerCreate.get(
+                                                      'custName'
+                                                    ).invalid &&
+                                                    newCustomerCreate.get(
+                                                      'custName'
+                                                    ).touched
+                                                  " class="invalid-form">
+                                              <div *ngIf="customerForm.get('customerName').hasError('required')">
+                                                Customer Name is required.
+                                              </div>
+                                              
+                                            </span>
+                                            
+                                          </div>
+                                        </div> -->
+                                        <div class="col-12">
+                                          <div class="form-group">
+                                            <label for="custName">Customer Name</label>
+                                            <input
+                                              type="text"
+                                              id="custName"
+                                              formControlName="custName"
+                                              class="form-control"
+                                              [ngClass]="{
+                                                'ng-touched': custNameControl.touched,
+                                                'error': custNameControl.invalid && custNameControl.touched,
+                                                'valid': !custNameControl.invalid && custNameControl.touched
+                                              }"
+                                              placeholder="Customer Name"
+                                            />
+                                        
+                                            <!-- Error message for required field -->
+                                            <span *ngIf="custNameControl.invalid && custNameControl.touched" class="invalid-form">
+                                              <small class="form-text text-danger">
+                                                <ng-container *ngIf="custNameControl.errors?.required">
+                                                  Customer Name cannot be blank!
+                                                </ng-container>
+                                                <ng-container *ngIf="custNameControl.errors?.nonUnique">
+                                                  Customer Name already exists!
+                                                </ng-container>
+                                              </small>
+                                            </span>
+                                        
+                                            <!-- Success message when input is valid and unique -->
+                                            <!-- <span *ngIf="!custNameControl.invalid && custNameControl.touched && !custNameControl.errors?.nonUnique" class="valid-form">
+                                              <small class="form-text text-success">Customer Name is available! {{custNameControl.errors?.nonUnique}}</small>
+                                            </span> -->
+                                          </div>
+                                        </div>
+                                        
+                                        <div class="col-12">
+                                          <div class="form-group">
+                                            <label>Parent Company</label>
+                                            <div class="form-group f-autocomplet-wrapper">
+                                              <ng-select id="parentCompany" formControlName="parentCompany" [ngClass]="{
+                                                      'ng-touched':
+                                                        newCustomerCreate.get(
+                                                          'parentCompany'
+                                                        ).touched,
+                                                      error:
+                                                        newCustomerCreate.get(
+                                                          'parentCompany'
+                                                        ).invalid &&
+                                                        newCustomerCreate.get(
+                                                          'parentCompany'
+                                                        ).touched
+                                                    }" bindValue="companyId" bindLabel="companyName" 
+                                                    (change)="onChangeParentCompany($event)"
+                                                placeholder="Select Parent Company" [items]="companies" #select>
+                                                <ng-option *ngIf="
+                                                        companies.length === 0
+                                                      " [disabled]="true">No data</ng-option>
+                                                <ng-option *ngFor="
+                                                        let comp of companies
+                                                      " [value]="comp.companyId">
+                                                  {{ comp.companyName }}
+                                                </ng-option>
+                                              </ng-select>
+                                              <span *ngIf="
+                                                      newCustomerCreate.get(
+                                                        'parentCompany'
+                                                      ).invalid &&
+                                                      newCustomerCreate.get(
+                                                        'parentCompany'
+                                                      ).touched
+                                                    " class="invalid-form">
+                                                <small class="form-text text-danger">Please Select Parent
+                                                  Company</small>
+                                              </span>
+                                              <input type="hidden" formControlName="parentCompanyName"/>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                          <div class="form-group">
+                                            <label for="email">Email</label>
+                                           <input type="text" id="email" formControlName="email" class="form-control"
+                                              placeholder="Email" autocomplete="address-level1" [ngClass]="{
+                                                'ng-touched':
+                                                  newCustomerCreate.get(
+                                                    'email'
+                                                  ).touched,
+                                                error:
+                                                  newCustomerCreate.get(
+                                                    'email'
+                                                  ).invalid &&
+                                                  newCustomerCreate.get(
+                                                    'email'
+                                                  ).touched
+                                              }"/>
+                                              <span *ngIf="
+                                                      newCustomerCreate.get(
+                                                        'email'
+                                                      ).invalid &&
+                                                      newCustomerCreate.get(
+                                                        'email'
+                                                      ).touched
+                                                    " class="invalid-form">
+                                                <small class="form-text text-danger">Please Enter valid
+                                                  Email Id</small>
+                                              </span>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                          <div class="form-group">
+                                            <label for="website">Website</label>
+                                            <input type="text" id="website" formControlName="website"
+                                              class="form-control" placeholder="Website" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- </ng-template>
+                                      </ngb-panel>
+                                    </ngb-accordion> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                  <!-- Accordion Basic end -->
+                </div>
+                <div class="mb-2">
+                  <!-- <app-customer-create-address></app-customer-create-address> -->
+                  <!-- start address -->
+                  <!-- Accordion Basic start -->
+                  <div class="rounded-corner-accordian">
+                    <section id="accordion">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+                            <div class="collapse-icon p-0">
+                              <div class="collapse-default">
+                                <ngb-accordion [destroyOnHide]="false" [closeOthers]="false"
+                                [activeIds]="activePanelId1">
+                                  <ngb-panel id="panelBorderBottom1" >
+                                    <ng-template ngbPanelTitle>
+                                      <div class="panel-title">
+                                        <div class="d-flex justify-content-start align-items-center">
+                                          <span class="icon-left">
+                                            <i class="feather icon-map-pin" aria-hidden="true" ></i>
+                                          </span>
+                                          <span class="padd-add">Address</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end align-items-center">
+                                          <!-- <button
+                                                type="button"
+                                                class="btn btn-outline-success mr-2 f-adrress-btn"
+                                                
+                                                rippleEffect
+                                                (click)="toggleSideNav()"
+                                              >
+                                                Add Address
+                                              </button> -->
+                                          <button type="button" class="btn btn-outline-success mr-2 f-adrress-btn"
+                                            rippleEffect (click)="openAddressForm()">
+                                            Add Address
+                                          </button>
+                                          <span class="icon-right">
+                                         
+                                            <i class="feather icon-plus-square"></i>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </ng-template>
+
+                                    <ng-template ngbPanelContent>
+                                      <div *ngIf="addrDetailsList && addrDetailsList.length === 0">
+                                        <input formControlName="address" type="hidden" [value]="addrDetailsList"/>
+                                        <div class="row p-1">
+                                          <div class="col-md-6 text-danger">
+                                          
+                                            <p>
+                                              Please Enter Atleast one Address Details
+                                            </p>
+                                          </div>
+                                          <div class="col-md-6 text-danger">
+                                              <p class="text-right">!</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      
+                                        <div *ngIf="addrDetailsList">
+                                          <div *ngIf="addrDetailsList && addrDetailsList.length > 0" class="table-responsive">
+                                           
+                                            <!-- <table class="table table-hover">
+                                              <thead>
+                                                <tr>
+                                                  <th>Address Type</th>
+                                                  <th>Company</th>
+                                                  <th>Address Line 1</th>
+                                                  <th>Address Line 2</th>
+                                                  <th>City</th>
+                                                  <th>Country</th>
+                                                  <th>State</th>
+                                                  <th>Zip Code</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <tr *ngFor="let detail of addrDetailsList" (click)="openAddressFormlByData(detail)">
+                                                  <td>{{ detail.addressType||detail.addressTypeNick }}</td>
+                                                  <td>{{ detail.company|| detail.companyName}}</td>
+                                                  <td>{{ detail.addressLine1 }}</td>
+                                                  <td>{{ detail.addressLine2 }}</td>
+                                                  <td>{{ detail.city||detail.cityName }}</td>
+                                                  <td>{{ detail.country }}</td>
+                                                  <td>{{ detail.state ||detail.stateName}}</td>
+                                                  <td>{{ detail.zipCode|| detail.zipcode}}</td>
+                                                </tr>
+                                              </tbody>
+                                            </table> -->
+                                           <div class="mb-1 cursor-pointer" *ngFor="let detail of addrDetailsList" (click)="openAddressFormlByData(detail)">
+                                            <div class="row">
+                                              <div class="col-md-8">
+                                                <div class=""><b>{{ detail.addressTypeValue||detail.addressTypeNick }} Address</b></div>
+                                                <div class="pt-1">{{ detail.company|| detail.companyName}}, {{ detail.addressLine1 }},{{ detail.addressLine2 }}, {{ detail.city||detail.cityName }}-{{ detail.zipCode|| detail.zipcode}},{{ detail.country }},{{ detail.state ||detail.stateName}}</div>
+                                              </div>
+                                              <div class="col-md-4 text-right">
+                                                
+                                                <div class="badge badge-light-success mr-1">{{ detail.addressTypeValue||detail.addressTypeNick }}</div>
+                                                <span class="" (click)="copyAddress($event, detail)"><i class="feather icon-copy"></i></span>
+                                                  <!-- <div class="icon-wrapper">
+                                                    <i [data-feather]="data.key" [size]="24"></i>
+                                                  </div> -->
+                                                  <i [data-feather]="copy" [size]="24"></i>
+                                                  <!-- <div *ngIf="showCopiedMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+                                                    Address copied to clipboard!
+                                                    <button type="button" class="close" (click)="showCopiedMessage = false">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div> -->
+                                              </div>
+                                              
+                                            </div>
+                                            <hr>
+                                           </div>
+                                            
+                                          </div>
+                                        </div>
+                                    </ng-template>
+                                  </ngb-panel>
+                                </ngb-accordion>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                  
+                  <!-- Accordion Basic end -->
+                  <!-- end address -->
+                </div>
+                <div class="mb-2">
+                  <!-- <app-customer-create-contact></app-customer-create-contact> -->
+                  <!-- start contact -->
+                  <!-- Accordion Basic start -->
+                  <div class="rounded-corner-accordian">
+                    <section id="accordion">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+                            <div class="collapse-icon p-0">
+                              <div class="collapse-default">
+                                <ngb-accordion [destroyOnHide]="false" [closeOthers]="true"
+                                [activeIds]="activePanelId2">
+                                  <ngb-panel id="panelBorderBottom2">
+                                    <ng-template ngbPanelTitle>
+                                      <div class="panel-title">
+                                        <div class="d-flex justify-content-start align-items-center">
+                                          <span class="icon-left">
+                                            <i class="feather icon-users"></i>
+                                          </span>
+                                          <span class="padd-add">Contacts</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end align-items-center">
+                                          <button type="button" class="btn btn-outline-success mr-2 f-adrress-btn"
+                                            (click)="openContactForm(customerId)" rippleEffect>
+                                            Add Contact
+                                          </button>
+                                          <span class="icon-right">
+                                            <i class="feather icon-plus-square"></i>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </ng-template>
+
+                                    <ng-template ngbPanelContent>
+                                      <div *ngIf="contactDetailsList && contactDetailsList.length === 0">
+                                        <div class="row p-1">
+                                          <input formControlName="contact" type="hidden" [value]="contactDetailsList"/>
+                                          <div class="col-md-6 text-danger">
+                                            <p>
+                                              Please Enter Atleast one Contact Details
+                                            </p>
+                                          </div>
+                                          <div class="col-md-6 text-danger">
+                                              <p class="text-right">!</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                        <div *ngIf="contactDetailsList">
+                                          <div *ngIf="contactDetailsList && contactDetailsList.length > 0" class="table-responsive"> 
+                                            <!-- <table class="table table-hover"> 
+                                              <thead>
+                                                <tr>
+                                                  <th>Contact Type</th>
+                                                  <th>Name</th>
+                                                  <th>Email</th>
+                                                  <th>Mobile</th>
+                                                  <th>Landline</th>
+                                                  <th>Designation</th>
+                                                  <th>Department</th>
+                                                  <th>Date of Birth</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <tr *ngFor="let detail of contactDetailsList" (click)="openContatFormlByData(detail)">
+                                                  <td>{{ detail.contactType||detail.contactTypeName }}</td>
+                                                  <td>{{ detail.name || detail.displayName  }}</td>
+                                                  <td>{{ detail.email }}</td>
+                                                  <td>{{ detail.mobile }}</td>
+                                                  <td>{{ detail.landline||detail.phone }}</td>
+                                                  <td>{{ detail.designation }}</td>
+                                                  <td>{{ detail.department}}</td>
+                                                  <td>{{ detail.dateOfBirth ||detail.dob}}</td>
+                                                </tr>
+                                              </tbody>
+                                            </table> -->
+                                           <div>
+                                            <div class="mb-1 cursor-pointer" *ngFor="let detail of contactDetailsList" (click)="openContatFormlByData(detail)">
+                                              <div class="row">
+                                                <div class="col-md-8">
+                                                  <!-- <div class=""><b>{{ detail.contactType||detail.contactTypeName }} Address</b></div> -->
+                                                  <div class="pt-0">{{ (detail.name || detail.displayName)  }}: {{ detail.designation }} {{ detail.department}}</div>
+                                                  <div class="pt-0">Mobile : {{ detail.mobile }}</div>
+                                                  <div class="pt-0">Email : {{ detail.email }}</div>
+                            
+                                                </div>
+                                                <div class="col-md-4 text-right">
+                                                  <a><i class="fa fa-whatsapp mr-1" aria-hidden="true" style="font-size:19px;"></i></a>
+                                                  <a><i class="fa fa-envelope-o mr-1" aria-hidden="true"></i></a>
+                                                  <a><i class="fa fa-phone mr-1" aria-hidden="true"></i></a>
+                                                  
+                                                  
+                                                  <span class="badge badge-light-success mr-1">
+                                                   
+                                                    Billing</span>
+                                                 
+                                                  
+                                                </div>
+                                                
+                                              </div>
+                                              <hr>
+                                            </div>
+                                            
+                                           </div>
+                                          </div>
+                                        </div>
+                                    </ng-template>
+                                  </ngb-panel>
+                                </ngb-accordion>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                  <!-- Accordion Basic end -->
+                  <!-- end contact -->
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="">
+                <!-- <app-customer-create-accounting-info
+                                        (customerAccountInfoChild)="customerAccountInfoChild($event)"></app-customer-create-accounting-info> -->
+
+                <!-- start accounting -->
+                <!-- Accordion Basic start -->
+                <div class="rounded-corner-accordian">
+                      <section id="accordion">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div
+                              id="accordionWrapa1"
+                              role="tablist"
+                              aria-multiselectable="true"
+                            >
+                              <div class="collapse-icon p-0">
+                                <div class="collapse-default">
+                                <!--  <ngb-accordion
+                                    [destroyOnHide]="false"
+                                    [closeOthers]="true"
+                                    activeIds="panelBorderBottom1"
+                                  >
+                                    <ngb-panel id="panelBorderBottom1">
+                                      <ng-template ngbPanelTitle>
+                                        <span>Accounting Information</span>
+                                      </ng-template>
+                                      <ng-template ngbPanelContent>-->
+                <!-- <div class="row">
+                                          <div class="col-md-12">  -->
+                <!-- customer-create-basic-detail.component.html -->
+                <!-- customer-create-accounting-info.component.html -->
+                <div class="card ">
+                  <div class="card-header">
+                    <h6><i class="feather icon-file-text"></i>&nbsp;Accounting Information</h6>
+                  </div>
+                  <div class="row p-1">
+
+                    <!-- <div class="col-12">
+                                                  <div class="form-group">
+                                                    <label>Currency</label>
+                                                    <ng-select
+                                                      formControlName="currency"
+                                                      [ngClass]="{
+                                                        'ng-touched': newCustomerCreate.get('currency').touched,
+                                                        error:
+                                                          newCustomerCreate.get('currency').invalid &&
+                                                          newCustomerCreate.get('currency').touched
+                                                      }"
+                                                      [items]="currency"
+                                                      bindLabel="currencyName"
+                                                      bindValue="currencyId"
+                                                      placeholder="Select Currency"
+                                                    >
+                                                    <ng-option
+                                                      *ngFor="
+                                                        let curr of currency
+                                                      "
+                                                      [value]="curr.currencyId"
+                                                      >{{ curr.currencyCode }}
+                                                      -
+                                                      {{
+                                                        curr.currencyName
+                                                      }}</ng-option
+                                                    >
+                                                    </ng-select>
+                                                    
+                                                    <span
+                                                      *ngIf="
+                                                        newCustomerCreate.get('currency').invalid &&
+                                                        newCustomerCreate.get('currency').touched
+                                                      "
+                                                      class="invalid-form"
+                                                    >
+                                                      <small class="form-text text-danger">Please Select Currency</small>
+                                                    </span>
+                                                  </div>
+                                                </div> -->
+
+                                              <div class="col-12">
+                                                <div class="form-group">
+                                                  <label>Currency</label>
+                                                  <ng-select formControlName="currency" [ngClass]="{
+                                                                                'ng-touched':
+                                                                                  newCustomerCreate.get(
+                                                                                    'currency'
+                                                                                  ).touched,
+                                                                                error:
+                                                                                  newCustomerCreate.get(
+                                                                                    'currency'
+                                                                                  ).invalid &&
+                                                                                  newCustomerCreate.get(
+                                                                                    'currency'
+                                                                                  ).touched
+                                                                              }" [items]="currency" bindValue="currencyId"
+                                                    bindLabel="currencyName" placeholder="Select Currency">
+                                                    <ng-option *ngFor="let curr of currency
+                                                                                " [value]="curr.currencyName">{{ curr.currencyCode }}
+                                                      -
+                                                      {{
+                                                      curr.currencyName
+                                                      }}</ng-option>
+                                                  </ng-select>
+                                                    <span *ngIf="
+                                                                                  newCustomerCreate.get(
+                                                                                    'currency'
+                                                                                  ).invalid &&
+                                                                                  newCustomerCreate.get(
+                                                                                    'currency'
+                                                                                  ).touched
+                                                                                " class="invalid-form">
+                                                      <small class="form-text text-danger">Please Select
+                                                        Currency</small>
+                                                    </span>
+
+                                                    <input type="hidden" formControlName="currencyName"/>
+                                                </div>
+                                              </div>
+                                              <div class="col-12">
+                                                <div class="row">
+                                                  <div class="col-6">
+                                                    <div class="form-group">
+                                                      <label for="creditLimit">Credit Limit</label>
+                                                      <input formControlName="creditLimit" type="number" id="creditLimit" class="form-control"
+                                                        placeholder="Credit Limit" [ngClass]="{
+                                                          'ng-touched':
+                                                            newCustomerCreate.get(
+                                                              'creditLimit'
+                                                            ).touched,
+                                                          error:
+                                                            newCustomerCreate.get(
+                                                              'creditLimit'
+                                                            ).invalid &&
+                                                            newCustomerCreate.get(
+                                                              'creditLimit'
+                                                            ).touched
+                                                        }"/>
+                                                        <span *ngIf="
+                                                                                  newCustomerCreate.get(
+                                                                                    'creditLimit'
+                                                                                  ).invalid &&
+                                                                                  newCustomerCreate.get(
+                                                                                    'creditLimit'
+                                                                                  ).touched
+                                                                                " class="invalid-form">
+                                                      <small class="form-text text-danger">Please Select
+                                                        Credit Limit</small>
+                                                    </span>
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-6">
+                                                    <div class="form-group">
+                                                      <label>Credit Days</label>
+                                                      <ng-select formControlName="creditDays" [items]="creditDay" bindValue="paymentTermId"
+                                                        bindLabel="paymentTerm1" placeholder="Credit Days" [ngClass]="{
+                                                          'ng-touched':
+                                                            newCustomerCreate.get(
+                                                              'creditDays'
+                                                            ).touched,
+                                                          error:
+                                                            newCustomerCreate.get(
+                                                              'creditDays'
+                                                            ).invalid &&
+                                                            newCustomerCreate.get(
+                                                              'creditDays'
+                                                            ).touched
+                                                        }">
+                                                      </ng-select>
+                                                      <span *ngIf="
+                                                                                  newCustomerCreate.get(
+                                                                                    'creditDays'
+                                                                                  ).invalid &&
+                                                                                  newCustomerCreate.get(
+                                                                                    'creditDays'
+                                                                                  ).touched
+                                                                                " class="invalid-form">
+                                                      <small class="form-text text-danger">Please Select
+                                                        Credit Limit</small>
+                                                    </span>
+
+                                                    <input type="hidden" formControlName="creditDaysName"/>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="col-12">
+                                                <div class="row">
+                                                  <div class="col-6">
+                                                    <div class="form-group">
+                                                      <label for="panNumber">PAN Number</label>
+                                                      <input formControlName="panNumber" type="text" id="panNumber" class="form-control"
+                                                        placeholder="Enter PAN Number" />
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-6">
+                                                    <div class="form-group">
+                                                      <label for="tanNumber">TAN Number</label>
+                                                      <input formControlName="tanNumber" type="text" id="tanNumber" class="form-control"
+                                                        placeholder="Enter TAN Number" />
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                    <!-- </div>
+                                        </div> -->
+                                 <!-- </ng-template>
+                                    </ngb-panel>
+                                  </ngb-accordion>-->
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div> 
+                <!-- Accordion Basic end -->
+                <!-- end accounting info -->
+
+                <!-- <app-ustomer-create-taxdetail></app-ustomer-create-taxdetail> -->
+                <!-- tax detail -->
+                <!-- Accordion Basic start -->
+                <!-- <div class="rounded-corner-accordian mt-1">
+                      <section id="accordion">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div
+                              id="accordionWrapa1"
+                              role="tablist"
+                              aria-multiselectable="true"
+                            >
+                              <div class="collapse-icon p-0">
+                                <div class="collapse-default">
+                                  <ngb-accordion
+                                    [destroyOnHide]="false"
+                                    [closeOthers]="true"
+                                    activeIds="panelBorderBottom1"
+                                  >
+                                    <ngb-panel id="panelBorderBottom1">
+                                      <ng-template ngbPanelTitle>
+                                        <span>Tax Details</span>
+                                      </ng-template>
+                                      <ng-template ngbPanelContent> -->
+                                        <div class="mb-2 mt-2">
+                                          <!-- <app-customer-create-address></app-customer-create-address> -->
+                                          <!-- start address -->
+                                          <!-- Accordion Basic start -->
+                                           
+                                          <div class="rounded-corner-accordian">
+                                            <section id="accordion">
+                                              <div class="row">
+                                                <div class="col-sm-12">
+                                                  <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+                                                    <div class="collapse-icon p-0">
+                                                      <div class="collapse-default">
+                                                        <ngb-accordion [destroyOnHide]="false" [closeOthers]="false" [activeIds]="activePanelId3">
+                                                          <ngb-panel id="panelBorderBottom3" >
+                                                            <ng-template ngbPanelTitle>
+                                                              <div class="panel-title">
+                                                                <div class="d-flex justify-content-start align-items-center">
+                                                                  <span class="icon-left">
+                                                                    <i class="feather icon-list"></i>
+                                                                  </span>
+                                                                  <span class="padd-add">Tax Details</span>
+                                                                </div>
+                                                                <div class="d-flex justify-content-end align-items-center">
+                                                                  <!-- <button
+                                                                        type="button"
+                                                                        class="btn btn-outline-success mr-2 f-adrress-btn"
+                                                                        
+                                                                        rippleEffect
+                                                                        (click)="toggleSideNav()"
+                                                                      >
+                                                                        Add Address
+                                                                      </button> -->
+                                                                  <button type="button" class="btn btn-outline-success mr-2 f-adrress-btn"
+                                                                    rippleEffect (click)="openTaxDetailsModal(customerId)">
+                                                                    Add Tax Details
+                                                                  </button>
+                                                                  <span class="icon-right">
+                                                                    <i class="feather icon-plus-square"></i>
+                                                                  </span>
+                                                                </div>
+                                                              </div>
+                                                            </ng-template>
+                        
+                                                            <ng-template ngbPanelContent>
+                                                              <div *ngIf="taxDetailsList && taxDetailsList.length === 0">
+                                                                <input formControlName="gst" [value]="taxDetailsList" type="hidden"/>
+                                                                  <div class="row p-1">
+                                                                    <div class="col-md-6 text-danger">
+                                                                    
+                                                                      <p>
+                                                                        Please Enter Atleast one Tax Details
+                                                                      </p>
+                                                                    </div>
+                                                                    <div class="col-md-6 text-danger">
+                                                                        <p class="text-right">!</p>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                                  <div *ngIf="taxDetailsList">
+                                                                    <div *ngIf="taxDetailsList && taxDetailsList.length > 0" class="table-responsive">
+                                                                      <!-- <table class="table table-hover">
+                                                                        <thead>
+                                                                          <tr>
+                                                                            <th>GST Registration Type</th>
+                                                                            <th>GSTIN</th>
+                                                                            <th>Source of Supply</th>
+                                                                            <th>Business Legal Name</th>
+                                                                            <th>Business Trade Name</th>
+                                                                          </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                          <tr *ngFor="let detail of taxDetailsList" (click)="openTaxFormlByData(detail)">
+                                                                            <td>{{ detail.gst||detail.gstregisType}}</td>
+                                                                            <td>{{ detail.gstin ||detail.gstNum}}</td>
+                                                                            <td>{{ detail.sop || detail.sourceOfSupply}}</td>
+                                                                            <td>{{ detail.bln || detail.businessLegalName }}</td>
+                                                                            <td>{{ detail.businessTrad || detail.businessTradeName}}</td>
+                                                                          </tr>
+                                                                        </tbody>
+                                                                      </table> -->
+                                                                      <div class="mb-1" *ngFor="let detail of taxDetailsList" (click)="openTaxFormlByData(detail)">
+                                                                        <div class="row cursor-pointer">
+                                                                          <div class="col-md-4">GST Type</div>
+                                                                          <div class="col-md-8"><b>{{ detail.GSTTypeValue||detail.gstregisType}}</b></div>
+                                                                        </div>
+                                                                        <div class="row pt-0" >
+                                                                          <div class="col-md-4">GSTIN</div>
+                                                                          <div class="col-md-8">
+                                                                            <b>
+                                                                              <span class="mr-1" (click)="copyAddress($event, detail)">
+                                                                                
+                                                                                <i class="feather icon-copy"></i>
+                                                                              </span>
+                                                                              {{ detail.gstin ||detail.gstNum}}
+                                                                            </b>
+                                                                          </div>
+                                                                        </div>
+                                                                        <div class="row cursor-pointer">
+                                                                          <div class="col-md-4">Source of Supply</div>
+                                                                          <div class="col-md-8"><b>{{ detail.sop || detail.sourceOfSupply}}</b></div>
+                                                                        </div>
+                                                                        <div class="row cursor-pointer">
+                                                                          <div class="col-md-4">Business Legal Name</div>
+                                                                          <div class="col-md-8"><b>{{ detail.bln || detail.businessLegalName }}</b></div>
+                                                                        </div>
+                                                                        <div class="row cursor-pointer">
+                                                                          <div class="col-md-4">Business Trade Name</div>
+                                                                          <div class="col-md-8"><b>{{ detail.businessTrad || detail.businessTradeName}}</b></div>
+                                                                        </div>
+                                                                        <hr>
+                                                                    </div>
+                                                                    </div>
+                                                                  </div>
+                                                            </ng-template>
+                                                          </ngb-panel>
+                                                        </ngb-accordion>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </section>  
+                                          </div>
+                                          <!-- Accordion Basic end -->
+                                          <!-- end address -->
+                                        </div>
+                <!-- <div class="card  mt-2">
+                  <div class="card-header">
+                    <h6>Tax Details</h6>
+                  </div>
+                  <div class="row p-1">
+                    
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label>GST Registration
+                              Type</label>
+                            <div class="form-group">
+                           
+                              <ng-select formControlName="gst" bindLabel="gst"
+                                placeholder="Registerd, Unregistered,Overseas etc">
+                                <ng-option value="FCL">xlpxl</ng-option>
+                                <ng-option value="LCL">fretrack</ng-option>
+                                <ng-option value="AIR">abc</ng-option>
+                              </ng-select>
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="gstin">GSTIN (GST Registration
+                              Number)e</label>
+                            <input type="text" formControlName="gstin" id="gstin" class="form-control" name="gstin"
+                              placeholder="GSTIN (GST Registration Number)" />
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="form-group">
+                                <label>Source of Supply</label>
+                                <ng-select formControlName="sop" bindLabel="sop" placeholder="Source of Supply">
+                                  <ng-option value="FCL">xlpxl</ng-option>
+                                  <ng-option value="LCL">fretrack</ng-option>
+                                  <ng-option value="AIR">abc</ng-option>
+                                </ng-select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="form-group">
+                                <label for="bln">Business Legal
+                                  Name</label>
+                                <input type="text" id="bln" class="form-control" name="bln"
+                                  placeholder="Business Legal Name" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="form-group">
+                                <label for="businessTrad">Business Trade
+                                  Name</label>
+                                <input formControlName="businessTrad" type="text" id="businessTrad" class="form-control"
+                                  name="businessTrad" placeholder="Business Trade Name" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- </ng-template>
+                                    </ngb-panel>
+                                  </ngb-accordion>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div> -->
+                <!-- Accordion Basic end -->
+                <!-- end tax detail -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Side Navigation -->
+<!-- <div class="side-nav" [class.open]="isSideNavOpen"> -->
+<!-- Side navigation content goes here -->
+<!-- <div class="container mt-5">
+    <h6>Add Address</h6>
+    <form [formGroup]="addressForm" >
+      <div class="form-group">
+        <label for="street">Street</label>
+        <input id="street" class="form-control" formControlName="street" />
+        <div *ngIf="addressForm.get('street').invalid && addressForm.get('street').touched" class="text-danger">
+          Street is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="city">City</label>
+        <input id="city" class="form-control" formControlName="city" />
+        <div *ngIf="addressForm.get('city').invalid && addressForm.get('city').touched" class="text-danger">
+          City is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="state">State</label>
+        <input id="state" class="form-control" formControlName="state" />
+        <div *ngIf="addressForm.get('state').invalid && addressForm.get('state').touched" class="text-danger">
+          State is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="zip">Zip Code</label>
+        <input id="zip" class="form-control" formControlName="zip" />
+        <div *ngIf="addressForm.get('zip').invalid && addressForm.get('zip').touched" class="text-danger">
+          Valid zip code is required
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="addressForm.invalid">Add Address</button>
+    </form>
+  </div>
+  
+</div> -->

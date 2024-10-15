@@ -1,0 +1,179 @@
+<div class="modal-header">
+  <span class="icon-left">
+   <i class="feather icon-users"></i>
+  </span>
+
+    <h5 class="modal-title">Contact Form</h5>
+    <p class="btn-close" aria-label="Close" (click)="close()" aria-hidden="true" class="cursor-pointer">×</p>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+      <input type="hidden" formControlName="companyId" [value]="companyId"/>
+      <input type="hidden" formControlName="contactId" />
+      <div class="form-group mb-1">
+        <label for="contactType">Contact Type</label>
+        <ng-select
+          id="contactType"
+          formControlName="contactType"
+          [items]="getContactType"
+          bindLabel="contactTypeName"
+          bindValue="contactTypeId"
+          placeholder="Select Contact Type"
+          [ngClass]="{
+            'ng-touched': contactForm.get('contactType').touched,
+            error: contactForm.get('contactType').invalid && contactForm.get('contactType').touched
+          }"
+          (change)="onContactTypeChange($event)"
+        ></ng-select>
+        <span *ngIf="contactForm.get('contactType').invalid && contactForm.get('contactType').touched" class="invalid-form">
+          <small class="form-text text-danger">Please select a contact type</small>
+        </span>
+
+        <input type="hidden" formControlName="addressTypeValue" />
+      </div>
+    
+      <div class="form-group mb-1">
+        <label for="name">Name</label>
+        <input
+          id="name"
+          formControlName="name"
+          type="text"
+          class="form-control"
+          placeholder="Name"
+          [ngClass]="{
+            'ng-touched': contactForm.get('name').touched,
+            error: contactForm.get('name').invalid && contactForm.get('name').touched
+          }"
+        />
+        <span *ngIf="contactForm.get('name').invalid && contactForm.get('name').touched" class="invalid-form">
+          <small class="form-text text-danger">
+            Name is required and must be at least 3 characters long.
+          </small>
+        </span>
+      </div>
+    
+      <div class="form-group mb-1">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          formControlName="email"
+          type="email"
+          class="form-control"
+          placeholder="Email"
+          [ngClass]="{
+            'ng-touched': contactForm.get('email').touched,
+            error: contactForm.get('email').invalid && contactForm.get('email').touched
+          }"
+        />
+        <span *ngIf="contactForm.get('email').invalid && contactForm.get('email').touched" class="invalid-form">
+          <small class="form-text text-danger">Please enter a valid email address</small>
+        </span>
+      </div>
+    
+      <div class="row mb-1">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="mobile">Mobile</label>
+            <input
+              id="mobile"
+              formControlName="mobile"
+              type="text"
+              class="form-control"
+              placeholder="Mobile"
+              [ngClass]="{
+                'ng-touched': contactForm.get('mobile').touched,
+                error: contactForm.get('mobile').invalid && contactForm.get('mobile').touched
+              }"
+            />
+            <span *ngIf="contactForm.get('mobile').invalid && contactForm.get('mobile').touched" class="invalid-form">
+              <small class="form-text text-danger">Please enter a valid 10-digit mobile number</small>
+            </span>
+          </div>
+        </div>
+    
+        <div class="col-6">
+          <div class="form-group">
+            <label for="landline">Landline</label>
+            <input
+              id="landline"
+              formControlName="landline"
+              type="text"
+              class="form-control"
+              placeholder="Landline"
+              [ngClass]="{
+                'ng-touched': contactForm.get('landline').touched,
+                error: contactForm.get('landline').invalid && contactForm.get('landline').touched
+              }"
+            />
+            <span *ngIf="contactForm.get('landline').invalid && contactForm.get('landline').touched" class="invalid-form">
+              <small class="form-text text-danger">Please enter a valid landline number</small>
+            </span>
+          </div>
+        </div>
+      </div>
+    
+      <div class="row mb-1">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="designation">Designation</label>
+            <input
+              id="designation"
+              formControlName="designation"
+              type="text"
+              class="form-control"
+              placeholder="Enter Designation"
+              [ngClass]="{
+                'ng-touched': contactForm.get('designation').touched,
+                error: contactForm.get('designation').invalid && contactForm.get('designation').touched
+              }"
+            />
+            <span *ngIf="contactForm.get('designation').invalid && contactForm.get('designation').touched" class="invalid-form">
+              <small class="form-text text-danger">Designation is required</small>
+            </span>
+          </div>
+        </div>
+    
+        <div class="col-6">
+          <div class="form-group">
+            <label for="department">Department</label>
+            <input
+              id="department"
+              formControlName="department"
+              type="text"
+              class="form-control"
+              placeholder="Enter Department"
+              [ngClass]="{
+                'ng-touched': contactForm.get('department').touched,
+                error: contactForm.get('department').invalid && contactForm.get('department').touched
+              }"
+            />
+            <span *ngIf="contactForm.get('department').invalid && contactForm.get('department').touched" class="invalid-form">
+              <small class="form-text text-danger">Department is required</small>
+            </span>
+          </div>
+        </div>
+      </div>
+    
+      <div class="form-group mb-1">
+        <label for="dateOfBirth">Date of Birth</label>
+        <input
+          class="form-control"
+          id="dateOfBirth"
+          formControlName="dateOfBirth"
+          type="date"
+          placeholder="yyyy-mm-dd"
+          
+        />
+        <!-- <span *ngIf="contactForm.get('dateOfBirth').invalid && contactForm.get('dateOfBirth').touched" class="invalid-form">
+          <small class="form-text text-danger">Date of Birth is required</small>
+        </span> -->
+      </div>
+    
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" (click)="close()">Cancel</button>
+        <button type="submit" class="btn btn-success">Save</button>
+      </div>
+    </form>
+  </div>
+  
+  

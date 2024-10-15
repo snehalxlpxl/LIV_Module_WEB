@@ -1,0 +1,77 @@
+<!-- Accordion Basic start -->
+<div class="rounded-corner-accordian">
+<section id="accordion rounded-corners">
+  <div class="row">
+    <div class="col-sm-12">
+      <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+        <!-- <core-card-snippet [snippetCode]="_snippetCodeAccordion"> -->
+
+        <div class="card-body collapse-icon p-0">
+
+          <div class="collapse-default">
+            <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" activeIds="panelBorderBottom1">
+              <ngb-panel id="panelBorderBottom1">
+                <ng-template ngbPanelTitle>
+                  <div class="panel-title">
+                    <span class="icon-left">
+                      <i class="feather icon-users"></i>
+                      
+                    </span>
+                    <span class="padd-add">Contacts</span>
+                    <span class="icon-right">
+                      <i class="feather icon-plus-square"></i>
+                    </span>
+                  </div>
+                </ng-template>
+                
+                <ng-template ngbPanelContent>
+                  <div class="row mb-1" *ngFor="let contcAddr of contactDetail;">
+                    <div class="col-md-7">
+                     
+                      <div class="pt-0">{{contcAddr.displayName||blankvalue}} : {{contcAddr.department||blankvalue}} {{contcAddr.designation||blankvalue}}</div>
+                      <div class="pt-0">Mobile : {{contcAddr.mobile||blankvalue}}</div>
+                      <div class="pt-0">Email : {{contcAddr.email||blankvalue}}</div>
+
+                    </div>
+                    <div class="col-md-5 text-right align-content-center">
+                      <a><i class="fa fa-whatsapp mr-1" aria-hidden="true" ></i></a>
+                      <a><i class="fa fa-envelope-o mr-1" aria-hidden="true"></i></a>
+                      <a><i class="fa fa-phone mr-1" aria-hidden="true"></i></a>
+                      
+                      
+                      <span class="badge badge-light-success mr-1">
+                       
+                        Billing</span>
+                      
+                        
+                    </div>
+                    <hr>
+                  </div>
+
+                  
+                  <!-- <div class="row">
+                    <div class="col-md-8">
+                      <div class=""><b>Shipping Address</b></div>
+                      <div class="pt-1">702, Sunflower Tower, SV Road, Khar West, Mumbai,400052, India Contact:
+                        9890098900</div>
+                    </div>
+                    <div class="col-md-4 text-right">
+                      <div class="badge badge-light-secondary  mr-1">Shipping</div>
+                      <span class=""><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></span>
+                       
+                    </div>
+
+                  </div> -->
+                </ng-template>
+              </ngb-panel>
+
+            </ngb-accordion>
+          </div>
+        </div>
+        <!-- </core-card-snippet> -->
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+<!-- Accordion Basic end -->

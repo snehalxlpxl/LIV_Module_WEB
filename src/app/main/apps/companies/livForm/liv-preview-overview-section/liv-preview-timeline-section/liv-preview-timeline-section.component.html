@@ -1,0 +1,88 @@
+<div class="card-body shadow rounded-corners">
+    <h5 class="timeline-header">
+      <div class="panel-title">
+        <span class="icon-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-list">
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+          </svg>
+        </span>
+        <span class="padd-add">TimeLine</span>
+        <span class="icon-right">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-more-vertical">
+            <circle cx="12" cy="5" r="1"></circle>
+            <circle cx="12" cy="12" r="1"></circle>
+            <circle cx="12" cy="19" r="1"></circle>
+          </svg>
+        </span>
+      </div>
+    </h5>
+  
+  
+    <ul class="timeline mt-2"*ngIf="timelineData && timelineData.length > 0 && timelineData[0]">
+      <li class="timeline-item">
+        <span class="timeline-point timeline-point-warning timeline-point-indicator"></span>
+        <div class="timeline-event">
+          <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+            <h6>LIV Form Approval Created By</h6>
+            <span class="timeline-event-time">{{ getRelativeTime(timelineData[0]?.requestedDate) }}</span>
+          </div>
+          <p>{{ timelineData[0].createdByName }}</p>
+          <!-- <div class="media align-items-center">
+            <div class="avatar mr-1">
+              <img src="assets/images/avatars/12-small.png" alt="Avatar" height="32" width="32" />
+            </div>
+            <div class="media-body">
+              <h6 class="mb-0">Rakesh Kumar (Client)</h6>
+              <span>Logistics Manager at Global Motors</span>
+            </div>
+          </div> -->
+        </div>
+      </li>
+      <li class="timeline-item">
+        <span class="timeline-point timeline-point-info timeline-point-indicator"></span>
+        <div class="timeline-event">
+          <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+            <h6>LIV Form Approval Requested</h6>
+            <span class="timeline-event-time">{{ getRelativeTime(timelineData[0]?.assignedDate) }} </span>
+          </div>
+          <p>Requested Approval - Limit - {{ timelineData[0].creditLimit }} & {{ timelineData[0].creditTerms }}</p>
+        </div>
+      </li>
+      <li  *ngFor="let item of timelineData" class="timeline-item">
+        <span class="timeline-point timeline-point-indicator"></span>
+        <div class="timeline-event">
+          <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+            <!-- <h6>{{timelineData[0].levelStatus }} By {{timelineData[0]?.approverName}}</h6> -->
+            <h6>{{ item.levelStatus }} - {{item.level}} By {{ item.approverName }}</h6>
+            <!-- <span class="timeline-event-time">{{  getRelativeTime(timelineData[0].approvedDate)}}</span> -->
+            <span class="timeline-event-time">{{ getRelativeTime(item.approvedDate) }}</span>
+          </div>
+          <!-- <p>Contacted by Phone</p>
+          <div class="media align-items-center">
+            <img class="mr-1" src="assets/images/icons/xls.png" alt="xls" height="23" />
+            <div class="media-body">Air Shipments</div>
+            <img class="mr-1" src="assets/images/icons/doc.png" alt="doc" height="23" />
+            <div class="media-body">Ocean Shipments</div>
+          </div> -->
+        </div>
+      <!-- <li class="timeline-item">
+        <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+        <div class="timeline-event">
+          <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+            <h6>Lead Created</h6>
+            <span class="timeline-event-time">10 Days Ago</span>
+          </div>
+          <p>Lead created by Import</p>
+        </div>
+      </li> -->
+    </ul>
+  </div>

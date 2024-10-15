@@ -1,0 +1,22 @@
+<div>
+    <div class="modal-header">
+        <h4 class="modal-title">
+            <span>Reason For Rejection</span>
+        </h4>
+
+        <p class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true"
+            class="cursor-pointer"> × </p>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="rejectionReason">Reason</label>
+            <input type="text" class="form-control" id="rejectionReason" placeholder="Enter reason for rejection">
+        </div>
+        <hr>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+            <button type="button" class="btn btn-danger ml-2" (click)="confirmRejection()">Confirm Rejection</button>
+        </div>
+    </div>
+   
+</div>

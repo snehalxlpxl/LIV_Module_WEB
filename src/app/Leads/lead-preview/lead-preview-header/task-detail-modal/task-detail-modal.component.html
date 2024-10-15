@@ -1,0 +1,102 @@
+<div class="modal-header">
+    <h4 class="modal-title  text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="6" y="2" width="12" height="20" rx="2" ry="2"/>
+            <line x1="6" y1="6" x2="18" y2="6"/>
+            
+            <path d="M9 12l2 2 4-4"/>
+            <path d="M9 16h6"/>
+          </svg>
+          
+          <span class="ml-1"> Task Details</span>
+    </h4>
+    <p class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true"
+        class="cursor-pointer"> × </p>
+</div>
+<div class="modal-body">
+    <form [formGroup]="taskDetailForm" (ngSubmit)="save()">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" class="form-control" formControlName="title"
+                placeholder="Enter Meeting Title">
+                <span *ngIf="taskDetailForm.get('title').invalid && (taskDetailForm.get('title').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Title is required</small>
+                </span>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="startDate ">Start Date </label>
+                <input type="datetime-local" id="startDate" class="form-control" formControlName="startDate">
+                <span *ngIf="taskDetailForm.get('startDate').invalid && (taskDetailForm.get('startDate').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Start Date is required</small>
+                </span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="dueDate ">Due Date</label>
+                <input type="datetime-local" id="dueDate " class="form-control" formControlName="dueDate">
+                <span *ngIf="taskDetailForm.get('dueDate').invalid && (taskDetailForm.get('dueDate').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Due Date is required</small>
+                </span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="priority">Priority</label>
+                
+                <ng-select id="priority"  formControlName="priority" [items]="priorities"
+                    bindLabel="name" placeholder="Select Priority">
+                </ng-select>
+                <span *ngIf="taskDetailForm.get('priority').invalid && (taskDetailForm.get('priority').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Priority is required</small>
+                </span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="status">Status</label>
+               
+                <ng-select id="status" formControlName="status" [items]="statuses" bindLabel="name"
+                    placeholder="Select Status">
+                </ng-select>
+                <span *ngIf="taskDetailForm.get('status').invalid && (taskDetailForm.get('status').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Status is required</small>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="reminder">Reminder</label>
+            <input id="reminder" class="form-control" rows="3" formControlName="reminder" placeholder="reminder">
+            <span *ngIf="taskDetailForm.get('reminder').invalid && (taskDetailForm.get('reminder').touched || submitted)" class="invalid-form">
+                <small class="form-text text-danger">Reminder is required</small>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="repeat">Repeat</label>
+            <input id="repeat" class="form-control" rows="3" formControlName="repeat" placeholder="Repeat">
+            <span *ngIf="taskDetailForm.get('repeat').invalid && (taskDetailForm.get('repeat').touched || submitted)" class="invalid-form">
+                <small class="form-text text-danger">Repeat is required</small>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input id="description" class="form-control" rows="3" formControlName="description"
+                placeholder="Description">
+                <span *ngIf="taskDetailForm.get('description').invalid && (taskDetailForm.get('description').touched || submitted)" class="invalid-form">
+                    <small class="form-text text-danger">Description is required</small>
+                </span>
+        </div>
+        <!-- <div *ngIf="errorMessage" class="alert-danger">
+            {{ errorMessage }}
+        </div> -->
+        <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+                (click)="activeModal.dismiss('cancel click')">Cancel</button>
+            <button type="submit" class="btn btn-success">Save</button>
+        </div> -->
+        <hr>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary mr-2"
+                    (click)="activeModal.dismiss('cancel click')">Cancel</button>
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+          
+    </form>
+</div>

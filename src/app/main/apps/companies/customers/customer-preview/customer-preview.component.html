@@ -1,0 +1,99 @@
+<!-- <div class="">
+    <div class=""> -->
+      <section class="customer-list-wrapper">
+        <!-- <div class=""> -->
+          <div class="row">
+            <div class="fixheader">
+              <!-- <app-customer-preview-header></app-customer-preview-header> -->
+               <!-- Customer List Header -->
+              <div class="row align-items-center">
+                <div class="col-md-5 col-12">
+                  <div class="d-flex justify-content-between align-items-center m-1">
+                    <div class="d-flex align-items-center">
+                      <h2 class=""><b>{{companyName}}</b></h2><div class="badge badge-success ml-1 mb-1">Active</div>
+                      <!-- Add other controls if necessary -->
+                       
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="
+                  col-md-7 col-lg-3 justify-content-start justify-content-md-end align-items-center offset-lg-2
+                  "
+                >
+                  <div class="row pr-1 pb-1 pb-md-0 align-items-center w-100 mr-left">
+                   
+                    <div class="col-10 col-md-12 mt-2 ml-1 ml-md-0 mt-md-0 d-flex justify-content-start justify-content-md-end  " style="height: 40px;">
+                      <button class="btn btn-primary mr-2" routerLink="/customer/edit/{{customerId}}" rippleEffect style="height: 40px;">
+                       <span class="mr-1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> </span> Edit</button>
+                      <div class="btn-group">
+                        <div ngbDropdown>
+                          <button
+                            ngbDropdownToggle
+                            class="btn btn-primary mr-1"
+                            type="button"
+                            id="dropdownMenuButton"
+                            rippleEffect
+                          >
+                            New
+                          </button>
+                          <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                            <a ngbDropdownItem href="javascript:void(0)">Option 1</a>
+                            <a ngbDropdownItem href="javascript:void(0)">Option 2</a>
+                            <a ngbDropdownItem href="javascript:void(0)">Option 3</a>
+                          </div>
+                          <!-- <span aria-hidden="true" class="close-big cursor-pointer" routerLink="/customerList">×</span> -->
+                          <div aria-hidden="true" class="close-big cursor-pointer" (click)="cancelPreview()" >×</div>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+              <!--/ Customer List Header -->
+              <div class="pl-1 f-pills" >
+                <div class="overview">
+                  <!-- <ul ngbNav #nav="ngbNav" class="nav nav-pills fixed-nav-pills p-0"> -->
+                  <ul ngbNav #nav="ngbNav" class="nav nav-pills p-0">
+                    <li ngbNavItem>
+                      <a ngbNavLink (click)="setComponent('overview')" [class.active]="currentComponent === 'overview'">Overview</a>
+                    </li>
+                    <li ngbNavItem>
+                      <a ngbNavLink (click)="setComponent('shipment')" [class.active]="currentComponent === 'shipment'">Shipment</a>
+                    </li>
+                    <li ngbNavItem>
+                      <a ngbNavLink (click)="setComponent('transaction')" [class.active]="currentComponent === 'transaction'">Transaction</a>
+                    </li>
+                    <li ngbNavItem>
+                      <a ngbNavLink (click)="setComponent('sales')" [class.active]="currentComponent === 'sales'">Sales</a>
+                    </li>
+                    <li ngbNavItem>
+                      <a ngbNavLink (click)="setComponent('documents')" [class.active]="currentComponent === 'documents'">Documents</a>
+                    </li>
+                    <li ngbNavItem>
+                      <a ngbNavLink (click)="setComponent('reports')" [class.active]="currentComponent === 'reports'">Reports</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+  
+            <div class="mt-1 f-preview-overview-content">
+              <div class="row">
+                <app-customer-preview-overview-section [customerData]="companydatafromParent" [gstData]="taxDetails" [addrData]="addrDetails" [contactData]="contactDetails" *ngIf="currentComponent === 'overview'" @fade></app-customer-preview-overview-section>
+              </div>
+              <!-- <app-customer-preview-overview-section [customerData]="companydatafromParent" [gstData]="taxDetails" [addrData]="addrDetails" [contactData]="contactDetails" *ngIf="currentComponent === 'overview'" @fade></app-customer-preview-overview-section> -->
+              <app-customer-preview-shipment-section [companyId]="customerId"  *ngIf="currentComponent === 'shipment'" @fade></app-customer-preview-shipment-section>
+              <app-customer-preview-transac-section [companyId]="customerId" *ngIf="currentComponent === 'transaction'" @fade></app-customer-preview-transac-section>
+             
+              <app-sales *ngIf="currentComponent === 'sales'" @fade></app-sales>
+              <app-documents *ngIf="currentComponent === 'documents'" @fade></app-documents>
+              <app-reports *ngIf="currentComponent === 'reports'" @fade></app-reports>
+            </div>
+          </div>
+        <!-- </div> -->
+      </section>
+    <!-- </div>
+  </div> -->
+  

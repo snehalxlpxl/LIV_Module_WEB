@@ -1,0 +1,228 @@
+
+<div class="content-body">
+    <!-- Customer List -->
+     <div class="f-listmargin">
+     
+          <div class="d-flex align-items-center">
+            <h2 class="d-flex align-items-center mr-1 mt-1 mb-3 ">Credit Limit Requests Approve</h2>
+            <!-- <span class="badge badge-warning mb-1">{{awaitingApprovedCount}} Pending</span> -->
+            <!-- Add other controls if necessary -->
+          </div>
+         <div class="card">
+          <!--start Customer List Header -->
+          
+          <div class="row">
+                <div class="col-md-12 col-12">
+                <div class="d-flex justify-content-between align-items-center m-1">
+                    
+                        <form [formGroup]="CreditLimitReqForm" (ngSubmit)="onSubmit()">
+                            <!-- <div class="form-group mb-1">
+                                <div class="custom-control custom-switch custom-switch-success">
+                                    <label for="salePerson">Is this Existing Customer?</label>&nbsp;
+                                    <input type="checkbox" 
+                                        class="custom-control-input" 
+                                        id="customSwitch111" 
+                                        formControlName="isNewCustomer"
+                                        (change)="toggleCustomerTypeCheckbox($event)" />
+                                    <label class="custom-control-label" for="customSwitch111">
+                                    <span class="switch-icon-left"><i data-feather="check"></i></span>
+                                    <span class="switch-icon-right"><i data-feather="x"></i></span>
+                                    </label>
+                                </div>
+                            </div> -->
+                        <div class="form-group mb-1">
+                            <div>
+                                <label for="salePerson">Status</label>&nbsp;
+                                <span class="badge badge-warning mb-1 mr-2">{{status}}</span>
+                            </div>
+                            
+
+                            <label for="salePerson">Sales Person</label>
+                            <!-- <ng-select
+                            id="salePerson"
+                            formControlName="salePersonId"
+                            [items]="salePerson"
+                            bindLabel="userDisplayName"
+                            bindValue="userId"
+                            placeholder="Primary, Billing, Shipper, Consignee, etc"
+                            [ngClass]="{
+                                'ng-touched': CreditLimitReqForm.get('salePersonId').touched,
+                                error:
+                                CreditLimitReqForm.get('salePersonId').invalid &&
+                                CreditLimitReqForm.get('salePersonId').touched
+                            }"
+                            (change)="onsalePersonChange($event)"
+                            ></ng-select> -->
+                            <!-- Hidden field to store the value -->
+                            <input type="text" formControlName="salePersonName" class="form-control" disabled="true"/>
+                            <!-- <span
+                            *ngIf="
+                            CreditLimitReqForm.get('salePersonId').invalid &&
+                            CreditLimitReqForm.get('salePersonId').touched
+                            "
+                            class="invalid-form"
+                        >
+                            <small class="form-text text-danger">Please Select a Customer</small>
+                        </span> -->
+                        </div>
+                    
+                    <!-- Show this section if checkbox is checked -->
+                    <div *ngIf="isExistingCustomer" class="form-group mb-1">
+                        <label for="customerId">Existing Customer List</label>
+                        <!-- <ng-select
+                        id="customerId"
+                        formControlName="customerId"
+                        [items]="companies"
+                        bindLabel="companyName"
+                        bindValue="companyId"
+                        placeholder="Select Company Name"
+                        [ngClass]="{
+                            'ng-touched': CreditLimitReqForm.get('customerId').touched,
+                            error:
+                            CreditLimitReqForm.get('customerId').invalid &&
+                            CreditLimitReqForm.get('customerId').touched
+                        }"
+                        (change)="onCompanyNameChange($event)"
+                        ></ng-select> -->
+                        <input type="text" class="form-control" formControlName="customerName" disabled="true"/>
+                       
+                    </div>
+                    
+                    <!-- Show this section if checkbox is not checked -->
+                    <!-- <div *ngIf="!isExistingCustomer" class="form-group mb-1">
+                        <input type="hidden" formControlName="customerId" />
+                        <label for="customerName">Company</label>
+                        <input
+                        id="customerName"
+                        formControlName="customerName"
+                        type="text"
+                        class="form-control"
+                        placeholder="Company Name"
+                        [ngClass]="{
+                            'ng-touched': CreditLimitReqForm.get('customerName').touched,
+                            error:
+                            CreditLimitReqForm.get('customerName').invalid &&
+                            CreditLimitReqForm.get('customerName').touched
+                        }"
+                        />
+                        <span
+                        *ngIf="
+                            CreditLimitReqForm.get('customerName').invalid &&
+                            CreditLimitReqForm.get('customerName').touched
+                        "
+                        class="invalid-form"
+                        >
+                        <small class="form-text text-danger">Please Select Company Name</small>
+                        </span>
+                    </div> -->
+                    
+                        <div class="form-group mb-2">
+                            <label for="country">Select Branch</label>
+                            <!-- <ng-select
+                            id="branch"
+                            formControlName="branchId"
+                            [items]="branch"
+                            bindLabel="companyName"
+                            bindValue="companyId"
+                            placeholder="Select Branch"
+                            [ngClass]="{
+                                'ng-touched': CreditLimitReqForm.get('branchId').touched,
+                                error:
+                                CreditLimitReqForm.get('branchId').invalid &&
+                                CreditLimitReqForm.get('branchId').touched
+                            }"
+                            (change)='onChangeBranch($event)'
+                            ></ng-select>
+                            <span
+                            *ngIf="
+                                CreditLimitReqForm.get('branchId').invalid &&
+                                CreditLimitReqForm.get('branchId').touched
+                            "
+                            class="invalid-form"
+                            >
+                            <small class="form-text text-danger">Please Select a Branch</small>
+                            </span> -->
+                            <input formControlName="branchName" class="form-control"  type="text" disabled="true"/>
+                    
+                        <div class="row mb-1 form-group mt-1">
+                            <div class="col-6">
+                            <label for="creditLimit">Requested Limit</label>
+                            <input
+                            id="creditLimit"
+                            formControlName="creditLimit"
+                            type="number"
+                            class="form-control"
+                            placeholder="Credit Limit"
+                            disabled="true"
+                            />
+                           
+                    </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="state">Credit Terms</label>
+                                    <!-- <ng-select
+                                    id="state"
+                                    formControlName="creditTermId"
+                                    [items]="creditTerm"
+                                    bindLabel="paymentTerm1"
+                                    bindValue="paymentTermId"
+                                    placeholder="Immediate, 30 Days, etc"
+                                    [ngClass]="{
+                                        'ng-touched': CreditLimitReqForm.get('creditTermId').touched,
+                                        error:
+                                        CreditLimitReqForm.get('creditTermId').invalid &&
+                                        CreditLimitReqForm.get('creditTermId').touched
+                                    }"
+                                    (change)="onChangecreditTerm($event)"
+                                    ></ng-select>
+                                    <span
+                                    *ngIf="
+                                        CreditLimitReqForm.get('creditTermId').invalid &&
+                                        CreditLimitReqForm.get('creditTermId').touched
+                                    "
+                                    class="invalid-form"
+                                    >
+                                    <small class="form-text text-danger">Please Select Credit Term</small>
+                                    </span> -->
+                                    <input formControlName="creditTermName" class="form-control"  type="text" disabled="true"/>
+                        
+                                </div>
+                            </div>
+                    
+                            <div class="col-12">
+                            <div class="form-group">
+                                <label for="note">Note</label>
+                                <input
+                                id="note"
+                                formControlName="note"
+                                type="text"
+                                placeholder="Enter Note"
+                                class="form-control"
+                                disabled="true"
+                                />
+                            
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        
+                            <button type="button" class="btn btn-outline-danger mr-2" (click)="close()">
+                            Cancel
+                            </button> 
+                            <button type="submit" class="btn btn-success">Approve</button>
+                       
+                        </form>
+                    
+                </div>
+            
+            </div>
+          <!-- end Customer List Header -->
+        
+    
+      <!--/ Customer List -->
+     </div>
+    
+  </div>
+
+
+

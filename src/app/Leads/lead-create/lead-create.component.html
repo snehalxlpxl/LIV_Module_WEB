@@ -1,0 +1,1349 @@
+
+        <section class="customer-list-wrapper">
+            <div class="">
+                <div class="row">
+                    <form [formGroup]="leadForm" (ngSubmit)="saveLead(leadForm)">
+                        <div class="fixheader">
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <!-- <h1 class=""><b>New Lead</b></h1> -->
+                                        <h1><b>{{ isEditMode ? 'Update Lead' : 'New Lead' }}</b></h1>
+                                    </div>
+                                </div>
+                                <div
+                                    class="col-md-6 col-lg-4 col-12 d-flex justify-content-start justify-content-md-end align-items-center offset-lg-2">
+                                    <div class="row pr-1 pb-1 pb-md-0 align-items-center ">
+                                        <div
+                                            class="col-10 col-md-12 mt-2 ml-1 ml-md-0 mt-md-0 d-flex justify-content-start justify-content-md-end">
+                                            <button type="button" class="btn btn-outline-danger mr-1"
+                                                routerLink="/leadsList" rippleEffect>Cancel</button>
+                                            <!-- <button class="btn btn-success mr-2" type="submit" rippleEffect>Save</button> -->
+                                            <button class="btn btn-success" type="submit" rippleEffect>{{
+                                                isEditMode ? 'Update' : 'Save' }}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="f-preview-overview-content-new ">
+                            <div class="row">
+                                <!-- <div class="col-md-6">
+                                    <div class="overviewsection">
+                                        <div class="mb-2">
+                                            <div class="rounded-corner-accordian">
+                                                <section id="accordion">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div id="accordionWrapa1" role="tablist"
+                                                                aria-multiselectable="true">
+                                                                <div class="collapse-icon p-0">
+                                                                    <div class="collapse-default">
+                                                                        <ngb-accordion [destroyOnHide]="false"
+                                                                            [closeOthers]="true"
+                                                                            activeIds="panelBorderBottom1">
+                                                                            <ngb-panel id="panelBorderBottom1">
+                                                                                <ng-template ngbPanelTitle>
+                                                                                    <span class="icon-left"><svg
+                                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                                            width="20" height="20"
+                                                                                            viewBox="0 0 24 24"
+                                                                                            fill="none"
+                                                                                            stroke="currentColor"
+                                                                                            stroke-width="2"
+                                                                                            stroke-linecap="round"
+                                                                                            stroke-linejoin="round"
+                                                                                            class="feather feather-list">
+                                                                                            <line x1="8" y1="6" x2="21"
+                                                                                                y2="6"></line>
+                                                                                            <line x1="8" y1="12" x2="21"
+                                                                                                y2="12"></line>
+                                                                                            <line x1="8" y1="18" x2="21"
+                                                                                                y2="18"></line>
+                                                                                            <line x1="3" y1="6"
+                                                                                                x2="3.01" y2="6"></line>
+                                                                                            <line x1="3" y1="12"
+                                                                                                x2="3.01" y2="12">
+                                                                                            </line>
+                                                                                            <line x1="3" y1="18"
+                                                                                                x2="3.01" y2="18">
+                                                                                            </line>
+                                                                                        </svg></span>
+                                                                                    <span> Basic Details</span>
+                                                                                </ng-template>
+                                                                                <ng-template ngbPanelContent>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+
+                                                                                            <div class="row">
+                                                                                                <div class="col-12">
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label
+                                                                                                            for="salesPerson">Lead
+                                                                                                            Owner (Sales
+                                                                                                            Person)</label>
+                                                                                                        <div
+                                                                                                            class="form-group">
+                                                                                                            <ng-select
+                                                                                                                formControlName="salesPerson"
+                                                                                                                [ngClass]="{'ng-touched': leadForm.get('salesPerson').touched, 'error': leadForm.get('salesPerson').invalid && leadForm.get('salesPerson').touched ||submitted}"
+                                                                                                                [items]="salesPerson"
+                                                                                                                bindValue="userId"
+                                                                                                                bindLabel="userDisplayName"
+                                                                                                                placeholder="Select Sales Person">
+                                                                                                                <ng-option
+                                                                                                                    *ngFor="let person of salesPerson"
+                                                                                                                    [value]="person.userId">{{
+                                                                                                                    person.userDisplayName
+                                                                                                                    }}</ng-option>
+                                                                                                            </ng-select>
+
+                                                                                                            <span
+                                                                                                                *ngIf="leadForm.get('salesPerson').invalid && (leadForm.get('salesPerson').touched || submitted)"
+                                                                                                                class="invalid-form">
+                                                                                                                <small
+                                                                                                                    class="form-text text-danger">Please
+                                                                                                                    Select
+                                                                                                                    Lead
+                                                                                                                    Owner</small>
+                                                                                                            </span>
+
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="col-12">
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label
+                                                                                                            for="companyName">Company
+                                                                                                            Name</label>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            id="companyName"
+                                                                                                            formControlName="companyName"
+                                                                                                            class="form-control"
+                                                                                                            [ngClass]="{'ng-touched': leadForm.get('companyName').touched, 'error': leadForm.get('companyName').invalid && leadForm.get('companyName').touched||submitted}"
+                                                                                                            placeholder="Customer Name"
+                                                                                                            maxlength="50" />
+                                                                                                        <span
+                                                                                                            *ngIf="leadForm.get('companyName').invalid && leadForm.get('companyName').touched"
+                                                                                                            class="invalid-form">
+                                                                                                            <small
+                                                                                                                class="form-text text-danger">Company
+                                                                                                                Name
+                                                                                                                Cannot
+                                                                                                                be
+                                                                                                                blank!</small>
+                                                                                                            <small
+                                                                                                                class="form-text text-danger"
+                                                                                                                *ngIf="leadForm.get('companyName').hasError('maxlength')">Company
+                                                                                                                Name
+                                                                                                                cannot
+                                                                                                                exceed
+                                                                                                                50
+                                                                                                                characters!</small>
+                                                                                                        </span>
+                                                                                                    </div>
+
+                                                                                                </div>
+
+
+                                                                                                <div class="col-12">
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label
+                                                                                                            for="leadStatus">Lead
+                                                                                                            Status</label>
+                                                                                                        <div
+                                                                                                            class="form-group f-autocomplet-wrapper">
+                                                                                                            <ng-select
+                                                                                                                [items]="leadStatuses"
+                                                                                                                bindLabel="name"
+                                                                                                                bindValue="id"
+                                                                                                                placeholder="Select Lead Status"
+                                                                                                                formControlName="leadStatus"></ng-select>
+                                                                                                            <span
+                                                                                                                *ngIf="leadForm.get('leadStatus').invalid && leadForm.get('leadStatus').touched"
+                                                                                                                class="invalid-form">
+                                                                                                                <small
+                                                                                                                    class="form-text text-danger">Lead
+                                                                                                                    Status
+                                                                                                                    is
+                                                                                                                    required</small>
+                                                                                                            </span>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-12">
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label
+                                                                                                            for="leadSource">Lead
+                                                                                                            Source</label>
+                                                                                                        <div
+                                                                                                            class="form-group f-autocomplet-wrapper">
+                                                                                                            <ng-select
+                                                                                                                [items]="leadSources"
+                                                                                                                bindLabel="name"
+                                                                                                                bindValue="id"
+                                                                                                                placeholder="Select Lead Source"
+                                                                                                                formControlName="leadSource"></ng-select>
+                                                                                                            <span
+                                                                                                                *ngIf="leadForm.get('leadSource').invalid && leadForm.get('leadSource').touched"
+                                                                                                                class="invalid-form">
+                                                                                                                <small
+                                                                                                                    class="form-text text-danger">Lead
+                                                                                                                    Source
+                                                                                                                    is
+                                                                                                                    required</small>
+                                                                                                            </span>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-12">
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label
+                                                                                                            for="contactName">Contact
+                                                                                                            Name</label>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            id="contactName"
+                                                                                                            formControlName="contactName"
+                                                                                                            class="form-control"
+                                                                                                            placeholder="Contact Name" />
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="col-12">
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label
+                                                                                                            for="email">Email</label>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            id="email"
+                                                                                                            formControlName="email"
+                                                                                                            class="form-control"
+                                                                                                            placeholder="Email"
+                                                                                                            [ngClass]="{'is-invalid': leadForm.get('email')?.invalid && leadForm.get('email')?.touched ||submitted}" />
+                                                                                                        <div *ngIf="leadForm.get('email')?.invalid && leadForm.get('email')?.touched"
+                                                                                                            class="invalid-feedback">
+                                                                                                            <div
+                                                                                                                *ngIf="leadForm.get('email')?.errors?.['required']">
+                                                                                                                Email is
+                                                                                                                required.
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                *ngIf="leadForm.get('email')?.errors?.['email']">
+                                                                                                                Please
+                                                                                                                enter a
+                                                                                                                valid
+                                                                                                                email
+                                                                                                                address.
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-12">
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label
+                                                                                                            for="mobile">Mobile</label>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            id="mobile"
+                                                                                                            formControlName="mobile"
+                                                                                                            class="form-control"
+                                                                                                            placeholder="mobile"
+                                                                                                            maxlength="10"
+                                                                                                            [ngClass]="{'is-invalid': leadForm.get('mobile')?.invalid && leadForm.get('mobile')?.touched ||submitted}" />
+                                                                                                        <div *ngIf="leadForm.get('mobile')?.invalid && leadForm.get('mobile')?.touched"
+                                                                                                            class="invalid-feedback">
+                                                                                                            <div
+                                                                                                                *ngIf="leadForm.get('mobile')?.errors?.['required']">
+                                                                                                                Mobile
+                                                                                                                number
+                                                                                                                is
+                                                                                                                required.
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                *ngIf="leadForm.get('mobile')?.errors?.['pattern']">
+                                                                                                                Please
+                                                                                                                enter a
+                                                                                                                valid
+                                                                                                                mobile
+                                                                                                                number
+                                                                                                                (10
+                                                                                                                digits).
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                *ngIf="leadForm.get('mobile')?.errors?.['maxlength']">
+                                                                                                                Mobile
+                                                                                                                number
+                                                                                                                cannot
+                                                                                                                exceed
+                                                                                                                10
+                                                                                                                digits.
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="col-12">
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label
+                                                                                                            for="website">Website</label>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            id="website"
+                                                                                                            formControlName="website"
+                                                                                                            class="form-control"
+                                                                                                            placeholder="Website"
+                                                                                                            [ngClass]="{'is-invalid': leadForm.get('website')?.invalid && leadForm.get('website')?.touched ||submitted }" />
+                                                                                                        <div *ngIf="leadForm.get('website')?.invalid && leadForm.get('website')?.touched"
+                                                                                                            class="invalid-feedback">
+                                                                                                            <div
+                                                                                                                *ngIf="leadForm.get('website')?.errors?.['pattern']">
+                                                                                                                Please
+                                                                                                                enter a
+                                                                                                                valid
+                                                                                                                website
+                                                                                                                URL.
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+
+
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                </ng-template>
+                                                                            </ngb-panel>
+                                                                        </ngb-accordion>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                        <div class=" mb-2">
+                                            <div class="rounded-corner-accordian">
+                                                <section id="accordion">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div id="accordionWrapa1" role="tablist"
+                                                                aria-multiselectable="true">
+                                                                <div class="collapse-icon p-0">
+                                                                    <div class="collapse-default">
+                                                                        <ngb-accordion [destroyOnHide]="false"
+                                                                            [closeOthers]="true"
+                                                                            activeIds="panelBorderBottom1">
+                                                                            <ngb-panel id="panelBorderBottom1">
+                                                                                <ng-template ngbPanelTitle>
+                                                                                    <div class="panel-title">
+
+                                                                                        <div
+                                                                                            class="d-flex justify-content-start align-items-center">
+                                                                                            <span class="icon-left">
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                    width="20"
+                                                                                                    height="20"
+                                                                                                    viewBox="0 0 24 24"
+                                                                                                    fill="none"
+                                                                                                    stroke="currentColor"
+                                                                                                    stroke-width="2"
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    class="feather feather-map-pin">
+                                                                                                    <path
+                                                                                                        d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z">
+                                                                                                    </path>
+                                                                                                    <circle cx="12"
+                                                                                                        cy="10" r="3">
+                                                                                                    </circle>
+                                                                                                </svg>
+                                                                                            </span>
+                                                                                            <span
+                                                                                                class="padd-add">Address</span>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="d-flex justify-content-end align-items-center">
+                                                                                            
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </ng-template>
+
+                                                                                <ng-template ngbPanelContent>
+                                                                                   
+
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="country">Country</label>
+                                                                                        <ng-select [items]="countries"
+                                                                                            bindLabel="countryName"
+                                                                                            bindValue="countryId"
+                                                                                            formControlName="country"
+                                                                                            placeholder="Select country"
+                                                                                            (change)="onCountryChange($event)">
+                                                                                        </ng-select>
+                                                                                    </div>
+
+                                                                                    <div class="form-group">
+                                                                                        <label for="state">State</label>
+                                                                                        <ng-select [items]="states"
+                                                                                            bindLabel="stateName"
+                                                                                            bindValue="stateId"
+                                                                                            formControlName="state"
+                                                                                            placeholder="Select state">
+                                                                                        </ng-select>
+                                                                                    </div>
+
+                                                                                    <div class="form-group">
+                                                                                        <label for="city">City</label>
+                                                                                        <input type="text" id="city"
+                                                                                            formControlName="city"
+                                                                                            class="form-control"
+                                                                                            placeholder="City" />
+                                                                                    </div>
+
+                                                                                    <div class="form-group">
+                                                                                        <label for="zipcode">Zip
+                                                                                            Code</label>
+                                                                                        <input type="text" id="zipcode"
+                                                                                            formControlName="zipcode"
+                                                                                            class="form-control"
+                                                                                            placeholder="Zip Code" />
+                                                                                    </div>
+
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="street">Street</label>
+                                                                                        <input type="text" id="street"
+                                                                                            formControlName="street"
+                                                                                            class="form-control"
+                                                                                            placeholder="Street" />
+                                                                                    </div>
+                                                                                </ng-template>
+
+                                                                            </ngb-panel>
+                                                                        </ngb-accordion>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-md-6">
+                                    <!-- First Card Section -->
+                                    <div class="mb-2">
+                                        <div class="rounded-corner-card">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="d-flex justify-content-start align-items-center">
+                                                        <span class="icon-left"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-list">
+                                                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                                                <line x1="3" y1="12" x2="3.01" y2="12">
+                                                                </line>
+                                                                <line x1="3" y1="18" x2="3.01" y2="18">
+                                                                </line>
+                                                            </svg></span>
+                                                        <span> Basic Details</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="salesPerson">Lead
+                                                                    Owner (Sales
+                                                                    Person)</label>
+                                                                <div class="form-group">
+                                                                    <ng-select formControlName="salesPerson"
+                                                                        [items]="salesPerson" bindValue="userId"
+                                                                        bindLabel="userDisplayName"
+                                                                        placeholder="Select Sales Person">
+                                                                        <ng-option *ngFor="let person of salesPerson"
+                                                                            [value]="person.userId">{{
+                                                                            person.userDisplayName
+                                                                            }}</ng-option>
+                                                                    </ng-select>
+
+                                                                    <span
+                                                                        *ngIf="leadForm.get('salesPerson').invalid && (leadForm.get('salesPerson').touched || submitted)"
+                                                                        class="invalid-form">
+                                                                        <small class="form-text text-danger">Please
+                                                                            Select
+                                                                            Lead
+                                                                            Owner</small>
+                                                                    </span>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="companyName">Company
+                                                                    Name</label>
+                                                                <input type="text" id="companyName"
+                                                                    formControlName="companyName" class="form-control"
+                                                                    placeholder="Customer Name" maxlength="50" />
+                                                                <span
+                                                                    *ngIf="leadForm.get('companyName').invalid && leadForm.get('companyName').touched"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">Company
+                                                                        Name
+                                                                        Cannot
+                                                                        be
+                                                                        blank!</small>
+                                                                    <small class="form-text text-danger"
+                                                                        *ngIf="leadForm.get('companyName').hasError('maxlength')">Company
+                                                                        Name
+                                                                        cannot
+                                                                        exceed
+                                                                        50
+                                                                        characters!</small>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="leadStatus">Lead
+                                                                    Status</label>
+                                                                <div class="form-group f-autocomplet-wrapper">
+                                                                    <ng-select [items]="leadStatuses" bindLabel="leadStatusName"
+                                                                        bindValue="leadStatusId" placeholder="Select Lead Status"
+                                                                        formControlName="leadStatus"></ng-select>
+                                                                    <span
+                                                                        *ngIf="leadForm.get('leadStatus').invalid && leadForm.get('leadStatus').touched"
+                                                                        class="invalid-form">
+                                                                        <small class="form-text text-danger">Lead
+                                                                            Status
+                                                                            is
+                                                                            required</small>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="leadSource">Lead
+                                                                    Source</label>
+                                                                <div class="form-group f-autocomplet-wrapper">
+                                                                    <ng-select [items]="leadSources" bindLabel="marketingSourceName"
+                                                                        bindValue="marketingSourceId" placeholder="Select Lead Source"
+                                                                        formControlName="leadSource"></ng-select>
+                                                                    <span
+                                                                        *ngIf="leadForm.get('leadSource').invalid && leadForm.get('leadSource').touched"
+                                                                        class="invalid-form">
+                                                                        <small class="form-text text-danger">Lead
+                                                                            Source
+                                                                            is
+                                                                            required</small>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="contactName">Contact
+                                                                    Name</label>
+                                                                <input type="text" id="contactName"
+                                                                    formControlName="contactName" class="form-control"
+                                                                    placeholder="Contact Name" />
+                                                                <span
+                                                                    *ngIf="leadForm.get('contactName').invalid && leadForm.get('contactName').touched"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">
+                                                                        Contact Name
+                                                                        is
+                                                                        required</small>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="email">Email</label>
+                                                                <input type="text" id="email" formControlName="email"
+                                                                    class="form-control" placeholder="Email" />
+                                                                <div *ngIf="leadForm.get('email')?.invalid && leadForm.get('email')?.touched"
+                                                                    class="invalid-form">
+                                                                    <span
+                                                                        *ngIf="leadForm.get('email')?.errors?.['required']"
+                                                                        class="form-text text-danger">
+                                                                        Email is
+                                                                        required.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="leadForm.get('email')?.errors?.['email']"
+                                                                        class="form-text text-danger">
+                                                                        Please
+                                                                        enter a
+                                                                        valid
+                                                                        email
+                                                                        address.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="mobile">Mobile</label>
+                                                                <input type="text" id="mobile" formControlName="mobile"
+                                                                    class="form-control" placeholder="mobile"
+                                                                    maxlength="10" />
+                                                                <div *ngIf="leadForm.get('mobile')?.invalid && leadForm.get('mobile')?.touched"
+                                                                    class="invalid-form">
+                                                                    <div *ngIf="leadForm.get('mobile')?.errors?.['required']"
+                                                                        class="form-text text-danger">
+                                                                        Mobile
+                                                                        number
+                                                                        is
+                                                                        required.
+                                                                    </div>
+                                                                    <div *ngIf="leadForm.get('mobile')?.errors?.['pattern']"
+                                                                        class="form-text text-danger">
+                                                                        Please
+                                                                        enter a
+                                                                        valid
+                                                                        mobile
+                                                                        number
+                                                                        (10
+                                                                        digits).
+                                                                    </div>
+                                                                    <div *ngIf="leadForm.get('mobile')?.errors?.['maxlength']"
+                                                                        class="form-text text-danger">
+                                                                        Mobile
+                                                                        number
+                                                                        cannot
+                                                                        exceed
+                                                                        10
+                                                                        digits.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="website">Website</label>
+                                                                <input type="text" id="website"
+                                                                    formControlName="website" class="form-control"
+                                                                    placeholder="Website"
+                                                                    [ngClass]="{'is-invalid': leadForm.get('website')?.invalid && leadForm.get('website')?.touched ||submitted }" />
+                                                                <div *ngIf="leadForm.get('website')?.invalid && leadForm.get('website')?.touched"
+                                                                    class="invalid-feedback">
+                                                                    <div
+                                                                        *ngIf="leadForm.get('website')?.errors?.['pattern']">
+                                                                        Please
+                                                                        enter a
+                                                                        valid
+                                                                        website
+                                                                        URL.
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Second Card Section -->
+                                    <div class="mb-2">
+                                        <div class="rounded-corner-card">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="d-flex justify-content-start align-items-center">
+                                                        <span class="icon-left">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                height="20" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-map-pin">
+                                                                <path
+                                                                    d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z">
+                                                                </path>
+                                                                <circle cx="12" cy="10" r="3">
+                                                                </circle>
+                                                            </svg>
+                                                        </span>
+                                                        <span class="padd-add">Address</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="country">Country</label>
+                                                                <ng-select [items]="countries" bindLabel="countryName"
+                                                                    bindValue="countryId" formControlName="country"
+                                                                    placeholder="Select country"
+                                                                    (change)="onCountryChange($event)">
+                                                                </ng-select>
+                                                                <span
+                                                                    *ngIf="leadForm.get('country').invalid && (leadForm.get('country').touched || submitted)"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">Please
+                                                                        Select
+                                                                        Country</small>
+                                                                </span>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="state">State</label>
+                                                                <ng-select [items]="states" bindLabel="stateName"
+                                                                    bindValue="stateId" formControlName="state"
+                                                                    placeholder="Select state">
+                                                                </ng-select>
+                                                                <span
+                                                                    *ngIf="leadForm.get('state').invalid && (leadForm.get('state').touched || submitted)"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">Please
+                                                                        Select
+                                                                        State</small>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="city">City</label>
+                                                                <input type="text" id="city" formControlName="city"
+                                                                    class="form-control" placeholder="City" />
+                                                                <span
+                                                                    *ngIf="leadForm.get('city').invalid && (leadForm.get('city').touched || submitted)"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">Please
+                                                                        Enter
+                                                                        City</small>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="zipcode">Zip
+                                                                    Code</label>
+                                                                <input type="text" id="zipcode"
+                                                                    formControlName="zipcode" class="form-control"
+                                                                    placeholder="Zip Code" />
+                                                                <span
+                                                                    *ngIf="leadForm.get('zipcode').invalid && (leadForm.get('zipcode').touched || submitted)"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">Please Enter
+                                                                        Zipcode</small>
+                                                                </span>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="street">Street</label>
+                                                                <input type="text" id="street" formControlName="street"
+                                                                    class="form-control" placeholder="Street" />
+                                                                <span
+                                                                    *ngIf="leadForm.get('street').invalid && (leadForm.get('street').touched || submitted)"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">Please
+                                                                        Enter
+                                                                        Street</small>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-6">
+                                    <div class="mb-2">
+                                        <div class="rounded-corner-accordian">
+                                            <section id="accordion">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div id="accordionWrapa1" role="tablist"
+                                                            aria-multiselectable="true">
+                                                            <div class="collapse-icon p-0">
+                                                                <div class="collapse-default">
+                                                                    <ngb-accordion [destroyOnHide]="false"
+                                                                        [closeOthers]="true"
+                                                                        activeIds="panelBorderBottom1">
+                                                                        <ngb-panel id="panelBorderBottom1">
+                                                                            <ng-template ngbPanelTitle>
+                                                                                <div class="panel-title">
+
+                                                                                    <div
+                                                                                        class="d-flex justify-content-start align-items-center">
+                                                                                        <span class="icon-left">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                width="16" height="16"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                stroke-width="2"
+                                                                                                stroke-linecap="round"
+                                                                                                stroke-linejoin="round"
+                                                                                                class="feather feather-file-text">
+                                                                                                <path
+                                                                                                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z">
+                                                                                                </path>
+                                                                                                <polyline
+                                                                                                    points="14 2 14 8 20 8">
+                                                                                                </polyline>
+                                                                                                <line x1="16" y1="13"
+                                                                                                    x2="8" y2="13">
+                                                                                                </line>
+                                                                                                <line x1="16" y1="17"
+                                                                                                    x2="8" y2="17">
+                                                                                                </line>
+                                                                                                <polyline
+                                                                                                    points="10 9 9 9 8 9">
+                                                                                                </polyline>
+                                                                                            </svg>
+                                                                                        </span>
+                                                                                        <span
+                                                                                            class="padd-add">Products</span>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="d-flex justify-content-end align-items-center">
+                                                                                        <span class="icon-right">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                width="16" height="16"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                stroke-width="2"
+                                                                                                stroke-linecap="round"
+                                                                                                stroke-linejoin="round"
+                                                                                                class="feather feather-plus-square">
+                                                                                                <rect x="3" y="3"
+                                                                                                    width="18"
+                                                                                                    height="18" rx="2"
+                                                                                                    ry="2">
+                                                                                                </rect>
+                                                                                                <line x1="12" y1="8"
+                                                                                                    x2="12" y2="16">
+                                                                                                </line>
+                                                                                                <line x1="8" y1="12"
+                                                                                                    x2="16" y2="12">
+                                                                                                </line>
+                                                                                            </svg>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </ng-template>
+                                                                            <ng-template ngbPanelContent>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="row">
+                                                                                            <div class="col-6">
+                                                                                                <div
+                                                                                                    class="form-group ">
+                                                                                                    <label
+                                                                                                        for="serviceType">Service
+                                                                                                        Type</label>
+                                                                                                    <ng-select
+                                                                                                        [items]="serviceTypes"
+                                                                                                        bindLabel="name"
+                                                                                                        bindValue="value"
+                                                                                                        placeholder="Select Service Type"
+                                                                                                        formControlName="serviceType"></ng-select>
+                                                                                                    <span
+                                                                                                        *ngIf="leadForm.get('serviceType').invalid && leadForm.get('serviceType').touched"
+                                                                                                        class="invalid-form">
+                                                                                                        <small
+                                                                                                            class="form-text text-danger">Please
+                                                                                                            Select
+                                                                                                            serviceType</small>
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-6">
+                                                                                                <div
+                                                                                                    class="form-group ">
+                                                                                                    <label
+                                                                                                        for="monthlyVolume">Monthly
+                                                                                                        Volume</label>
+                                                                                                    <input
+                                                                                                        id="monthlyVolume"
+                                                                                                        formControlName="monthlyVolume"
+                                                                                                        placeholder="Enter Monthly Volume"
+                                                                                                        type="text"
+                                                                                                        class="form-control">
+                                                                                                    <span
+                                                                                                        *ngIf="leadForm.get('monthlyVolume').invalid && (leadForm.get('serviceType').touched || submitted)"
+                                                                                                        class="invalid-form">
+                                                                                                        <small
+                                                                                                            class="form-text text-danger">Please
+                                                                                                            Enter
+                                                                                                            Monthly
+                                                                                                            Volume</small>
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="pol">POL</label>
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <ng-select
+                                                                                                            formControlName="pol"
+                                                                                                            [ngClass]="{'ng-touched': leadForm.get('pol').touched, 'error': leadForm.get('pol').invalid && leadForm.get('pol').touched ||submitted}"
+                                                                                                            [items]="locationMasterData"
+                                                                                                            bindValue="locationShortName"
+                                                                                                            bindLabel="locationShortName"
+                                                                                                            placeholder="Select Sales Person">
+                                                                                                            <ng-option
+                                                                                                                *ngFor="let person of locationMasterData"
+                                                                                                                [value]="person.locationShortName">{{
+                                                                                                                person.locationShortName
+                                                                                                                }}</ng-option>
+                                                                                                        </ng-select>
+
+                                                                                                        <span
+                                                                                                            *ngIf="leadForm.get('pol').invalid && (leadForm.get('pol').touched || submitted)"
+                                                                                                            class="invalid-form">
+                                                                                                            <small
+                                                                                                                class="form-text text-danger">Please
+                                                                                                                Select
+                                                                                                                POL</small>
+                                                                                                        </span>
+
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="pod">POD</label>
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <ng-select
+                                                                                                            formControlName="pod"
+                                                                                                            [ngClass]="{'ng-touched': leadForm.get('pod').touched, 'error': leadForm.get('pod').invalid && leadForm.get('pod').touched ||submitted}"
+                                                                                                            [items]="locationMasterData"
+                                                                                                            bindValue="locationShortName"
+                                                                                                            bindLabel="locationShortName"
+                                                                                                            placeholder="Select Sales Person">
+                                                                                                            <ng-option
+                                                                                                                *ngFor="let person of locationMasterData"
+                                                                                                                [value]="person.locationShortName">{{
+                                                                                                                person.locationShortName
+                                                                                                                }}</ng-option>
+                                                                                                        </ng-select>
+
+                                                                                                        <span
+                                                                                                            *ngIf="leadForm.get('pod').invalid && (leadForm.get('pod').touched || submitted)"
+                                                                                                            class="invalid-form">
+                                                                                                            <small
+                                                                                                                class="form-text text-danger">Please
+                                                                                                                Select
+                                                                                                                POD</small>
+                                                                                                        </span>
+
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </ng-template>
+                                                                        </ngb-panel>
+                                                                    </ngb-accordion>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="rounded-corner-accordian">
+                                            <section id="accordion">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div id="accordionWrapa1" role="tablist"
+                                                            aria-multiselectable="true">
+                                                            <div class="collapse-icon p-0">
+                                                                <div class="collapse-default">
+                                                                    <ngb-accordion [destroyOnHide]="false"
+                                                                        [closeOthers]="true"
+                                                                        activeIds="panelBorderBottom1">
+                                                                        <ngb-panel id="panelBorderBottom1">
+                                                                            <ng-template ngbPanelTitle>
+                                                                                <div class="panel-title">
+
+                                                                                    <div
+                                                                                        class="d-flex justify-content-start align-items-center">
+                                                                                        <span class="icon-left">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                width="20" height="20"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                stroke-width="2"
+                                                                                                stroke-linecap="round"
+                                                                                                stroke-linejoin="round"
+                                                                                                class="feather feather-list">
+                                                                                                <line x1="8" y1="6"
+                                                                                                    x2="21" y2="6">
+                                                                                                </line>
+                                                                                                <line x1="8" y1="12"
+                                                                                                    x2="21" y2="12">
+                                                                                                </line>
+                                                                                                <line x1="8" y1="18"
+                                                                                                    x2="21" y2="18">
+                                                                                                </line>
+                                                                                                <line x1="3" y1="6"
+                                                                                                    x2="3.01" y2="6">
+                                                                                                </line>
+                                                                                                <line x1="3" y1="12"
+                                                                                                    x2="3.01" y2="12">
+                                                                                                </line>
+                                                                                                <line x1="3" y1="18"
+                                                                                                    x2="3.01" y2="18">
+                                                                                                </line>
+                                                                                            </svg>
+                                                                                        </span>
+                                                                                        <span
+                                                                                            class="padd-add">Additional
+                                                                                            Details</span>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </ng-template>
+                                                                            <ng-template ngbPanelContent>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="row">
+                                                                                            <div class="col-12">
+                                                                                                <div
+                                                                                                    class="form-group ">
+                                                                                                    <label
+                                                                                                        for="industry">Industry</label>
+                                                                                                    <ng-select
+                                                                                                        [items]="industries"
+                                                                                                        bindLabel="name"
+                                                                                                        bindValue="value"
+                                                                                                        placeholder="Select Industry"
+                                                                                                        formControlName="industry"
+                                                                                                        [ngClass]="{'ng-touched': leadForm.get('industry').touched, 'error': leadForm.get('industry').invalid && (leadForm.get('industry').touched || submitted)}"
+                                                                                                        ></ng-select>
+                                                                                                    <span
+                                                                                                        *ngIf="leadForm.get('industry').invalid && (leadForm.get('industry').touched ||submitted)"
+                                                                                                        class="invalid-form">
+                                                                                                        <small
+                                                                                                            class="form-text text-danger">Please
+                                                                                                            Select
+                                                                                                            Industry</small>
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="col-12">
+                                                                                                <div
+                                                                                                    class="form-group ">
+                                                                                                    <label
+                                                                                                        for="annualRevenue">Annual
+                                                                                                        Revenue
+                                                                                                        (Turnover)</label>
+                                                                                                    <input
+                                                                                                        id="annualRevenue"
+                                                                                                        formControlName="annualRevenue"
+                                                                                                        placeholder="Enter Annual Revenue"
+                                                                                                        type="text"
+                                                                                                        class="form-control">
+                                                                                                    <span
+                                                                                                        *ngIf="leadForm.get('annualRevenue').invalid && leadForm.get('annualRevenue').touched"
+                                                                                                        class="invalid-form">
+                                                                                                        <small
+                                                                                                            class="form-text text-danger">Please
+                                                                                                            Enter Annual
+                                                                                                            Revenue</small>
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="employeeCount">Employee
+                                                                                                        Count</label>
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <ng-select
+                                                                                                            [items]="employeeCounts"
+                                                                                                            bindLabel="name"
+                                                                                                            bindValue="value"
+                                                                                                            placeholder="Select Employee Count"
+                                                                                                            formControlName="employeeCount"
+                                                                                                            [dropdownPosition]="'bottom'"
+                                                                                                            [clearable]="false"
+                                                                                                            class="ng-select-custom"></ng-select>
+
+                                                                                                        <span
+                                                                                                            *ngIf="leadForm.get('employeeCount').invalid && (leadForm.get('employeeCount').touched || submitted)"
+                                                                                                            class="invalid-form">
+                                                                                                            <small
+                                                                                                                class="form-text text-danger">Employee
+                                                                                                                Count</small>
+                                                                                                        </span>
+
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-12">
+                                                                                                <div
+                                                                                                    class="form-group custom-control custom-checkbox">
+                                                                                                    <input
+                                                                                                        type="checkbox"
+                                                                                                        class="custom-control-input"
+                                                                                                        id="emailOptIn"
+                                                                                                        formControlName="emailOptIn">
+                                                                                                    <label
+                                                                                                        class="custom-control-label"
+                                                                                                        for="emailOptIn">Email
+                                                                                                        Opt-in</label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </ng-template>
+                                                                        </ngb-panel>
+                                                                    </ngb-accordion>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-md-6">
+                                    <!-- First Card Section -->
+                                    <div class="mb-2">
+                                        <div class="rounded-corner-card">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="d-flex justify-content-start align-items-center">
+                                                        <span class="icon-left">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                height="16" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-file-text">
+                                                                <path
+                                                                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z">
+                                                                </path>
+                                                                <polyline points="14 2 14 8 20 8"></polyline>
+                                                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                                                <polyline points="10 9 9 9 8 9"></polyline>
+                                                            </svg>
+                                                        </span>
+                                                        <span class="padd-add">Products</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="form-group">
+                                                                <label for="serviceType">Service Type</label>
+                                                                <ng-select [items]="serviceTypes" bindLabel="name"
+                                                                    bindValue="value" placeholder="Select Service Type"
+                                                                    formControlName="serviceType"></ng-select>
+                                                                <span
+                                                                    *ngIf="leadForm.get('serviceType').invalid && leadForm.get('serviceType').touched"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">Please Select
+                                                                        serviceType</small>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="form-group">
+                                                                <label for="monthlyVolume">Monthly Volume</label>
+                                                                <input id="monthlyVolume"
+                                                                    formControlName="monthlyVolume"
+                                                                    placeholder="Enter Monthly Volume" type="text"
+                                                                    class="form-control">
+                                                                <span
+                                                                    *ngIf="leadForm.get('monthlyVolume').invalid && (leadForm.get('monthlyVolume').touched || submitted)"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">Please Enter
+                                                                        Monthly Volume</small>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="pol">POL</label>
+                                                                <ng-select formControlName="pol"
+                                                                    [items]="locationMasterData"
+                                                                    bindValue="locationShortName"
+                                                                    bindLabel="locationShortName"
+                                                                    placeholder="Select POL"></ng-select>
+                                                                <span
+                                                                    *ngIf="leadForm.get('pol').invalid && (leadForm.get('pol').touched || submitted)"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">Please Select
+                                                                        POL</small>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="pod">POD</label>
+                                                                <ng-select formControlName="pod"
+                                                                    [items]="locationMasterData"
+                                                                    bindValue="locationShortName"
+                                                                    bindLabel="locationShortName"
+                                                                    placeholder="Select POD"></ng-select>
+                                                                <span
+                                                                    *ngIf="leadForm.get('pod').invalid && (leadForm.get('pod').touched || submitted)"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">Please Select
+                                                                        POD</small>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Second Card Section -->
+                                    <div class="mb-2">
+                                        <div class="rounded-corner-card">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="d-flex justify-content-start align-items-center">
+                                                        <span class="icon-left">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                height="20" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-list">
+                                                                <line x1="8" y1="6" x2="21" y2="6">
+                                                                </line>
+                                                                <line x1="8" y1="12" x2="21" y2="12">
+                                                                </line>
+                                                                <line x1="8" y1="18" x2="21" y2="18">
+                                                                </line>
+                                                                <line x1="3" y1="6" x2="3.01" y2="6">
+                                                                </line>
+                                                                <line x1="3" y1="12" x2="3.01" y2="12">
+                                                                </line>
+                                                                <line x1="3" y1="18" x2="3.01" y2="18">
+                                                                </line>
+                                                            </svg>
+                                                        </span>
+                                                        <span class="padd-add">Additional Details</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="industry">Industry</label>
+                                                                <ng-select [items]="industries" bindLabel="industryType"
+                                                                    bindValue="industryId" placeholder="Select Industry"
+                                                                    formControlName="industry"></ng-select>
+                                                                <span
+                                                                    *ngIf="leadForm.get('industry').invalid && (leadForm.get('industry').touched || submitted)"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">Please Select
+                                                                        Industry</small>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="annualRevenue">Annual Revenue
+                                                                    (Turnover)</label>
+                                                                <input id="annualRevenue"
+                                                                    formControlName="annualRevenue"
+                                                                    placeholder="Enter Annual Revenue" type="text"
+                                                                    class="form-control">
+                                                                <span
+                                                                    *ngIf="leadForm.get('annualRevenue').invalid && leadForm.get('annualRevenue').touched"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">Please Enter
+                                                                        Annual Revenue</small>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="employeeCount">Employee Count</label>
+                                                                <ng-select [items]="employeeCounts" bindLabel="name"
+                                                                    bindValue="value"
+                                                                    placeholder="Select Employee Count"
+                                                                    formControlName="employeeCount"
+                                                                    [dropdownPosition]="'bottom'" [clearable]="false"
+                                                                    class="ng-select-custom"></ng-select>
+                                                                <span
+                                                                    *ngIf="leadForm.get('employeeCount').invalid && (leadForm.get('employeeCount').touched || submitted)"
+                                                                    class="invalid-form">
+                                                                    <small class="form-text text-danger">Please Select
+                                                                        Employee Count</small>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="emailOptIn" formControlName="emailOptIn">
+                                                                <label class="custom-control-label"
+                                                                    for="emailOptIn">Email Opt-in</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    

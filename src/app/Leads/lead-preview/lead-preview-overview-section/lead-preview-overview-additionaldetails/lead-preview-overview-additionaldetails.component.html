@@ -1,0 +1,57 @@
+<!-- Accordion Basic start -->
+<div class="rounded-corner-accordian">
+  <section id="accordion ">
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+          <!-- <core-card-snippet [snippetCode]="_snippetCodeAccordion"> -->
+
+          <div class="card-body collapse-icon p-0">
+
+            <div class="collapse-default">
+              <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" activeIds="panelBorderBottom1">
+                <ngb-panel id="panelBorderBottom1">
+                  <ng-template ngbPanelTitle>
+                    <div class="panel-title">
+                      <span class="icon-left">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                          class="feather feather-list">
+                          <line x1="8" y1="6" x2="21" y2="6"></line>
+                          <line x1="8" y1="12" x2="21" y2="12"></line>
+                          <line x1="8" y1="18" x2="21" y2="18"></line>
+                          <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                          <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                          <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                      </span>
+                      <span class="padd-add">Additional Details</span>
+                      
+                    </div>
+                  </ng-template>
+                  <ng-template ngbPanelContent>
+                    <div class="row">
+                      <div class="col-md-4">Industry</div>
+                      <div class="col-md-8"><b>{{ getLeadIndustryName(leadDetails?.industryId) }}</b></div>
+                    </div>
+                    <div class="row pt-1">
+                      <div class="col-md-4">Annual Revenue</div>
+                      <div class="col-md-8"><b>{{leadDetails?.annualRevenue}}</b></div>
+                    </div>
+                    <div class="row pt-1">
+                      <div class="col-md-4">Employee Count</div>
+                      <div class="col-md-8"><b>{{leadDetails?.employeeCount}}</b></div>
+                    </div>
+                  </ng-template>
+                </ngb-panel>
+
+              </ngb-accordion>
+            </div>
+          </div>
+          <!-- </core-card-snippet> -->
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- Accordion Basic end -->

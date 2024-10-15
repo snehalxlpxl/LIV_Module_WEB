@@ -1,0 +1,102 @@
+<!-- <div class="card-body shadow rounded-corners">
+        <h5 class="timeline-header">
+            <div class="panel-title">
+                <h5 style="display: flex; align-items: center;">
+                    <i class="feather icon-list" style="font-size: 24px; margin-right: 8px;"></i>
+                    Basic Details
+                  </h5>
+            </div>
+        </h5>
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-6">Requested Date</div>
+                <b class="col-6">04-Sep-2024</b>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">Sales Person</div>
+                <b class="col-6">Edwin Xavier</b>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">Customer Type</div>
+                <b class="col-6">New / Existing</b>
+            </div>
+            <hr>
+            <div class="row mb-2">
+                <div class="col-6">Branch</div>
+                <b class="col-6">Mumbai</b>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">Current Limit</div>
+                <b class="col-6">>₹ 0 (New Customer)</b>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">Requested Limit</div>
+                <b class="col-6">₹ 10,00,000</b>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">Current Payment Terms</div>
+                <b class="col-6">30 Days</b>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">Payment Terms</div>
+                <b class="col-6">60 Days</b>
+            </div>
+            <hr>
+            <div class="row mb-2">
+                <div class="col-6">Notes</div>
+                <b class="col-6">New business expected 50 containers per month</b>
+            </div>
+        </div>
+    </div>
+     -->
+     <div class="card-body shadow rounded-corners">
+        <h5 class="timeline-header">
+            <div class="panel-title">
+                <h5 style="display: flex; align-items: center;">
+                    <i class="feather icon-list" style="font-size: 24px; margin-right: 8px;"></i>
+                    Basic Details
+                </h5>
+            </div>
+        </h5>
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-6">Requested Date</div>
+                <b class="col-6">{{ livRequest.requestedDate | date: 'dd-MMM-yyyy' }}</b>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">Sales Person</div>
+                <b class="col-6">{{ salesPersonName }}</b>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">Customer Type</div>
+                <!-- <b class="col-6">{{ livRequest.isNewCustomer}}</b> -->
+                <b class="col-6">{{ livRequest?.isNewCustomer ? 'Existing' : 'New' }}</b>
+            </div>
+            <hr>
+            <div class="row mb-2">
+                <div class="col-6">Branch</div>
+                <b class="col-6">{{ companyName}}</b>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">Current Limit</div>
+                <b class="col-6"></b>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">Requested Limit</div>
+                <b class="col-6">₹ {{livRequest.creditLimit}}</b>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">Current Payment Terms</div>
+                <b class="col-6"></b>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">Payment Terms</div>
+                <b class="col-6">{{livRequest.creditTerms}}</b>
+            </div>
+            <hr>
+            <div class="row mb-2">
+                <div class="col-6">Notes</div>
+                <b class="col-6">{{livRequest.notes}}</b>
+            </div>
+        </div>
+    </div>

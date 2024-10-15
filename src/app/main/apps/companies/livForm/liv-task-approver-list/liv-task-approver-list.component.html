@@ -1,0 +1,187 @@
+
+<div *ngIf="showAccessDeniedMessage">
+  <b>You cannot access this page. </b>
+</div>
+
+<!-- The rest of your component's HTML goes here -->
+<div *ngIf="!showAccessDeniedMessage">
+  <!-- <h1>Welcome, {{ userName }}</h1> -->
+  <!-- Load other component content here -->
+
+<!-- <p>credit-limit-req-list works!
+    <a [routerLink]="['/liv-preview']" class="font-weight-bold">
+      Go to Liv Preview
+    </a>
+  </p>
+   -->
+
+   <div class="content-body">
+    <!-- Customer List -->
+     <div class="f-listmargin">
+      <section class="customer-list-wrapper">
+        <div class="card">
+          <!-- Customer List Header -->
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <div class="d-flex justify-content-between align-items-center m-1">
+                <div class="d-flex align-items-center">
+                  <h1 class="d-flex align-items-center mr-1 ">LIV Task Approval</h1>
+                  <!-- <span class="badge badge-warning mb-1">{{awaitingApprovedCount}} Pending</span> -->
+                  <!-- Add other controls if necessary -->
+                </div>
+              </div>
+            </div>
+            <div
+              class="
+                col-md-6 col-lg-4 col-12
+                d-flex
+                justify-content-start justify-content-md-end
+                align-items-center
+                offset-lg-2
+              "
+            >
+              <div class="row pr-1 pb-1 pb-md-0 align-items-center w-100">
+               
+                <!-- <div class="col-10 col-md-6 mt-2 ml-1 ml-md-0 mt-md-0"> -->
+                  <!-- <button class="btn btn-primary ml-2" routerLink="/customer/create" rippleEffect><span [data-feather]="'plus'" [class]="'mr-50'"></span>New</button> -->
+                   
+                <!-- </div> -->
+                <div class="col-10 col-md-12 mt-2 ml-1 ml-md-0 mt-md-0 d-flex justify-content-start justify-content-md-end  " style="height: 40px;">
+                  <!-- <button class="btn btn-primary mr-2"  rippleEffect style="height: 40px;">
+                   <span class="mr-1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> </span> Edit</button> -->
+                  <div class="btn-group">
+                    <!-- <div ngbDropdown>
+                      <button
+                        ngbDropdownToggle
+                        class="btn btn-primary mr-1"
+                        type="button"
+                        id="dropdownMenuButton"
+                        rippleEffect
+                      >
+                        New
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownMenuButton" >
+                         <a ngbDropdownItem href="javascript:void(0)" (click)="openCreditLimitReqModal()">New</a> 
+                        <a ngbDropdownItem href="javascript:void(0)" routerLink="/liv-preview">Preview</a>
+                        <a ngbDropdownItem href="javascript:void(0)">Option 3</a>
+                      </div>
+                   <span aria-hidden="true" class="close-big cursor-pointer" routerLink="/customerList">×</span> 
+                      <div aria-hidden="true" class="close-big cursor-pointer" >×</div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--/ Customer List Header -->
+  
+          <!-- Customer List Table -->
+          <!-- <ngx-datatable
+            [rows]="rows"
+            [rowHeight]="50"
+            class="bootstrap core-bootstrap"
+            [limit]="selectedOption"
+            [columnMode]="ColumnMode.force"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [scrollbarH]="true"
+          > -->
+          <ngx-datatable
+          class="bootstrap core-bootstrap"
+        [rows]="task"
+        [count]="totalRecords"
+        [offset]="pageNumber - 1"
+        [limit]="pageSize"
+        [loadingIndicator]="loading"
+        [headerHeight]="50"
+        [footerHeight]="30"
+        [scrollbarH]="true"
+        (page)='onPage($event)'>
+            <!-- <ngx-datatable-column name="ID" prop="companyId" [width]="50">
+              <ng-template let-companyId="value" ngx-datatable-cell-template>
+                <a routerLink="/customer/edit/{{companyId}}" class="font-weight-bold">#{{ companyId }}</a>
+              </ng-template>
+            </ngx-datatable-column>
+            -->
+            
+            <ngx-datatable-column name="customerName" prop="customerName" [width]="250">
+              <ng-template ngx-datatable-cell-template let-customerName="value" let-row="row">
+                <a [routerLink]="['/liv-preview', row['livrequestId']]" class="font-weight-bold">
+                  {{ customerName}}
+                </a>
+              </ng-template>
+            </ngx-datatable-column>
+  
+            <ngx-datatable-column name="branchName" prop="branchName" [width]="200">
+              <ng-template let-branchName="value" ngx-datatable-cell-template>
+                {{ branchName }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Date" prop="requestedDate" [width]="200">
+              <ng-template let-requestedDate="value" ngx-datatable-cell-template>
+                {{ requestedDate }}
+              </ng-template>
+            </ngx-datatable-column>
+           
+            <ngx-datatable-column name="Credit Limit" prop="creditLimit" [width]="200">
+              <ng-template let-creditLimit="value" ngx-datatable-cell-template>
+                {{ creditLimit }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Term" prop="creditTerms" [width]="200">
+              <ng-template let-creditTerms="value" ngx-datatable-cell-template>
+                {{ creditTerms }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Status" prop="levelStatus" [width]="100">
+              <ng-template let-levelStatus="value" ngx-datatable-cell-template>
+                <span class="badge badge-light-warning">
+                  {{ levelStatus }}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+  
+            <!--  -->
+          </ngx-datatable>
+          <!-- Pagination Controls -->
+         <!-- Pagination Controls -->
+        <ul class="pagination justify-content-end pr-1">
+          <li class="page-item" [class.disabled]="pageNumber === 1">
+            <a class="page-link" (click)="goToPreviousPage()">Previous</a>
+          </li>
+
+          <!-- Display page numbers with ellipsis -->
+          <li *ngIf="pages[0] > 1" class="page-item">
+            <a class="page-link" (click)="goToPage(1)">1</a>
+          </li>
+          <li *ngIf="pages[0] > 2" class="page-item disabled">
+            <span class="page-link">...</span>
+          </li>
+
+          <li *ngFor="let page of pages" class="page-item" [class.active]="page === pageNumber">
+            <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
+          </li>
+
+          <li *ngIf="pages[pages.length - 1] < totalPages - 1" class="page-item disabled">
+            <span class="page-link">...</span>
+          </li>
+          <li *ngIf="pages[pages.length - 1] < totalPages" class="page-item">
+            <a class="page-link" (click)="goToPage(totalPages)">{{ totalPages }}</a>
+          </li>
+
+          <li class="page-item" [class.disabled]="pageNumber === totalPages">
+            <a class="page-link" (click)="goToNextPage()">Next</a>
+          </li>
+        </ul>
+          <!--/ Customer List Table -->
+        </div>
+      </section>
+      <!--/ Customer List -->
+     </div>
+    
+  </div>
+
+
+
+
+</div>

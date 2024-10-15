@@ -1,0 +1,40 @@
+span.padd-add.ng-star-inserted {
+    padding-top: 3px;
+}
+.panel-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .icon-left, .padd-add {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon-right {
+    margin-left: auto;
+    margin-right: 20px;
+  }
+  .rounded-corner-accordian {
+    background-color: white;
+    border-radius: 9px;
+    box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
+    padding: 2px;
+}
+
+.fixheader {
+  position: fixed;
+  top: 62px;
+  width: 100%;
+  max-width: 85%; /* Default max-width for smaller screens */
+  z-index: 21;
+  background-color: white;
+  margin-bottom: 15px;
+  box-shadow: 0 12px 28px -12px rgba(34, 41, 47, 0.1);
+  padding-left: 7px;
+  padding-bottom: 0px;
+  margin-left: -19px;
+  margin-bottom: 0px;
+
+}
