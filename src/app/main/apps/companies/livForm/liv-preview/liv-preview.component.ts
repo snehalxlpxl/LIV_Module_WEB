@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { CustomerPreviewService } from '../../customers/customer-preview.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,6 +11,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from 'app/auth/models';
 import { Location } from '@angular/common'; // Import the Location service
 import Swal from 'sweetalert2';
+import { ActivityNotificationService } from 'app/Leads/lead-preview/lead-preview-activities-section/ActivityNotificationService.service';
 
 @Component({
   selector: 'app-liv-preview',
@@ -43,7 +44,7 @@ export class LivPreviewComponent implements OnInit {
   isApprover : boolean=false;
   approverList = [113057, 113058, 113059, 113060, 113061, 113062];
 
-  constructor(private navigationService: CustomerPreviewService, private modalService: NgbModal,private livRequestService: LivPreviewService, private livApproveService:LivApproveService,  private route: ActivatedRoute, private router: Router,private location: Location) {
+  constructor(private navigationService: CustomerPreviewService, private modalService: NgbModal,private livRequestService: LivPreviewService, private livApproveService:LivApproveService,  private route: ActivatedRoute, private router: Router,private location: Location,  private activityNotificationService: ActivityNotificationService,    private changeDetector: ChangeDetectorRef) {
     const storedUser = localStorage.getItem('currentUser');
     this.currentUserSubject = new BehaviorSubject<User | null>(storedUser ? JSON.parse(storedUser) : null);
     this.currentUser = this.currentUserSubject.asObservable();
@@ -112,15 +113,21 @@ export class LivPreviewComponent implements OnInit {
     // Use the actual request ID
   this.status= 'Approved';        // Use the actual status
 
-  this.livApproveService.updateApprovalTask(this.LIVRequestId, this.status,'')
+  this.livApproveService.updateApprovalTask(this.LIVRequestId, this.status,'',this.userId)
     .subscribe(response => {
       console.log('API response:', response);
-      window.location.reload(); 
+      this.getLIVRequest(this.LIVRequestId);
+      console.log("LIV request data updated+++++++++++++");
+      this.activityNotificationService.notifyUpdateApprovalChange();
+      this.changeDetector.detectChanges();
+ 
+      // window.location.reload(); 
     }, error => {
       console.error('Error occurred:', error);
     });
  
   }
+
   cancelLivRequest(livReqId: number, userId: number) {
     console.log("livReqId=", livReqId);
     console.log("userId=", userId);

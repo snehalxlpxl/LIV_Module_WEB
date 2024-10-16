@@ -37,14 +37,14 @@ export class LivApproveComponent implements OnInit {
     private CreditLimitSer: CreditLimitRequestModalService,) { }
 
   ngOnInit(): void {
-    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    const userData = JSON.parse(localStorage.getItem('currentUser'));
     if (userData) {
       this.userName = userData.userName;
       this.userId = userData.userId;
       console.log('User Name:', this.userName);
       console.log('User ID:', this.userId);
   } else {
-      console.log('No user data found in sessionStorage');
+      console.log('No user data found in localStorage');
   }
     // Retrieve the ID from the URL
     this.livrequestId =+ this.route.snapshot.paramMap.get('id');
@@ -180,9 +180,10 @@ export class LivApproveComponent implements OnInit {
       // Use the actual request ID
     this.status= 'Approved';        // Use the actual status
 
-    this.livApproveService.updateApprovalTask(this.livrequestId, this.status,'')
+    this.livApproveService.updateApprovalTask(this.livrequestId, this.status,'', this.userId)
       .subscribe(response => {
         console.log('API response:', response);
+        window.location.reload();
       }, error => {
         console.error('Error occurred:', error);
       });

@@ -14,4 +14,10 @@ export class ActivityNotificationService {
   notifyActivitiesChange() {
     this.activitiesSubject.next();
   }
+  private approvalSubject = new BehaviorSubject<void>(null); 
+  approvalStatus$ = this.approvalSubject.asObservable(); 
+    notifyUpdateApprovalChange() {
+    this.approvalSubject.next();
+    }
+
 }

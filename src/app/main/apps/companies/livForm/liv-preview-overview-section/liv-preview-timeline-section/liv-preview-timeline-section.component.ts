@@ -34,6 +34,9 @@ export class LivPreviewTimelineSectionComponent implements OnInit {
     );
   }
   getRelativeTime(requestedDate: string): string {
+    if (!requestedDate) {
+      return ''; 
+  }
     const now = new Date();
     const pastDate = new Date(requestedDate);
     const diffInMs = now.getTime() - pastDate.getTime();

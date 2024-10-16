@@ -13,11 +13,22 @@ declare var bootstrap: any;
 export class RejectModalComponent implements OnInit {
   @Input() LIVRequestId: any; 
   livRequest: any;
+  userName: any;
+  userId: any;
 
   constructor(public activeModal: NgbActiveModal,private livApproveService:LivApproveService,private route: ActivatedRoute,private livRequestService: LivPreviewService,) { }
 
   ngOnInit(): void {
     console.log("BasicDetailLIVRequestId",this.LIVRequestId);
+    const userData = JSON.parse(localStorage.getItem('currentUser'));
+    if (userData) {
+      this.userName = userData.userName;
+      this.userId = userData.userId;
+      console.log('User Name:', this.userName);
+      console.log('User ID:', this.userId);
+  } else {
+      console.log('No user data found in sessionStorage');
+  }
   }
   confirmRejection() {
     const rejectionReason = (document.getElementById('rejectionReason') as HTMLInputElement).value;
@@ -27,12 +38,13 @@ export class RejectModalComponent implements OnInit {
       const status = 'Rejected';
       
       // Call the updateApprovalTask service method
-      this.livApproveService.updateApprovalTask(this.LIVRequestId, status, rejectionReason).subscribe(
+      this.livApproveService.updateApprovalTask(this.LIVRequestId, status, rejectionReason, this.userId).subscribe(
         response => {
           console.log('Approval task updated successfully:', response);
           // Close the modal after confirming rejection
           this.closeModal();
           this.close();
+          window.location.reload();
         },
         error => {
           console.error('Error updating approval task:', error);
