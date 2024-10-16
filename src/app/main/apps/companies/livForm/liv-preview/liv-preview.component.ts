@@ -51,7 +51,7 @@ export class LivPreviewComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    const userData = JSON.parse(localStorage.getItem('currentUser'));
     if (userData) {
       this.userName = userData.userName;
       this.userId = userData.userId;
@@ -79,6 +79,7 @@ export class LivPreviewComponent implements OnInit {
   }
   openRejectModal() {
     const modalRef = this.modalService.open(RejectModalComponent);
+    modalRef.componentInstance.LIVRequestId = this.LIVRequestId;
     // modalRef.result.then(
     //   (result) => {
     //     console.log('Modal closed with reason:', result);
@@ -111,7 +112,7 @@ export class LivPreviewComponent implements OnInit {
     // Use the actual request ID
   this.status= 'Approved';        // Use the actual status
 
-  this.livApproveService.updateApprovalTask(this.LIVRequestId, this.status)
+  this.livApproveService.updateApprovalTask(this.LIVRequestId, this.status,'')
     .subscribe(response => {
       console.log('API response:', response);
       window.location.reload(); 
@@ -148,5 +149,5 @@ export class LivPreviewComponent implements OnInit {
       }
     });
   }
- 
+
 }

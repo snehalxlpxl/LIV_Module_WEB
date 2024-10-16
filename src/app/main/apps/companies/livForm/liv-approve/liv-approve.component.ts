@@ -180,7 +180,7 @@ export class LivApproveComponent implements OnInit {
       // Use the actual request ID
     this.status= 'Approved';        // Use the actual status
 
-    this.livApproveService.updateApprovalTask(this.livrequestId, this.status)
+    this.livApproveService.updateApprovalTask(this.livrequestId, this.status,'')
       .subscribe(response => {
         console.log('API response:', response);
       }, error => {
