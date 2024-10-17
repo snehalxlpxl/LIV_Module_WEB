@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="mt-1 f-preview-overview-content" *ngIf="!error && ! isApprover">
+        <div class="mt-1 f-preview-overview-content" *ngIf="!error && !isApprover">
             <app-liv-preview-overview-section *ngIf="currentComponent === 'overview'"  @fade></app-liv-preview-overview-section>
             <app-liv-preview-time-line-section *ngIf="currentComponent === 'timeline'"  @fade></app-liv-preview-time-line-section>
             <app-liv-preview-documents-section *ngIf="currentComponent === 'documents'"  @fade></app-liv-preview-documents-section>
