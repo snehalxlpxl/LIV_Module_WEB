@@ -45,13 +45,13 @@ export class LivPreviewTimelineSectionComponent implements OnInit {
       data => {
         console.log("data:",data)
 
-        console.log("createdBy:",data.createdById)
+        console.log("createdBy:",data[0].createdById)
         console.log("userId:",this.userId)
         if (this.isApprover) {
          
         this.timelineData = data;
         console.log('Timeline Data:', taskId, this.timelineData);
-      }else if(data.createdById == this.userId){
+      }else if(data[0].createdById == this.userId){
         this.timelineData = data;
         console.log('Timeline Data:', taskId, this.timelineData);
       } else {
@@ -68,6 +68,9 @@ export class LivPreviewTimelineSectionComponent implements OnInit {
     );
   }
   getRelativeTime(requestedDate: string): string {
+    if (!requestedDate) {
+      return ''; 
+  }
     const now = new Date();
     const pastDate = new Date(requestedDate);
     const diffInMs = now.getTime() - pastDate.getTime();
