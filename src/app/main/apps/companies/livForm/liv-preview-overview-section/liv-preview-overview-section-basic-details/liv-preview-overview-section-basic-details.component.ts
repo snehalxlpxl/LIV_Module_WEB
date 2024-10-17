@@ -20,7 +20,7 @@ export class LivPreviewOverviewSectionBasicDetailsComponent implements OnInit {
     private route: ActivatedRoute,  ) { }
 
   ngOnInit(): void {
-    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    const userData = JSON.parse(localStorage.getItem('currentUser'));
     if (userData) {
       this.userName = userData.userName;
       this.userId = userData.userId;

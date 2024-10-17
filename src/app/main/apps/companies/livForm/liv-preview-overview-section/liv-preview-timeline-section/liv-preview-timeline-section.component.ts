@@ -19,7 +19,7 @@ export class LivPreviewTimelineSectionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    const userData = JSON.parse(localStorage.getItem('currentUser'));
     if (userData) {
       this.userName = userData.userName;
       this.userId = userData.userId;
