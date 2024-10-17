@@ -13,22 +13,41 @@ export class LivPreviewOverviewSectionBasicDetailsComponent implements OnInit {
   LIVRequestId:any;
   salesPersonName:any;
   companyName:any;
+  userName: any;
+  userId: any;
 
   constructor(private livRequestService: LivPreviewService,private leadService: LeadCreateService ,
     private route: ActivatedRoute,  ) { }
 
   ngOnInit(): void {
-
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    if (userData) {
+      this.userName = userData.userName;
+      this.userId = userData.userId;
+      console.log('User Name:', this.userName);
+      console.log('User ID:', this.userId);
+  } else {
+      console.log('No user data found in sessionStorage');
+  }
+  
    this.LIVRequestId = this.route.snapshot.paramMap.get('id');
    console.log("BasicDetailLIVRequestId",this.LIVRequestId);
   
     this.getLIVRequest(this.LIVRequestId);
+    this.isApprover = this.approverList.includes(this.userId);
   }
+
+  isApprover : boolean=false;
+  approverList = [113057, 113058, 113059, 113060, 113061, 113062];
   getLIVRequest(id: any): void {
     this.livRequestService.getLIVRequest(id).subscribe({
       next: (data) => {
-        this.livRequest = data;
-        console.log("GetLIVRequest",data); 
+        if (this.isApprover || data.createdBy == this.userId) {
+          this.livRequest = data;
+          console.log("GetLIVRequest", data);
+      } else {
+          console.log('No matching LIV request found for createdBy:', this.userId);
+      }
         // console.log(this.livRequest.salesPersonId);
         this.fetchSalesPersonName(this.livRequest.salesPersonId);
         this.fetchBranchName(this.livRequest.branchId)

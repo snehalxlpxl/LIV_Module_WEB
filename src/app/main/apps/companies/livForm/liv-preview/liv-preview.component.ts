@@ -12,6 +12,7 @@ import { User } from 'app/auth/models';
 import { Location } from '@angular/common'; // Import the Location service
 import Swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-liv-preview',
   templateUrl: './liv-preview.component.html',
@@ -35,13 +36,16 @@ export class LivPreviewComponent implements OnInit {
     console.log("this.currentUserSubject.value", this.currentUserSubject.value);
     return this.currentUserSubject.value;
   }
+
   livRequest:any = [];
+   livRequestSubject = new BehaviorSubject<any>(this.livRequest);
   LIVRequestId:any;
   currentComponent: string;
   userName: any;
   userId: any; 
   isApprover : boolean=false;
   approverList = [113057, 113058, 113059, 113060, 113061, 113062];
+  isCanceledStatus:any;
 
   constructor(private navigationService: CustomerPreviewService, private modalService: NgbModal,private livRequestService: LivPreviewService, private livApproveService:LivApproveService,  private route: ActivatedRoute, private router: Router,private location: Location) {
     const storedUser = localStorage.getItem('currentUser');
@@ -50,6 +54,10 @@ export class LivPreviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.livRequestSubject.subscribe((livRequest) => {
+      console.log('Updated livRequest:', livRequest);
+      this.livRequest = livRequest;
+    });
 
     const userData = JSON.parse(sessionStorage.getItem('userData'));
     if (userData) {
@@ -57,15 +65,22 @@ export class LivPreviewComponent implements OnInit {
       this.userId = userData.userId;
       console.log('User Name:', this.userName);
       console.log('User ID:', this.userId);
+      this.isApprover = this.approverList.includes(this.userId);
+      console.log("approver:",this.isApprover)
   } else {
       console.log('No user data found in sessionStorage');
   }
-  this.isApprover = this.approverList.includes(this.userId);
+  
+  // this.isApprover = this.approverList.includes(this.userId);
+  // console.log("approver:",this.isApprover)
 
     this.LIVRequestId = this.route.snapshot.paramMap.get('id');
    console.log("BasicDetailLIVRequestId",this.LIVRequestId);
   
     this.getLIVRequest(this.LIVRequestId);
+    
+    this.isCanceledStatus=this.getLIVRequest(this.LIVRequestId);
+
     this.navigationService.component$.subscribe(component => {
       this.currentComponent = component;
     });
@@ -93,16 +108,26 @@ export class LivPreviewComponent implements OnInit {
     const modalRef = this.modalService.open(ApproveModalComponent);
 
   }
+  error:true;
   getLIVRequest(id: any): void {
+    this.isApprover = this.approverList.includes(this.userId);
     this.livRequestService.getLIVRequest(id).subscribe({
       next: (data) => {
-        this.livRequest = data;
-        console.log("GetLIVRequest",data); 
-        // console.log(this.livRequest.salesPersonId);
-        // this.fetchSalesPersonName(this.livRequest.salesPersonId);
-        // this.fetchBranchName(this.livRequest.branchId)
+        if (this.isApprover ) {
+          this.livRequest = data;
+          console.log("GetLIVRequest", data);
+        }else if(data.createdBy === this.userId){
+          this.livRequest = data;
+          console.log("GetLIVRequest", data);
+        } else {
+          this.error = true;
+          console.log('No matching LIV request found for createdBy:', this.userId);
+          // this.router.navigate(['/pages/miscellaneous/error']);
+        }
       },
-      error: (err) => console.error('Error fetching LIVRequest', err),
+      error: (err) => {
+        console.error('Error fetching LIVRequest', err);
+      },
     });
   }
   status: string;
@@ -120,9 +145,12 @@ export class LivPreviewComponent implements OnInit {
     });
  
   }
+  
+ 
   cancelLivRequest(livReqId: number, userId: number) {
-    console.log("livReqId=", livReqId);
-    console.log("userId=", userId);
+    // console.log("livReqId=", livReqId);
+    // console.log("userId=", userId);
+    const updatedLivRequest = { ...this.livRequest, isDeleted: 1, status: 'Canceled' };
     Swal.fire({
       title: 'Are you sure?',
       text: 'Do you want to cancel this LIV request?',
@@ -132,14 +160,18 @@ export class LivPreviewComponent implements OnInit {
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.isConfirmed) {
+        
         this.livRequestService.cancelLivRequest({ LivrequestId: livReqId, UserId: userId }).subscribe(
           (response) => {
             Swal.fire('Canceled!', 'LIV request has been canceled.', 'success');
+            window.location.reload();
             this.getLIVRequest(livReqId);
           },
           (error) => {
             if (error.status === 200) {
               Swal.fire('Canceled!', 'LIV request has been canceled.', 'success');
+              // window.location.reload();
+              this.livRequestSubject.next(updatedLivRequest); //change detection
             } else {
               Swal.fire('Error!', 'Failed to cancel LIV request.', 'error');
             }
