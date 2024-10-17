@@ -17,10 +17,10 @@
                     class="col-lg-5 col-md-10 col-10 d-flex justify-content-end align-items-center flex-wrap text-right">
                     <!-- <button type="button" class="btn btn-outline-danger mr-1" routerLink="/credit-limit-req-list"
                         rippleEffect>Reject</button> -->
-                        <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" *ngIf="livRequest.status !== 'Approved' && livRequest.status !== 'Rejected'">Reject</button>
+                        <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" *ngIf="livRequest.status !== 'Approved' && livRequest.status !== 'Rejected' && livRequest.status !== 'Canceled'" > Reject</button>
 
                       <!-- <button class="btn btn-success" type="submit" (click)="openApproveModal()">Approve</button> for delegate-->
-                      <button class="btn btn-success" type="submit" (click)="onSubmit()"  *ngIf="livRequest.status !== 'Approved'&& livRequest.status !== 'Rejected'" >Approve</button>
+                      <button class="btn btn-success" type="submit" (click)="onSubmit()"  *ngIf="livRequest.status !== 'Approved'&& livRequest.status !== 'Rejected' && livRequest.status !== 'Canceled'" >Approve</button>
                     <span class="close-big mx-1 flex-shrink-0 clickable" (click)="goBack()">×</span>
                 </div>
                 <div   *ngIf="!isApprover" class="col-lg-5 col-md-10 col-10 d-flex justify-content-end align-items-center flex-wrap text-right">
