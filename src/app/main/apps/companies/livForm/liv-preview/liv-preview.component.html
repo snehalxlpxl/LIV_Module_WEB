@@ -1,15 +1,17 @@
 <section class="customer-list-wrapper" >
     <div class="row">
         <div class="fixheader">
-            <div class="row align-items-center m-1">
-                <div class="col-lg-5 col-md-10 col-10 d-flex align-items-center mb-2 mb-md-0">
+            <div class="row align-items-center liv-margin">
+                <div class="col-lg-6 col-md-10 col-10 d-flex align-items-center mb-2 mb-md-0">
                     <h2 class="mb-0 text-truncate flex-shrink-1">
                         <!-- <b>Suzuki Ltd</b> -->
                          <b>{{livRequest.customerName}}</b>
                     </h2>
                     <div class="ml-2">
                         <!-- <span></span> -->
-                        <div class="badge badge-warning">{{livRequest.status}}</div>
+                        <p class="badge badge-warning">{{livRequest.status}}</p> 
+                        <span class="ml-3 badge badge-secondary">{{message}}</span>
+                        
                         <!-- ApprovalLevelStatus: {{ApprovalLevelStatus}} .  levelStatusFlag:  {{levelStatusFlag}}.  showApprovalbtn:  {{showApprovalbtn}} -->
                         <!-- <div class="badge badge-warning">{{approvalTasks[0].levelStatus}}</div> -->
                     </div>
@@ -45,13 +47,14 @@
                 <span class="close-big mx-1 flex-shrink-0 clickable" (click)="goBack()">×</span>
             </div> -->
 
-            <div class="col-lg-5 col-md-10 col-10 d-flex justify-content-end align-items-center flex-wrap text-right">
-
-              <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" *ngIf="!isSalesPersonOrCreatedBy && !levelStatusFlag"> Reject</button>
-
-                <button class="btn btn-success mr-1" type="submit" (click)="openApproveModal(LIVRequestId)" *ngIf="isDelegate && !levelStatusFlag">delegate Approve</button>
+            <div class="col-lg-4 col-md-10 col-10 d-flex justify-content-end align-items-center flex-wrap text-right">
+              <!-- <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" > <span [data-feather]="'circle-minus'" [class]="'mr-25'"></span> Reject</button> -->
                 
-                <button class="btn btn-success" type="submit" (click)="onSubmit()" *ngIf="!isSalesPersonOrCreatedBy && !isDelegate && !levelStatusFlag">Approve</button>
+              <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" *ngIf="!isSalesPersonOrCreatedBy && !levelStatusFlag"><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i> Reject</button>
+
+                <button class="btn btn-success mr-1" type="submit" (click)="openApproveModal(LIVRequestId)" *ngIf="isDelegate && !levelStatusFlag"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i> Approve</button>
+                
+                <button class="btn btn-success" type="submit" (click)="onSubmit()" *ngIf="!isSalesPersonOrCreatedBy && !isDelegate && !levelStatusFlag"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i>Approve</button>
             
                 <button type="button" class="btn btn-outline-danger ml-1 mr-1" (click)="cancelLivRequest(LIVRequestId,userId)"  *ngIf="isSalesPersonOrCreatedBy || isSaleOrCreatedByApprover &&  !levelStatusFlag">Cancel</button>
                 <span class="close-big mx-1 flex-shrink-0 clickable" (click)="goBack()">×</span>

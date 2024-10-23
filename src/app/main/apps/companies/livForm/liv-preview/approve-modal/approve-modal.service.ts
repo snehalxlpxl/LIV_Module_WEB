@@ -20,6 +20,6 @@ export class ApproveModalService {
     return this.http.post(`${environment.apiUrl}/Customer/updateApprovalTaskForDelegate`, updateTask);
   }
   getApproverByDelegateId(delegateId: number) {
-    return this.http.get<{ approverId: number }>(`${environment.apiUrl}/Customer/GetApproverByDelegateId/${delegateId}`);
+    return this.http.get<{ approverId: number }>(`${environment.apiUrl}/LIVRequests/getApproverByDelegate/${delegateId}`);
   }
 }

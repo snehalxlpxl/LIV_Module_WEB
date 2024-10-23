@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { ApproveModalService } from './approve-modal.service';
 import { ActivatedRoute } from '@angular/router';
+import { CreditLimitReqListService } from '../../credit-limit-req-list/credit-limit-req-list.service';
 
 @Component({
   selector: 'app-approve-modal',
@@ -21,7 +22,7 @@ export class ApproveModalComponent implements OnInit {
   LIVRequestId: any;
   approverId: number;
 
-  constructor(public activeModal: NgbActiveModal,private ApproveModalSer:ApproveModalService,private route: ActivatedRoute) {}
+  constructor(public activeModal: NgbActiveModal,private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService) {}
 
 
   ngOnInit(): void {
@@ -37,6 +38,7 @@ export class ApproveModalComponent implements OnInit {
       console.log('User ID:', this.userId);
     }
     this.fetchApprover(this.userId);
+    this.checkIfDelegate(this.userId);
   }
 
   // Method to handle file selection
@@ -102,6 +104,7 @@ confirmApproval(): void {
           this.ApproveModalSer.updateApprovalTaskForDelegate(approvalData).subscribe(
             (res) => {
               console.log('Task updated successfully', res);
+              window.location.reload();
             },
             (err) => {
               console.error('Error updating task', err);
@@ -128,7 +131,7 @@ confirmApproval(): void {
 fetchApprover(delegateId: number) {
   this.ApproveModalSer.getApproverByDelegateId(delegateId).subscribe(
     response => {
-      this.approverId = response.approverId;
+      this.approverId = response[0].approverId;
       console.log('Approver ID:', this.approverId);
     },
     error => {
@@ -136,5 +139,25 @@ fetchApprover(delegateId: number) {
     }
   );
 }
+
+isDelegate: boolean = false;
+  message:string;
+  checkIfDelegate(userId: number) {
+    this.CreditLimitReqListSer.isDelegate(userId).subscribe(response => {
+      this.isDelegate = response.isDelegate;
+      console.log("this.isDelegate",this.isDelegate);
+
+      if(this.isDelegate==true){
+
+        this.CreditLimitReqListSer.getDelegatesApprover(userId).subscribe(response => {
+          this.message=`You will approve this as a delegate for Mr.  `+response[0].approverName;
+          });
+          
+
+      }
+      console.log('Is Delegate:', this.isDelegate); // For debugging
+    });
+  }
+
 
 }

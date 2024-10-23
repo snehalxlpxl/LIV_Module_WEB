@@ -16,7 +16,7 @@
               <div class="d-flex justify-content-between align-items-center m-1">
                 <div class="d-flex align-items-center">
                   <h1 class="d-flex align-items-center mr-1 ">Credit Limit Requests</h1>
-                  <span class="badge badge-warning mb-1">{{awaitingApprovedCount}} Pending</span>
+                  <span class="badge badge-warning mb-1" *ngIf="awaitingApprovedCount">{{awaitingApprovedCount}} Pending</span>
                  
                   <!-- Add other controls if necessary -->
                 </div> 
@@ -32,7 +32,7 @@
                 offset-lg-2
               "
             >
-             <div class="align-items-center"><div *ngIf="isDelegate" class="badge badge-light-secondary justify-content-start justify-content-md-start">{{message}}</div></div>
+             <!-- <div class="align-items-center"><div *ngIf="isDelegate" class="badge badge-light-secondary justify-content-start justify-content-md-start">{{message}}</div></div> -->
              <div class="ml-5">&nbsp;&nbsp;&nbsp;</div>
               <div class="row pr-1 pb-1 pb-md-0 align-items-center w-100">
                

@@ -202,7 +202,7 @@ export class CreditLimitReqListComponent implements OnInit {
 
 
       // Count the number of companies with status "Awaiting Approved"
-      this.awaitingApprovedCount = this.livRequests.filter(company => company.status === "Awaiting Approved").length;
+      this.awaitingApprovedCount = this.livRequests.filter(company => company.status === "Awaiting Approval").length;
       console.log("Count of 'Awaiting Approved' companies:", this.awaitingApprovedCount);
 
 
@@ -348,10 +348,14 @@ export class CreditLimitReqListComponent implements OnInit {
   isDelegate: boolean = false;
   message:string;
   checkIfDelegate(userId: number) {
+
     this.CreditLimitReqListSer.isDelegate(userId).subscribe(response => {
+      console.log("Delegate Info",response);
       this.isDelegate = response.isDelegate;
       if(this.isDelegate==true){
-        this.message="You are Logged in as a delegate for Mr Pradeep Alwar"
+        this.CreditLimitReqListSer.getDelegatesApprover(userId).subscribe(response => {
+        this.message=`You have logged in as delegate for Mr. `+response[0].approverName;
+        });
       }else{
         
       }

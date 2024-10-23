@@ -117,7 +117,11 @@ export class LivPreviewComponent implements OnInit {
       console.log("this.isDelegate",this.isDelegate);
 
       if(this.isDelegate==true){
-        this.message="You are Logged in as a delegate for Mr Pradeep Alwar"
+
+        this.CreditLimitReqListSer.getDelegatesApprover(userId).subscribe(response => {
+          this.message=`You have logged in as delegate for Mr. `+response[0].approverName;
+          });
+          
         this.loadLIVApprovalTasks(this.userId,livId);
 
       }else{
@@ -194,6 +198,7 @@ export class LivPreviewComponent implements OnInit {
     // Pass the LIVRequestId to the modal instance
     modalRef.componentInstance.livRequestId = LIVRequestId;
   }
+  
   // error:true;
   getLIVRequest(id: any): void {
     // this.isApprover = this.approverList.includes(this.userId);
@@ -225,17 +230,37 @@ export class LivPreviewComponent implements OnInit {
     // Use the actual request ID
   this.status= 'Approved';        // Use the actual status
 
-  this.livApproveService.updateApprovalTask(this.LIVRequestId, this.status,'',this.userId)
+  this.livApproveService.updateApprovalTask(this.LIVRequestId, this.status, '', this.userId)
     .subscribe(response => {
       console.log('API response:', response);
+
+      // Call the method to refresh the data after approval
       this.getLIVRequest(this.LIVRequestId);
       console.log("LIV request data updated+++++++++++++");
+
+      // Notify about the approval change
       this.activityNotificationService.notifyUpdateApprovalChange();
-      this.changeDetector.detectChanges();
- 
-      // window.location.reload(); 
+
+      // Show success SweetAlert after successful API call
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Approval task updated successfully.',
+        confirmButtonText: 'OK'
+      });
+
+      // Optional: Reload the page or just update the necessary parts
+      window.location.reload(); 
     }, error => {
       console.error('Error occurred:', error);
+
+      // Show error SweetAlert if API call fails
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to update the approval task.',
+        confirmButtonText: 'Try Again'
+      });
     });
  
   }
@@ -290,7 +315,7 @@ export class LivPreviewComponent implements OnInit {
   }
 
   getDelegatesApprover(LIVRequestId:number){
-    this.CreditLimitReqListSer.getDelegatesApprover().subscribe(
+    this.CreditLimitReqListSer.getDelegatesApprover(this.userId).subscribe(
       (delegates: any[]) => {
         var id=delegates[0].approverId;
         console.log('Delegates:', delegates,);

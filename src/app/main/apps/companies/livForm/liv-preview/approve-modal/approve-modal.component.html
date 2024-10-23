@@ -1,13 +1,8 @@
 <div class="modal-header">
-    <h4 class="modal-title">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="feather feather-map-pin">
-            <path d="M21 10c0 5-9 13-9 13s-9-8-9-13a9 9 0 1 1 18 0z"></path>
-            <circle cx="12" cy="10" r="3"></circle>
-        </svg>
-        <span class="ml-2">Upload Approval Proof</span>
-    </h4>
+    <h5 class="modal-title">
+        <i class="feather icon-map-pin" style="font-size: 16px; margin-right: 8px;"></i>
+        <span class="">Upload Approval Proof</span>
+    </h5>
     <p class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true"
         class="cursor-pointer"> × </p>
 </div>
@@ -40,4 +35,6 @@
         <button type="button" class="btn btn-success ml-2" [disabled]="!approvalSource || !selectedFile"
             (click)="confirmApproval()">Confirm Approval</button>
     </div>
+
+    <div class="text-center mt-1 mb-1"><span class="badge badge-secondary " style="font-size: 12px;">{{message}}</span></div>
 </div>

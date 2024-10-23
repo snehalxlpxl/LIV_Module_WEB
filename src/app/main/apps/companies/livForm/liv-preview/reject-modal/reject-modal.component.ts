@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { LivApproveService } from '../../liv-approve/liv-approve.service';
 import { ActivatedRoute } from '@angular/router';
 import { LivPreviewService } from '../liv-preview.service';
+import { CreditLimitReqListService } from '../../credit-limit-req-list/credit-limit-req-list.service';
 declare var bootstrap: any;
 
 @Component({
@@ -16,7 +17,7 @@ export class RejectModalComponent implements OnInit {
   userName: any;
   userId: any;
 
-  constructor(public activeModal: NgbActiveModal,private livApproveService:LivApproveService,private route: ActivatedRoute,private livRequestService: LivPreviewService,) { }
+  constructor(public activeModal: NgbActiveModal,private livApproveService:LivApproveService,private route: ActivatedRoute,private livRequestService: LivPreviewService,private CreditLimitReqListSer:CreditLimitReqListService) { }
 
   ngOnInit(): void {
     console.log("BasicDetailLIVRequestId",this.LIVRequestId);
@@ -29,6 +30,7 @@ export class RejectModalComponent implements OnInit {
   } else {
       console.log('No user data found in sessionStorage');
   }
+  this.checkIfDelegate(this.userId);
   }
   confirmRejection() {
     const rejectionReason = (document.getElementById('rejectionReason') as HTMLInputElement).value;
@@ -67,5 +69,22 @@ export class RejectModalComponent implements OnInit {
   close(): void {
     this.activeModal.dismiss('Modal dismissed');
   }
+  isDelegate: boolean = false;
+  message:string;
+  checkIfDelegate(userId: number) {
+    this.CreditLimitReqListSer.isDelegate(userId).subscribe(response => {
+      this.isDelegate = response.isDelegate;
+      console.log("this.isDelegate",this.isDelegate);
 
+      if(this.isDelegate==true){
+
+        this.CreditLimitReqListSer.getDelegatesApprover(userId).subscribe(response => {
+          this.message=`You will reject this as a delegate for Mr. `+response[0].approverName;
+          });
+          
+
+      }
+      console.log('Is Delegate:', this.isDelegate); // For debugging
+    });
+  }
 }

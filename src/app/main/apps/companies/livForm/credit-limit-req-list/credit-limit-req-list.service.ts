@@ -66,8 +66,8 @@ export class CreditLimitReqListService {
   isDelegate(userId: number): Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}/LIVRequests/IsDelegate/${userId}`);
   }
-  getDelegatesApprover(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.apiUrl}/LIVRequests/GetDelegatesApprover/${this.userId}`);
+  getDelegatesApprover(userId:number): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiUrl}/LIVRequests/getApproverByDelegate/${userId}`);
   }
   
   

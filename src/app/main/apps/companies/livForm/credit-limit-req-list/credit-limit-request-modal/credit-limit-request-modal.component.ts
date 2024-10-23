@@ -180,6 +180,7 @@ export class CreditLimitRequestModalComponent implements OnInit {
       
       if(res){
         this.close();
+        window.location.reload();
         Swal.fire({
           title: 'Success!',
           text: 'Your credit limit request has been created successfully.',
