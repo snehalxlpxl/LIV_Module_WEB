@@ -56,7 +56,7 @@
                 
                 <button class="btn btn-success" type="submit" (click)="onSubmit()" *ngIf="!isSalesPersonOrCreatedBy && !isDelegate && !levelStatusFlag"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i>Approve</button>
             
-                <button type="button" class="btn btn-outline-danger ml-1 mr-1" (click)="cancelLivRequest(LIVRequestId,userId)"  *ngIf="isSalesPersonOrCreatedBy || isSaleOrCreatedByApprover &&  !levelStatusFlag">Cancel</button>
+                <button type="button" class="btn btn-danger ml-1 mr-1" (click)="cancelLivRequest(LIVRequestId,userId)"  *ngIf="isSalesPersonOrCreatedBy || isSaleOrCreatedByApprover &&  !levelStatusFlag"><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i>  Cancel Request</button>
                 <span class="close-big mx-1 flex-shrink-0 clickable" (click)="goBack()">×</span>
             </div>
         </div>
