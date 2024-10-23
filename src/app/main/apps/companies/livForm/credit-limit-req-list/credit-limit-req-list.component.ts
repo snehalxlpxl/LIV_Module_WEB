@@ -47,6 +47,7 @@ export class CreditLimitReqListComponent implements OnInit {
   awaitingApprovedCount: number;
   userName: any;
   userId: any;
+  livRequests: any;
 
 
   /**
@@ -122,7 +123,7 @@ export class CreditLimitReqListComponent implements OnInit {
   ngOnInit(): void {
  
     // this.loadCustomer();
-    this.loadCompanies();
+   
 
     const userData = JSON.parse(localStorage.getItem('currentUser'));
     if (userData) {
@@ -131,7 +132,9 @@ export class CreditLimitReqListComponent implements OnInit {
       console.log('User Name:', this.userName);
       console.log('User ID:', this.userId);
       // this.router.navigate(['/credit-limit-req-list']);
-
+      this.loadLIVRequests(this.userId );
+      this.checkIfDelegate(this.userId );
+      
     }
   }
   
@@ -156,7 +159,7 @@ export class CreditLimitReqListComponent implements OnInit {
             });
             // Redirect to the customer list route
             // this.loadCustomer();
-            this.loadCompanies();
+            this.loadLIVRequests(this.userId );
             
           },
           (error) => {
@@ -173,12 +176,12 @@ export class CreditLimitReqListComponent implements OnInit {
   
   onPage(event: any) {
     this.pageNumber = event.page + 1;
-    this.loadCompanies();
+    this.loadLIVRequests(this.userId );
   }
 
   // rows: any[] = [];
   // tempData: any[] = [];
-  companies:any[]=[]
+ 
   totalRecords: number = 0;
   totalRecords2: any[]=[]
   pageNumber: number = 1;
@@ -186,22 +189,20 @@ export class CreditLimitReqListComponent implements OnInit {
   totalPages: number = 0;
   pages: number[] = [];
 
-  
-
-  loadCompanies() {
-    this.loading = true;
-    this.CreditLimitReqListSer.getCompanies(this.pageNumber, this.pageSize,'').subscribe(response => {
-      this.companies = response.companies;
-      this.totalRecords = response.totalRecords;
-      this.tempData = response.companies;
+  loadLIVRequests(userId:any) {
+    this.CreditLimitReqListSer.getLIVRequests(userId, this.pageNumber, this.pageSize, "")
+      .subscribe(response => {
+        this.livRequests = response.livrequest;
+        this.totalRecords = response.totalRecords;
+        this.tempData = response.companies;
       // Initialize filtered data
-      this.filteredData = [...this.companies];
+      this.filteredData = [...this.livRequests];
       
-      console.log("all liv data",this.companies);
+      console.log("all liv data",this.livRequests);
 
 
       // Count the number of companies with status "Awaiting Approved"
-      this.awaitingApprovedCount = this.companies.filter(company => company.status === "Awaiting Approved").length;
+      this.awaitingApprovedCount = this.livRequests.filter(company => company.status === "Awaiting Approved").length;
       console.log("Count of 'Awaiting Approved' companies:", this.awaitingApprovedCount);
 
 
@@ -219,12 +220,45 @@ export class CreditLimitReqListComponent implements OnInit {
       this.loading = false;
     });
   }
+  
+
+  // loadCompanies() {
+  //   this.loading = true;
+  //   this.CreditLimitReqListSer.getCompanies(this.pageNumber, this.pageSize,'').subscribe(response => {
+  //     this.companies = response.companies;
+  //     this.totalRecords = response.totalRecords;
+  //     this.tempData = response.companies;
+  //     // Initialize filtered data
+  //     this.filteredData = [...this.companies];
+      
+  //     console.log("all liv data",this.companies);
+
+
+  //     // Count the number of companies with status "Awaiting Approved"
+  //     this.awaitingApprovedCount = this.companies.filter(company => company.status === "Awaiting Approved").length;
+  //     console.log("Count of 'Awaiting Approved' companies:", this.awaitingApprovedCount);
+
+
+  //     // Calculate the total number of pages
+  //     this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+
+  //     // Update pagination and page data
+  //     this.updatePagination();
+  //     // this.updatePageData();
+      
+
+  //     this.loading = false;
+  //   }, error => {
+  //     console.error('Error fetching companies', error);
+  //     this.loading = false;
+  //   });
+  // }
  
 
   goToPage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.pageNumber = page;
-      this.loadCompanies();
+      this.loadLIVRequests(this.userId );
       this.updatePageData(); 
       this.updatePagination(); 
     }
@@ -233,7 +267,7 @@ export class CreditLimitReqListComponent implements OnInit {
   goToPreviousPage() {
     if (this.pageNumber > 1) {
       this.pageNumber--;
-      this.loadCompanies();
+      this.loadLIVRequests(this.userId );
       this.updatePageData(); 
       this.updatePagination(); 
     }
@@ -242,7 +276,7 @@ export class CreditLimitReqListComponent implements OnInit {
   goToNextPage() {
     if (this.pageNumber < this.totalPages) {
       this.pageNumber++;
-      this.loadCompanies();
+      this.loadLIVRequests(this.userId );
       this.updatePageData(); 
       this.updatePagination(); 
     }
@@ -281,10 +315,10 @@ export class CreditLimitReqListComponent implements OnInit {
     const val = (event.target.value || "").toLowerCase();
   
     // Make an API call to fetch filtered data from the server
-    this._customerListService.getCompanies(this.pageNumber, this.pageSize, val).subscribe(
+    this.CreditLimitReqListSer.getLIVRequests(this.pageNumber, this.pageSize, val).subscribe(
       (response: any) => {
         // Update the table data with the filtered data from the server
-        this.companies = response.companies;
+        this.livRequests = response.companies;
         this.totalRecords = response.totalRecords;
         this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
         this.updatePagination();
@@ -310,5 +344,21 @@ export class CreditLimitReqListComponent implements OnInit {
       }
     );
   }
+
+  isDelegate: boolean = false;
+  message:string;
+  checkIfDelegate(userId: number) {
+    this.CreditLimitReqListSer.isDelegate(userId).subscribe(response => {
+      this.isDelegate = response.isDelegate;
+      if(this.isDelegate==true){
+        this.message="You are Logged in as a delegate for Mr Pradeep Alwar"
+      }else{
+        
+      }
+      console.log('Is Delegate:', this.isDelegate); // For debugging
+    });
+  }
+ 
+ 
 
 }

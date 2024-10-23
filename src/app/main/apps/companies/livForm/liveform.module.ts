@@ -7,7 +7,6 @@ import { LivPreviewComponent } from './liv-preview/liv-preview.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LivPreviewOverviewSectionComponent } from './liv-preview-overview-section/liv-preview-overview-section.component';
-import { LivPreviewTimeLineSectionComponent } from './liv-preview-time-line-section/liv-preview-time-line-section.component';
 import { LivPreviewDocumentsSectionComponent } from './liv-preview-documents-section/liv-preview-documents-section.component';
 import { LivPreviewOverviewSectionBasicDetailsComponent } from './liv-preview-overview-section/liv-preview-overview-section-basic-details/liv-preview-overview-section-basic-details.component';
 import { LivPreviewTimelineSectionComponent } from './liv-preview-overview-section/liv-preview-timeline-section/liv-preview-timeline-section.component';
@@ -73,8 +72,8 @@ const routes = [
 
 @NgModule({
   declarations: [CreditLimitReqListComponent,CreditLimitRequestModalComponent, 
-    LivPreviewComponent, LivPreviewOverviewSectionComponent, 
-    LivPreviewTimeLineSectionComponent, LivPreviewDocumentsSectionComponent, 
+    LivPreviewComponent, LivPreviewOverviewSectionComponent
+    , LivPreviewDocumentsSectionComponent, 
     LivPreviewOverviewSectionBasicDetailsComponent, LivPreviewTimelineSectionComponent, 
     LivOverviewSectionSummaryComponent, RejectModalComponent, ApproveModalComponent, 
     LivApproveComponent,LivTaskApproverListComponent,LoadListSaleOrApproverComponent

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
+import { ApproveModalService } from './approve-modal.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-approve-modal',
@@ -7,23 +10,57 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./approve-modal.component.scss']
 })
 export class ApproveModalComponent implements OnInit {
+  @Input() livRequestId: number;
   approvalSource: string = 'Whatsapp'; // Default approval source
   approvalSources: string[] = ['Whatsapp', 'Email', 'Phone Call', 'Other'];
   notes: string = ''; 
   selectedFile: File | null = null;
   selectedFileName: string = '';
+  userName: any;
+  userId: any;
+  LIVRequestId: any;
+  approverId: number;
 
-  constructor(public activeModal: NgbActiveModal) {}
+  constructor(public activeModal: NgbActiveModal,private ApproveModalSer:ApproveModalService,private route: ActivatedRoute) {}
 
 
   ngOnInit(): void {
+    const userData = JSON.parse(localStorage.getItem('currentUser'));
+
+    this.LIVRequestId = this.route.snapshot.paramMap.get('id');
+    console.log("this.LIVRequestId",this.LIVRequestId)
+
+    if (userData) {
+      this.userName = userData.userName;
+      this.userId = userData.userId;
+      console.log('User Name:', this.userName);
+      console.log('User ID:', this.userId);
+    }
+    this.fetchApprover(this.userId);
   }
 
   // Method to handle file selection
+  // onFileSelect(event: any): void {
+  //   if (event.target.files.length > 0) {
+  //     this.selectedFile = event.target.files[0];
+  //     this.selectedFileName = this.selectedFile.name;
+  //   }
+  // }
   onFileSelect(event: any): void {
-    if (event.target.files.length > 0) {
+    const file: File = event.target.files[0];
+    if (file) {
       this.selectedFile = event.target.files[0];
-      this.selectedFileName = this.selectedFile.name;
+      this.selectedFileName = file.name;
+
+      const allowedExtensions = ['pdf', 'jpeg', 'jpg', 'png', 'eml'];
+      const fileExtension = file.name.split('.').pop()?.toLowerCase();
+
+      if (!allowedExtensions.includes(fileExtension!)) {
+        alert('Invalid file format. Please select a valid file (PDF, JPEG, PNG, or EML).');
+        // Clear the input if invalid
+        event.target.value = null;
+        this.selectedFileName = 'No file chosen';
+      }
     }
   }
   // Method to close modal
@@ -32,16 +69,72 @@ export class ApproveModalComponent implements OnInit {
   }
 
   // Method to confirm approval with selected data
-  confirmApproval(): void {
-    const approvalData = {
-      source: this.approvalSource,
-      file: this.selectedFile,
-      notes: this.notes || `Approval confirmed on ${this.approvalSource}`
-    };
-    
-    // Perform any actions like uploading the file or API calls, then close modal
-    console.log('Approval confirmed', approvalData);
-    this.activeModal.close(approvalData);
-  }
+  
+
+confirmApproval(): void {
+  // Display confirmation dialog
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'Do you want to confirm the approval?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, confirm it!',
+    cancelButtonText: 'No, cancel!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // If user confirms the approval
+      const approvalData = {
+        ApprovalSource: this.approvalSource,
+        ApprovalFileName: this.selectedFileName,
+        UserId: this.userId,
+        ApproverId:this.approverId,
+        Status:"Approved",
+        RejectReason:"",
+        livrequestId:this.livRequestId,
+        Note: this.notes || `Approval confirmed on ${this.approvalSource}`
+      };
+      console.log(approvalData);
+
+      this.ApproveModalSer.uploadFile(this.selectedFile).subscribe(
+        (fileResponse) => {
+         
+          this.ApproveModalSer.updateApprovalTaskForDelegate(approvalData).subscribe(
+            (res) => {
+              console.log('Task updated successfully', res);
+            },
+            (err) => {
+              console.error('Error updating task', err);
+            }
+          );
+        },
+        (fileErr) => {
+          console.error('Error uploading file', fileErr);
+        }
+      );
+      // Perform any actions like uploading the file or API calls, then close modal
+      console.log('Approval confirmed', approvalData);
+      this.activeModal.close(approvalData);
+
+      // Optionally show success message
+      Swal.fire('Confirmed!', 'Your approval has been confirmed.', 'success');
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      // If user cancels, show cancellation message
+      Swal.fire('Cancelled', 'Approval was not confirmed.', 'error');
+    }
+  });
+}
+
+fetchApprover(delegateId: number) {
+  this.ApproveModalSer.getApproverByDelegateId(delegateId).subscribe(
+    response => {
+      this.approverId = response.approverId;
+      console.log('Approver ID:', this.approverId);
+    },
+    error => {
+      console.error('Error fetching approver ID:', error);
+    }
+  );
+}
 
 }

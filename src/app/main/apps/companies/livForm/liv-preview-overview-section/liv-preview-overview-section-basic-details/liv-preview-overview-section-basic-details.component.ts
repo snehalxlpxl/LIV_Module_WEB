@@ -34,20 +34,20 @@ export class LivPreviewOverviewSectionBasicDetailsComponent implements OnInit {
    console.log("BasicDetailLIVRequestId",this.LIVRequestId);
   
     this.getLIVRequest(this.LIVRequestId);
-    this.isApprover = this.approverList.includes(this.userId);
+    // this.isApprover = this.approverList.includes(this.userId);
   }
 
-  isApprover : boolean=false;
-  approverList = [113057, 113058, 113059, 113060, 113061, 113062];
+  // isApprover : boolean=false;
+  // approverList = [113057, 113058, 113059, 113060, 113061, 113062];
   getLIVRequest(id: any): void {
     this.livRequestService.getLIVRequest(id).subscribe({
       next: (data) => {
-        if (this.isApprover || data.createdBy == this.userId) {
+        // if (this.isApprover || data.createdBy == this.userId) {
           this.livRequest = data;
-          console.log("GetLIVRequest", data);
-      } else {
-          console.log('No matching LIV request found for createdBy:', this.userId);
-      }
+          console.log("GetLIVRequest ++++++++++++++++", data);
+      // } else {
+      //     console.log('No matching LIV request found for createdBy:', this.userId);
+      // }
         // console.log(this.livRequest.salesPersonId);
         this.fetchSalesPersonName(this.livRequest.salesPersonId);
         this.fetchBranchName(this.livRequest.branchId)

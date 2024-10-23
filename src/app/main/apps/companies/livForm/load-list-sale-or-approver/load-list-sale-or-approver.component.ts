@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'app/auth/models';
 import { Console } from 'console';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { LoadListSaleOrApproverService } from './load-list-sale-or-approver.service';
 
 @Component({
   selector: 'app-load-list-sale-or-approver',
@@ -14,6 +15,7 @@ export class LoadListSaleOrApproverComponent implements OnInit {
     public currentUser: Observable<User>;
       //private
   private currentUserSubject: BehaviorSubject<User>;
+  livRequests: any[] = [];
      // getter: currentUserValue
   public get currentUserValue(): User {
     console.log("this.currentUserSubject.value",this.currentUserSubject.value);
@@ -25,7 +27,9 @@ export class LoadListSaleOrApproverComponent implements OnInit {
   approverId: number;
   approver: any;
 
-  constructor(private route:ActivatedRoute,private router:Router) {
+  constructor(private route:ActivatedRoute,private router:Router,private LoadListSaleOrApproverSer:LoadListSaleOrApproverService) {
+
+    
     const storedUser = localStorage.getItem('currentUser');
     this.currentUserSubject = new BehaviorSubject<User | null>(storedUser ? JSON.parse(storedUser) : null);
  
@@ -43,21 +47,35 @@ export class LoadListSaleOrApproverComponent implements OnInit {
     // Log the values for debugging
     console.log('User Name:', this.userName);
     console.log('User ID:', this.userId);
-
-    // Check if the approver is in the list of allowed approver IDs
-    const validApprovers = [113057, 113058, 113059, 113060, 113061, 113062];
-
-    if (!validApprovers.includes(this.userId)) {
-      console.log("this.userId++++++", this.userId); // Log the userId for debugging
-      this.router.navigate(['credit-limit-req-list']); 
-    } else {
-      this.router.navigate([`liv-task-approve-list/${this.userId}`]);
-    }
-  } else {
-    // Handle the case where user data is not found
-    console.log('No user data found in local storage');
     this.router.navigate(['credit-limit-req-list']);
+    // Check if the approver is in the list of allowed approver IDs
+    // const validApprovers = [];
+    // const validApprovers = [113057, 113058, 113059, 113060, 113061, 113062];
+
+    // if (!validApprovers.includes(this.userId)) {
+    //   console.log("this.userId++++++", this.userId); // Log the userId for debugging
+    //   this.router.navigate(['credit-limit-req-list']); 
+    // } else {
+    //   this.router.navigate([`liv-task-approve-list/${this.userId}`]);
+    // }
+  } 
+  // else {
+  //   // Handle the case where user data is not found
+  //   console.log('No user data found in local storage');
+  //   this.router.navigate(['credit-limit-req-list']);
+  // }
   }
-  }
+
+  // getlivRequestData(){
+  //   this.LoadListSaleOrApproverSer.getLIVRequests(this.userId).subscribe(
+  //     (data) => {
+  //       this.livRequests = data;
+  //       console.log('LIV Requests:', this.livRequests);
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching LIV Requests', error);
+  //     }
+  //   );
+  // }
 
 }

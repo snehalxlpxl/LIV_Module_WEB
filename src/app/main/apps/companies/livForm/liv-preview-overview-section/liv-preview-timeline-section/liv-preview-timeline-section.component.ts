@@ -33,31 +33,31 @@ export class LivPreviewTimelineSectionComponent implements OnInit {
       this.taskId = +params['id'];  
       this.loadLivTaskTimeLine(this.taskId); 
     });
-    this.isApprover = this.approverList.includes(this.userId);
+    // this.isApprover = this.approverList.includes(this.userId);
   }
   
-  error:true;
-  isApprover : boolean=false;
-  approverList = [113057, 113058, 113059, 113060, 113061, 113062];
+  // error:true;
+  // isApprover : boolean=false;
+  // approverList = [113057, 113058, 113059, 113060, 113061, 113062];
   loadLivTaskTimeLine(taskId: number): void {
-    this.isApprover = this.approverList.includes(this.userId);
+    // this.isApprover = this.approverList.includes(this.userId);
     this.timelineService.getLivTaskTimeLine(taskId).subscribe(
       data => {
         console.log("data:",data)
 
         console.log("createdBy:",data[0].createdById)
         console.log("userId:",this.userId)
-        if (this.isApprover) {
+        // if (this.isApprover) {
          
         this.timelineData = data;
         console.log('Timeline Data:', taskId, this.timelineData);
-      }else if(data[0].createdById == this.userId){
-        this.timelineData = data;
-        console.log('Timeline Data:', taskId, this.timelineData);
-      } else {
-        this.error=true;
-          console.log('No matching LIV request found for createdBy:', this.userId);
-      }
+      // }else if(data[0].createdById == this.userId){
+      //   this.timelineData = data;
+      //   console.log('Timeline Data:', taskId, this.timelineData);
+      // } else {
+      //   this.error=true;
+      //     console.log('No matching LIV request found for createdBy:', this.userId);
+      // }
      
         // this.timelineData = data;
         // console.log('Timeline Data:', taskId, this.timelineData);

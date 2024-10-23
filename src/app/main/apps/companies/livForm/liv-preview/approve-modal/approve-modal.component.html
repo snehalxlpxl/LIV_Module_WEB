@@ -25,7 +25,7 @@
             <input type="text" class="form-control" [value]="selectedFileName || 'No file chosen'" readonly>
             <div class="input-group-append">
                 <button class="btn btn-gradient-primary ml-1" type="button" (click)="fileInput.click()">Choose File</button>
-                <input type="file" class="d-none" id="fileUpload" #fileInput (change)="onFileSelect($event)">
+                <input type="file" class="d-none" id="fileUpload" #fileInput (change)="onFileSelect($event)" accept=".pdf,.jpeg,.jpg,.png,.eml">
             </div>
         </div>
     </div>
