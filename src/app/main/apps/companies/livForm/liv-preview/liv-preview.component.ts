@@ -40,7 +40,7 @@ export class LivPreviewComponent implements OnInit {
     console.log("this.currentUserSubject.value", this.currentUserSubject.value);
     return this.currentUserSubject.value;
   }
-
+  finalStatus:string;
   livRequest:any = [];
    livRequestSubject = new BehaviorSubject<any>(this.livRequest);
   LIVRequestId:any;
@@ -76,10 +76,11 @@ export class LivPreviewComponent implements OnInit {
       
       this.LIVRequestId = this.route.snapshot.paramMap.get('id');
       console.log(this.LIVRequestId)
-      this.checkUserSalesPersonOrCreatedBy(this.LIVRequestId, this.userId);
+      this.checkUserSalesPersonOrCreatedBy( this.userId,this.LIVRequestId);
       this.checkUserSalesPersonOrCreatedByApprover(this.userId,this.LIVRequestId )
       // this.loadLIVApprovalTasks(this.userId,this.LIVRequestId);
-      
+      this.finalStatus=this.livRequest.status;
+      console.log("ng oninit this.finalStatus=",this.livRequest.status);
       // this.checkLevelStatus(this.LIVRequestId,this.userId);
       // this.getDelegatesApprover(this.LIVRequestId);
 
@@ -98,7 +99,7 @@ export class LivPreviewComponent implements OnInit {
     this.getDelegatesApprover(this.LIVRequestId);
   //  console.log("BasicDetailLIVRequestId",this.LIVRequestId);
   
-    // this.getLIVRequest(this.LIVRequestId);
+    this.getLIVRequest(this.LIVRequestId);
     
     
     this.isCanceledStatus=this.getLIVRequest(this.LIVRequestId);
@@ -137,13 +138,14 @@ export class LivPreviewComponent implements OnInit {
   showApprovalbtn=false;
   levelStatusFlag=false;
   loadLIVApprovalTasks(userId: number, LIVRequestId: number): void {
+   
     this.livRequestService.getLIVApprovalTasks(userId, LIVRequestId).subscribe(
       (tasks) => {
         this.approvalTasks = tasks;
         console.log('Approval Tasks line 136:', tasks);
-
+        console.log("this.livRequest.Status",this.livRequest.status);
         if( this.approvalTasks){
-          console.log("^^^^^^^^^^^^^^^^",this.approvalTasks);
+          // console.log("^^^^^^^^^^^^^^^^",this.approvalTasks);
           this.ApprovalLevelStatus=this.approvalTasks[0].levelStatus;
           this.showApprovalbtn=true;
           console.log("this.ApprovalLevelStatus",this.ApprovalLevelStatus);
@@ -155,7 +157,10 @@ export class LivPreviewComponent implements OnInit {
             this.levelStatusFlag=false;
           }
         }else{
-          console.log("================",this.approvalTasks);
+          // console.log("================",this.approvalTasks);
+          if(this.livRequest.status=='Approved'){
+            this.levelStatusFlag=true;
+          }
         }
         // else if(this.showApprovalbtn==false){
         //   // this.showApprovalbtn=false;
@@ -164,8 +169,10 @@ export class LivPreviewComponent implements OnInit {
         // }
           
 
-        }else if(!this.approvalTasks){
+        }else {
+          console.log("yyyyyyyyyyyyyyyyyyy")
           this.levelStatusFlag=true;
+          this.showApprovalbtn=true;
         }
       },
       (error) => {
@@ -200,6 +207,7 @@ export class LivPreviewComponent implements OnInit {
   }
   
   // error:true;
+
   getLIVRequest(id: any): void {
     // this.isApprover = this.approverList.includes(this.userId);
     this.livRequestService.getLIVRequest(id).subscribe({
@@ -207,6 +215,7 @@ export class LivPreviewComponent implements OnInit {
         // if (this.isApprover ) {
           this.livRequest = data;
           console.log("GetLIVRequest1", data);
+          this.finalStatus=this.livRequest.status;
         // }else if(data.createdBy === this.userId){
         //   this.livRequest = data;
         //   console.log("GetLIVRequest", data);
@@ -236,7 +245,7 @@ export class LivPreviewComponent implements OnInit {
 
       // Call the method to refresh the data after approval
       this.getLIVRequest(this.LIVRequestId);
-      console.log("LIV request data updated+++++++++++++");
+      // console.log("LIV request data updated+++++++++++++");
 
       // Notify about the approval change
       this.activityNotificationService.notifyUpdateApprovalChange();
@@ -328,8 +337,10 @@ export class LivPreviewComponent implements OnInit {
   }
 
   isSalesPersonOrCreatedBy: boolean = false;
+  StatusFlag=false;
   checkUserSalesPersonOrCreatedBy(userId: number, LIVRequestId: number) {
-    this.livRequestService.checkUserSalesPersonOrCreatedBy(LIVRequestId,userId)
+    
+    this.livRequestService.checkUserSalesPersonOrCreatedBy(userId,LIVRequestId)
       .subscribe(
         (response) => {
           console.log('check salesPerson API Response:', response);
@@ -337,7 +348,14 @@ export class LivPreviewComponent implements OnInit {
           if (response && response.request) {
             this.isSalesPersonOrCreatedBy = true;  // Set flag to true if user is a salesperson or creator
             this.getLIVRequest(LIVRequestId);
-            this.loadLIVApprovalTasks(userId,LIVRequestId);
+            console.log("this.livRequest.status",this.finalStatus)
+                if(this.finalStatus=='Awaiting Approval'){
+                  
+                  this.StatusFlag=true;
+                  console.log("this.livRequest.status========",this.StatusFlag)
+                }
+          
+            // this.loadLIVApprovalTasks(userId,LIVRequestId);
             
           } else {
             this.isSalesPersonOrCreatedBy = false;  // Otherwise, set flag to false
@@ -357,8 +375,15 @@ export class LivPreviewComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('checkUserSalesPersonOrCreatedByApprover:', response);
+
           this.isSaleOrCreatedByApprover = true; // Set the flag if API call is successful
           this.requestData = response.request; // Store request data
+          // this.loadLIVApprovalTasks(userId,LIVRequestId);
+          if(this.isSaleOrCreatedByApprover==true){
+            if(this.livRequest.status=='Awaiting Approval'){
+              this.levelStatusFlag=true;
+            }
+        }
         },
         (error) => {
           console.error('Error from API:', error);
