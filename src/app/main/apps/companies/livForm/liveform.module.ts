@@ -4,7 +4,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CreditLimitReqListComponent } from './credit-limit-req-list/credit-limit-req-list.component';
 import { RouterModule } from '@angular/router';
 import { LivPreviewComponent } from './liv-preview/liv-preview.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LivPreviewOverviewSectionComponent } from './liv-preview-overview-section/liv-preview-overview-section.component';
 import { LivPreviewDocumentsSectionComponent } from './liv-preview-documents-section/liv-preview-documents-section.component';
@@ -83,6 +83,7 @@ const routes = [
     RouterModule.forChild(routes),
     NgbModule,
     FormsModule,
+    NgbDropdownModule,
     ReactiveFormsModule,
     CoreCommonModule,
     CoreDirectivesModule,

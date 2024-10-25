@@ -35,7 +35,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/credit-limit-req-list',
     pathMatch: 'full'
   },
   {

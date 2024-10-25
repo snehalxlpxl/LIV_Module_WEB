@@ -45,6 +45,21 @@
                   <!-- <button class="btn btn-primary mr-2"  rippleEffect style="height: 40px;">
                    <span class="mr-1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> </span> Edit</button> -->
                   <div class="btn-group" *ngIf="!isDelegate">
+                    <div>
+
+                      <select
+                      (change)="filterRows($event.target.value)"
+                      class="form-control"
+                      style="width: 150px; margin-right: 10px;"
+                    >
+                      <option value="">All Statuses</option>
+                      <option value="Approved">Approved</option>
+                      <option value="AwaitingApproval">Awaiting Approval</option>
+                      <option value="Rejected">Rejected</option>
+
+                    </select>
+                      
+                    </div>
                     <div ngbDropdown>
                       <button
                         ngbDropdownToggle

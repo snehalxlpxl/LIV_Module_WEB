@@ -185,6 +185,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (userData) {
       this.userName = userData.userName;
       this.userId = userData.userId;
+      console.log(userData);
       console.log('User Name:', this.userName);
       console.log('User ID:', this.userId);
   } else {

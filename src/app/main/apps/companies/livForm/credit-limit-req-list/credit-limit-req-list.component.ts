@@ -22,10 +22,11 @@ export class CreditLimitReqListComponent implements OnInit {
   public data: Company[];
   public rows: Company[];
   public tempData: Company[];
+
   public tempFilterData: Company[];
   // Public properties
   // public data: any;
-  public selectedOption = 10;
+  public selectedOption = 12 ;
   public ColumnMode = ColumnMode;
   public selectStatus: any = [
     { name: "All", value: "" },
@@ -123,7 +124,8 @@ export class CreditLimitReqListComponent implements OnInit {
   ngOnInit(): void {
  
     // this.loadCustomer();
-   
+    console.log("++++++++++++++++++++++",this.tempData);
+
 
     const userData = JSON.parse(localStorage.getItem('currentUser'));
     if (userData) {
@@ -185,7 +187,7 @@ export class CreditLimitReqListComponent implements OnInit {
   totalRecords: number = 0;
   totalRecords2: any[]=[]
   pageNumber: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 12;
   totalPages: number = 0;
   pages: number[] = [];
 
