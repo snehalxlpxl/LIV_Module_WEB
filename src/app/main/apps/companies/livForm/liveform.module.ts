@@ -22,6 +22,8 @@ import { LivApproveComponent } from './liv-approve/liv-approve.component';
 import { AuthGuard } from 'app/auth/helpers'
 import { LivTaskApproverListComponent } from './liv-task-approver-list/liv-task-approver-list.component';
 import { LoadListSaleOrApproverComponent } from './load-list-sale-or-approver/load-list-sale-or-approver.component';
+import { LivDocumentSectionComponent } from './liv-preview/liv-document-section/liv-document-section.component';
+import { LivDocumentUploadComponent } from './liv-preview/liv-document-section/liv-document-upload/liv-document-upload.component';
 
 const routes = [ 
   
@@ -76,7 +78,7 @@ const routes = [
     , LivPreviewDocumentsSectionComponent, 
     LivPreviewOverviewSectionBasicDetailsComponent, LivPreviewTimelineSectionComponent, 
     LivOverviewSectionSummaryComponent, RejectModalComponent, ApproveModalComponent, 
-    LivApproveComponent,LivTaskApproverListComponent,LoadListSaleOrApproverComponent
+    LivApproveComponent,LivTaskApproverListComponent,LoadListSaleOrApproverComponent, LivDocumentUploadComponent, LivDocumentSectionComponent
   ],
   imports: [
     CommonModule,
