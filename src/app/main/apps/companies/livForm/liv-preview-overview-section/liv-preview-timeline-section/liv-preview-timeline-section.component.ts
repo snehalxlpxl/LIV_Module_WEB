@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { LivPreviewTimelineSectionService } from './liv-preview-timeline-section.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -12,6 +12,7 @@ export class LivPreviewTimelineSectionComponent implements OnInit {
   taskId: number;
   userName: any;
   userId: any;
+  @Input() showDates: boolean = true;
 
 
   constructor(private timelineService: LivPreviewTimelineSectionService,
