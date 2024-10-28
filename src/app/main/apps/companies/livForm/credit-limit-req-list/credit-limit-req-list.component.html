@@ -14,12 +14,16 @@
           <div class="row">
             <div class="col-md-6 col-12">
               <div class="d-flex justify-content-between align-items-center m-1">
-                <div class="d-flex align-items-center">
+                <!-- <div class="d-flex align-items-center">
                   <h1 class="d-flex align-items-center mr-1 ">Credit Limit Requests</h1>
-                  <span class="badge badge-warning mb-1" *ngIf="awaitingApprovedCount">{{awaitingApprovedCount}} Pending</span>
+                  <span class="badge badge-warning mb-1 " *ngIf="awaitingApprovedCount">{{awaitingApprovedCount}} Pending</span>
                  
-                  <!-- Add other controls if necessary -->
-                </div> 
+                </div>  -->
+                <div class="d-flex align-items-center">
+                  <h1 class="mr-2 mb-0">Credit Limit Requests</h1>
+                  <span class="badge badge-warning" *ngIf="awaitingApprovedCount">{{awaitingApprovedCount}} Pending</span>
+                </div>
+                
               </div>
              
             </div>
@@ -41,11 +45,28 @@
                    
                 <!-- </div> -->
                 <div class="col-10 col-md-12 mt-2 ml-1 ml-md-0 mt-md-0 d-flex justify-content-start justify-content-md-end  " style="height: 40px;">
-                  
+                  <div>
+                    <label class="d-flex align-items-center">Status
+                      <ng-select 
+                        [items]="statusOptions" 
+                        bindLabel="label" 
+                        bindValue="value"
+                        [(ngModel)]="selectedStatus" 
+                        (change)="filterByStatus()"
+                        class="ml-25" 
+                        placeholder="All Statuses" 
+                        style="width: 150px;">
+                      </ng-select>
+                    </label>
+
+                    <!-- <label class="d-flex align-items-center ml-1">Search
+                      <input type="search" placeholder="Search" class="form-control ml-25" (keyup)="filterUpdate($event)" />
+                    </label> -->
+                  </div>
                   <!-- <button class="btn btn-primary mr-2"  rippleEffect style="height: 40px;">
                    <span class="mr-1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> </span> Edit</button> -->
                   <div class="btn-group" *ngIf="!isDelegate">
-                    <div>
+                    <!-- <div>
 
                       <select
                       (change)="filterRows($event.target.value)"
@@ -59,11 +80,12 @@
 
                     </select>
                       
-                    </div>
+                    </div> -->
+                    
                     <div ngbDropdown>
                       <button
                         ngbDropdownToggle
-                        class="btn btn-primary mr-1"
+                        class="btn btn-primary mr-1 ml-1"
                         type="button"
                         id="dropdownMenuButton"
                         rippleEffect
@@ -117,8 +139,9 @@
             
             <ngx-datatable-column name="Company Name" prop="customerName" [width]="200">
               <ng-template ngx-datatable-cell-template let-customerName="value" let-row="row">
-                <a [routerLink]="['/liv-preview', row['livRequestId']]" class="font-weight-bold">
-                  {{ customerName}}
+                <a [routerLink]="['/liv-preview', row['livRequestId']]" class="font-weight-bold text-truncate ">
+                  <!-- {{ customerName}} -->
+                  {{ customerName.length > 20 ? (customerName | slice:0:25) + '...' : customerName}}
                 </a>
               </ng-template>
             </ngx-datatable-column>

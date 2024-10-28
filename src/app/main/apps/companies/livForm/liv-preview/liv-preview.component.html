@@ -3,14 +3,15 @@
         <div class="fixheader">
             <div class="row align-items-center liv-margin">
                 <div class="col-lg-6 col-md-10 col-10 d-flex align-items-center mb-2 mb-md-0">
-                    <h2 class="mb-0 text-truncate flex-shrink-1">
+                    <!-- <h2 class="mb-0 text-truncate flex-shrink-1"> -->
+                    <h2 class="mb-0 flex-shrink-1">
+
                         <!-- <b>Suzuki Ltd</b> -->
                          <b>{{livRequest.customerName}}</b>
                     </h2>
-                    <div class="ml-2">
+                    
                         <!-- <span></span> -->
-                        <p class="badge badge-warning">{{livRequest.status}}</p> 
-                        <span class="ml-3 badge badge-secondary">{{message}}</span>
+                        <span class="ml-1 badge badge-warning">{{livRequest.status}}</span> 
                         <!-- isSalesPersonOrCreatedBy={{isSalesPersonOrCreatedBy}}<br>
                         isSaleOrCreatedByApprover={{isSaleOrCreatedByApprover}}<br>
                         levelStatusFlag={{levelStatusFlag}}<br>
@@ -22,7 +23,8 @@
                         <!-- <button *ngIf="isSalesPersonOrCreatedBy && levelStatusFlag">hello</button> -->
 
                         <!-- <div class="badge badge-warning">{{approvalTasks[0].levelStatus}}</div> -->
-                    </div>
+                    
+
                 </div>
 
 
@@ -73,6 +75,8 @@
                 
                 <span class="close-big mx-1 flex-shrink-0 clickable" (click)="goBack()">×</span>
             </div>
+            <span class="ml-1 badge badge-secondary">{{message}}</span>
+
         </div>
 
             <div class="pl-1 f-pills">

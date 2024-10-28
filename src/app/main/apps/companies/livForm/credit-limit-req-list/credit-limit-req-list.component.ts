@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from "@angular/core";
 import { Subject } from "rxjs";
 import { ColumnMode, DatatableComponent } from "@swimlane/ngx-datatable";
 import { CoreConfigService } from "@core/services/config.service";
@@ -24,22 +24,17 @@ export class CreditLimitReqListComponent implements OnInit {
   public tempData: Company[];
 
   public tempFilterData: Company[];
-  // Public properties
-  // public data: any;
   public selectedOption = 12 ;
   public ColumnMode = ColumnMode;
-  public selectStatus: any = [
-    { name: "All", value: "" },
-    { name: "Downloaded", value: "Downloaded" },
-    { name: "Draft", value: "Draft" },
-    { name: "Paid", value: "Paid" },
-    { name: "Partial Payment", value: "Partial Payment" },
-    { name: "Past Due", value: "Past Due" },
-    { name: "Sent", value: "Sent" },
-  ];
-  public selectedStatus = [];
   public searchValue = "";
-
+  statusOptions = [
+    { label: 'All Statuses', value: '' },
+    { label: 'Approved', value: 'Approved' },
+    { label: 'Awaiting Approval', value: 'AwaitingApproval' },
+    { label: 'Rejected', value: 'Rejected' }
+  ];
+  selectedStatus: string = 'All Statuses';
+  
   // ViewChild decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
@@ -64,62 +59,12 @@ export class CreditLimitReqListComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private modalService: NgbModal,
+    private cdr: ChangeDetectorRef
   ) {}
 
   // Public Methods
   // -----------------------------------------------------------------------------------------------------
 
-  /**
-   * filterUpdate
-   *
-   * @param event
-   */
-  filterUpdate1(event) {
-    const val = (event.target.value || "").toLowerCase();
-
-    // filter our data
-    const temp = this.tempData.filter((d) => {
-      return d.companyName.toLowerCase().includes(val) || !val;
-    });
-
-    // update the rows
-    this.rows = temp;
-    // Whenever the filter changes, always go back to the first page
-    if (this.table) {
-      this.table.offset = 0;
-    }
-  }
-
-  /**
-   * Filter By Status
-   *
-   * @param event
-   */
-  filterByStatus(event) {
-    const filter = event ? event.value : "";
-    this.previousStatusFilter = filter;
-    this.tempFilterData = this.filterRows(filter);
-    this.rows = this.tempFilterData;
-  }
-
-  /**
-   * Filter Rows
-   *
-   * @param statusFilter
-   */
-  filterRows(statusFilter): any[] {
-    // Reset search on select change
-    this.searchValue = "";
-
-    statusFilter = (statusFilter || "").toLowerCase();
-
-    return this.tempData.filter((row) => {
-      return (
-        row.companyApprovalStatus.toLowerCase().includes(statusFilter) ||
-        !statusFilter
-      );
-    });
-  }
 
   ngOnInit(): void {
  
@@ -175,7 +120,27 @@ export class CreditLimitReqListComponent implements OnInit {
     });
   }
 
-  
+  filterByStatus() {
+    if (this.selectedStatus === '' || this.selectedStatus === 'All Statuses') {
+      console.log("selectedStatus",this.selectedStatus)
+      console.log("filteredData",this.filteredData)
+
+      // Show all requests if "All Statuses" is selected
+      this.filteredData = [...this.livRequests];
+    } else {
+      console.log("selectedStatus",this.selectedStatus)
+      // Filter based on the selected status
+      this.filteredData = this.livRequests.filter((request) => request.status === this.selectedStatus);
+      console.log("filteredData",this.filteredData)
+      this.cdr.detectChanges();
+
+    }
+
+    // Update pagination after filtering
+    this.updatePageData();
+    this.updatePagination();
+  }
+
   onPage(event: any) {
     this.pageNumber = event.page + 1;
     this.loadLIVRequests(this.userId );
@@ -194,19 +159,20 @@ export class CreditLimitReqListComponent implements OnInit {
   loadLIVRequests(userId:any) {
     this.CreditLimitReqListSer.getLIVRequests(userId, this.pageNumber, this.pageSize, "")
       .subscribe(response => {
-        this.livRequests = response.livrequest;
-        this.totalRecords = response.totalRecords;
-        this.tempData = response.companies;
+        this.livRequests = response.livrequest|| [];
+        this.totalRecords = response.totalRecords|| 0;
+        this.tempData = response.companies|| [];
       // Initialize filtered data
-      this.filteredData = [...this.livRequests];
-      
+      // this.filteredData = [...this.livRequests];
       console.log("all liv data",this.livRequests);
-
+      this.filterByStatus();
 
       // Count the number of companies with status "Awaiting Approved"
-      this.awaitingApprovedCount = this.livRequests.filter(company => company.status === "Awaiting Approval").length;
-      console.log("Count of 'Awaiting Approved' companies:", this.awaitingApprovedCount);
+      // this.awaitingApprovedCount = this.livRequests.filter(company => company.status === "Awaiting Approval").length;
+      // console.log("Count of 'Awaiting Approved' companies:", this.awaitingApprovedCount);
 
+      this.awaitingApprovedCount = this.livRequests.filter(request => request.status === "Awaiting Approval").length;
+      console.log("Count of 'Awaiting Approval' requests:", this.awaitingApprovedCount);
 
       // Calculate the total number of pages
       this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
@@ -223,40 +189,7 @@ export class CreditLimitReqListComponent implements OnInit {
     });
   }
   
-
-  // loadCompanies() {
-  //   this.loading = true;
-  //   this.CreditLimitReqListSer.getCompanies(this.pageNumber, this.pageSize,'').subscribe(response => {
-  //     this.companies = response.companies;
-  //     this.totalRecords = response.totalRecords;
-  //     this.tempData = response.companies;
-  //     // Initialize filtered data
-  //     this.filteredData = [...this.companies];
-      
-  //     console.log("all liv data",this.companies);
-
-
-  //     // Count the number of companies with status "Awaiting Approved"
-  //     this.awaitingApprovedCount = this.companies.filter(company => company.status === "Awaiting Approved").length;
-  //     console.log("Count of 'Awaiting Approved' companies:", this.awaitingApprovedCount);
-
-
-  //     // Calculate the total number of pages
-  //     this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
-
-  //     // Update pagination and page data
-  //     this.updatePagination();
-  //     // this.updatePageData();
-      
-
-  //     this.loading = false;
-  //   }, error => {
-  //     console.error('Error fetching companies', error);
-  //     this.loading = false;
-  //   });
-  // }
  
-
   goToPage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.pageNumber = page;
