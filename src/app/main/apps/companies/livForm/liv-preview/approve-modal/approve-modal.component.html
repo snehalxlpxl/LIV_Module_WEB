@@ -8,9 +8,9 @@
 </div>
 <div class="modal-body">
     <div class="form-group">
-        <label for="approvalSource">Approval Source</label>
-        <select class="form-control" id="approvalSource">
-            <option *ngFor="let source of approvalSources" [value]="source">{{ source }}</option>
+        <label for="approvalSource">Document</label>
+        <select class="form-control" id="approvalSource" [(ngModel)]="selectedSource" (change)="onSourceChange($event)">
+          <option *ngFor="let source of approvalSources" [ngValue]="source">{{ source.value }}</option>
         </select>
     </div>
 
@@ -27,12 +27,12 @@
     
     <div class="form-group">
         <label for="notes">Notes</label>
-        <input type="text" class="form-control" id="notes" placeholder="Approval confirmed on {{ approvalSource }}">
+        <input type="text" class="form-control" id="notes" placeholder="Approval confirmed on {{ sourceName }}">
     </div>
     <hr>
     <div class="d-flex justify-content-end">
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
-        <button type="button" class="btn btn-success ml-2" [disabled]="!approvalSource || !selectedFile"
+        <button type="button" class="btn btn-success ml-2" [disabled]="!selectedSource || !selectedFile" 
             (click)="confirmApproval()">Confirm Approval</button>
     </div>
 

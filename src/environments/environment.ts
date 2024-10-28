@@ -20,3 +20,5 @@ export const environment = {
   // apiUrl: 'http://localhost:5269/api'
 
   // apiUrl: 'http://108.181.191.121:5054/api'
+
+  //Remote UI path 'http://dev.fretlog.com

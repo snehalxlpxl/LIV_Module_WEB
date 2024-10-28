@@ -4,6 +4,8 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { ApproveModalService } from '../../approve-modal/approve-modal.service';
 import { CreditLimitReqListService } from '../../../credit-limit-req-list/credit-limit-req-list.service';
+import { LivDocumentUploadService } from './liv-document-upload.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -14,25 +16,35 @@ import { CreditLimitReqListService } from '../../../credit-limit-req-list/credit
 export class LivDocumentUploadComponent implements OnInit {
 
   @Input() livRequestId: number;
-  approvalSource: string = 'Whatsapp'; // Default approval source
-  approvalSources: string[] = ['Whatsapp', 'Email', 'Phone Call', 'Other'];
+  @Input() documentId: number;
+  selectedSourceId: any;
+  uploadForm: FormGroup;
+  // approvalSource: string = 'Whatsapp'; // Default approval source
+  // approvalSources: string[] = ['Whatsapp', 'Email', 'Phone Call', 'Other'];
+  selectedSource: { id: number; value: string } | null = null; // Initialize as null
+
+  approvalSources = [
+    { id: 1, value: 'Whatsapp' },
+    { id: 2, value: 'Email' },
+    { id: 3, value: 'Phone Call' },
+    { id: 4, value: 'Other' }
+  ];
+  
   notes: string = ''; 
+  sourceName:string='';
   selectedFile: File | null = null;
-  selectedFileName: string = '';
+  selectedFileName: string = 'No file chosen';
   userName: any;
   userId: any;
-  LIVRequestId: any;
   approverId: number;
 
-  constructor(public activeModal: NgbActiveModal,private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService) {}
+  constructor(public activeModal: NgbActiveModal,private LivDocumentUploadSer:LivDocumentUploadService,private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService,private fb: FormBuilder) {
+    this.selectedSource = this.approvalSources[0]; 
+  }
 
 
   ngOnInit(): void {
     const userData = JSON.parse(localStorage.getItem('currentUser'));
-
-    this.LIVRequestId = this.route.snapshot.paramMap.get('id');
-    console.log("this.LIVRequestId",this.LIVRequestId)
-
     if (userData) {
       this.userName = userData.userName;
       this.userId = userData.userId;
@@ -41,6 +53,12 @@ export class LivDocumentUploadComponent implements OnInit {
     }
     this.fetchApprover(this.userId);
     this.checkIfDelegate(this.userId);
+    this.getDocumentsById();
+
+    this.uploadForm = this.fb.group({
+      approvalSource: [''],
+      selectedFileName: ['']
+    });
   }
 
   // Method to handle file selection
@@ -50,6 +68,20 @@ export class LivDocumentUploadComponent implements OnInit {
   //     this.selectedFileName = this.selectedFile.name;
   //   }
   // }
+
+  // Method to handle the change event
+  SourceId:number;
+  // Method to handle the change event
+  onSourceChange(event: Event): void {
+    const selectedValue = this.selectedSource; // Now this holds the selected object
+    console.log('Selected Source ID:', selectedValue?.id);
+    this.SourceId=selectedValue?.id;
+    console.log('Selected Source Value:', selectedValue?.value);
+    this.sourceName=selectedValue?.value;
+
+    // Perform any additional logic you need here
+  }
+
   onFileSelect(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
@@ -75,7 +107,7 @@ export class LivDocumentUploadComponent implements OnInit {
   // Method to confirm approval with selected data
   
 
-confirmApproval(): void {
+UploadLivDoc(): void {
   // Display confirmation dialog
   Swal.fire({
     title: 'Are you sure?',
@@ -89,32 +121,26 @@ confirmApproval(): void {
     if (result.isConfirmed) {
       // If user confirms the approval
       const approvalData = {
-        ApprovalSource: this.approvalSource,
+        SourceId: this.SourceId,
         ApprovalFileName: this.selectedFileName,
+        SorceName:this.sourceName ,
         UserId: this.userId,
         ApproverId:this.approverId,
         Status:"Approved",
         RejectReason:"",
         livrequestId:this.livRequestId,
-        Note: this.notes || `Approval confirmed on ${this.approvalSource}`
+        // Note: this.notes || `Approval confirmed on ${this.approvalSource}`
       };
       console.log(approvalData);
 
-      this.ApproveModalSer.uploadFile(this.selectedFile).subscribe(
-        (fileResponse) => {
-         
-          this.ApproveModalSer.updateApprovalTaskForDelegate(approvalData).subscribe(
-            (res) => {
-              console.log('Task updated successfully', res);
-              window.location.reload();
-            },
-            (err) => {
-              console.error('Error updating task', err);
-            }
-          );
+      this.LivDocumentUploadSer.livUploadFile3(this.selectedFile,this.livRequestId,this.userId,this.sourceName,this.SourceId).subscribe(
+        (response) => {
+          Swal.fire('Confirmed!', 'Your document has been uploaded and path saved.', 'success');
+          this.activeModal.close(response);
         },
-        (fileErr) => {
-          console.error('Error uploading file', fileErr);
+        (error) => {
+          console.error('Error uploading file', error);
+          Swal.fire('Error!', 'File upload failed. Please try again.', 'error');
         }
       );
       // Perform any actions like uploading the file or API calls, then close modal
@@ -122,7 +148,7 @@ confirmApproval(): void {
       this.activeModal.close(approvalData);
 
       // Optionally show success message
-      Swal.fire('Confirmed!', 'Your approval has been confirmed.', 'success');
+      Swal.fire('Confirmed!', 'Your Document Uploaded Successfully', 'success');
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       // If user cancels, show cancellation message
       Swal.fire('Cancelled', 'Approval was not confirmed.', 'error');
@@ -161,5 +187,18 @@ isDelegate: boolean = false;
     });
   }
 
+  documents: any[] = [];
+  getDocumentsById(): void {
+    this.LivDocumentUploadSer.getDocumentsById(this.livRequestId, this.documentId).subscribe(
+      (data) => {
+        this.uploadForm.patchValue({
+          selectedFileName: data[0]?.documentName || 'No file chosen'
+        });
+      },
+      (error) => {
+        console.error('Error fetching document data', error);
+      }
+    );
+  }
 
 }

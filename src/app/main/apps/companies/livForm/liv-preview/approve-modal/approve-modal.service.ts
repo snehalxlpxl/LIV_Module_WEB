@@ -14,7 +14,7 @@ export class ApproveModalService {
     const formData = new FormData();
     formData.append('file', file, file.name);
   
-    return this.http.post(`${environment.apiUrl}/Customer/uploadFile`, formData);
+    return this.http.post(`${environment.apiUrl}/Customer/LivDocUploadFile`, formData);
   }
   updateApprovalTaskForDelegate(updateTask: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}/Customer/updateApprovalTaskForDelegate`, updateTask);

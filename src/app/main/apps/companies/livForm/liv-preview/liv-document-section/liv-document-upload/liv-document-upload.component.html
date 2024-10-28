@@ -1,41 +1,51 @@
-
 <div class="modal-header">
     <h5 class="modal-title">
-        <i class="feather icon-map-pin" style="font-size: 16px; margin-right: 8px;"></i>
-        <span class="">Upload Approval Proof</span>
+      <i class="feather icon-map-pin" style="font-size: 16px; margin-right: 8px;"></i>
+      <span>Upload Document</span>
     </h5>
-    <p class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true"
-        class="cursor-pointer"> × </p>
-</div>
-<div class="modal-body">
+    <button class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true">
+      &times;
+    </button>
+  </div>
+  
+  <div class="modal-body">
     <div class="form-group">
-        <label for="approvalSource">Approval Source</label>
-        <select class="form-control" id="approvalSource">
-            <option *ngFor="let source of approvalSources" [value]="source">{{ source }}</option>
+        <label for="approvalSource">Document</label>
+        <select class="form-control" id="approvalSource" [(ngModel)]="selectedSource" (change)="onSourceChange($event)">
+          <option *ngFor="let source of approvalSources" [ngValue]="source">{{ source.value }}</option>
         </select>
-    </div>
-
+      </div>
+      
+  
+  
     <div class="form-group">
-        <label for="fileUpload">File</label>
-        <div class="input-group">
-            <input type="text" class="form-control" [value]="selectedFileName || 'No file chosen'" readonly>
-            <div class="input-group-append">
-                <button class="btn btn-gradient-primary ml-1" type="button" (click)="fileInput.click()">Choose File</button>
-                <input type="file" class="d-none" id="fileUpload" #fileInput (change)="onFileSelect($event)" accept=".pdf,.jpeg,.jpg,.png,.eml">
-            </div>
+      <label for="fileUpload">File</label>
+      <div class="input-group">
+        <input type="text" class="form-control" [value]="selectedFileName || 'No file chosen'" readonly />
+        <div class="input-group-append">
+          <button class="btn btn-gradient-primary" type="button" (click)="fileInput.click()">Choose File</button>
+          <input
+            type="file"
+            class="d-none"
+            id="fileUpload"
+            #fileInput
+            (change)="onFileSelect($event)"
+            accept=".pdf, .jpeg, .jpg, .png, .eml"
+          />
         </div>
+      </div>
     </div>
-    
-    <div class="form-group">
-        <label for="notes">Notes</label>
-        <input type="text" class="form-control" id="notes" placeholder="Approval confirmed on {{ approvalSource }}">
-    </div>
-    <hr>
+  
+    <hr />
+  
     <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
-        <button type="button" class="btn btn-success ml-2" [disabled]="!approvalSource || !selectedFile"
-            (click)="confirmApproval()">Confirm Approval</button>
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+      <button type="button" 
+        class="btn btn-success ml-2" 
+        [disabled]="!selectedSource || !selectedFile" 
+        (click)="UploadLivDoc()">
+  Upload Document
+</button>
     </div>
-
-    <div class="text-center mt-1 mb-1"><span class="badge badge-secondary " style="font-size: 12px;">{{message}}</span></div>
-</div>
+  </div>
+  
