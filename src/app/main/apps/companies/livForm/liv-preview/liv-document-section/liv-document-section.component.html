@@ -1,2 +1,15 @@
-<p>liv-document-section works!</p>
-<button class="btn btn-success mr-1" type="submit" (click)="openApproveModal(LIVRequestId)" ><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i> Upload Documents</button>
+<div class="row">
+    <div class="card-body shadow rounded-corners">
+        <button class="btn btn-success mr-1" type="submit" (click)="openApproveModal(LIVRequestId)" ><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i> Upload Documents</button>
+
+        <div *ngIf="documents.length > 0">
+            <h5>Uploaded Documents</h5>
+            <ul>
+                <li *ngFor="let doc of documents">
+                    <a [href]="doc.documentPath" target="_blank">{{ doc.documentName }}</a>
+                    <span> - Uploaded on {{ doc.uploadedDate | date:'short' }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

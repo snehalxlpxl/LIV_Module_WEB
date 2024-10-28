@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { ApproveModalService } from './approve-modal.service';
 import { ActivatedRoute } from '@angular/router';
 import { CreditLimitReqListService } from '../../credit-limit-req-list/credit-limit-req-list.service';
+import { LivDocumentUploadService } from '../liv-document-section/liv-document-upload/liv-document-upload.service';
 
 @Component({
   selector: 'app-approve-modal',
@@ -22,7 +23,7 @@ export class ApproveModalComponent implements OnInit {
   LIVRequestId: any;
   approverId: number;
 
-  constructor(public activeModal: NgbActiveModal,private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService) {}
+  constructor(public activeModal: NgbActiveModal,private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService,private LivDocumentUploadSer:LivDocumentUploadService) {}
 
 
   ngOnInit(): void {
@@ -98,7 +99,11 @@ confirmApproval(): void {
       };
       console.log(approvalData);
 
-      this.ApproveModalSer.uploadFile(this.selectedFile).subscribe(
+      //
+
+
+      //
+      this.LivDocumentUploadSer.livUploadFile(this.selectedFile,this.livRequestId,this.userId).subscribe(
         (fileResponse) => {
          
           this.ApproveModalSer.updateApprovalTaskForDelegate(approvalData).subscribe(

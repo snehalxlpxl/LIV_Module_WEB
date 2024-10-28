@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { ApproveModalService } from '../../approve-modal/approve-modal.service';
 import { CreditLimitReqListService } from '../../../credit-limit-req-list/credit-limit-req-list.service';
+import { LivDocumentUploadService } from './liv-document-upload.service';
 
 
 @Component({
@@ -21,18 +22,13 @@ export class LivDocumentUploadComponent implements OnInit {
   selectedFileName: string = '';
   userName: any;
   userId: any;
-  LIVRequestId: any;
   approverId: number;
 
-  constructor(public activeModal: NgbActiveModal,private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService) {}
+  constructor(public activeModal: NgbActiveModal,private LivDocumentUploadSer:LivDocumentUploadService,private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService) {}
 
 
   ngOnInit(): void {
     const userData = JSON.parse(localStorage.getItem('currentUser'));
-
-    this.LIVRequestId = this.route.snapshot.paramMap.get('id');
-    console.log("this.LIVRequestId",this.LIVRequestId)
-
     if (userData) {
       this.userName = userData.userName;
       this.userId = userData.userId;
@@ -41,6 +37,7 @@ export class LivDocumentUploadComponent implements OnInit {
     }
     this.fetchApprover(this.userId);
     this.checkIfDelegate(this.userId);
+    // this.getDocumentsList();
   }
 
   // Method to handle file selection
@@ -91,30 +88,24 @@ confirmApproval(): void {
       const approvalData = {
         ApprovalSource: this.approvalSource,
         ApprovalFileName: this.selectedFileName,
+
         UserId: this.userId,
         ApproverId:this.approverId,
         Status:"Approved",
         RejectReason:"",
         livrequestId:this.livRequestId,
-        Note: this.notes || `Approval confirmed on ${this.approvalSource}`
+        // Note: this.notes || `Approval confirmed on ${this.approvalSource}`
       };
       console.log(approvalData);
 
-      this.ApproveModalSer.uploadFile(this.selectedFile).subscribe(
-        (fileResponse) => {
-         
-          this.ApproveModalSer.updateApprovalTaskForDelegate(approvalData).subscribe(
-            (res) => {
-              console.log('Task updated successfully', res);
-              window.location.reload();
-            },
-            (err) => {
-              console.error('Error updating task', err);
-            }
-          );
+      this.LivDocumentUploadSer.livUploadFile(this.selectedFile,this.livRequestId,this.userId).subscribe(
+        (response) => {
+          Swal.fire('Confirmed!', 'Your document has been uploaded and path saved.', 'success');
+          this.activeModal.close(response);
         },
-        (fileErr) => {
-          console.error('Error uploading file', fileErr);
+        (error) => {
+          console.error('Error uploading file', error);
+          Swal.fire('Error!', 'File upload failed. Please try again.', 'error');
         }
       );
       // Perform any actions like uploading the file or API calls, then close modal
@@ -161,5 +152,5 @@ isDelegate: boolean = false;
     });
   }
 
-
+ 
 }
