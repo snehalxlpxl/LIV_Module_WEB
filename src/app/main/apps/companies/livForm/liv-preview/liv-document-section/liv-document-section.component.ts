@@ -41,6 +41,12 @@ export class LivDocumentSectionComponent implements OnInit {
     // Pass the LIVRequestId to the modal instance
     modalRef.componentInstance.livRequestId = LIVRequestId;
   }
+  BindApproveModal(LIVRequestId: number,documentId:number){
+    const modalRef = this.modalService.open(LivDocumentUploadComponent);
+    // Pass the LIVRequestId to the modal instance
+    modalRef.componentInstance.livRequestId = LIVRequestId;
+    modalRef.componentInstance.documentId = documentId;
+  }
 
   documents: any[] = [];
   getDocumentsList(): void {

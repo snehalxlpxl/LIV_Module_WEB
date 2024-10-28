@@ -13,8 +13,14 @@ import { LivDocumentUploadService } from '../liv-document-section/liv-document-u
 })
 export class ApproveModalComponent implements OnInit {
   @Input() livRequestId: number;
-  approvalSource: string = 'Whatsapp'; // Default approval source
-  approvalSources: string[] = ['Whatsapp', 'Email', 'Phone Call', 'Other'];
+  selectedSource: { id: number; value: string } | null = null; // Initialize as null
+
+  approvalSources = [
+    { id: 1, value: 'Whatsapp' },
+    { id: 2, value: 'Email' },
+    { id: 3, value: 'Phone Call' },
+    { id: 4, value: 'Other' }
+  ];
   notes: string = ''; 
   selectedFile: File | null = null;
   selectedFileName: string = '';
@@ -49,6 +55,19 @@ export class ApproveModalComponent implements OnInit {
   //     this.selectedFileName = this.selectedFile.name;
   //   }
   // }
+  SourceId:number;
+  sourceName:string
+  // Method to handle the change event
+  onSourceChange(event: Event): void {
+    const selectedValue = this.selectedSource; // Now this holds the selected object
+    console.log('Selected Source ID:', selectedValue?.id);
+    this.SourceId=selectedValue?.id;
+    console.log('Selected Source Value:', selectedValue?.value);
+    this.sourceName=selectedValue?.value;
+
+    // Perform any additional logic you need here
+  }
+
   onFileSelect(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
@@ -88,14 +107,14 @@ confirmApproval(): void {
     if (result.isConfirmed) {
       // If user confirms the approval
       const approvalData = {
-        ApprovalSource: this.approvalSource,
+        ApprovalSource: this.sourceName,
         ApprovalFileName: this.selectedFileName,
         UserId: this.userId,
         ApproverId:this.approverId,
         Status:"Approved",
         RejectReason:"",
         livrequestId:this.livRequestId,
-        Note: this.notes || `Approval confirmed on ${this.approvalSource}`
+        Note: this.notes || `Approval confirmed on ${this.sourceName}`
       };
       console.log(approvalData);
 
@@ -103,7 +122,7 @@ confirmApproval(): void {
 
 
       //
-      this.LivDocumentUploadSer.livUploadFile(this.selectedFile,this.livRequestId,this.userId).subscribe(
+      this.LivDocumentUploadSer.livUploadFile3(this.selectedFile,this.livRequestId,this.userId,this.sourceName,this.SourceId).subscribe(
         (fileResponse) => {
          
           this.ApproveModalSer.updateApprovalTaskForDelegate(approvalData).subscribe(

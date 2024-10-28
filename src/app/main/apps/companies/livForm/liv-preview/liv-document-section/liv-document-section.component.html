@@ -1,15 +1,113 @@
 <div class="row">
-    <div class="card-body shadow rounded-corners">
-        <button class="btn btn-success mr-1" type="submit" (click)="openApproveModal(LIVRequestId)" ><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i> Upload Documents</button>
-
+    <div class="card-body ">
+        
         <div *ngIf="documents.length > 0">
-            <h5>Uploaded Documents</h5>
-            <ul>
+            <!-- <h5>Uploaded Documents</h5> -->
+            <!-- <ul>
                 <li *ngFor="let doc of documents">
                     <a [href]="doc.documentPath" target="_blank">{{ doc.documentName }}</a>
                     <span> - Uploaded on {{ doc.uploadedDate | date:'short' }}</span>
                 </li>
-            </ul>
+            </ul> -->
+            <div class="row" id="basic-table">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header pt-1 pr-1 pl-1 pb-0">
+                        <h4 class="card-title">Uploaded Documents</h4>
+                        <button class="btn btn-success mr-1" type="submit" (click)="openApproveModal(LIVRequestId)" ><i class="feather icon-icon-file" style="font-size: 16px; margin-right: 8px;"></i> Upload Documents</button>
+
+                    </div>
+                    <div class="card-body">
+                      <!-- <p class="card-text">
+                        Using the most basic table Leanne Grahamup, here’s how <code>.table</code> -based tables look in
+                        Bootstrap. You can use any example of below table for your table and it can be use with any type of
+                        bootstrap tables.
+                      </p> -->
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Document Name</th>
+                            <th>Uploaded By</th>
+                            <th>Uploaded Date</th>
+                            <th>Source</th> 
+                            <!-- <th>Actions</th> -->
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr  *ngFor="let doc of documents">
+                            <td>
+                                <i class="feather icon-file" style="font-size: 16px; margin-right: 8px;"></i><span class="font-weight-bold"> <a [href]="doc.documentPath" target="_blank">{{ doc.documentName }}</a></span>
+                            </td>
+                            <td>{{ doc.userDisplayName  }}</td>
+                            <td>{{ doc.uploadedDate | date:'short' }}</td>
+                            <td><span class="badge badge-pill badge-light-primary mr-1">{{ doc.source  }}</span></td>
+
+                            <!-- <td>
+                              <div class="avatar-group">
+                                <div
+                                  data-toggle="tooltip"
+                                  data-popup="tooltip-custom"
+                                  placement="top"
+                                  container="body"
+                                  title=""
+                                  class="avatar pull-up my-0"
+                                  ngbTooltip="Lilian Nenez"
+                                >
+                                  <img src="assets/images/portrait/small/avatar-s-5.jpg" alt="Avatar" height="26" width="26" />
+                                </div>
+                                <div
+                                  data-toggle="tooltip"
+                                  data-popup="tooltip-custom"
+                                  placement="top"
+                                  container="body"
+                                  title=""
+                                  class="avatar pull-up my-0"
+                                  ngbTooltip="Alberto Glotzbach"
+                                >
+                                  <img src="assets/images/portrait/small/avatar-s-6.jpg" alt="Avatar" height="26" width="26" />
+                                </div>
+                                <div
+                                  data-toggle="tooltip"
+                                  data-popup="tooltip-custom"
+                                  placement="top"
+                                  container="body"
+                                  title=""
+                                  class="avatar pull-up my-0"
+                                  ngbTooltip="Alberto Glotzbach"
+                                >
+                                  <img src="assets/images/portrait/small/avatar-s-7.jpg" alt="Avatar" height="26" width="26" />
+                                </div>
+                              </div>
+                            </td> -->
+                            <!-- <td><span class="badge badge-pill badge-light-primary mr-1"></span></td> -->
+                            <!-- <td class="overflow-hidden">
+                              <div ngbDropdown container="body">
+                                <button type="button" class="btn btn-sm hide-arrow" ngbDropdownToggle data-toggle="dropdown">
+                                  <i data-feather="more-vertical"></i>
+                                </button>
+                                <div ngbDropdownMenu>
+                                    <a ngbDropdownItem href="javascript:void(0);" (click)="BindApproveModal(doc.livRequestId, doc.id)">
+                                        <i data-feather="edit-2" class="mr-50"></i>
+                                        <span>Edit</span>
+                                      </a>
+                                      <a ngbDropdownItem href="javascript:void(0);"
+                                    ><i data-feather="trash" class="mr-50"></i><span>Delete</span></a
+                                  >
+                                </div>
+                              </div>
+                            </td> -->
+                          </tr>
+                         
+                          
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
         </div>
     </div>
 </div>
