@@ -10,6 +10,7 @@ import { Company } from "../../customers/customer-list/company";
 import { CreditLimitRequestModalComponent } from "./credit-limit-request-modal/credit-limit-request-modal.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CreditLimitReqListService } from "./credit-limit-req-list.service";
+import { CustomerCreateService } from "../../customers/customer-create/customer-create.service";
 
 @Component({
   selector: 'app-credit-limit-req-list',
@@ -22,6 +23,7 @@ export class CreditLimitReqListComponent implements OnInit {
   public data: Company[];
   public rows: Company[];
   public tempData: Company[];
+  salesPerson:any;
 
   public tempFilterData: Company[];
   public selectedOption = 12 ;
@@ -30,7 +32,7 @@ export class CreditLimitReqListComponent implements OnInit {
   statusOptions = [
     { label: 'All Statuses', value: '' },
     { label: 'Approved', value: 'Approved' },
-    { label: 'Awaiting Approval', value: 'AwaitingApproval' },
+    { label: 'Awaiting Approval', value: 'Awaiting Approval' },
     { label: 'Rejected', value: 'Rejected' }
   ];
   selectedStatus: string = 'All Statuses';
@@ -59,7 +61,9 @@ export class CreditLimitReqListComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private apiService: CustomerCreateService,
+
   ) {}
 
   // Public Methods
@@ -298,6 +302,11 @@ export class CreditLimitReqListComponent implements OnInit {
     });
   }
  
- 
+  loadSalesPerson() {
+    this.apiService.getSalesPerson().subscribe((data: any[]) => {
+      this.salesPerson = new Map(data.map(item => [item.userId, item.userDisplayName]));
+      console.log("sales Person", this.salesPerson);
+    });
+  }
 
 }
