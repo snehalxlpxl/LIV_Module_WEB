@@ -79,3 +79,7 @@ i.code-icon {
 .collapse:not(.show) {
   display: block!important;
 }
+.toast.ngx-toastr {
+  opacity: 1 !important;      /* Ensures the toast is fully opaque */
+  color: #343a40;      /* Text color */
+}
