@@ -47,17 +47,15 @@ export class CreditLimitReqListService {
   //   return this.http.get<any>(`${environment.apiUrl}/Customer/liv/${this.userId}`, { params });
   // }
 
-  getLIVRequests(userid: number, pageNumber: number = 1, pageSize: number = 10, filter: string = ''): Observable<any> {
+  getLIVRequests(userid: number, pageNumber: number, pageSize: number, filter: string = ''): Observable<any> {
     // Set up query parameters for pagination and filtering
     let params = new HttpParams()
       .set('userid', userid)
       .set('pageNumber', pageNumber.toString())
-      .set('pageSize', pageSize.toString());
-
+      .set('pageSize', pageSize.toString())
+      .set('filter', filter);  // Add the filter parameter
     // Add filter to query params if it exists
-    if (filter) {
-      params = params.set('filter', filter);
-    }
+   
 
     // Send GET request with query parameters
     return this.http.get(`${environment.apiUrl}/LIVRequests/GetLIVRequestsProc`, { params });
