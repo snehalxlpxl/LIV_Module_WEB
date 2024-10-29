@@ -53,6 +53,7 @@ export class LivDocumentSectionComponent implements OnInit {
     this.LivDocumentUploadSer.getDocuments(this.LIVRequestId).subscribe(
       (response) => {
         this.documents = response;
+        
         console.log(" this.documents", this.documents);
       },
       (error) => {
