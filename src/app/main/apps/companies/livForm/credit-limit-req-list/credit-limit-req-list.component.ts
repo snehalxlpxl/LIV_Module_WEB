@@ -334,14 +334,16 @@ export class CreditLimitReqListComponent implements OnInit {
     );
   }
 
-  isDelegate: boolean = false;
+  // isDelegate: boolean = false;
+  isDelegate: boolean | null = null; 
   message:string;
   checkIfDelegate(userId: number) {
-
+    this.isDelegate = null;  // Set to null to trigger loading state
     this.CreditLimitReqListSer.isDelegate(userId).subscribe(response => {
       console.log("Delegate Info",response);
       this.isDelegate = response.isDelegate;
-      if(this.isDelegate==true){
+      // if(this.isDelegate==true){
+        if(this.isDelegate){
         this.CreditLimitReqListSer.getDelegatesApprover(userId).subscribe(response => {
         this.message=`You have logged in as delegate for Mr. `+response[0].approverName;
         });
