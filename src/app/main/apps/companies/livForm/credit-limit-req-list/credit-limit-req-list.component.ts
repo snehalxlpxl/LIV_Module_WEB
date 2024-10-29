@@ -123,6 +123,7 @@ export class CreditLimitReqListComponent implements OnInit {
  
     // this.loadCustomer();
     console.log("++++++++++++++++++++++",this.tempData);
+    this.loadSalesPerson();
 
 
     const userData = JSON.parse(localStorage.getItem('currentUser'));
@@ -358,5 +359,10 @@ export class CreditLimitReqListComponent implements OnInit {
     });
   }
 
+  getSalesPersonName(id: any): string {
+    console.log(id)
+    const salesPerson = this.salesPerson.find(person => person.id === id);
+    return salesPerson ? salesPerson.name : 'Unknown'; // Handle cases where ID is not found
+  }
   
 }

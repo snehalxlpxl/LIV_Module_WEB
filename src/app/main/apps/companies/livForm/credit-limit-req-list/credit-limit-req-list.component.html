@@ -155,11 +155,17 @@
               </ng-template>
             </ngx-datatable-column>
   
-            <ngx-datatable-column name="Sales Person" prop="salesPersonID" [width]="100">
+            <!-- <ngx-datatable-column name="Sales Person" prop="salesPersonID" [width]="100">
               <ng-template let-salesPersonID="value" ngx-datatable-cell-template>
                 {{ salesPersonID }}
               </ng-template>
+            </ngx-datatable-column> -->
+            <ngx-datatable-column name="Sales Person" prop="salesPersonID" [width]="100">
+              <ng-template let-salesPersonID="value" ngx-datatable-cell-template>
+                {{ salesPerson.get(salesPersonID) || 'Unknown' }}
+              </ng-template>
             </ngx-datatable-column>
+            
             <ngx-datatable-column name="Branch" prop="branchName" [width]="100">
               <ng-template let-branchName="value" ngx-datatable-cell-template>
                 {{ branchName }}
