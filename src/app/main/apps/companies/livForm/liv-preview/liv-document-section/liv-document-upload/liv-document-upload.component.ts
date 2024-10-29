@@ -137,6 +137,7 @@ UploadLivDoc(): void {
         (response) => {
           Swal.fire('Confirmed!', 'Your document has been uploaded and path saved.', 'success');
           this.activeModal.close(response);
+          window.location.reload();
         },
         (error) => {
           console.error('Error uploading file', error);

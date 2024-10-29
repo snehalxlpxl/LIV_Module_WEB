@@ -34,6 +34,7 @@ import { ConstantPool } from '@angular/compiler';
   ]
 })
 export class LivPreviewComponent implements OnInit {
+  loading: boolean = true;
   public currentUser: Observable<User>;
   private currentUserSubject: BehaviorSubject<User>;
   public get currentUserValue(): User {
@@ -138,9 +139,10 @@ export class LivPreviewComponent implements OnInit {
   showApprovalbtn=false;
   levelStatusFlag=false;
   loadLIVApprovalTasks(userId: number, LIVRequestId: number): void {
-   
+    this.loading = true;
     this.livRequestService.getLIVApprovalTasks(userId, LIVRequestId).subscribe(
       (tasks) => {
+        this.loading = false;
         this.approvalTasks = tasks;
         console.log('Approval Tasks line 136:', tasks);
         console.log("this.livRequest.Status",this.livRequest.status);
@@ -176,6 +178,7 @@ export class LivPreviewComponent implements OnInit {
         }
       },
       (error) => {
+        this.loading = false;
         console.error('Error fetching approval tasks:', error);
       }
     );
