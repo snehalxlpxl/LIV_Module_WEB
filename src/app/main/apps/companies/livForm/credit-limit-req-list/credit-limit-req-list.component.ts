@@ -62,9 +62,58 @@ export class CreditLimitReqListComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
-  // Public Methods
-  // -----------------------------------------------------------------------------------------------------
 
+  /**
+   * filterUpdate
+   *
+   * @param event
+   */
+  // filterUpdate1(event) {
+  //   const val = (event.target.value || "").toLowerCase();
+
+  //   // filter our data
+  //   const temp = this.tempData.filter((d) => {
+  //     return d.companyName.toLowerCase().includes(val) || !val;
+  //   });
+
+  //   // update the rows
+  //   this.rows = temp;
+  //   // Whenever the filter changes, always go back to the first page
+  //   if (this.table) {
+  //     this.table.offset = 0;
+  //   }
+  // }
+
+  // /**
+  //  * Filter By Status
+  //  *
+  //  * @param event
+  //  */
+  // filterByStatus1(event) {
+  //   const filter = event ? event.value : "";
+  //   this.previousStatusFilter = filter;
+  //   this.tempFilterData = this.filterRows(filter);
+  //   this.rows = this.tempFilterData;
+  // }
+
+  /**
+   * Filter Rows
+   *
+  //  * @param statusFilter
+  //  */
+  // filterRows(statusFilter): any[] {
+  //   // Reset search on select change
+  //   this.searchValue = "";
+
+  //   statusFilter = (statusFilter || "").toLowerCase();
+
+  //   return this.tempData.filter((row) => {
+  //     return (
+  //       row.companyApprovalStatus.toLowerCase().includes(statusFilter) ||
+  //       !statusFilter
+  //     );
+  //   });
+  // }
 
   ngOnInit(): void {
  
@@ -163,9 +212,9 @@ export class CreditLimitReqListComponent implements OnInit {
         this.totalRecords = response.totalRecords|| 0;
         this.tempData = response.companies|| [];
       // Initialize filtered data
-      // this.filteredData = [...this.livRequests];
+      this.filteredData = [...this.livRequests];
       console.log("all liv data",this.livRequests);
-      this.filterByStatus();
+      // this.filterByStatus();
 
       // Count the number of companies with status "Awaiting Approved"
       // this.awaitingApprovedCount = this.livRequests.filter(company => company.status === "Awaiting Approval").length;
@@ -250,10 +299,10 @@ export class CreditLimitReqListComponent implements OnInit {
     const val = (event.target.value || "").toLowerCase();
   
     // Make an API call to fetch filtered data from the server
-    this.CreditLimitReqListSer.getLIVRequests(this.pageNumber, this.pageSize, val).subscribe(
+    this.CreditLimitReqListSer.getLIVRequests(this.userId,this.pageNumber, this.pageSize, val).subscribe(
       (response: any) => {
         // Update the table data with the filtered data from the server
-        this.livRequests = response.companies;
+        this.livRequests = response.livrequest;
         this.totalRecords = response.totalRecords;
         this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
         this.updatePagination();
@@ -298,6 +347,5 @@ export class CreditLimitReqListComponent implements OnInit {
     });
   }
  
- 
-
+  
 }

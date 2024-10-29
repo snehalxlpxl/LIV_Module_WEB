@@ -76,12 +76,12 @@ export const menu: CoreMenu[] = [
         url: 'Vendors'
       },
       {
-        id: 'LIV',
+        id: 'livs',
         title: 'LIV Form',
-        translate: 'LIV',
+        translate: 'LIV Form',
         type: 'item',
         icon: 'arrow-right',
-        url: 'load-list'
+        url: 'credit-limit-req-list'
       }
 
     ]
