@@ -24,7 +24,8 @@
                         bootstrap tables.
                       </p> -->
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive ml-2 mb-3" *ngIf="documents.length==0"><h6>No documents Uploaded yet</h6></div>
+                    <div class="table-responsive" *ngIf="documents.length>0">
                       <table class="table">
                         <thead>
                           <tr>
