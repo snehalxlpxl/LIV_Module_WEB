@@ -57,7 +57,7 @@
                 <span class="close-big mx-1 flex-shrink-0 clickable" (click)="goBack()">×</span>
             </div> -->
 
-            <div class="col-lg-4 col-md-10 col-10 d-flex justify-content-end align-items-center flex-wrap text-right">
+            <div class="col-lg-4 col-md-10 col-10 d-flex justify-content-end align-items-center flex-wrap text-right" *ngIf="!isLoading">
               <!-- <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" > <span [data-feather]="'circle-minus'" [class]="'mr-25'"></span> Reject</button> -->
                 
               <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" *ngIf="!isSalesPersonOrCreatedBy && !levelStatusFlag"><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i> Reject</button>

@@ -51,7 +51,7 @@ export class LivPreviewComponent implements OnInit {
   // approverList = [113057, 113058, 113059, 113060, 113061, 113062];
   isCanceledStatus:any;
 
-  constructor(private navigationService: CustomerPreviewService, private modalService: NgbModal,private livRequestService: LivPreviewService, private livApproveService:LivApproveService,  private route: ActivatedRoute, private router: Router,private location: Location,  private activityNotificationService: ActivityNotificationService,    private cdr: ChangeDetectorRef,private CreditLimitReqListSer:CreditLimitReqListService) {
+  constructor(private navigationService: CustomerPreviewService, private modalService: NgbModal,private livRequestService: LivPreviewService, private livApproveService:LivApproveService,  private route: ActivatedRoute, private router: Router,private location: Location,  private activityNotificationService: ActivityNotificationService,    private changeDetector: ChangeDetectorRef,private CreditLimitReqListSer:CreditLimitReqListService) {
     const storedUser = localStorage.getItem('currentUser');
     this.currentUserSubject = new BehaviorSubject<User | null>(storedUser ? JSON.parse(storedUser) : null);
     this.currentUser = this.currentUserSubject.asObservable();
@@ -348,12 +348,9 @@ export class LivPreviewComponent implements OnInit {
           if (response && response.request) {
             this.isSalesPersonOrCreatedBy = true;  // Set flag to true if user is a salesperson or creator
             this.getLIVRequest(LIVRequestId);
-            this.cdr.detectChanges();
-
             console.log("this.livRequest.status",this.finalStatus)
                 if(this.finalStatus=='Awaiting Approval'){
-                  this.cdr.detectChanges();
-
+                  
                   this.StatusFlag=true;
                   console.log("this.livRequest.status========",this.StatusFlag)
                 }
@@ -362,8 +359,6 @@ export class LivPreviewComponent implements OnInit {
             
           } else {
             this.isSalesPersonOrCreatedBy = false;  // Otherwise, set flag to false
-            this.cdr.detectChanges();
-
           }
         },
         (error) => {
@@ -384,13 +379,9 @@ export class LivPreviewComponent implements OnInit {
           this.isSaleOrCreatedByApprover = true; // Set the flag if API call is successful
           this.requestData = response.request; // Store request data
           // this.loadLIVApprovalTasks(userId,LIVRequestId);
-          this.cdr.detectChanges();
-
           if(this.isSaleOrCreatedByApprover==true){
             if(this.livRequest.status=='Awaiting Approval'){
               this.levelStatusFlag=true;
-              this.cdr.detectChanges();
-
             }
         }
         },
