@@ -9,7 +9,6 @@ import { catchError } from 'rxjs/operators';
 })
 export class LivPreviewService {
 
-
   private apiUrl = `${environment.apiUrl}/LIVRequests`;
 
   constructor(private http: HttpClient) { }

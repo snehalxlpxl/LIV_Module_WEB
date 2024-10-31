@@ -59,8 +59,8 @@ export class LivPreviewOverviewSectionBasicDetailsComponent implements OnInit {
     // console.log("leadOwnerId:",leadOwnerId)
     this.leadService.getLeadOwner(leadOwnerId).subscribe(
       (ownerData) => {
-        this.salesPersonName = ownerData.userName; // Assuming the API returns the owner's name
-        // console.log(ownerData);
+        this.salesPersonName = ownerData.userDisplayName; // Assuming the API returns the owner's name
+        console.log("ownerData",ownerData);
       },
       (error) => {
         console.error('Error deleting lead:', error);

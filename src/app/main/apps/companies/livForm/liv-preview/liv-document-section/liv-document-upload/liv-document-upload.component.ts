@@ -21,7 +21,7 @@ export class LivDocumentUploadComponent implements OnInit {
   uploadForm: FormGroup;
   // approvalSource: string = 'Whatsapp'; // Default approval source
   // approvalSources: string[] = ['Whatsapp', 'Email', 'Phone Call', 'Other'];
-  selectedSource: { id: number; value: string } | null = null; // Initialize as null
+  // selectedSource: { id: number; value: string } | null = null; // Initialize as null
 
   approvalSources = [
     { id: 1, value: 'Whatsapp' },
@@ -29,7 +29,7 @@ export class LivDocumentUploadComponent implements OnInit {
     { id: 3, value: 'Phone Call' },
     { id: 4, value: 'Other' }
   ];
-  
+  selectedSource = this.approvalSources[0]; 
   notes: string = ''; 
   sourceName:string='';
   selectedFile: File | null = null;
@@ -39,9 +39,16 @@ export class LivDocumentUploadComponent implements OnInit {
   approverId: number;
 
   constructor(public activeModal: NgbActiveModal,private LivDocumentUploadSer:LivDocumentUploadService,private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService,private fb: FormBuilder) {
-    this.selectedSource = this.approvalSources[0]; 
-  }
+    // this.selectedSource = this.approvalSources[0]; 
+    this.initializeDocumentdrp();
 
+  }
+  initializeDocumentdrp(){
+    console.log('Selected Source ID:', this.approvalSources[0].id);
+      this.SourceId = this.approvalSources[0]?.id ?? 0; // Set a default in case of undefined
+      console.log('Selected Source Value:', this.approvalSources[0]?.value);
+      this.sourceName = this.approvalSources[0]?.value ?? '';
+  }
 
   ngOnInit(): void {
     const userData = JSON.parse(localStorage.getItem('currentUser'));
@@ -75,9 +82,9 @@ export class LivDocumentUploadComponent implements OnInit {
   onSourceChange(event: Event): void {
     const selectedValue = this.selectedSource; // Now this holds the selected object
     console.log('Selected Source ID:', selectedValue?.id);
-    this.SourceId=selectedValue?.id;
+    this.SourceId = selectedValue?.id ?? 0; // Set a default in case of undefined
     console.log('Selected Source Value:', selectedValue?.value);
-    this.sourceName=selectedValue?.value;
+    this.sourceName = selectedValue?.value ?? '';
 
     // Perform any additional logic you need here
   }
