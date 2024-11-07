@@ -11,7 +11,7 @@
                     </h2>
                     
                         <!-- <span></span> -->
-                        <span class="ml-1 badge badge-warning">{{livRequest.status}}</span> 
+                        <span class="ml-1 badge badge-warning md-font">{{livRequest.status}}</span> 
                         <!-- isSalesPersonOrCreatedBy={{isSalesPersonOrCreatedBy}}<br>
                         isSaleOrCreatedByApprover={{isSaleOrCreatedByApprover}}<br>
                         levelStatusFlag={{levelStatusFlag}}<br>
@@ -57,17 +57,17 @@
                     <span class="close-big mx-1 flex-shrink-0 clickable" (click)="goBack()">×</span>
                 </div> -->
 
-            <div class="col-lg-6 col-md-10  col-10 d-flex justify-content-end align-items-center flex-wrap text-right mar-left" >
+            <div class="col-lg-6 col-md-10 d-flex justify-content-end align-items-center flex-wrap text-right mar-left" >
               <!-- <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" > <span [data-feather]="'circle-minus'" [class]="'mr-25'"></span> Reject</button> -->
                 <div *ngIf="!loading">
-                        <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" *ngIf="!isSalesPersonOrCreatedBy && !levelStatusFlag"><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i> Reject</button>
+                        <button type="button" class="btn btn-outline-danger mr-1 md-font" (click)="openRejectModal()" *ngIf="!isSalesPersonOrCreatedBy && !levelStatusFlag"><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i> Reject</button>
 
-                        <button class="btn btn-success mr-1" type="submit" (click)="openApproveModal(LIVRequestId)" *ngIf="isDelegate && !levelStatusFlag"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i> Approve</button>
+                        <button class="btn btn-success mr-1 md-font" type="submit" (click)="openApproveModal(LIVRequestId)" *ngIf="isDelegate && !levelStatusFlag"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i> Approve</button>
                         
-                        <button class="btn btn-success" type="submit" (click)="onSubmit()" *ngIf="!isSalesPersonOrCreatedBy && !isDelegate && !levelStatusFlag"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i>Approve</button>
+                        <button class="btn btn-success md-font" type="submit" (click)="onSubmit()" *ngIf="!isSalesPersonOrCreatedBy && !isDelegate && !levelStatusFlag"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i>Approve</button>
                     
                         <!-- <button type="button" class="btn btn-danger ml-1 mr-1" (click)="cancelLivRequest(LIVRequestId,userId)"  *ngIf="(isSalesPersonOrCreatedBy || isSaleOrCreatedByApprover) && (livRequest.status=='Awaiting Approval' || !levelStatusFlag) "><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i>  Cancel Request</button> -->
-                        <button type="button" class="btn btn-danger ml-1 mr-1" (click)="cancelLivRequest(LIVRequestId,userId)"  *ngIf="(isSalesPersonOrCreatedBy || isSaleOrCreatedByApprover) && 
+                        <button type="button" class="btn btn-danger ml-1 mr-1 md-font" (click)="cancelLivRequest(LIVRequestId,userId)"  *ngIf="(isSalesPersonOrCreatedBy || isSaleOrCreatedByApprover) && 
                         (livRequest.status === 'Awaiting Approval' || !levelStatusFlag) && 
                         livRequest.status !== 'Approved' && 
                         livRequest.status !== 'Canceled' && 
@@ -80,7 +80,7 @@
         </div>
 
             <div class="pl-1 f-pills">
-                <div class="overview">
+                <div class="overview md-font">
                     <ul ngbNav #nav="ngbNav" class="nav nav-pills p-0">
                         <li ngbNavItem>
                             <a ngbNavLink (click)="setComponent('overview')"
@@ -101,7 +101,7 @@
             </div>
         </div>
 
-        <div class="mt-1 f-preview-overview-content" >
+        <div class="mt-1 f-preview-overview-content md-font-component" >
             <app-liv-preview-overview-section *ngIf="currentComponent === 'overview'"  @fade></app-liv-preview-overview-section>
             <app-liv-preview-timeline-section *ngIf="currentComponent === 'timeline'"  @fade></app-liv-preview-timeline-section>
             <app-liv-document-section *ngIf="currentComponent === 'documents'"  @fade></app-liv-document-section>
