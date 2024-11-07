@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable, throwError } from 'rxjs';
@@ -66,5 +66,51 @@ export class LivPreviewService {
     const url = `${environment.apiUrl}/LIVRequests/CheckUserSalesPersonOrCreatedByApprover/${userId}/${LIVRequestId}`;
     return this.http.get<any>(url);
   }
-  
+  // private baseUrl =  'http://localhost:5116/api/CountProfitReport';
+  private baseUrl = 'http://108.181.191.121:5053/api/CountProfitReport';
+// Method to get Count by Company
+getCountByCompany(companyId: any): Observable<any> {
+  const url = `${this.baseUrl}/CountByCompany/${companyId}`;
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json', // Add any other headers Swagger might use
+  });
+  return this.http.get<any>(url).pipe(
+    catchError(this.handleError)
+  );
+}
+
+// Method to get Sum of Realized Revenue
+getSumRealizedRevenue(companyId: any): Observable<any> {
+  const url = `${this.baseUrl}/SumRealizedRevenue/${companyId}`;
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json', // Add any other headers Swagger might use
+  });
+  return this.http.get<any>(url).pipe(
+    catchError(this.handleError)
+  );
+}
+
+// Method to get Sum of Realized Revenue for the Last 60 Days
+getSumOfRealizedRevenueLast60Days(companyId: any): Observable<any> {
+  const url = `${this.baseUrl}/SumOfRealizedRevenueLast60Days/${companyId}`;
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json', // Add any other headers Swagger might use
+  });
+  return this.http.get<any>(url).pipe(
+    catchError(this.handleError)
+  );
+}
+
+// Method to get Sum of Realized Revenue for the Last N Days
+getSumOfRealizedRevenueLastNDays(companyId: number, days: number): Observable<any> {
+  const url = `${this.baseUrl}/SumOfRealizedRevenueLastNDays/${companyId}/${days}`;
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json', // Add any other headers Swagger might use
+  });
+  return this.http.get<any>(url).pipe(
+    catchError(this.handleError)
+  );
+}
+
+
 }

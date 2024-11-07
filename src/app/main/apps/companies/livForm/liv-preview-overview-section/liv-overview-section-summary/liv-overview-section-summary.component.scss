@@ -77,3 +77,22 @@ h6 {
     padding: 8px 12px;
     border-radius: 8px;
 }
+.title-container h4 {
+    /* Allow text to wrap to a new line if it doesn’t fit */
+    white-space: normal;
+    word-break: break-word;
+    text-align: left; /* Ensures text aligns to the left within the container */
+    line-height: 1.2; /* Adjusts spacing between lines if wrapping occurs */
+    margin: 0; /* Removes any extra margin */
+}
+.sub-title {
+    font-size: 0.9rem; /* Adjust to a smaller size */
+    font-weight: normal; /* Remove bold if not needed */
+    color: #666; /* Example color */
+    margin-left: 5px; /* Optional: spacing between title and subtitle */
+    /* Add any other styling you need */
+}
+.avatar-icon {
+    width: 50px;    /* Adjust to desired width */
+    height: 50px;   /* Adjust to desired height */
+}
