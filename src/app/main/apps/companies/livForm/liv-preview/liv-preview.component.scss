@@ -15,7 +15,12 @@
     .customer-list-wrapper h2 {
       font-size: 1.25rem;
     }
-  
+  .md-font{
+    font-size: 11px!important;
+  }
+  .md-font ul li a,.md-font-component{
+    font-size: 12px!important;
+  }
     .customer-list-wrapper .btn {
       font-size: 0.85rem;
       padding: 0.25rem 0.5rem;
@@ -35,6 +40,11 @@
   }
   @media (min-width: 1441px) {
     .mar-left{
-      margin-left: -98px!important;
+      margin-left: -120px!important;
+    }
+  }
+  @media (min-width: 1024px) and (max-width: 1024px) and (min-height: 600px) and (max-height: 600px) {
+    .mar-left {
+      margin-left: 80px !important;
     }
   }
