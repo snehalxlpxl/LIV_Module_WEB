@@ -32,7 +32,6 @@
             <ngx-datatable-column name="Customer" prop="companyName" [width]="210">
               <ng-template let-row="row" ngx-datatable-cell-template>
                 <a [routerLink]="['/lead/preview', row.leadId]" class="font-weight-bold">
-                <!-- {{ row.companyName }} -->
                 {{ row.companyName.length > 20 ? (row.companyName | slice:0:20) + '...' : row.companyName }}
               </a>
               </ng-template>

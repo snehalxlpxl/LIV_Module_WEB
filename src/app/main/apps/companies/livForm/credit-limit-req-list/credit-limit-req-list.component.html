@@ -149,9 +149,11 @@
             
             <ngx-datatable-column name="Company Name" prop="customerName" [width]="200">
               <ng-template ngx-datatable-cell-template let-customerName="value" let-row="row">
-                <a [routerLink]="['/liv-preview', row['livRequestId']]" class="font-weight-bold text-truncate ">
-                  <!-- {{ customerName}} -->
-                  {{ customerName.length > 20 ? (customerName | slice:0:25) + '...' : customerName}}
+                <a [routerLink]="['/liv-preview', row['livRequestId']]"  
+                class="font-weight-bold text-truncate ellipsis-text"  title="{{customerName}}"
+                [style.width.px]="220">
+                  {{ customerName}}
+                  <!-- {{ customerName.length > 20 ? (customerName | slice:0:25) + '...' : customerName}} -->
                 </a>
               </ng-template>
             </ngx-datatable-column>
@@ -161,7 +163,7 @@
                 {{ salesPersonID }}
               </ng-template>
             </ngx-datatable-column> -->
-            <ngx-datatable-column name="Sales Person" prop="salesPersonID" [width]="100">
+            <ngx-datatable-column name="Sales Person" prop="salesPersonID" [width]="120">
               <ng-template let-salesPersonID="value" ngx-datatable-cell-template>
                 {{ salesPerson.get(salesPersonID) || 'Unknown' }}
               </ng-template>
@@ -178,15 +180,28 @@
                 {{ creditLimit }}
               </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="Term" prop="creditTerms" [width]="100">
+            <ngx-datatable-column name="Term" prop="creditTerms" [width]="80">
               <ng-template let-creditTerms="value" ngx-datatable-cell-template>
                 {{ creditTerms }}
               </ng-template>
             </ngx-datatable-column>
+            <ngx-datatable-column name="Requested Date" prop="requestedDate" [width]="100">
+              <ng-template let-requestedDate="value" ngx-datatable-cell-template>
+                {{ requestedDate | date: 'dd MM yyyy HH:mm'  }}
+              </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column name="Status" prop="status" [width]="100">
-              <ng-template let-status="value" ngx-datatable-cell-template>
-                <span class="badge badge-light-warning">
-                  {{ status }}
+              <ng-template  let-row="row" ngx-datatable-cell-template>
+                <span 
+                [ngClass]="{
+                  'badge-custom': true,
+                  'badge-success badge-light-success': row.status === 'Approved',
+                  'badge-danger badge-light-danger': row.status === 'Rejected',
+                  'badge-warning badge-light-warning': row.status === 'Canceled',
+                  'badge-info badge-light-info': row.status === 'Awaiting Approval'
+                }"
+                >
+                  {{ row.status }}
                 </span>
               </ng-template>
             </ngx-datatable-column>
