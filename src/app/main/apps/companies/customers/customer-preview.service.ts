@@ -31,6 +31,8 @@ export class CustomerPreviewService {
    * @returns {Observable<any> | Promise<any> | any}
    */
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
+    this.setComponent('overview');
+    
     let currentId = Number(route.paramMap.get('id'));
     return new Promise<void>((resolve, reject) => {
       Promise.all([this.getApiData(currentId)]).then(() => {

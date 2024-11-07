@@ -145,6 +145,7 @@ export class CreditLimitRequestModalComponent implements OnInit {
   
     const selectedValue = event ? event.userDisplayName : '';
     this.CreditLimitReqForm.get('salePersonName').setValue(selectedValue);
+   
   }
  
   onChangeBranch(event: any) {
