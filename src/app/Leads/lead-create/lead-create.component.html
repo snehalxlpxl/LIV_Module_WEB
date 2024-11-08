@@ -656,7 +656,8 @@
                                                                 <input type="text" id="website"
                                                                     formControlName="website" class="form-control"
                                                                     placeholder="Website"
-                                                                    [ngClass]="{'is-invalid': leadForm.get('website')?.invalid && leadForm.get('website')?.touched ||submitted }" />
+                                                                    [ngClass]="{'is-invalid': leadForm.get('website')?.invalid && leadForm.get('website')?.touched}" 
+                                                                    />
                                                                 <div *ngIf="leadForm.get('website')?.invalid && leadForm.get('website')?.touched"
                                                                     class="invalid-feedback">
                                                                     <div

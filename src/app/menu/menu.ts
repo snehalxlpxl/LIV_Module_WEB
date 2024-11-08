@@ -19,6 +19,14 @@ export const menu: CoreMenu[] = [
     url: 'Calendar'
   },
   {
+    id: 'livs',
+    title: 'LIV Form',
+    translate: 'LIV Form',
+    type: 'item',
+    icon: 'arrow-right',
+    url: 'credit-limit-req-list'
+  },
+  {
     id: 'Task',
     type: 'collapsible',
     title: 'Tasks',
@@ -74,15 +82,8 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'shopping-bag',
         url: 'Vendors'
-      },
-      {
-        id: 'livs',
-        title: 'LIV Form',
-        translate: 'LIV Form',
-        type: 'item',
-        icon: 'arrow-right',
-        url: 'credit-limit-req-list'
       }
+      
 
     ]
   },
