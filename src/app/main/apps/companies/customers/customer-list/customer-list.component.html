@@ -62,6 +62,7 @@
             <ngx-datatable
             class="bootstrap core-bootstrap"
           [rows]="companies"
+          [rowHeight]="40"
           [count]="totalRecords"
           [offset]="pageNumber - 1"
           [limit]="pageSize"
@@ -100,7 +101,7 @@
     
               <ngx-datatable-column name="Status" prop="companyApprovalStatus" [width]="100">
                 <ng-template let-companyApprovalStatus="value" ngx-datatable-cell-template>
-                  <span class="badge badge-success">
+                  <span class="badge-success badge-light-success badge-custom">
                     {{ companyApprovalStatus }}
                   </span>
                 </ng-template>

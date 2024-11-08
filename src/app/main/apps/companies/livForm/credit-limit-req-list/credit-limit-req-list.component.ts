@@ -206,7 +206,7 @@ export class CreditLimitReqListComponent implements OnInit {
   totalRecords: number = 0;
   totalRecords2: any[]=[]
   pageNumber: number = 1;
-  pageSize: number = 12;
+  pageSize: number = 10;
   totalPages: number = 0;
   pages: number[] = [];
 

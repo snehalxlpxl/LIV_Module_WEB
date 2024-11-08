@@ -131,13 +131,14 @@
           <ngx-datatable
           class="bootstrap core-bootstrap"
         [rows]="livRequests"
+        [rowHeight]="40" 
         [count]="totalRecords"
         [offset]="pageNumber - 1"
         [limit]="pageSize"
         [loadingIndicator]="loading"
         [columnMode]="ColumnMode.force"
         [headerHeight]="50"
-        [footerHeight]="30"
+        [footerHeight]="50"
         [scrollbarH]="true"
         (page)='onPage($event)'>
             <!-- <ngx-datatable-column name="ID" prop="companyId" [width]="50">
@@ -168,13 +169,13 @@
               </ng-template>
             </ngx-datatable-column>
             
-            <ngx-datatable-column name="Branch" prop="branchName" [width]="100">
+            <ngx-datatable-column name="Branch" prop="branchName" [width]="80">
               <ng-template let-branchName="value" ngx-datatable-cell-template>
                 {{ branchName }}
               </ng-template>
             </ngx-datatable-column>
            
-            <ngx-datatable-column name="Limit" prop="creditLimit" [width]="100">
+            <ngx-datatable-column name="Limit" prop="creditLimit" [width]="80">
               <ng-template let-creditLimit="value" ngx-datatable-cell-template>
                 {{ creditLimit }}
               </ng-template>
@@ -189,9 +190,9 @@
                 {{ requestedDate | date: 'dd / MM / yyyy HH:mm'  }}
               </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="Status" prop="status" [width]="100">
+            <ngx-datatable-column name="Status" prop="status" [width]="120">
               <ng-template  let-row="row" ngx-datatable-cell-template>
-                <span 
+                <span
                 [ngClass]="{
                   'badge-custom': true,
                   'badge-success badge-light-success': row.status === 'Approved',
