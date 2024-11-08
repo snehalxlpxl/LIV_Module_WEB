@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 // import { Company } from '../customer-list/company';
 // import { CompanyInfo } from './customer-create-model/CustomerInfo';
 
@@ -28,14 +28,37 @@ export class CustomerCreateService {
     return this.http.get<any[]>(`${environment.apiUrl}/Customer/creditDays`);
   }
  
+  // getCompanies(searchTerm?: string): Observable<any[]> {
+  //   let url = `${environment.apiUrl}/Customer/cust`;
+  //   // if (searchTerm) {
+  //   //   url += `?search=${searchTerm}`;
+  //   // }
+  //   return this.http.get<any[]>(url);
+  // }
+  private readonly storageKey = 'companiesCache';
   getCompanies(searchTerm?: string): Observable<any[]> {
+    const cachedData = localStorage.getItem(this.storageKey);
+
+    // If no search term and cached data is available, return cached data
+    if (!searchTerm && cachedData) {
+      return of(JSON.parse(cachedData));
+    }
+
+    // Define the API URL and add search term if provided
     let url = `${environment.apiUrl}/Customer/cust`;
-    // if (searchTerm) {
-    //   url += `?search=${searchTerm}`;
-    // }
-    return this.http.get<any[]>(url);
+    if (searchTerm) {
+      url += `?search=${searchTerm}`;
+    }
+
+    // Fetch data from API and cache it if there's no search term
+    return this.http.get<any[]>(url).pipe(
+      tap(data => {
+        if (!searchTerm) {
+          localStorage.setItem(this.storageKey, JSON.stringify(data));
+        }
+      })
+    );
   }
-  
   updateCustomerById(id:number,customerData:any){
     return this.http.put(`${environment.apiUrl}/Customer/${id}`, customerData);
   }

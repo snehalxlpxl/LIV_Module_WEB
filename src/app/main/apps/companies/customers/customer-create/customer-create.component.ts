@@ -52,7 +52,7 @@ export class CustomerCreateComponent implements OnInit{
     console.log("open side nav");
   }
 
-  //to focus on next field
+  //to focus on next focus
   @ViewChild('custName') custNameField!:  ElementRef;
   @ViewChild('email') emailField!:  ElementRef;
   @ViewChild('creditLimit') creditLimitField!:  ElementRef;
