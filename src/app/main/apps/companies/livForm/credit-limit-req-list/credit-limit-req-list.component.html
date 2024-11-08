@@ -147,23 +147,22 @@
             </ngx-datatable-column>
             -->
             
-            <ngx-datatable-column name="Company Name" prop="customerName" [width]="200">
+            <ngx-datatable-column name="Company Name" prop="customerName" [width]="200" [flexGrow]="1">
               <ng-template ngx-datatable-cell-template let-customerName="value" let-row="row">
-                <a [routerLink]="['/liv-preview', row['livRequestId']]"  
-                class="font-weight-bold text-truncate ellipsis-text"  title="{{customerName}}"
-                [style.width.px]="220">
-                  {{ customerName}}
-                  <!-- {{ customerName.length > 20 ? (customerName | slice:0:25) + '...' : customerName}} -->
-                </a>
+                <div class="font-weight-bold ellipsis-text">
+                  <a [routerLink]="['/liv-preview', row['livRequestId']]" >
+                    {{ customerName }}
+                  </a>
+                </div>
               </ng-template>
             </ngx-datatable-column>
-  
+            
             <!-- <ngx-datatable-column name="Sales Person" prop="salesPersonID" [width]="100">
               <ng-template let-salesPersonID="value" ngx-datatable-cell-template>
                 {{ salesPersonID }}
               </ng-template>
             </ngx-datatable-column> -->
-            <ngx-datatable-column name="Sales Person" prop="salesPersonID" [width]="120">
+            <ngx-datatable-column name="Sales Person" prop="salesPersonID" [width]="150">
               <ng-template let-salesPersonID="value" ngx-datatable-cell-template>
                 {{ salesPerson.get(salesPersonID) || 'Unknown' }}
               </ng-template>
@@ -187,7 +186,7 @@
             </ngx-datatable-column>
             <ngx-datatable-column name="Requested Date" prop="requestedDate" [width]="100">
               <ng-template let-requestedDate="value" ngx-datatable-cell-template>
-                {{ requestedDate | date: 'dd MM yyyy HH:mm'  }}
+                {{ requestedDate | date: 'dd / MM / yyyy HH:mm'  }}
               </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Status" prop="status" [width]="100">
