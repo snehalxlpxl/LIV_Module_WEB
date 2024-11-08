@@ -6,6 +6,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CompanyInfo } from '../../../customers/customer-create/customer-create-model/CustomerInfo';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import {  ViewChild, ElementRef } from '@angular/core';
+import { NgSelectComponent } from '@ng-select/ng-select';
+
  
 @Component({
   selector: 'app-credit-limit-request-modal',
@@ -23,6 +26,12 @@ export class CreditLimitRequestModalComponent implements OnInit {
   userName: any;
   userId: any;
  
+  @ViewChild('customerId') customerIdField!: NgSelectComponent;
+  @ViewChild('branchId') branchIdField!: NgSelectComponent;
+  @ViewChild('note') noteField!:  ElementRef;
+  @ViewChild('creditLimit') limitField!:  ElementRef;
+
+
   constructor(private fb: FormBuilder,
   private apiService: CustomerCreateService,
   private CreditLimitSer: CreditLimitRequestModalService,
@@ -140,17 +149,24 @@ export class CreditLimitRequestModalComponent implements OnInit {
       }
     );
   }
- 
+
   onsalePersonChange(event: any) {
   
     const selectedValue = event ? event.userDisplayName : '';
     this.CreditLimitReqForm.get('salePersonName').setValue(selectedValue);
    
+    setTimeout(() => {
+      this.customerIdField.focus();
+    }, 0);
   }
  
   onChangeBranch(event: any) {
     const selectedValue = event ? event.companyName : '';
     this.CreditLimitReqForm.get('branchName').setValue(selectedValue);
+
+    setTimeout(() => {
+      this.limitField.nativeElement.focus();
+    }, 0);
   }
  
   // onChangecreditLimit(event: any) {
@@ -162,11 +178,18 @@ export class CreditLimitRequestModalComponent implements OnInit {
   onChangecreditTerm(event: any) {
     const selectedValue = event ? event.paymentTerm1 : '';
     this.CreditLimitReqForm.get('creditTermName').setValue(selectedValue);
+
+    setTimeout(() => {
+      this.noteField.nativeElement.focus();
+    }, 0);
   }
  
   onCompanyNameChange(event:any){
     const selectedValue = event ? event.companyName : '';
     this.CreditLimitReqForm.get('customerName').setValue(selectedValue);
+    setTimeout(() => {
+      this.branchIdField.focus();
+    }, 0);
   }
  
   onSubmit() {

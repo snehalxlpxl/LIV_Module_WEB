@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddContactDetailService } from './add-contact-detail.service';
@@ -17,6 +17,7 @@ export class AddCustContactModalComponent implements OnInit {
   @Input() companyId: any; // Data passed from the parent component
   contactForm: FormGroup;
 
+  @ViewChild('name', { static: false }) nameField!: ElementRef;
  
   getContactType: any[];
 
@@ -30,8 +31,8 @@ export class AddCustContactModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.contactForm = this.fb.group({
-      contactId:[0],
-      companyId:[0]||this.companyId,
+      contactId:0,
+      companyId:0||this.companyId,
       contactType: ['', Validators.required],
       addressTypeValue:[''],
       name: [''],
@@ -108,7 +109,12 @@ export class AddCustContactModalComponent implements OnInit {
 
   onContactTypeChange(event: any) {
     const selectedValue = event ? event.contactTypeName : '';
-    this.contactForm.get('contactTypename').setValue(selectedValue);
+    this.contactForm.get('addressTypeValue').setValue(selectedValue);
+
+    setTimeout(() => {
+      console.log('Name Field:', this.nameField); // Log to ensure it is correctly selected
+      this.nameField?.nativeElement.focus();
+    }, 100);
   }
 
   updateCustContact(id:number,data:any){

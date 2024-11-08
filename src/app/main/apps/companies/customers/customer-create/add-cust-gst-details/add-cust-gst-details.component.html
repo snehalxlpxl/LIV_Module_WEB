@@ -31,7 +31,7 @@
     
       <div class="form-group">
         <label for="gstin">GSTIN (GST Registration Number)</label>
-        <input type="text" formControlName="gstin" id="gstin" class="form-control" placeholder="GSTIN (GST Registration Number)" [ngClass]="{
+        <input #gstin type="text" formControlName="gstin" id="gstin" class="form-control" placeholder="GSTIN (GST Registration Number)" [ngClass]="{
           'ng-touched': taxDetailsForm.get('gstin').touched,
           error:
           taxDetailsForm.get('gstin').invalid &&
@@ -66,7 +66,7 @@
     
       <div class="form-group">
         <label for="bln">Business Legal Name</label>
-        <input type="text" formControlName="bln" id="bln" class="form-control" placeholder="Business Legal Name" [ngClass]="{
+        <input #bln type="text" formControlName="bln" id="bln" class="form-control" placeholder="Business Legal Name" [ngClass]="{
           'ng-touched': taxDetailsForm.get('bln').touched,
           error:
           taxDetailsForm.get('bln').invalid &&

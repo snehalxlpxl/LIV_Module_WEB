@@ -42,6 +42,7 @@
     <div class="form-group mb-1">
       <label for="company">Company</label>
       <input
+      #company
         id="company"
         formControlName="company"
         type="text"
@@ -162,6 +163,7 @@
         <div class="form-group">
           <label for="state">State</label>
           <ng-select
+          #state
             id="state"
             formControlName="state"
             [items]="states"
@@ -193,6 +195,7 @@
         <div class="form-group">
           <label for="zipCode">Zip Code</label>
           <input
+          #zipCode
             id="zipCode"
             formControlName="zipCode"
             type="text"

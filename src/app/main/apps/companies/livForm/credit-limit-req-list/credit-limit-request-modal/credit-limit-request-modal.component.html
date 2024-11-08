@@ -68,6 +68,7 @@
 <div *ngIf="isExistingCustomer" class="form-group mb-1">
     <label for="customerId">Existing Customer List</label>
     <ng-select
+    #customerId
       id="customerId"
       formControlName="customerId"
       [items]="companies"
@@ -125,6 +126,7 @@
       <div class="form-group mb-2">
         <label for="country">Select Branch</label>
         <ng-select
+          #branchId
           id="branch"
           formControlName="branchId"
           [items]="branch"
@@ -154,6 +156,7 @@
         <div class="col-6">
         <label for="creditLimit">Requested Limit</label>
         <input
+        #creditLimit
           id="creditLimit"
           formControlName="creditLimit"
           type="number"
@@ -213,6 +216,7 @@
           <div class="form-group">
             <label for="note">Note</label>
             <input
+              #note
               id="note"
               formControlName="note"
               type="text"

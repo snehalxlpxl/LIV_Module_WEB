@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddCustAddressService } from './add-cust-address.service';
@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-add-cust-addr-modal',
@@ -16,6 +17,12 @@ export class AddCustAddrModalComponent implements OnInit {
 
   @Input() addressData: any; // Data passed from the parent component
   @Output() updatedAddress = new EventEmitter<any>();
+
+  
+    @ViewChild('company') companyField!:  ElementRef;
+      @ViewChild('state') stateField!: NgSelectComponent;
+    @ViewChild('zipCode') zipcodeField!:  ElementRef;
+
 
   addressForm: FormGroup;
   addressTypes = [
@@ -155,14 +162,23 @@ export class AddCustAddrModalComponent implements OnInit {
   onAddressTypeChange(event: any) {
     const selectedValue = event ? event.label : '';
     this.addressForm.get('addressTypeValue').setValue(selectedValue);
+    setTimeout(() => {
+      this.companyField.nativeElement.focus();
+    }, 0);
   }
   onChangeCountry(event:any){
     const selectedValue = event ? event.countryName : '';
     this.addressForm.get('CountryName').setValue(selectedValue);
+    setTimeout(() => {
+      this.stateField.focus();
+    }, 0);
   }
   onChangeState(event:any){
     const selectedValue = event ? event.stateName : '';
     this.addressForm.get('StateName').setValue(selectedValue);
+    setTimeout(() => {
+      this.zipcodeField.nativeElement.focus();
+    }, 0);
   }
   updateCustAddre(id:number,data:any){
     this.addAddrSer.updateCustAddre(id,data).subscribe( res => {

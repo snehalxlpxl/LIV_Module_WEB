@@ -1,6 +1,6 @@
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import { TaxDetailsService } from "./tax-details.service";
 import { ToastrService } from "ngx-toastr";
 import Swal from "sweetalert2";
@@ -20,6 +20,9 @@ export class AddCustGstDetailsComponent implements OnInit {
     { value: 2, label: "Developer" },
     // Add other designations here
   ];
+
+  @ViewChild('gstin', { static: false }) gstinField!: ElementRef;
+  @ViewChild('bln', { static: false }) blnField!: ElementRef;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -130,10 +133,18 @@ export class AddCustGstDetailsComponent implements OnInit {
   onGstRegistrTypeChange(event: any) {
     const selectedValue = event ? event.gstregType : "";
     this.taxDetailsForm.get("GSTTypeValue").setValue(selectedValue);
+    setTimeout(() => {
+      console.log('Name Field:', this.gstinField); // Log to ensure it is correctly selected
+      this.gstinField?.nativeElement.focus();
+    }, 100);
   }
   onSourceOfSuppTypeChange(event: any) {
     const selectedValue = event ? event.label : "";
     this.taxDetailsForm.get("SopTypeValue").setValue(selectedValue);
+    setTimeout(() => {
+      console.log('Name Field:', this.blnField); // Log to ensure it is correctly selected
+      this.blnField?.nativeElement.focus();
+    }, 100);
   }
   updateGSTDetail(id: number, data: any) {
     this.taxDetailsService.updateCustGst(id, data).subscribe(

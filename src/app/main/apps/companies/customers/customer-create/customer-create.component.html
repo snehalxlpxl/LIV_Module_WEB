@@ -145,6 +145,7 @@
                                           <div class="form-group">
                                             <label for="custName">Customer Name</label>
                                             <input
+                                            #custName
                                               type="text"
                                               id="custName"
                                               formControlName="custName"
@@ -223,7 +224,7 @@
                                         <div class="col-12">
                                           <div class="form-group">
                                             <label for="email">Email</label>
-                                           <input type="text" id="email" formControlName="email" class="form-control"
+                                           <input #email type="text" id="email" formControlName="email" class="form-control"
                                               placeholder="Email" autocomplete="address-level1" [ngClass]="{
                                                 'ng-touched':
                                                   newCustomerCreate.get(
@@ -608,7 +609,7 @@
                                               <div class="col-12">
                                                 <div class="form-group">
                                                   <label>Currency</label>
-                                                  <ng-select formControlName="currency" [ngClass]="{
+                                                  <ng-select  formControlName="currency" [ngClass]="{
                                                                                 'ng-touched':
                                                                                   newCustomerCreate.get(
                                                                                     'currency'
@@ -620,7 +621,7 @@
                                                                                   newCustomerCreate.get(
                                                                                     'currency'
                                                                                   ).touched
-                                                                              }" [items]="currency" bindValue="currencyId"
+                                                                              }" [items]="currency" bindValue="currencyId" (change)="onChangeCurrency($event)"
                                                     bindLabel="currencyName" placeholder="Select Currency">
                                                     <ng-option *ngFor="let curr of currency
                                                                                 " [value]="curr.currencyName">{{ curr.currencyCode }}
@@ -649,7 +650,7 @@
                                                   <div class="col-6">
                                                     <div class="form-group">
                                                       <label for="creditLimit">Credit Limit</label>
-                                                      <input formControlName="creditLimit" type="number" id="creditLimit" class="form-control"
+                                                      <input #creditLimit formControlName="creditLimit" type="number" id="creditLimit" class="form-control"
                                                         placeholder="Credit Limit" [ngClass]="{
                                                           'ng-touched':
                                                             newCustomerCreate.get(
@@ -692,7 +693,7 @@
                                                             newCustomerCreate.get(
                                                               'creditDays'
                                                             ).touched
-                                                        }">
+                                                        }" (change)="onChangeCreditDays($event)">
                                                       </ng-select>
                                                       <span *ngIf="
                                                                                   newCustomerCreate.get(
@@ -716,7 +717,7 @@
                                                   <div class="col-6">
                                                     <div class="form-group">
                                                       <label for="panNumber">PAN Number</label>
-                                                      <input formControlName="panNumber" type="text" id="panNumber" class="form-control"
+                                                      <input #panNumber formControlName="panNumber" type="text" id="panNumber" class="form-control"
                                                         placeholder="Enter PAN Number" />
                                                     </div>
                                                   </div>

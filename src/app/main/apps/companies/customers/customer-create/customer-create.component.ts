@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit} from "@angular/core";
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { CustomerCreateService, UniqueCheckResponse } from "./customer-create.service";
 import { CompanyInfo } from "./customer-create-model/CustomerInfo";
@@ -16,6 +16,7 @@ import { catchError, debounceTime, filter, finalize, map, switchMap } from "rxjs
 import { Location } from '@angular/common';
 import Swal from "sweetalert2";
 import { LoaderService } from "app/global-loader/loader.service";
+import { NgSelectComponent } from "@ng-select/ng-select";
 
 
 
@@ -51,6 +52,12 @@ export class CustomerCreateComponent implements OnInit{
     console.log("open side nav");
   }
 
+  //to focus on next field
+  @ViewChild('custName') custNameField!:  ElementRef;
+  @ViewChild('email') emailField!:  ElementRef;
+  @ViewChild('creditLimit') creditLimitField!:  ElementRef;
+  @ViewChild('panNumber') panNumberField!:  ElementRef;
+  
   constructor(
     private apiService: CustomerCreateService,
     private fb: FormBuilder,
@@ -603,10 +610,30 @@ copyAddress(event: MouseEvent, detail: any) {
 onChangeSalePerson(event:any){
   const selectedValue = event ? event.userDisplayName : '';
   this.newCustomerCreate.get('salesPersonName').setValue(selectedValue);
+  setTimeout(() => {
+    this.custNameField.nativeElement.focus();
+  }, 0);
 }
 onChangeParentCompany(event:any){
   const selectedValue = event ? event.companyName : '';
   this.newCustomerCreate.get('parentCompanyName').setValue(selectedValue);
+  setTimeout(() => {
+    this.emailField.nativeElement.focus();
+  }, 0);
+}
+onChangeCurrency(event:any){
+  // const selectedValue = event ? event.userDisplayName : '';
+  // this.newCustomerCreate.get('salesPersonName').setValue(selectedValue);
+  setTimeout(() => {
+    this.creditLimitField.nativeElement.focus();
+  }, 0);
+}
+onChangeCreditDays(event:any){
+  // const selectedValue = event ? event.userDisplayName : '';
+  // this.newCustomerCreate.get('salesPersonName').setValue(selectedValue);
+  setTimeout(() => {
+    this.panNumberField.nativeElement.focus();
+  }, 0);
 }
 cancelPreview(){
   this.location.back();
