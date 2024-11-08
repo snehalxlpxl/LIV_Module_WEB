@@ -109,6 +109,7 @@ export class LivPreviewComponent implements OnInit {
       this.currentComponent = component;
     });
 
+    
   }
 
   isDelegate: boolean = false;
@@ -186,6 +187,7 @@ export class LivPreviewComponent implements OnInit {
 
   goBack(): void {
     this.location.back(); // Go back to the previous page
+    this.setComponent("overview");
   }
   setComponent(component: string) {
     this.navigationService.setComponent(component);
