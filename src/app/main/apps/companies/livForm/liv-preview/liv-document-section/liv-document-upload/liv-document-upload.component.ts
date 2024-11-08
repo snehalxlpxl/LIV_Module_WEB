@@ -118,7 +118,7 @@ UploadLivDoc(): void {
   // Display confirmation dialog
   Swal.fire({
     title: 'Are you sure?',
-    text: 'Do you want to confirm the approval?',
+    text: 'Do you want to Upload Document?',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: 'Yes, confirm it!',
@@ -126,7 +126,7 @@ UploadLivDoc(): void {
     reverseButtons: true
   }).then((result) => {
     if (result.isConfirmed) {
-      // If user confirms the approval
+      
       const approvalData = {
         SourceId: this.SourceId,
         ApprovalFileName: this.selectedFileName,
@@ -142,9 +142,17 @@ UploadLivDoc(): void {
 
       this.LivDocumentUploadSer.livUploadFile3(this.selectedFile,this.livRequestId,this.userId,this.sourceName,this.SourceId).subscribe(
         (response) => {
-          Swal.fire('Confirmed!', 'Your document has been uploaded and path saved.', 'success');
+          // Swal.fire('Confirmed!', 'Your Document Uploaded Successfully', 'success');
           this.activeModal.close(response);
           window.location.reload();
+          Swal.fire({
+            title: 'Confirmed!',
+            text: 'Your Document Uploaded Successfully',
+            icon: 'success',
+            timer: 3000, // 2000 milliseconds = 2 seconds
+            showConfirmButton: false // Optional: hides the OK button for a cleaner look
+          });
+          
         },
         (error) => {
           console.error('Error uploading file', error);
@@ -155,8 +163,8 @@ UploadLivDoc(): void {
       console.log('Approval confirmed', approvalData);
       this.activeModal.close(approvalData);
 
-      // Optionally show success message
-      Swal.fire('Confirmed!', 'Your Document Uploaded Successfully', 'success');
+      // // Optionally show success message
+      // Swal.fire('Confirmed!', 'Your Document Uploaded Successfully', 'success');
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       // If user cancels, show cancellation message
       Swal.fire('Cancelled', 'Approval was not confirmed.', 'error');
