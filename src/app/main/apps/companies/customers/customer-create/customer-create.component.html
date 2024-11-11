@@ -44,7 +44,7 @@
                       <div class="row">
                         <div class="col-sm-12">
                           <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
-                            <div class="collapse-icon p-0">
+                            <div class="collapse-icon p-1">
                               <div class="collapse-default">
                                 <!-- <ngb-accordion
                                       [destroyOnHide]="false"
@@ -284,13 +284,13 @@
                       <div class="row">
                         <div class="col-sm-12">
                           <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
-                            <div class="collapse-icon p-0">
+                            <div class="collapse-icon p-1">
                               <div class="collapse-default">
-                                <ngb-accordion [destroyOnHide]="false" [closeOthers]="false"
+                                <!-- <ngb-accordion [destroyOnHide]="false" [closeOthers]="false"
                                 [activeIds]="activePanelId1">
                                   <ngb-panel id="panelBorderBottom1" >
-                                    <ng-template ngbPanelTitle>
-                                      <div class="panel-title">
+                                    <ng-template ngbPanelTitle> -->
+                                      <div class="panel-title pb-2">
                                         <div class="d-flex justify-content-start align-items-center">
                                           <span class="icon-left">
                                             <i class="feather icon-map-pin" aria-hidden="true" ></i>
@@ -311,18 +311,18 @@
                                             rippleEffect (click)="openAddressForm()">
                                             Add Address
                                           </button>
-                                          <span class="icon-right">
+                                          <!-- <span class="icon-right">
                                          
                                             <i class="feather icon-plus-square"></i>
-                                          </span>
+                                          </span> -->
                                         </div>
                                       </div>
-                                    </ng-template>
+                                    <!-- </ng-template>
 
-                                    <ng-template ngbPanelContent>
+                                    <ng-template ngbPanelContent> -->
                                       <div *ngIf="addrDetailsList && addrDetailsList.length === 0">
                                         <input formControlName="address" type="hidden" [value]="addrDetailsList"/>
-                                        <div class="row p-1">
+                                        <div class="row pt-1">
                                           <div class="col-md-6 text-danger">
                                           
                                             <p>
@@ -392,9 +392,9 @@
                                             
                                           </div>
                                         </div>
-                                    </ng-template>
+                                    <!-- </ng-template>
                                   </ngb-panel>
-                                </ngb-accordion>
+                                </ngb-accordion> -->
                               </div>
                             </div>
                           </div>
@@ -415,13 +415,13 @@
                       <div class="row">
                         <div class="col-sm-12">
                           <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
-                            <div class="collapse-icon p-0">
+                            <div class="collapse-icon p-1">
                               <div class="collapse-default">
-                                <ngb-accordion [destroyOnHide]="false" [closeOthers]="true"
+                                <!-- <ngb-accordion [destroyOnHide]="false" [closeOthers]="true"
                                 [activeIds]="activePanelId2">
                                   <ngb-panel id="panelBorderBottom2">
-                                    <ng-template ngbPanelTitle>
-                                      <div class="panel-title">
+                                    <ng-template ngbPanelTitle> -->
+                                      <div class="panel-title pb-2">
                                         <div class="d-flex justify-content-start align-items-center">
                                           <span class="icon-left">
                                             <i class="feather icon-users"></i>
@@ -433,16 +433,16 @@
                                             (click)="openContactForm(customerId)" rippleEffect>
                                             Add Contact
                                           </button>
-                                          <span class="icon-right">
+                                          <!-- <span class="icon-right">
                                             <i class="feather icon-plus-square"></i>
-                                          </span>
+                                          </span> -->
                                         </div>
                                       </div>
-                                    </ng-template>
+                                    <!-- </ng-template>
 
-                                    <ng-template ngbPanelContent>
+                                    <ng-template ngbPanelContent> -->
                                       <div *ngIf="contactDetailsList && contactDetailsList.length === 0">
-                                        <div class="row p-1">
+                                        <div class="row pt-1">
                                           <input formControlName="contact" type="hidden" [value]="contactDetailsList"/>
                                           <div class="col-md-6 text-danger">
                                             <p>
@@ -512,9 +512,9 @@
                                            </div>
                                           </div>
                                         </div>
-                                    </ng-template>
+                                    <!-- </ng-template>
                                   </ngb-panel>
-                                </ngb-accordion>
+                                </ngb-accordion> -->
                               </div>
                             </div>
                           </div>
@@ -543,7 +543,7 @@
                               role="tablist"
                               aria-multiselectable="true"
                             >
-                              <div class="collapse-icon p-0">
+                              <div class="collapse-icon p-1">
                                 <div class="collapse-default">
                                 <!--  <ngb-accordion
                                     [destroyOnHide]="false"
@@ -781,11 +781,11 @@
                                               <div class="row">
                                                 <div class="col-sm-12">
                                                   <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
-                                                    <div class="collapse-icon p-0">
+                                                    <div class="collapse-icon p-1">
                                                       <div class="collapse-default">
-                                                        <ngb-accordion [destroyOnHide]="false" [closeOthers]="false" [activeIds]="activePanelId3">
-                                                          <ngb-panel id="panelBorderBottom3" >
-                                                            <ng-template ngbPanelTitle>
+                                                        <!-- <ngb-accordion [destroyOnHide]="false" [closeOthers]="false" [activeIds]="activePanelId3"> -->
+                                                          <!-- <ngb-panel id="panelBorderBottom3" > -->
+                                                            <!-- <ng-template ngbPanelTitle> -->
                                                               <div class="panel-title">
                                                                 <div class="d-flex justify-content-start align-items-center">
                                                                   <span class="icon-left">
@@ -807,17 +807,17 @@
                                                                     rippleEffect (click)="openTaxDetailsModal(customerId)">
                                                                     Add Tax Details
                                                                   </button>
-                                                                  <span class="icon-right">
+                                                                  <!-- <span class="icon-right">
                                                                     <i class="feather icon-plus-square"></i>
-                                                                  </span>
+                                                                  </span> -->
                                                                 </div>
                                                               </div>
-                                                            </ng-template>
+                                                            <!-- </ng-template>
                         
-                                                            <ng-template ngbPanelContent>
+                                                            <ng-template ngbPanelContent> -->
                                                               <div *ngIf="taxDetailsList && taxDetailsList.length === 0">
                                                                 <input formControlName="gst" [value]="taxDetailsList" type="hidden"/>
-                                                                  <div class="row p-1">
+                                                                  <div class="row pt-1">
                                                                     <div class="col-md-6 text-danger">
                                                                     
                                                                       <p>
@@ -884,9 +884,9 @@
                                                                     </div>
                                                                     </div>
                                                                   </div>
-                                                            </ng-template>
-                                                          </ngb-panel>
-                                                        </ngb-accordion>
+                                                            <!-- </ng-template>
+                                                          </ngb-panel> -->
+                                                        <!-- </ngb-accordion> -->
                                                       </div>
                                                     </div>
                                                   </div>

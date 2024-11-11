@@ -20,6 +20,8 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="CreditLimitReqForm" (ngSubmit)="onSubmit()">
+      <div class="collapse-icon p-0">
+        <div class="collapse-default">
         <div class="form-group mb-1">
             <div class="custom-control custom-switch custom-switch-success">
                 <label for="salePerson">Is this Existing Customer?</label>&nbsp;
@@ -236,6 +238,8 @@
           Cancel
         </button>
         <button type="submit" class="btn btn-success">Send for Approval</button>
+      </div>
+      </div>
       </div>
     </form>
 

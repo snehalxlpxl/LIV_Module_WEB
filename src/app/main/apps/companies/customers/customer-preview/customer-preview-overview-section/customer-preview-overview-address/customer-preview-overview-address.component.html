@@ -1,6 +1,6 @@
 <!-- Accordion Basic start -->
-<div class="rounded-corner-accordian">
-<section id="accordion ">
+<div class="rounded-corner-accordian p-2">
+<!-- <section id="accordion "> -->
   <div class="row">
     <div class="col-sm-12">
       <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
@@ -9,24 +9,27 @@
         <div class="card-body collapse-icon p-0">
 
           <div class="collapse-default">
-            <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" activeIds="panelBorderBottom1">
+            <!-- <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" activeIds="panelBorderBottom1">
               <ngb-panel id="panelBorderBottom1">
-                <ng-template ngbPanelTitle>
-                  <div class="panel-title">
+                <ng-template ngbPanelTitle> -->
+                  <div class="panel-title pb-2">
                     <span class="icon-left">
                       <i class="feather icon-map-pin"></i>
                        
                     </span>
                     <span class="padd-add">Address</span>
-                    <span class="icon-right">
-                      <i class="feather icon-plus-square"></i>
-                      
+                    <span class="icon-right mr-0">
+                      <!-- <i class="feather icon-plus-square"></i> -->
+                      <button type="button" class="btn-sm btn-outline-success"
+                      rippleEffect (click)="openAddressForm()">
+                      Add Address
+                    </button>
                     </span>
                   </div>
-                </ng-template>
-                <ng-template ngbPanelContent>
+                <!-- </ng-template>
+                <ng-template ngbPanelContent> -->
                   <div class="row" *ngFor="let addr of addrDetail;">
-                    <div class="col-md-8">
+                    <div class="col-md-8 cursor-pointer" (click)="openAddressFormlByData(addr)">
                       <div class=""><b>{{addr.addressTypeNick || 'N/A'}} Address</b></div>
                       <div class="pt-1">{{addr.addressLine1 || 'N/A'}}, {{addr.addressLine2 || 'N/A'}}, {{addr.cityName || 'N/A'}}, {{addr.zipcode || 'N/A'}}, {{addr.country || 'N/A'}}</div>
                     </div>
@@ -38,16 +41,16 @@
                     <hr>
                   </div>
 
-                </ng-template>
+                <!-- </ng-template>
               </ngb-panel>
 
-            </ngb-accordion>
+            </ngb-accordion> -->
           </div>
         </div>
         <!-- </core-card-snippet> -->
-      </div>
+      <!-- </div> -->
     </div>
   </div>
-</section>
+<!-- </section> -->
 </div>
 <!-- Accordion Basic end -->

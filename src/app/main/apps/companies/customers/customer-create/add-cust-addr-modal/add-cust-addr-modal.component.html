@@ -3,7 +3,7 @@
     <span class="icon-left">
       <i class="feather icon-map-pin" aria-hidden="true" ></i>
     </span>
-    Edit Address
+    Edit Address 
   </h6>
   <p
     class="btn-close"
@@ -20,6 +20,9 @@
 </div>
 <div class="modal-body">
   <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+
+    <div class="collapse-icon p-0">
+      <div class="collapse-default">
     <input type="hidden" formControlName="companyAddressId" />
     <input type="hidden" formControlName="companyId" />
 
@@ -226,6 +229,8 @@
         Cancel
       </button>
       <button type="submit" class="btn btn-success">Save</button>
+    </div>
+    </div>
     </div>
   </form>
 </div>

@@ -5,7 +5,7 @@ import { AddCustAddressService } from './add-cust-address.service';
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
@@ -22,7 +22,8 @@ export class AddCustAddrModalComponent implements OnInit {
     @ViewChild('company') companyField!:  ElementRef;
       @ViewChild('state') stateField!: NgSelectComponent;
     @ViewChild('zipCode') zipcodeField!:  ElementRef;
-
+    @Input() isPreview:any;
+    @Input() customerIdfromPreview:any;
 
   addressForm: FormGroup;
   addressTypes = [
@@ -37,6 +38,7 @@ export class AddCustAddrModalComponent implements OnInit {
   ];
   countries : any[];
   states = [];
+  customerId: number;
  
 
 
@@ -45,13 +47,14 @@ export class AddCustAddrModalComponent implements OnInit {
     public activeModal: NgbActiveModal,
     public addAddrSer:AddCustAddressService,
     private toastr: ToastrService,
-    private router:Router
+    private router:Router,
+    private activeroute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.addressForm = this.fb.group({
       companyAddressId:0,
-      companyId:0,
+      companyId:0||this.customerIdfromPreview,
       addressType: [0],
       addressTypeValue: [null] ,// For hidden field
       company: ['', Validators.required],
@@ -75,6 +78,9 @@ export class AddCustAddrModalComponent implements OnInit {
       console.log("data for patch",this.addressData);
       this.patchForm(this.addressData) 
     }
+    this.activeroute.paramMap.subscribe(params => {
+      this.customerId = +params.get('id');
+    });
   }
   patchForm(data:any) {
     this.addressForm.patchValue({
@@ -99,21 +105,29 @@ export class AddCustAddrModalComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.addressForm.valid) {
-      if (this.addressForm.get('companyAddressId')?.value == 0) {
-      this.addAddrSer.addAddressDetails(this.addressForm.value);
-      console.log(this.addAddrSer.getAddDetailsList());
-      this.close();
-    }
-    else{
-      //update
-      console.log("update");
-      console.log(this.addressForm.value)
-      const id=this.addressForm.get('companyAddressId')?.value
-      this.updateCustAddre(id,this.addressForm.value);
-     
+    if (this.addressForm.valid) { 
+       if(this.isPreview){
+        // customerIdfromPreview
+        //if from preview directlt save address
+        this.insertCustAddre(this.addressForm.value);
+        window.location.reload();
       
-    }
+          }else{
+              if (this.addressForm.get('companyAddressId')?.value == 0) {
+              this.addAddrSer.addAddressDetails(this.addressForm.value);
+              console.log(this.addAddrSer.getAddDetailsList());
+              this.close();
+            }
+            else{
+              //update
+              console.log("update");
+              console.log(this.addressForm.value)
+              const id=this.addressForm.get('companyAddressId')?.value
+              this.updateCustAddre(id,this.addressForm.value);
+            
+              
+            }
+        }
       
     }
     else{
@@ -198,6 +212,22 @@ export class AddCustAddrModalComponent implements OnInit {
     (err) => {
       Swal.fire('Error', 'Error updating Address', 'error');
       console.error('Error updating Address:', err);
+     
+        this.activeModal.dismiss(); // Return undefined to parent component
+      
+    }
+  );
+  }
+  insertCustAddre(data:any){
+    this.addAddrSer.insertCustAddre(data).subscribe( res => {
+ 
+      this.activeModal.dismiss();
+      Swal.fire('Success', 'Address added successfully', 'success');
+      
+    },
+    (err) => {
+      Swal.fire('Error', 'Error Adding Address', 'error');
+      console.error('Error Adding Address:', err);
      
         this.activeModal.dismiss(); // Return undefined to parent component
       

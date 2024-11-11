@@ -18,7 +18,8 @@ export class AddCustContactModalComponent implements OnInit {
   contactForm: FormGroup;
 
   @ViewChild('name', { static: false }) nameField!: ElementRef;
- 
+  @Input() customerIdfromPreview:any;
+  @Input() isPreview:any;
   getContactType: any[];
 
   constructor(
@@ -50,6 +51,7 @@ export class AddCustContactModalComponent implements OnInit {
       console.log("contact data for patch",this.contactData);
       this.patchForm(this.contactData) 
     }
+    console.log("isPreview",this.isPreview);
   }
 
   patchForm(data:any) {
@@ -74,7 +76,11 @@ export class AddCustContactModalComponent implements OnInit {
 
   onSubmit() {
     if (this.contactForm.valid) {
-      
+      if(this.isPreview){
+        this.insertCustAddre(this.contactForm.value);
+        window.location.reload();
+      }
+      else{
       console.log("contactId",this.contactForm.get("contactId")?.value)
       console.log("company Id",this.companyId)
       if (this.contactForm.get('contactId')?.value == 0) {
@@ -93,6 +99,7 @@ export class AddCustContactModalComponent implements OnInit {
         this.updateCustContact(id,this.contactForm.value);
         
       }
+    }
     }else{
       this.contactForm.markAllAsTouched();
       return;
@@ -127,6 +134,22 @@ export class AddCustContactModalComponent implements OnInit {
     err => {
       this.toastr.error('Error updating Address');
       console.error('Error updating Address:', err);
+    }
+  );
+  }
+  insertCustAddre(data:any){
+    this.addContactSer.insertCustContact(data).subscribe( res => {
+ 
+      this.activeModal.dismiss();
+      Swal.fire('Success', 'Address added successfully', 'success');
+      
+    },
+    (err) => {
+      Swal.fire('Error', 'Error Adding Address', 'error');
+      console.error('Error Adding Address:', err);
+     
+        this.activeModal.dismiss(); // Return undefined to parent component
+      
     }
   );
   }

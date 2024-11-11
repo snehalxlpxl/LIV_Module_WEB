@@ -40,4 +40,11 @@ export class AddCustAddressService {
       { responseType: "text" as "json" }
     );
   }
+  insertCustAddre(data: any): Observable<string> {
+    return this.http.post<string>(
+      `${environment.apiUrl}/Customer/insert/Address`,
+      data,
+      { responseType: "text" as "json" }
+    );
+  }
 }

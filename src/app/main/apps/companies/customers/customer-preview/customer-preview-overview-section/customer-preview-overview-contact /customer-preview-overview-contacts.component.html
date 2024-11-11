@@ -6,27 +6,31 @@
       <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
         <!-- <core-card-snippet [snippetCode]="_snippetCodeAccordion"> -->
 
-        <div class="card-body collapse-icon p-0">
+        <div class="card-body collapse-icon p-2">
 
           <div class="collapse-default">
-            <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" activeIds="panelBorderBottom1">
+            <!-- <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" activeIds="panelBorderBottom1">
               <ngb-panel id="panelBorderBottom1">
-                <ng-template ngbPanelTitle>
-                  <div class="panel-title">
+                <ng-template ngbPanelTitle> -->
+                  <div class="panel-title pb-2">
                     <span class="icon-left">
                       <i class="feather icon-users"></i>
                       
                     </span>
                     <span class="padd-add">Contacts</span>
-                    <span class="icon-right">
-                      <i class="feather icon-plus-square"></i>
+                    <span class="icon-right mr-0">
+                      <!-- <i class="feather icon-plus-square"></i> -->
+                      <button type="button" class="btn-sm btn-outline-success"
+                      (click)="openContactForm(customerId)" rippleEffect>
+                      Add Contact
+                    </button>
                     </span>
                   </div>
-                </ng-template>
+                <!-- </ng-template>
                 
-                <ng-template ngbPanelContent>
+                <ng-template ngbPanelContent> -->
                   <div class="row mb-1" *ngFor="let contcAddr of contactDetail;">
-                    <div class="col-md-7">
+                    <div class="col-md-7 cursor-pointer" (click)="openContatFormlByData(contcAddr)">
                      
                       <div class="pt-0">{{contcAddr.displayName||blankvalue}} : {{contcAddr.department||blankvalue}} {{contcAddr.designation||blankvalue}}</div>
                       <div class="pt-0">Mobile : {{contcAddr.mobile||blankvalue}}</div>
@@ -62,10 +66,10 @@
                     </div>
 
                   </div> -->
-                </ng-template>
+                <!-- </ng-template>
               </ngb-panel>
 
-            </ngb-accordion>
+            </ngb-accordion> -->
           </div>
         </div>
         <!-- </core-card-snippet> -->

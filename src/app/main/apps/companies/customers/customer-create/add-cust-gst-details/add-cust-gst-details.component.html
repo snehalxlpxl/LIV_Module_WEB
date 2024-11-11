@@ -5,6 +5,8 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="taxDetailsForm" (ngSubmit)="onSubmit()">
+      <div class="collapse-icon p-0">
+        <div class="collapse-default">
       <input type="hidden" formControlName="companyId" [value]="companyId"/>
       <input type="hidden" formControlName="gstid" />
       <div class="form-group">
@@ -93,6 +95,8 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-danger" (click)="closeModal()">Close</button>
         <button type="submit" class="btn btn-success">Save</button>
+      </div>
+      </div>
       </div>
     </form>
   </div>
