@@ -42,7 +42,7 @@ export class AddCustContactModalComponent implements OnInit {
       landline: ['', Validators.required],
       designation: [''],
       department: ['', Validators.required],
-      dateOfBirth: [''||null],
+      dateOfBirth: [null||''],
     });
     this.getGstContactType();
 
