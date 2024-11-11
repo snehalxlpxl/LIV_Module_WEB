@@ -110,7 +110,7 @@ export class AddCustAddrModalComponent implements OnInit {
         // customerIdfromPreview
         //if from preview directlt save address
         this.insertCustAddre(this.addressForm.value);
-        window.location.reload();
+    
       
           }else{
               if (this.addressForm.get('companyAddressId')?.value == 0) {
@@ -222,8 +222,9 @@ export class AddCustAddrModalComponent implements OnInit {
     this.addAddrSer.insertCustAddre(data).subscribe( res => {
  
       this.activeModal.dismiss();
+
       Swal.fire('Success', 'Address added successfully', 'success');
-      
+      window.location.reload();
     },
     (err) => {
       Swal.fire('Error', 'Error Adding Address', 'error');

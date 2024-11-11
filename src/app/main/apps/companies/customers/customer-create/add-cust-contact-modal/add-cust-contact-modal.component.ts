@@ -78,7 +78,7 @@ export class AddCustContactModalComponent implements OnInit {
     if (this.contactForm.valid) {
       if(this.isPreview){
         this.insertCustAddre(this.contactForm.value);
-        window.location.reload();
+        
       }
       else{
       console.log("contactId",this.contactForm.get("contactId")?.value)
@@ -142,7 +142,7 @@ export class AddCustContactModalComponent implements OnInit {
  
       this.activeModal.dismiss();
       Swal.fire('Success', 'Address added successfully', 'success');
-      
+      window.location.reload();
     },
     (err) => {
       Swal.fire('Error', 'Error Adding Address', 'error');
