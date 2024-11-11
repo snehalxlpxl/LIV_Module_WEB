@@ -1,13 +1,17 @@
 <div class="modal-header">
-  <span class="icon-left">
-   <i class="feather icon-users"></i>
-  </span>
-
-    <h5 class="modal-title">Contact Form</h5>
+ 
+  <h6 class="modal-title">
+    <span class="icon-left">
+      <i class="feather icon-users" aria-hidden="true" ></i>
+    </span>
+    Edit Contact 
+  </h6>
     <p class="btn-close" aria-label="Close" (click)="close()" aria-hidden="true" class="cursor-pointer">×</p>
   </div>
   <div class="modal-body">
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+      <div class="collapse-icon p-0">
+        <div class="collapse-default">
       <input type="hidden" formControlName="companyId" [value]="companyId"/>
       <input type="hidden" formControlName="contactId" />
       <div class="form-group mb-1">
@@ -173,6 +177,8 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-danger" (click)="close()">Cancel</button>
         <button type="submit" class="btn btn-success">Save</button>
+      </div>
+      </div>
       </div>
     </form>
   </div>

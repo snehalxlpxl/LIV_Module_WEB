@@ -38,4 +38,12 @@ export class AddContactDetailService {
     const body = JSON.stringify(gstdata);
     return this.http.post<any>(`${environment.apiUrl}/Customer/insert/Address`, body, { headers });
   }
+
+  insertCustContact(data: any): Observable<string> {
+    return this.http.post<string>(
+      `${environment.apiUrl}/Customer/insert/Contact`,
+      data,
+      { responseType: "text" as "json" }
+    );
+  }
 }
