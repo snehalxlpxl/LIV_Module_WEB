@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { CallLogInformation } from './CallLogInformation';
 import { Router } from '@angular/router';
 import { ActivityNotificationService } from '../../lead-preview-activities-section/ActivityNotificationService.service';
+import { SharedService } from 'app/shared.service';
 
 @Component({
   selector: 'app-call-log-modal',
@@ -29,20 +30,21 @@ export class CallLogModalComponent implements OnInit {
   @ViewChild("select") select: NgSelectComponent;
 
   constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private leadCreateService: LeadCreateService,private router: Router,  private activityNotificationService: ActivityNotificationService,
-
+    private userService: SharedService
 
   ) { }
 
   ngOnInit(): void {
-    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    const userData = this.userService.getUserData();
     if (userData) {
-      this.userName = userData.userName;
-      this.userId = userData.userId;
+      this.userName = this.userService.getUserName();
+      this.userId = this.userService.getUserId();
+      console.log('User Data:', userData);
       console.log('User Name:', this.userName);
       console.log('User ID:', this.userId);
-  } else {
-      console.log('No user data found in sessionStorage');
-  }
+    } else {
+      console.log('No user data found in localStorage');
+    }
     this.callLogForm = this.fb.group({
       markAsComplete: [false],
       title: ['', Validators.required],

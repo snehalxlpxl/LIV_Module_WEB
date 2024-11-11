@@ -1,12 +1,14 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
+import { Observable,throwError } from 'rxjs';
 import { Lead } from './lead-create-model/Lead';
 import { LeadStatus } from './LeadStatus';
 import { MeetingInformation } from '../lead-preview/lead-preview-header/meeting-information-modal/MeetingInformation';
 import { CallLogInformation } from '../lead-preview/lead-preview-header/call-log-modal/CallLogInformation';
 import { ActivityDetails } from '../lead-preview/lead-preview-activities-section/ActivityDetails';
+import { catchError } from 'rxjs/operators';
+
 export interface LeadSource {
   name: string;
   id: number;
@@ -238,7 +240,18 @@ deleteActivity(activityId: number, activityType: string): Observable<any> {
   return this.http.put(endpoint, {});
 }
 
-
+getLeadDetails(leadId: number): Observable<Lead> {
+  const url = `${this.apiUrl}/leadsdetails/${leadId}`;
+  return this.http.get<Lead>(url)
+    .pipe(
+      catchError(this.handleError)
+    );
+}
+  // Error handling
+  private handleError(error: HttpErrorResponse) {
+    console.error('Error fetching lead details:', error);
+    return throwError('Something went wrong while fetching lead details. Please try again later.');
+  }
 
 }
 

@@ -2,8 +2,11 @@ export interface Lead {
     leadId:number,
     leadOwnerId:number,
       companyName:string,
+      leadOwnerName?:string,
       leadStatusId:number,
+      leadStatusName?:string,
       leadSourceId:number ,
+      leadSourceName?:string,
       firstName:string ,
       email:string ,
       phone1:string ,
@@ -13,6 +16,7 @@ export interface Lead {
       pol: string,
       pod: string,
       industryId:number ,
+      industryName?:string,
       annualRevenue:number ,
       employeeCount: string,
       emailOptIn: boolean,
@@ -20,5 +24,8 @@ export interface Lead {
       stateId: number,
       cityName:string ,
       zipcode: string,
-      street: string
+      street: string,
+      stateName ?: string,
+      countryName?:string,
+      zipCode?:string
 }

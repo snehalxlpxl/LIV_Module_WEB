@@ -13,42 +13,27 @@
                                 <ngb-panel id="panelBorderBottom1">
                                     <ng-template ngbPanelTitle>
                                         <div class="panel-title">
-                                            <span class="icon-left">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-list">
-                                                    <line x1="8" y1="6" x2="21" y2="6"></line>
-                                                    <line x1="8" y1="12" x2="21" y2="12"></line>
-                                                    <line x1="8" y1="18" x2="21" y2="18"></line>
-                                                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                                                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                                                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                                                </svg>
-                                            </span>
-                                            <span class="padd-add">Products</span>
+                                            <h5 style="display: flex; align-items: center;">
+                                                <i class="feather icon-list" style="font-size: 20px; margin-right: 8px;"></i>
+                                                Products
+                                              </h5>      
                                             <span class="icon-right">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                  class="feather feather-eye">
-                                                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                  <circle cx="12" cy="12" r="3"></circle>
-                                                </svg>
-                                              </span>
+                                                <i class="feather icon-eye" style="font-size: 20px; margin-right: 8px;"></i>
+                                            </span>
                                         </div>
                                     </ng-template>
                                     <ng-template ngbPanelContent>
                                         <div class="row">
                                             <div class="col-md-4">Products</div>
-                                            <div class="col-md-8"><b>{{leadDetails?.shipmentType}}</b></div>
+                                            <div class="col-md-8"><b>{{lead?.shipmentType}}</b></div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-md-4">Ports</div>
-                                            <div class="col-md-8"><b>{{leadDetails?.pol}}, {{leadDetails?.pod}}</b></div>
+                                            <div class="col-md-8"><b>{{lead?.pol}}, {{lead?.pod}}</b></div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-md-4">Monthly TEUs</div>
-                                            <div class="col-md-8"><b>{{leadDetails?.monthlyTeus}}</b></div>
+                                            <div class="col-md-8"><b>{{lead?.monthlyTeus}}</b></div>
                                         </div>
                                         <!-- <div class="row pt-1">
                                             <div class="col-md-4">Monthly CBM</div>

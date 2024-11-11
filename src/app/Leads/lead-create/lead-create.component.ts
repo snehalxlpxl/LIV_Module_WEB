@@ -19,6 +19,7 @@ import { Console } from "console";
 import { ActivatedRoute, Router } from "@angular/router";
 import Swal from "sweetalert2";
 import { ErrorLogService } from "app/auth/service/errorLog.service";
+import { AppInitService } from "app/app-init.service";
 @Component({
   selector: 'app-lead-create',
   templateUrl: './lead-create.component.html',
@@ -44,6 +45,7 @@ export class LeadCreateComponent implements OnInit {
   private searchTerms = new Subject<string>();
   @ViewChild("select") select: NgSelectComponent;
   constructor(
+    private appInitService: AppInitService,
     private leadCreateService: LeadCreateService,
     private errorLogService:ErrorLogService,
     // private apiService: CustomerCreateService,
@@ -96,15 +98,19 @@ export class LeadCreateComponent implements OnInit {
       zipcode: ['', Validators.required],
       street: ['', Validators.required]
     });
-    this.loadSalesPerson();
-    this.getLocationMasterData();
+    // this.loadSalesPerson();
+    // this.getLocationMasterData();
+    this.salesPerson = this.appInitService.salesPerson;
+    this.locationMasterData = this.appInitService.locationMasterData; //appinitilizer
+    this.countries = this.appInitService.countries;
+
     this.getLeadStatus();
     this.getLeadSources();
     // this.fetchLeadSourceName(this.leadId);
     // this.fetchLeadStatusName(this.leadId);
     this.getServiceTypes();
     this.getEmployeeCounts();
-    this.getCountries();
+    // this.getCountries();
     this.getIndustries();
     // this.getStates(id);
   }
@@ -156,70 +162,6 @@ export class LeadCreateComponent implements OnInit {
     );
   }
 
-  //   saveLead(leadForm: FormGroup): void {
-  //     const formData = leadForm.value;
-  //     const leadData = this.mapFormToLeadData(formData);
-
-  //     if (this.isEditMode) {
-  //         leadData.leadId = this.leadId;  // Assign the leadId in edit mode
-  //         this.updateLead(leadData);
-  //     } else {
-  //         this.createLead(leadData);
-  //     }
-  // }
-
-  // private mapFormToLeadData(formData: any): any {
-  //     return {
-  //         leadId: 0,  // Default for new lead, overridden in edit mode
-  //         leadOwnerId: formData.salesPerson,
-  //         companyName: formData.companyName,
-  //         leadStatusId: formData.leadStatus,
-  //         leadSourceId: formData.leadSource,
-  //         firstName: formData.contactName,
-  //         email: formData.email,
-  //         phone1: formData.mobile,
-  //         website: formData.website,
-  //         shipmentType: formData.serviceType,
-  //         monthlyTeus: Number(formData.monthlyVolume),
-  //         pol: formData.pol,
-  //         pod: formData.pod,
-  //         industryId: formData.industry,
-  //         annualRevenue: Number(formData.annualRevenue),
-  //         employeeCount: formData.employeeCount,
-  //         emailOptIn: formData.emailOptIn,
-  //         countryId: formData.country,
-  //         stateId: formData.state,
-  //         cityName: formData.city,
-  //         zipcode: formData.zipCode,
-  //         street: formData.street,
-  //     };
-  // }
-
-  // private updateLead(leadData: any): void {
-  //     this.leadCreateService.updateLead(this.leadId, leadData).subscribe(
-  //         (response) => {
-  //             console.log('Lead updated successfully:', response);
-  //             // Handle success
-  //         },
-  //         (error) => {
-  //             console.error('Error updating lead:', error);
-  //             // Handle error
-  //         }
-  //     );
-  // }
-
-  // private createLead(leadData: any): void {
-  //     this.leadCreateService.createLead(leadData).subscribe(
-  //         (response) => {
-  //             console.log('Lead saved successfully:', response);
-  //             // Handle success
-  //         },
-  //         (error) => {
-  //             console.error('Error saving lead:', error);
-  //             // Handle error
-  //         }
-  //     );
-  // }
   saveLead(leadForm: FormGroup): void {
     this.submitted = true;
 
@@ -330,23 +272,23 @@ export class LeadCreateComponent implements OnInit {
     }
   }
 
-  loadSalesPerson() {
-    this.leadCreateService.getVwAllSalesPerson().subscribe((data: any[]) => {
-      this.salesPerson = data;
-      console.log("sales Person", this.salesPerson);
-    });
-  }
-  getLocationMasterData(): void {
-    this.leadCreateService.getAllLocationMaster().subscribe(
-      data => {
-        this.locationMasterData = data;
-        console.log("locationMasterData", this.locationMasterData);
-      },
-      error => {
-        console.error('Error fetching location master data', error);
-      }
-    );
-  }
+  // loadSalesPerson() {
+  //   this.leadCreateService.getVwAllSalesPerson().subscribe((data: any[]) => {
+  //     this.salesPerson = data;
+  //     console.log("sales Person", this.salesPerson);
+  //   });
+  // }
+  // getLocationMasterData(): void {
+  //   this.leadCreateService.getAllLocationMaster().subscribe(
+  //     data => {
+  //       this.locationMasterData = data;
+  //       console.log("locationMasterData", this.locationMasterData);
+  //     },
+  //     error => {
+  //       console.error('Error fetching location master data', error);
+  //     }
+  //   );
+  // }
   getLeadStatus(): void {
     this.leadCreateService.getLeadStatuses().subscribe(
       (data: LeadStatus[]) => {
@@ -386,17 +328,17 @@ export class LeadCreateComponent implements OnInit {
       (error) => console.error('Failed to fetch employee counts', error)
     );
   }
-  getCountries(): void {
-    this.leadCreateService.getCountries().subscribe(
-      (data) => {
-        this.countries = data;
-        console.log('Countries:', this.countries);
-      },
-      (error) => {
-        console.error('Error fetching countries', error);
-      }
-    );
-  }
+  // getCountries(): void {
+  //   this.leadCreateService.getCountries().subscribe(
+  //     (data) => {
+  //       this.countries = data;
+  //       console.log('Countries:', this.countries);
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching countries', error);
+  //     }
+  //   );
+  // }
 
   getStates(countryId: 0): void {
     this.leadCreateService.getStatesByCountryId(countryId).subscribe(

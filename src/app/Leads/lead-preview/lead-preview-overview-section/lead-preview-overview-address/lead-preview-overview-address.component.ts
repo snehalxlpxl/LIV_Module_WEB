@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
+import { Lead } from 'app/Leads/lead-create/lead-create-model/Lead';
 import { LeadCreateService } from 'app/Leads/lead-create/lead-create.service';
 import * as snippet1 from 'app/main/apps/companies/customers/customer-preview/customer-preview-overview-section/customer-preview-overview-address/customer-preview-overview-address-snippetcode';
 import { ToastrService } from 'ngx-toastr';
@@ -13,6 +14,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./lead-preview-overview-address.component.scss']
 })
 export class LeadPreviewOverviewAddressComponent implements OnInit {
+  @Input() lead: string | undefined;
+
   leadDetails: any;
   leadId: any;
   billingAddress: string;
@@ -87,11 +90,7 @@ export class LeadPreviewOverviewAddressComponent implements OnInit {
    */
   ngOnInit(): void {
     console.log('CustomerPreviewOverviewAddressComponent initialized');
-
-    this.leadId = this.route.snapshot.paramMap.get('id');
-    console.log("AddressleadId", this.leadId)
-    this.fetchLeadDetails();
-    // content header
+   
     this.contentHeader = {
       headerTitle: 'Accordion',
       actionButton: true,
@@ -139,44 +138,6 @@ export class LeadPreviewOverviewAddressComponent implements OnInit {
         ]
       }
     };
-  }
-  fetchLeadDetails(): void {
-    this.leadService.getLeadById(this.leadId).subscribe(
-      (data) => {
-        this.leadDetails = data;
-  
-        // First, fetch the country name
-        this.leadService.getCountryName(this.leadDetails.countryId).subscribe(
-          (countryResponse) => {
-            this.countryName = countryResponse.countryName; // Assuming API returns countryName
-  
-            // Then, fetch the state name
-            this.leadService.getStateName(this.leadDetails.stateId).subscribe(
-              (stateResponse) => {
-                this.stateName = stateResponse.stateName; // Assuming API returns stateName
-                
-                // Finally, format the address
-                this.formatAddress();
-              },
-              (error) => {
-                console.error('Error fetching state:', error);
-              }
-            );
-          },
-          (error) => {
-            console.error('Error fetching country:', error);
-          }
-        );
-      },
-      (error) => {
-        console.error('Error fetching lead:', error);
-      }
-    );
-  }
-  
-  formatAddress(): void {
-    this.billingAddress = `${this.leadDetails.street}, ${this.leadDetails.cityName}, ${this.stateName}, ${this.countryName}, ${this.leadDetails.zipCode} Contact: ${this.leadDetails.phone1}`;
-    console.log('Formatted Address:', this.billingAddress);
   }
   copyToClipboard(text: string) {
     if (text) {

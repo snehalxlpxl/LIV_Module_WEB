@@ -52,5 +52,8 @@ export class LeadsListService implements Resolve<any> {
 
     return this._httpClient.delete<any>(`${environment.apiUrl}/Leads/${leadId}`);
 }
-
+getUserData(): { userName: string; userId: string } | null {
+  const userData = localStorage.getItem('userData');
+  return userData ? JSON.parse(userData) : null;
+}
 }

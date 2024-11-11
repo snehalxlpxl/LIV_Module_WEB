@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,6 +26,7 @@ import { LoaderInterceptor } from './global-loader/loader.interceptor';
 import { CapitalizePipe } from './capitalize.pipe';
 import { LeadsModule } from './Leads/leads.module';
 import { LiveformModule } from './main/apps/companies/livForm/liveform.module';
+import { AppInitService } from './app-init.service';
 
 
 const appRoutes: Routes = [
@@ -60,6 +61,9 @@ const appRoutes: Routes = [
 
   }
 ];
+export function initializeApp(appInitService: AppInitService): () => Promise<any> {
+  return () => appInitService.loadInitialData();
+}
 
 @NgModule({
   declarations: [AppComponent, LoaderComponent, CapitalizePipe],
@@ -92,6 +96,13 @@ const appRoutes: Routes = [
     
   ],
   providers: [
+    AppInitService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [AppInitService],
+      multi: true,
+    },
     {
        provide: HTTP_INTERCEPTORS,
        useClass: LoaderInterceptor,

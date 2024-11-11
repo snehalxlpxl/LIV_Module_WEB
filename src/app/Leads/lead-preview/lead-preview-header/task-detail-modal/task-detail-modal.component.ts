@@ -9,6 +9,7 @@ import { TaskDetail } from './TaskDetail';
 import * as moment from 'moment';
 import Swal from 'sweetalert2';
 import { ActivityNotificationService } from '../../lead-preview-activities-section/ActivityNotificationService.service';
+import { SharedService } from 'app/shared.service';
 @Component({
   selector: 'app-task-detail-modal',
   templateUrl: './task-detail-modal.component.html',
@@ -26,17 +27,19 @@ export class TaskDetailModalComponent implements OnInit {
   @Input() activityId: number;
 
   // reminderJob: CronJob;
-  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder,  private leadCreateService: LeadCreateService, private taskDetailService: TaskDetailService,private route: ActivatedRoute,   private activityNotificationService: ActivityNotificationService) { }
+  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder,  private leadCreateService: LeadCreateService, private taskDetailService: TaskDetailService,private route: ActivatedRoute,   private activityNotificationService: ActivityNotificationService,    private userService: SharedService
+  ) { }
   ngOnInit(): void {
-    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    const userData = this.userService.getUserData();
     if (userData) {
-      this.userName = userData.userName;
-      this.userId = userData.userId;
+      this.userName = this.userService.getUserName();
+      this.userId = this.userService.getUserId();
+      console.log('User Data:', userData);
       console.log('User Name:', this.userName);
       console.log('User ID:', this.userId);
-  } else {
-      console.log('No user data found in sessionStorage');
-  }
+    } else {
+      console.log('No user data found in localStorage');
+    }
     this.taskDetailForm = this.fb.group({
       title: ['', Validators.required],
       startDate : ['', Validators.required],
