@@ -103,7 +103,12 @@
 
         <div class="mt-1 f-preview-overview-content md-font-component" >
             <app-liv-preview-overview-section *ngIf="currentComponent === 'overview'"  @fade></app-liv-preview-overview-section>
-            <app-liv-preview-timeline-section *ngIf="currentComponent === 'timeline'"  @fade></app-liv-preview-timeline-section>
+          
+            <app-liv-preview-timeline-section  [taskTimeLineData]="taskTimeLineData"
+            *ngIf="currentComponent === 'timeline'" 
+            @fade
+            ></app-liv-preview-timeline-section>
+
             <app-liv-document-section *ngIf="currentComponent === 'documents'"  @fade></app-liv-document-section>
         </div>
      

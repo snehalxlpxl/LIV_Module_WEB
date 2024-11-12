@@ -3,13 +3,36 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
+export interface VwLivrequest {
+  companyId: any;
+  livrequestId: number;
+  salesPersonId: number;
+  isNewCustomer: boolean;
+  customerId?: number;
+  customerName?: string;
+  branchId: number;
+  creditLimit?: number;
+  creditTerms?: string;
+  status?: string;
+  requestedDate?: Date;
+  modifiedDate?: Date;
+  notes?: string;
+  createdBy?: number;
+  modifiedBy?: number;
+  branchName?: string;
+  salesPersonName?: string;
+  isDeleted: number;
+  branch: string;
+}
 @Injectable({
   providedIn: 'root'
 })
+
 export class LivPreviewService {
 
   private apiUrl = `${environment.apiUrl}/LIVRequests`;
+
+  
 
   constructor(private http: HttpClient) { }
   getLIVRequest(id): Observable<any> {
@@ -112,5 +135,8 @@ getSumOfRealizedRevenueLastNDays(companyId: number, days: number): Observable<an
   );
 }
 
+getLivrequestById(livRequestId: number): Observable<VwLivrequest> {
+  return this.http.get<VwLivrequest>(`${this.apiUrl}/GetLiv/${livRequestId}`);
+}
 
 }

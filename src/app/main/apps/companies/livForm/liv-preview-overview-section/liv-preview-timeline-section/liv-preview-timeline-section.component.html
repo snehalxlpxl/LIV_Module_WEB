@@ -14,6 +14,7 @@
         </svg>
       </span>
       <span class="padd-add">TimeLine</span>
+      <!-- {{ taskTimeLineData[0] | json }} -->
       <span class="icon-right">
         <!-- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -26,23 +27,22 @@
     </div>
   </h5>
 
-
-  <ul class="timeline mt-2" *ngIf="timelineData && timelineData.length > 0 && timelineData[0]">
+  <!-- <ul class="timeline mt-2" *ngIf="timelineData && timelineData?.length > 0 && timelineData[0]">
    
     <li class="timeline-item">
       <span class="timeline-point timeline-point-info timeline-point-indicator"></span>
       <div class="timeline-event">
         <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
           <h6>LIV Form Approval Requested</h6>
-          <span class="timeline-event-time">{{ getRelativeTime(timelineData[0]?.assignedDate) }} </span>
+          <span class="timeline-event-time">{{ getRelativeTime(taskTimeLineData[0]?.assignedDate) }} </span>
         </div>
-        <p>Requested Approval - Limit - {{ timelineData[0].creditLimit }} & {{ timelineData[0].creditTerms }} Term</p>
+        <p>Requested Approval - Limit - {{ taskTimeLineData[0].creditLimit }} & {{ taskTimeLineData[0].creditTerms }} Term</p>
         <div class="media align-items-center">
           <div class="avatar mr-1">
             <img src="assets/images/avatars/user.png" alt="Avatar" height="32" width="32" />
           </div>
           <div class="media-body">
-            <h6 class="mb-0">Created By {{ timelineData[0].createdByName }}</h6>
+            <h6 class="mb-0">Created By {{ taskTimeLineData[0].createdByName }}</h6>
           </div>
         </div>
       </div>
@@ -64,5 +64,48 @@
           <p *ngIf="showDates">AssignedDate {{item.assignedDate | date: 'dd-MM-yyyy HH:mm'}}</p>
           <p *ngIf="showDates">RequestedDate {{item.requestedDate | date: 'dd-MM-yyyy HH:mm'}}</p>
       </div>
+  </ul> -->
+  <!-- {{ timelineData| json}} {{taskTimeLineData|json}} -->
+  <ul class="timeline mt-2" *ngIf="taskTimeLineData && taskTimeLineData.length > 0 && taskTimeLineData[0]">
+
+    <!-- First timeline item -->
+    <li class="timeline-item" *ngIf="taskTimeLineData[0]">
+      <span class="timeline-point timeline-point-info timeline-point-indicator"></span>
+      <div class="timeline-event">
+        <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+          <h6>LIV Form Approval Requested</h6>
+          <span class="timeline-event-time">{{ getRelativeTime(taskTimeLineData[0]?.assignedDate) }}</span>
+        </div>
+        <p>Requested Approval - Limit - {{ taskTimeLineData[0]?.creditLimit }} & {{ taskTimeLineData[0]?.creditTerms }} Term</p>
+        <div class="media align-items-center">
+          <div class="avatar mr-1">
+            <img src="assets/images/avatars/user.png" alt="Avatar" height="32" width="32" />
+          </div>
+          <div class="media-body">
+            <h6 class="mb-0">Created By {{ taskTimeLineData[0]?.createdByName }}</h6>
+          </div>
+        </div>
+      </div>
+    </li>
+  
+    <!-- Loop through remaining timeline items -->
+    <li *ngFor="let item of taskTimeLineData" class="timeline-item">
+      <span class="timeline-point timeline-point-indicator" [ngClass]="{
+          'bg-success': item.levelStatus === 'Approved',
+          'bg-danger': item.levelStatus === 'Rejected',
+          'bg-warning': item.levelStatus === 'Awaiting Approved',
+          'bg-dark': item.levelStatus === 'Canceled'
+      }"></span>
+      <div class="timeline-event">
+        <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+          <h6>{{ item.levelStatus }} - Level {{ item.level }} By {{ item.approverName }}</h6>
+          <span class="timeline-event-time">{{ getRelativeTime(item.approvedDate) }}</span>
+        </div>
+        <p *ngIf="showDates">ApprovedDate: {{ item.approvedDate | date: 'dd-MM-yyyy HH:mm' }}</p>
+        <p *ngIf="showDates">AssignedDate: {{ item.assignedDate | date: 'dd-MM-yyyy HH:mm' }}</p>
+        <p *ngIf="showDates">RequestedDate: {{ item.requestedDate | date: 'dd-MM-yyyy HH:mm' }}</p>
+      </div>
+    </li>
   </ul>
+  
 </div>

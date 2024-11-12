@@ -3,16 +3,20 @@
         <div class="col-md-7">
             <div class="overviewsection">
                 <div class="mb-2">
-                    <app-liv-preview-overview-section-basic-details></app-liv-preview-overview-section-basic-details>
+                    <app-liv-preview-overview-section-basic-details  [livRequestData]="livRequestData"></app-liv-preview-overview-section-basic-details>
                 </div>
                 <div class="mb-2">
-                    <app-liv-overview-section-summary></app-liv-overview-section-summary>
+                    <app-liv-overview-section-summary  
+                        [sumOfRealizedRevenueLast60Days]="sumOfRealizedRevenueLast60Days"
+                        [realizedRevenue]="realizedRevenue"
+                        [totalSales]="totalSales"
+                    ></app-liv-overview-section-summary>
                 </div>
             </div>
         </div>
         <div class="col-md-5">
             <div class="">
-                <app-liv-preview-timeline-section [showDates]="false"></app-liv-preview-timeline-section>
+                <app-liv-preview-timeline-section [showDates]="false"  [taskTimeLineData]="taskTimeLineData"></app-liv-preview-timeline-section>
            </div>
         </div>
     </div>

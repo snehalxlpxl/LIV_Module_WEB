@@ -13,6 +13,7 @@ export class LivPreviewTimelineSectionComponent implements OnInit {
   userName: any;
   userId: any;
   @Input() showDates: boolean = true;
+  @Input() taskTimeLineData: any[] = [];
 
 
   constructor(private timelineService: LivPreviewTimelineSectionService,
@@ -32,7 +33,9 @@ export class LivPreviewTimelineSectionComponent implements OnInit {
   
     this.route.params.subscribe(params => {
       this.taskId = +params['id'];  
-      this.loadLivTaskTimeLine(this.taskId); 
+      console.log("taskTimeLineData++++++++++++++++++++++++++",this.taskTimeLineData);
+      // this.timelineData = this.taskTimeLineData || [];
+      // this.loadLivTaskTimeLine(this.taskId); 
     });
     // this.isApprover = this.approverList.includes(this.userId);
   }
@@ -68,25 +71,55 @@ export class LivPreviewTimelineSectionComponent implements OnInit {
       }
     );
   }
-  getRelativeTime(requestedDate: string): string {
-    if (!requestedDate) {
-      return ''; 
-  }
-    const now = new Date();
-    const pastDate = new Date(requestedDate);
-    const diffInMs = now.getTime() - pastDate.getTime();
-    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  // getRelativeTime(requestedDate: string): string {
+  //   if (!requestedDate) {
+  //     return ''; 
+  // }
+  //   const now = new Date();
+  //   const pastDate = new Date(requestedDate);
+  //   const diffInMs = now.getTime() - pastDate.getTime();
+  //   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 
-    if (diffInDays === 0) {
-      return 'Today';
-    } else if (diffInDays === 1) {
-      return '1 day ago';
-    } else if (diffInDays > 1) {
-      return `${diffInDays} days ago`;
+  //   if (diffInDays === 0) {
+  //     return 'Today';
+  //   } else if (diffInDays === 1) {
+  //     return '1 day ago';
+  //   } else if (diffInDays > 1) {
+  //     return `${diffInDays} days ago`;
+  //   } else {
+  //     return 'In the future'; // In case the date is in the future
+  //   }
+  // }
+  getRelativeTime(date: string | Date): string {
+    if (!date) {
+      return ''; // Return empty string if date is null or undefined
+    }
+  
+    const givenDate = new Date(date);
+    
+    // Check if the date is invalid
+    if (isNaN(givenDate.getTime())) {
+      return ''; // Return empty string if the date is invalid
+    }
+  
+    const now = new Date();
+    const secondsAgo = Math.floor((now.getTime() - givenDate.getTime()) / 1000);
+  
+    if (secondsAgo < 60) {
+      return `${secondsAgo} second${secondsAgo > 1 ? 's' : ''} ago`;
+    } else if (secondsAgo < 3600) {
+      const minutesAgo = Math.floor(secondsAgo / 60);
+      return `${minutesAgo} minute${minutesAgo > 1 ? 's' : ''} ago`;
+    } else if (secondsAgo < 86400) {
+      const hoursAgo = Math.floor(secondsAgo / 3600);
+      return `${hoursAgo} hour${hoursAgo > 1 ? 's' : ''} ago`;
     } else {
-      return 'In the future'; // In case the date is in the future
+      const daysAgo = Math.floor(secondsAgo / 86400);
+      return `${daysAgo} day${daysAgo > 1 ? 's' : ''} ago`;
     }
   }
+  
+
 }
 
 

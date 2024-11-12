@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef, Input } from '@angular/core';
 import { CustomerPreviewService } from '../../customers/customer-preview.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,6 +15,10 @@ import { ActivityNotificationService } from 'app/Leads/lead-preview/lead-preview
 import { CreditLimitReqListComponent } from '../credit-limit-req-list/credit-limit-req-list.component';
 import { CreditLimitReqListService } from '../credit-limit-req-list/credit-limit-req-list.service';
 import { ConstantPool } from '@angular/compiler';
+import { forkJoin, of } from 'rxjs';
+import { environment } from 'environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
 
 @Component({
@@ -35,12 +39,15 @@ import { ConstantPool } from '@angular/compiler';
 })
 export class LivPreviewComponent implements OnInit {
   loading: boolean = true;
+  taskTimeLineData: any;
   public currentUser: Observable<User>;
   private currentUserSubject: BehaviorSubject<User>;
   public get currentUserValue(): User {
     console.log("this.currentUserSubject.value", this.currentUserSubject.value);
     return this.currentUserSubject.value;
   }
+  livRequestData: any;
+
   finalStatus:string;
   livRequest:any = [];
    livRequestSubject = new BehaviorSubject<any>(this.livRequest);
@@ -48,11 +55,14 @@ export class LivPreviewComponent implements OnInit {
   currentComponent: string;
   userName: any;
   userId: any; 
+  // @Input() taskTimeLineData: any[] = [];
+
   // isApprover : boolean=false;
   // approverList = [113057, 113058, 113059, 113060, 113061, 113062];
   isCanceledStatus:any;
 
-  constructor(private navigationService: CustomerPreviewService, private modalService: NgbModal,private livRequestService: LivPreviewService, private livApproveService:LivApproveService,  private route: ActivatedRoute, private router: Router,private location: Location,  private activityNotificationService: ActivityNotificationService,    private changeDetector: ChangeDetectorRef,private CreditLimitReqListSer:CreditLimitReqListService) {
+  constructor(private navigationService: CustomerPreviewService, private modalService: NgbModal,private livRequestService: LivPreviewService, private livApproveService:LivApproveService,  private route: ActivatedRoute, private router: Router,private location: Location,  private activityNotificationService: ActivityNotificationService,    private changeDetector: ChangeDetectorRef,private CreditLimitReqListSer:CreditLimitReqListService,    private http: HttpClient
+  ) {
     const storedUser = localStorage.getItem('currentUser');
     this.currentUserSubject = new BehaviorSubject<User | null>(storedUser ? JSON.parse(storedUser) : null);
     this.currentUser = this.currentUserSubject.asObservable();
@@ -62,6 +72,7 @@ export class LivPreviewComponent implements OnInit {
     this.livRequestSubject.subscribe((livRequest) => {
       console.log('Updated livRequest:', livRequest);
       this.livRequest = livRequest;
+      console.log('Task Timeline Data:+++++++++++++++++++++', this.taskTimeLineData);
     });
 
     const userData = JSON.parse(localStorage.getItem('currentUser'));
@@ -76,7 +87,8 @@ export class LivPreviewComponent implements OnInit {
       // this.checkIfDelegate(this.userId,this.LIVRequestId);
       
       this.LIVRequestId = this.route.snapshot.paramMap.get('id');
-      console.log(this.LIVRequestId)
+      console.log(this.LIVRequestId);
+      this.getAllData(this.LIVRequestId);
       this.checkUserSalesPersonOrCreatedBy( this.userId,this.LIVRequestId);
       this.checkUserSalesPersonOrCreatedByApprover(this.userId,this.LIVRequestId )
       // this.loadLIVApprovalTasks(this.userId,this.LIVRequestId);
@@ -110,8 +122,42 @@ export class LivPreviewComponent implements OnInit {
     });
 
     
+  }  
+  getLivTaskTimeLine(taskId: number) {
+    const url = `${environment.apiUrl}/LIVTimeLine/GetLivTaskTimeLine/${taskId}`;
+    return this.http.get<any>(url).pipe(
+      catchError(this.handleError)
+    );
   }
 
+  handleError(error: any) {
+    console.error('Error:', error);
+    return [];
+  }
+ 
+  getAllData(LIVRequestId: any): void {
+    console.log("BasicDetailgetAllDataLIVRequestId---------------", this.LIVRequestId);
+
+    const livRequest$ = this.livRequestService.getLivrequestById(LIVRequestId);
+    const taskTimeLine$ = this.getLivTaskTimeLine(LIVRequestId);
+    forkJoin([livRequest$, taskTimeLine$
+      // , sumRevenue$, realizedRevenue$, companyCount$
+    ])
+      .subscribe({
+        next: ([livRequestData,taskTimeLineData
+          // , sumRevenueData, realizedRevenueData, companyCountData
+          ]) => {
+          this.livRequestData = livRequestData;
+          this.taskTimeLineData = taskTimeLineData; 
+  
+          console.log('Fetched LivRequest Data:', this.livRequestData);
+          console.log('Fetched Task TimeLine Data:', taskTimeLineData);
+        },
+        error: (error) => {
+          console.error('Error fetching data:', error);
+        }
+      });
+  }
   isDelegate: boolean = false;
   message:string;
   checkIfDelegate(userId: number,livId:number) {

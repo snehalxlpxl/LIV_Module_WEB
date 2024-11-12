@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { LivPreviewService } from '../../liv-preview/liv-preview.service';
 import { ActivatedRoute } from '@angular/router';
 import feather from 'feather-icons';
+import { forkJoin, of } from 'rxjs';
+import { switchMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-liv-overview-section-summary',
@@ -9,12 +11,15 @@ import feather from 'feather-icons';
   styleUrls: ['./liv-overview-section-summary.component.scss']
 })
 export class LivOverviewSectionSummaryComponent implements OnInit {
+  @Input() sumOfRealizedRevenueLast60Days: any;
+  @Input() realizedRevenue: any;
+  @Input() totalSales: any;
   livRequest: any;
   customerId: any;
   LIVRequestId: any;
-  totalSales: any | undefined;
-  realizedRevenue: any | undefined;
-  sumOfRealizedRevenueLast60Days: any | undefined;
+  // totalSales: any | undefined;
+  // realizedRevenue: any | undefined;
+  // sumOfRealizedRevenueLast60Days: any | undefined;
   mainTitle: string = '';
   subTitle: string = '';
   constructor(private LivPreviewService: LivPreviewService,  private route: ActivatedRoute,) { }
@@ -26,58 +31,61 @@ export class LivOverviewSectionSummaryComponent implements OnInit {
 
   }
 
-  getLIVRequest(id: any): void {
-    this.LivPreviewService.getLIVRequest(id).subscribe({
-      next: (data) => {
-          this.livRequest = data;
-          console.log("GetLIVRequest ++++++++++++++++", data);
-          this.customerId = data.customerId;
-          this.getCompanyCount();
-          this.getRealizedRevenue();
-          this.getSumOfRealizedRevenueLast60Days();
-        
-      },
-      error: (err) => console.error('Error fetching LIVRequest', err),
-    });
-  }
-
-  getCompanyCount() {
-    this.LivPreviewService.getCountByCompany(this.customerId).subscribe(
-      data => this.totalSales = data,
-      error => console.error('Error:', error)
-    );
-  }
-
-  getRealizedRevenue() {
-    this.LivPreviewService.getSumRealizedRevenue(this.customerId).subscribe(
-      data => this.realizedRevenue = data, 
-      error => console.error('Error:', error)
-    );
-  }
-  // getSumOfRealizedRevenueLast60Days() {
-  //   this.LivPreviewService.getSumOfRealizedRevenueLast60Days(this.customerId).subscribe(
-  //     data => 
-  //       this.sumOfRealizedRevenueLast60Days = data,
-      
-  //     // console.log('Sum of Realized Revenue Last 60 Days:', data),
-  //     error => console.error('Error:', error)
-  //   );
-  // }
-  getSumOfRealizedRevenueLast60Days() {
-    this.LivPreviewService.getSumOfRealizedRevenueLast60Days(this.customerId).subscribe({
-      next: (data) => {
-        this.sumOfRealizedRevenueLast60Days = data;
-        this.extractTitleAndSubtitle(this.sumOfRealizedRevenueLast60Days.title);
-      },
-      error: (err) => console.error('Error:', err)
-    });
-  }
   
-  extractTitleAndSubtitle(title: string) {
-    const parts = title.split(" for the ");
-    this.mainTitle = parts[0]; // "Sum of Realized Revenue"
-    this.subTitle = parts[1] || ''; // "Last 60 Days", or empty if not found
-  }
+getLIVRequest(id: any): void {
+  // First, get the main LIV request data
+  this.LivPreviewService.getLIVRequest(id).pipe(
+    switchMap((data) => {
+      this.livRequest = data;
+      console.log("GetLIVRequest ++++++++++++++++", data);
+      this.customerId = data.customerId;
+
+      // Use forkJoin to simultaneously call the three other methods with customerId
+      return forkJoin({
+        companyCount: this.LivPreviewService.getCountByCompany(this.customerId).pipe(
+          catchError((error) => {
+            console.error('Error fetching company count:', error);
+            return of(null); // Return null if there's an error
+          })
+        ),
+        realizedRevenue: this.LivPreviewService.getSumRealizedRevenue(this.customerId).pipe(
+          catchError((error) => {
+            console.error('Error fetching realized revenue:', error);
+            return of(null);
+          })
+        ),
+        sumOfRealizedRevenueLast60Days: this.LivPreviewService.getSumOfRealizedRevenueLast60Days(this.customerId).pipe(
+          catchError((error) => {
+            console.error('Error fetching sum of realized revenue:', error);
+            return of(null);
+          })
+        ),
+      });
+    })
+  ).subscribe({
+    next: ({ companyCount, realizedRevenue, sumOfRealizedRevenueLast60Days }) => {
+      this.totalSales = companyCount;
+      this.realizedRevenue = realizedRevenue;
+      this.sumOfRealizedRevenueLast60Days = sumOfRealizedRevenueLast60Days;
+
+      console.log('Fetched Company Count:', this.totalSales);
+      console.log('Fetched Realized Revenue:', this.realizedRevenue);
+      console.log('Fetched Sum of Realized Revenue Last 60 Days:', this.sumOfRealizedRevenueLast60Days);
+
+      // Extract title and subtitle if sumOfRealizedRevenueLast60Days data exists
+      if (this.sumOfRealizedRevenueLast60Days) {
+        this.extractTitleAndSubtitle(this.sumOfRealizedRevenueLast60Days.title);
+      }
+    },
+    error: (err) => console.error('Error in getLIVRequest:', err)
+  });
+}
+
+extractTitleAndSubtitle(title: string) {
+  const parts = title.split(" for the ");
+  this.mainTitle = parts[0];
+  this.subTitle = parts[1] || '';
+}
 
 ngAfterViewInit() {
   feather.replace();

@@ -11,21 +11,21 @@
         <div class="card-body">
             <div class="row mb-2">
                 <div class="col-6">Requested Date</div>
-                <b class="col-6">{{ livRequest.requestedDate | date: 'dd-MMM-yyyy' }}</b>
+                <b class="col-6">{{ livRequestData?.requestedDate | date: 'dd-MMM-yyyy' }}</b>
             </div>
             <div class="row mb-2">
                 <div class="col-6">Sales Person</div>
-                <b class="col-6">{{ salesPersonName }}</b>
+                <b class="col-6">{{ livRequestData?.salesPersonName }}</b>
             </div>
             <div class="row mb-2">
                 <div class="col-6">Customer Type</div>
                 <!-- <b class="col-6">{{ livRequest.isNewCustomer}}</b> -->
-                <b class="col-6">{{ livRequest?.isNewCustomer ? 'Existing' : 'New' }}</b>
+                <b class="col-6">{{ livRequestData?.isNewCustomer ? 'Existing' : 'New' }}</b>
             </div>
             <hr>
             <div class="row mb-2">
                 <div class="col-6">Branch</div>
-                <b class="col-6">{{ companyName}}</b>
+                <b class="col-6">{{ livRequestData?.branch}}</b>
             </div>
             <div class="row mb-2">
                 <div class="col-6">Current Limit</div>
@@ -33,7 +33,7 @@
             </div>
             <div class="row mb-2">
                 <div class="col-6">Requested Limit</div>
-                <b class="col-6">₹ {{livRequest.creditLimit}}</b>
+                <b class="col-6">₹ {{livRequestData?.creditLimit}}</b>
             </div>
             <div class="row mb-2">
                 <div class="col-6">Current Payment Terms</div>
@@ -41,12 +41,12 @@
             </div>
             <div class="row mb-2">
                 <div class="col-6">Payment Terms</div>
-                <b class="col-6">{{livRequest.creditTerms}}</b>
+                <b class="col-6">{{livRequestData?.creditTerms}}</b>
             </div>
             <hr>
             <div class="row mb-2">
                 <div class="col-6">Notes</div>
-                <b class="col-6">{{livRequest.notes}}</b>
+                <b class="col-6">{{livRequestData?.notes}}</b>
             </div>
         </div>
     </div>
