@@ -27,6 +27,7 @@ import { CapitalizePipe } from './capitalize.pipe';
 import { LeadsModule } from './Leads/leads.module';
 import { LiveformModule } from './main/apps/companies/livForm/liveform.module';
 import { AppInitService } from './app-init.service';
+import { EnquiryModule } from './enquiry/enquiry.module';
 
 
 const appRoutes: Routes = [
@@ -59,7 +60,12 @@ const appRoutes: Routes = [
     loadChildren: () => import('./Leads/leads.module').then(m => m.LeadsModule),
     canActivate: [AuthGuard] 
 
+  },
+  {
+    path: 'enquiry',
+    loadChildren: () => import('./enquiry/enquiry.module').then(m => m.EnquiryModule)
   }
+  
 ];
 export function initializeApp(appInitService: AppInitService): () => Promise<any> {
   return () => appInitService.loadInitialData();
@@ -92,7 +98,7 @@ export function initializeApp(appInitService: AppInitService): () => Promise<any
     CustomersModule,
     LeadsModule,
     LiveformModule,
-    
+    EnquiryModule
     
   ],
   providers: [

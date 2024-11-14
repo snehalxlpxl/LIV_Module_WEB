@@ -26,6 +26,7 @@ export const menu: CoreMenu[] = [
     icon: 'arrow-right',
     url: 'credit-limit-req-list'
   },
+  
   {
     id: 'Task',
     type: 'collapsible',
@@ -117,7 +118,15 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'arrow-right',
         url: 'sales-quotes'
-      }
+      },
+      {
+        id: 'Enquiry',
+        title: 'Enquiry',
+        translate: 'Enquiry',
+        type: 'item',
+        icon: 'search',
+        url: 'enquiry-list'
+      },
 
     ]
   },
