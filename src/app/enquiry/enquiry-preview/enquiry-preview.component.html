@@ -1,1 +1,56 @@
-<p>enquiry-preview works!</p>
+<!-- <section class="enquiry-wrapper" >
+    <div class="row">
+        <div class="fixheader">
+            <div class="row align-items-center liv-margin">
+                <div class="col-lg-5 col-md-10 col-xs-10 col-10 d-flex align-items-center mb-2 mb-md-0">
+                    <h2 class="mb-0 flex-shrink-1">
+                         <b>{{currentEnquiry.enquiryId}}</b>
+                    </h2>
+                    <span class="ml-1 badge badge-warning md-font">{{currentEnquiry.status}}</span> 
+                </div>
+            <div class="col-lg-6 col-md-10 d-flex justify-content-end align-items-center flex-wrap text-right mar-left" >
+                <div>
+                        <button type="button" class="btn btn-outline-danger mr-1 md-font" ><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i> Edit</button>
+
+                        <button class="btn btn-success mr-1 md-font"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i> Convert</button>
+                        
+                        <button class="btn btn-success md-font"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i>New</button>
+                        
+                </div>
+                <span class="close-big mx-1 flex-shrink-0 clickable mr-2" (click)="goBack()">×</span>
+            </div>
+            <span class="ml-1 badge badge-secondary">{{message}}</span>
+        </div>
+
+            <div class="pl-1 f-pills">
+                <div class="overview md-font">
+                    <ul ngbNav #nav="ngbNav" class="nav nav-pills p-0">
+                        <li ngbNavItem>
+                            <a ngbNavLink (click)="setComponent('overview')"
+                                [class.active]="currentComponent === 'overview'">Overview</a>
+                        </li>
+                        <li ngbNavItem>
+                            <a ngbNavLink (click)="setComponent('timeline')"
+                                [class.active]="currentComponent === 'timeline'">Timelines</a>
+                        </li>
+                       
+                        <li ngbNavItem>
+                            <a ngbNavLink (click)="setComponent('documents')"
+                                [class.active]="currentComponent === 'documents'">Documents</a>
+                        </li>
+                       
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-0 f-preview-overview-content md-font-component p-0" >
+            <app-liv-preview-overview-section *ngIf="currentComponent === 'overview'"  @fade></app-liv-preview-overview-section>
+          
+            <app-liv-preview-timeline-section *ngIf="currentComponent === 'timeline'"  @fade></app-liv-preview-timeline-section>
+
+            <app-liv-document-section *ngIf="currentComponent === 'documents'"  @fade></app-liv-document-section>
+        </div>
+     
+    </div>
+</section> -->
