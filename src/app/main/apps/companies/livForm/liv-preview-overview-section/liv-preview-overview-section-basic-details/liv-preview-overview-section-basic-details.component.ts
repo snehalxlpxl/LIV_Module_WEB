@@ -82,17 +82,16 @@ export class LivPreviewOverviewSectionBasicDetailsComponent implements OnInit {
   //   );
   // }
 
-  // fetchBranchName(branchId: string): void {
-  //   // console.log("leadOwnerId:",leadOwnerId)
-  //   console.log(branchId);
-  //   this.livRequestService.getBranchName(branchId).subscribe(
-  //     (data) => {
-  //       this.companyName = data.companyName; // Assuming the API returns the owner's name
-  //       // console.log(data);
-  //     },
-  //     (error) => {
-  //       console.error('Error deleting lead:', error);
-  //     }
-  //   );
-  // }
+  fetchBranchName(branchId: string): void {
+    // console.log("leadOwnerId:",leadOwnerId)
+    this.livRequestService.getBranchName(branchId).subscribe(
+      (data) => {
+        this.companyName = data.companyName; // Assuming the API returns the owner's name
+        // console.log(data);
+      },
+      (error) => {
+        console.error('Error deleting lead:', error);
+      }
+    );
+  }
 }

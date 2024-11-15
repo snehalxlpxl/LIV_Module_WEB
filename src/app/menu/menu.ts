@@ -26,7 +26,7 @@ export const menu: CoreMenu[] = [
     icon: 'arrow-right',
     url: 'credit-limit-req-list'
   },
-  
+ 
   {
     id: 'Task',
     type: 'collapsible',
