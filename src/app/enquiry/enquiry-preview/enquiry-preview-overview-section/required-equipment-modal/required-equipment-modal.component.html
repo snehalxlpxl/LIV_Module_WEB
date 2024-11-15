@@ -1,1 +1,35 @@
-<p>required-equipment-modal works!</p>
+<div class="modal-header">
+    <h5 class="modal-title">
+      <i class="feather icon-package" style="font-size: 16px; margin-right: 8px;"></i>
+      <span>Add Required Equipment</span>
+    </h5>
+    <p class="btn-close cursor-pointer" aria-label="Close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true"> × </p>
+  </div>
+  
+  <!-- Modal Body -->
+  <div class="modal-body">
+    <div class="row">
+      <!-- Container Type input -->
+      <div class="form-group col-6">
+        <label for="containerType">Container Type</label>
+        <select class="form-control" id="containerType" [(ngModel)]="containerType">
+          <option>40GP</option>
+          <option>20GP</option>
+          <!-- Add more container options as needed -->
+        </select>
+      </div>
+  
+      <!-- Count input -->
+      <div class="form-group col-6">
+        <label for="containerCount">Count</label>
+        <input type="number" class="form-control" id="containerCount" [(ngModel)]="containerCount" />
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal Footer -->
+  <div class="modal-footer d-flex justify-content-end">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+    <button type="button" class="btn btn-success ml-2" (click)="addRequiredEquipment()">Add</button>
+  </div>
+  
