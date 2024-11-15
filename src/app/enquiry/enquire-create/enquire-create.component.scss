@@ -1,0 +1,84 @@
+
+
+.f-preview-overview-content-new {
+    margin-top: 4.9rem !important;
+    padding: 0 10px;
+}
+span.padd-add.ng-star-inserted {
+    padding-top: 3px;
+}
+.panel-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .icon-left, .padd-add {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon-right {
+    margin-left: auto;
+    margin-right: 20px;
+  }
+// input.ng-touched{
+//   border: 1px solid red;
+// }
+.f-autocomplet-wrapper{
+  position: relative;
+}
+// .form-group.f-autocomplet-wrapper>input {
+//   left: 11px;
+//     border: none;
+//     z-index: 1;
+//     top: 3px;
+//     width: 90%;
+//     height: 31px;
+//     position: absolute;
+// }
+// .dropdown {
+//   display: none; /* Hidden by default */
+//   position: absolute;
+//   background-color: #fff;
+//   width: 100%; /* Match the input width */
+//   border: 1px solid #ddd;
+//   z-index: 1000;
+//   height: 500px; /* Set max height for the dropdown */
+//   overflow-y: scroll; /* Enable vertical scrolling */
+//   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+// }
+
+// .dropdown-item {
+//   padding: 8px 16px;
+//   cursor: pointer;
+// }
+
+// .dropdown-item:hover {
+//   background-color: rgba(115, 103, 240, 0.12) !important;
+// }
+
+// /* Show the dropdown when input is focused */
+// input:focus + .dropdown {
+//   display: block;
+// }
+.mr-left-30{
+  margin-right: 30%;
+}
+.side-nav {
+  width: 0;
+  height: 100%;
+  position: fixed;
+  top: 10%;
+  right: 0;
+  padding-top: 1%;
+  background-color: #ffffff;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+  box-shadow: 2px 3px 7px #a7a6a6;
+}
+
+.side-nav.open {
+  width: 300px;
+  z-index: 20;
+}

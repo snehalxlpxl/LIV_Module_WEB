@@ -4,6 +4,7 @@ import { EnquiryListComponent } from './enquiry-list/enquiry-list.component';
 import { EnquiryPreviewComponent } from './enquiry-preview/enquiry-preview.component';
 import { RouterModule } from '@angular/router';
 import { CoreCommonModule } from '@core/common.module';
+import { EnquireCreateComponent } from './enquire-create/enquire-create.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CoreDirectivesModule } from '@core/directives/directives';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,6 +32,11 @@ const routes = [
     data: { path: 'enquiry-list', animation: 'EnquiryListComponent' }
   },
   {
+    path: 'enquiry-create',
+    component: EnquireCreateComponent,
+    data: { path: 'enquiry-create', animation: 'EnquireCreateComponent' }
+  },
+  {
     path: 'enquiry-preview/:id',
     component: EnquiryPreviewComponent,
     data: { path: 'enquiry-preview/:id', animation: 'EnquiryPreviewComponent' }
@@ -40,6 +46,7 @@ const routes = [
 @NgModule({
   declarations: [
     EnquiryListComponent,
+    EnquireCreateComponent,
     EnquiryPreviewComponent,
     EnquiryPreviewOverviewSectionComponent,
     EnquiryPreviewBasicDetailComponent,

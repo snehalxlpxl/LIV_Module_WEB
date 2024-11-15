@@ -1,0 +1,513 @@
+<section class="customer-list-wrapper">
+    <div class="">
+        <div class="row">
+            <form [formGroup]="newEnqiryCreate" (ngSubmit)="saveEnquiry(newEnqiryCreate)">
+                <div class="fixheader">
+                    <!-- Customer List Header -->
+                    <div class="row">
+                        <div class="col-md-5 col-12">
+                            <div class="d-flex justify-content-between align-items-center m-1">
+                                <div class="d-flex align-items-center">
+                                    <h1 class=""><b>New Enquiry</b></h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="col-md-7 col-lg-4 col-12 d-flex justify-content-start justify-content-md-end align-items-center offset-lg-2">
+                            <div class="row pr-1 pb-1 pb-md-0 align-items-center w-100 mr-left-30">
+                                <div
+                                    class="col-10 col-md-12 mt-2 ml-1 ml-md-0 mt-md-0 d-flex justify-content-start justify-content-md-end">
+                                    <button type="button" class="btn btn-outline-danger mr-2 cursor-pointer"
+                                        rippleEffect (click)="cancelPreview()">
+                                        Cancel
+                                    </button>
+                                    <button class="btn btn-success" type="submit" rippleEffect>
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="f-preview-overview-content-new">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="overviewsection">
+                                <div class="mb-2">
+                                    <!-- <app-customer-create-basic-detail
+                                                          (customerBasicDetailChild)="customerBasicDetailChild($event)"></app-customer-create-basic-detail> -->
+                                    <!-- Accordion Basic start -->
+                                    <div class="rounded-corner-accordian">
+                                        <section id="accordion">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div id="accordionWrapa1" role="tablist"
+                                                        aria-multiselectable="true">
+                                                        <div class="collapse-icon p-1">
+                                                            <div class="collapse-default">
+
+                                                                <div class="card">
+                                                                    <div class="card-header">
+
+                                                                        <h6><i class="feather icon-list"></i>&nbsp;Basic
+                                                                            Details</h6>
+                                                                    </div>
+                                                                    <div class="row p-1">
+
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label>Customer Status</label>
+                                                                                <ng-select id="CustomerStatus"
+                                                                                formControlName="CustomerStatus"
+                                                                                [items]="customerStatusOptions" bindValue="label"
+                                                                                bindLabel="label"
+                                                                                placeholder="Lead / Customer">
+                                                                                   
+                                                                                    <ng-option></ng-option>
+                                                                                </ng-select>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label>Customer Name</label>
+                                                                                <input formControlName="CompanyName"
+                                                                                    type="text"
+                                                                                    placeholder="Company Name"
+                                                                                    class="form-control">
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label>Lead Owner (Sales
+                                                                                    Person)</label>
+                                                                                <ng-select id="salesPerson"
+                                                                                    formControlName="LeadOwnerId"
+                                                                                    [items]="salesPerson" bindValue="userId"
+                                                                                    bindLabel="userDisplayName"
+                                                                                    placeholder="Sales Person Name">
+                                                                                    <ng-option></ng-option>
+                                                                                </ng-select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label>Service Type</label>
+                                                                                <ng-select id="serviceType"
+                                                                                    formControlName="ServiceTypeId"
+                                                                                    [items]="serviceTypes" 
+                                                                                    bindLabel="jobtypeName"
+                                                                                    bindValue="jobtypeId" 
+                                                                                    (change)="onChangeServiceType($event)"
+                                                                                    placeholder="FCL, Air, Etc">
+                                                                                    <ng-option></ng-option>
+                                                                                </ng-select>
+                                                                                <input type="hidden" formControlName="ServiceType"/>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label>Inco Terms</label>
+                                                                                <ng-select id="incoTerms"
+                                                                                    formControlName="IncoTermsId"
+                                                                                    [items]="incoTerm" 
+                                                                                    bindLabel="incotermName"
+                                                                                    bindValue="incoTermId" 
+                                                                                    (change)="onChangeIncoTerm($event)"
+                                                                                    placeholder="Exworks, FOB, etc">
+                                                                                    <ng-option></ng-option>
+                                                                                </ng-select>
+                                                                                <input type="hidden" formControlName="IncoTerms"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label>POL</label>
+                                                                                <ng-select id="POLId"
+                                                                                    formControlName="POLId"
+                                                                                    [items]="locationMasterData"
+                                                                                    bindValue="locationId"
+                                                                                    bindLabel="locationShortName"
+                                                                                    (change)="onChangePOL($event)"
+                                                                                    placeholder="Nava Sheva, Mumbai,etc">
+                                                                                    <ng-option></ng-option>
+                                                                                </ng-select>
+                                                                                <input type="hidden" formControlName="POL"/>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label>POD</label>
+                                                                                <ng-select id="PODId"
+                                                                                    formControlName="PODId"
+                                                                                    [items]="locationMasterData"
+                                                                                    bindValue="locationId"
+                                                                                    bindLabel="locationShortName"
+                                                                                    (change)="onChangePOD($event)"
+                                                                                    placeholder="Istambul, New York, etc">
+                                                                                    <ng-option></ng-option>
+                                                                                </ng-select>
+                                                                                <input type="hidden" formControlName="POD"/>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label>Commodity</label>
+                                                                                <input id="Commodity" type="text"
+                                                                                    class="form-control"
+                                                                                    formControlName="Commodity"
+                                                                                    placeholder="Auto Parts, Plastics,etc" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label>Free Time - Origin</label>
+                                                                                <input id="FreeTimeOrigin" type="text"
+                                                                                    class="form-control"
+                                                                                    formControlName="FreeTimeOrigin"
+                                                                                    placeholder="Auto Parts, Plastics,etc" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label>Free Time - Destination</label>
+                                                                                <input id="FreeTimeDestination"
+                                                                                    type="text" class="form-control"
+                                                                                    formControlName="FreeTimeDestination"
+                                                                                    placeholder="Auto Parts, Plastics,etc" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label>Notes</label>
+                                                                                <textarea id="Notes" type="text"
+                                                                                    class="form-control"
+                                                                                    formControlName="Notes"
+                                                                                    placeholder="General & Stackable"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <!-- Accordion Basic end -->
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="rounded-corner-accordian">
+                                <section id="accordion">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+                                                <div class="collapse-icon p-1">
+                                                    <div class="collapse-default">
+                                                        <ngb-accordion [destroyOnHide]="false" [closeOthers]="false">
+                                                            <ngb-panel id="panelBorderBottom1">
+                                                                <ng-template ngbPanelTitle>
+                                                                    <div class="panel-title pb-2">
+                                                                        <div
+                                                                            class="d-flex justify-content-start align-items-center">
+                                                                            <span class="icon-left">
+                                                                                <i class="feather icon-file"
+                                                                                    aria-hidden="true"></i>
+                                                                            </span>
+                                                                            <span class="padd-add">Required Equipment
+                                                                                (FCL)</span>
+                                                                        </div>
+                                                                        <div class="d-flex ">
+                                                                            <!-- <button
+                                                                type="button"
+                                                                class="btn btn-outline-success mr-2 f-adrress-btn"
+                                                                
+                                                                rippleEffect
+                                                                (click)="toggleSideNav()"
+                                                              >
+                                                                Add Address
+                                                              </button>
+                                                          <button type="button" class="btn btn-outline-success mr-2 f-adrress-btn"
+                                                            rippleEffect >
+                                                            Add Address
+                                                          </button> -->
+                                                                            <span class="icon-right">
+
+                                                                                <i class="feather icon-plus-square"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-template>
+
+                                                                <ng-template ngbPanelContent>
+                                                                    <!-- <div *ngIf="addrDetailsList && addrDetailsList.length === 0">
+                                                        <input formControlName="address" type="hidden" [value]="addrDetailsList"/>
+                                                        <div class="row pt-1">
+                                                          <div class="col-md-6 text-danger">
+                                                          
+                                                            <p>
+                                                              Please Enter Atleast one Address Details
+                                                            </p>
+                                                          </div>
+                                                          <div class="col-md-6 text-danger">
+                                                              <p class="text-right">!</p>
+                                                          </div>
+                                                        </div>
+                                                      </div>  -->
+                                                                    <div>
+
+                                                                    </div>
+
+                                                                </ng-template>
+                                                            </ngb-panel>
+                                                        </ngb-accordion>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="rounded-corner-accordian mt-2">
+                                <section id="accordion">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+                                                <div class="collapse-icon p-1">
+                                                    <div class="collapse-default">
+                                                        <ngb-accordion [destroyOnHide]="false" [closeOthers]="false">
+                                                            <ngb-panel id="panelBorderBottom2">
+                                                                <ng-template ngbPanelTitle>
+                                                                    <div class="panel-title pb-2">
+                                                                        <div
+                                                                            class="d-flex justify-content-start align-items-center">
+                                                                            <span class="icon-left">
+                                                                                <i class="feather icon-file"
+                                                                                    aria-hidden="true"></i>
+                                                                            </span>
+                                                                            <span class="padd-add">Cargo Weight &
+                                                                                Dimensions (Air & LCL)</span>
+                                                                        </div>
+                                                                        <div class="d-flex ">
+                                                                            <!-- <button
+                                                                type="button"
+                                                                class="btn btn-outline-success mr-2 f-adrress-btn"
+                                                                
+                                                                rippleEffect
+                                                                (click)="toggleSideNav()"
+                                                              >
+                                                                Add Address
+                                                              </button>
+                                                          <button type="button" class="btn btn-outline-success mr-2 f-adrress-btn"
+                                                            rippleEffect >
+                                                            Add Address
+                                                          </button> -->
+                                                                            <span class="icon-right">
+
+                                                                                <i class="feather icon-plus-square"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-template>
+
+                                                                <ng-template ngbPanelContent>
+                                                                    <!-- <div *ngIf="addrDetailsList && addrDetailsList.length === 0">
+                                                        <input formControlName="address" type="hidden" [value]="addrDetailsList"/>
+                                                        <div class="row pt-1">
+                                                          <div class="col-md-6 text-danger">
+                                                          
+                                                            <p>
+                                                              Please Enter Atleast one Address Details
+                                                            </p>
+                                                          </div>
+                                                          <div class="col-md-6 text-danger">
+                                                              <p class="text-right">!</p>
+                                                          </div>
+                                                        </div>
+                                                      </div>  -->
+                                                                    <div>
+
+                                                                    </div>
+
+                                                                </ng-template>
+                                                            </ngb-panel>
+                                                        </ngb-accordion>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="rounded-corner-accordian mt-2 ">
+                                <section id="accordion">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+                                                <div class="collapse-icon p-1">
+                                                    <div class="collapse-default">
+                                                        <ngb-accordion [destroyOnHide]="false" [closeOthers]="false">
+                                                            <ngb-panel id="panelBorderBottom3">
+                                                                <ng-template ngbPanelTitle>
+                                                                    <div class="panel-title pb-2">
+                                                                        <div
+                                                                            class="d-flex justify-content-start align-items-center">
+                                                                            <span class="icon-left">
+                                                                                <i class="feather icon-file"
+                                                                                    aria-hidden="true"></i>
+                                                                            </span>
+                                                                            <span class="padd-add">Hazardous Cargo Details</span>
+                                                                        </div>
+                                                                        <div class="d-flex ">
+                                                                          
+                                                                            <span class="icon-right">
+
+                                                                                <i class="feather icon-plus-square"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-template>
+
+                                                                <ng-template ngbPanelContent>
+                                                                    <!-- <div *ngIf="addrDetailsList && addrDetailsList.length === 0">
+                                                                        <input formControlName="address" type="hidden" [value]="addrDetailsList"/>
+                                                                        <div class="row pt-1">
+                                                                        <div class="col-md-6 text-danger">
+                                                                        
+                                                                            <p>
+                                                                            Please Enter Atleast one Address Details
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-md-6 text-danger">
+                                                                            <p class="text-right">!</p>
+                                                                        </div>
+                                                                        </div>
+                                                                    </div>  -->
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input"
+                                                                                (change)="onHazardousChange($event)"
+                                                                                    id="IsHazardous" formControlName="IsHazardous">
+                                                                                <label class="custom-control-label"
+                                                                                    for="IsHazardous">Hazardous Cargo</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label>UN Number & Proper Shipping Name</label>
+                                                                            <ng-select id="UN_Name"
+                                                                                formControlName="UN_Name"
+                                                                                placeholder="Automobile, Marbles, Pharma, etc">
+                                                                                <ng-option></ng-option>
+                                                                            </ng-select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label>Remarks for Hazardous Cargo</label>
+                                                                            <input id="RemarksHazardousCargo" type="text"
+                                                                                class="form-control"
+                                                                                formControlName="RemarksHazardousCargo"
+                                                                                placeholder="Haz Notes" />
+                                                                        </div>
+                                                                    </div>                  
+
+                                                                </ng-template>
+                                                            </ngb-panel>
+                                                        </ngb-accordion>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="rounded-corner-accordian  mt-2">
+                                <section id="accordion">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+                                                <div class="collapse-icon p-1">
+                                                    <div class="collapse-default">
+                                                        <ngb-accordion [destroyOnHide]="false" [closeOthers]="true">
+                                                            <ngb-panel id="panelBorderBottom4">
+                                                                <ng-template ngbPanelTitle>
+                                                                    <div class="panel-title pb-2">
+                                                                        <div
+                                                                            class="d-flex justify-content-start align-items-center">
+                                                                            <span class="icon-left">
+                                                                                <i class="feather icon-file"
+                                                                                    aria-hidden="true"></i>
+                                                                            </span>
+                                                                            <span class="padd-add">Address</span>
+                                                                        </div>
+                                                                        <div class="d-flex ">
+                                                                            <!-- <button
+                                                                type="button"
+                                                                class="btn btn-outline-success mr-2 f-adrress-btn"
+                                                                
+                                                                rippleEffect
+                                                                (click)="toggleSideNav()"
+                                                              >
+                                                                Add Address
+                                                              </button>
+                                                          <button type="button" class="btn btn-outline-success mr-2 f-adrress-btn"
+                                                            rippleEffect >
+                                                            Add Address
+                                                          </button> -->
+                                                                            <span class="icon-right">
+
+                                                                                <i class="feather icon-plus-square"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-template>
+
+                                                                <ng-template ngbPanelContent>
+                                                                    <!-- <div *ngIf="addrDetailsList && addrDetailsList.length === 0">
+                                                        <input formControlName="address" type="hidden" [value]="addrDetailsList"/>
+                                                        <div class="row pt-1">
+                                                          <div class="col-md-6 text-danger">
+                                                          
+                                                            <p>
+                                                              Please Enter Atleast one Address Details
+                                                            </p>
+                                                          </div>
+                                                          <div class="col-md-6 text-danger">
+                                                              <p class="text-right">!</p>
+                                                          </div>
+                                                        </div>
+                                                      </div>  -->
+                                                                    <div>
+
+                                                                    </div>
+
+                                                                </ng-template>
+                                                            </ngb-panel>
+                                                        </ngb-accordion>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</section>
