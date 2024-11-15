@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-package-detail-modal',
@@ -6,7 +7,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./package-detail-modal.component.scss']
 })
 export class PackageDetailModalComponent implements OnInit {
-  @Output() closeModal = new EventEmitter<void>();
+  // @Output() closeModal = new EventEmitter<void>();
   @Output() packageDetailsAdded = new EventEmitter<void>();
 
   // Define properties for form data binding
@@ -21,17 +22,16 @@ export class PackageDetailModalComponent implements OnInit {
   volumeWeight: number;
   cbm: number;
 
-  constructor() { }
+  constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void { }
 
-  handleClose() {
-    this.closeModal.emit();
-  }
 
   addPackageDetails() {
     // Handle package details submission logic
     this.packageDetailsAdded.emit();
-    this.handleClose();
+  }
+  closeModal(): void {
+    this.activeModal.dismiss('Modal dismissed');
   }
 }
