@@ -1,111 +1,145 @@
-.overviewsection {
-    height: 800px;
-    overflow-y: auto; /* Enable vertical scrolling */
-    padding: 10px; /* Optional: Add some padding */
-}
+// .overviewsection {
+//     height: 800px;
+//     overflow-y: auto; /* Enable vertical scrolling */
+//     padding: 10px; /* Optional: Add some padding */
+// }
 
-/* Hide scrollbar for Webkit browsers (e.g., Chrome, Safari) */
-.overviewsection::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* Make scrollbar transparent */
-}
+// /* Hide scrollbar for Webkit browsers (e.g., Chrome, Safari) */
+// .overviewsection::-webkit-scrollbar {
+//     width: 0px;
+//     background: transparent; /* Make scrollbar transparent */
+// }
 
-/* Hide scrollbar for Firefox */
-.overviewsection {
-    scrollbar-width: none; /* Firefox */
-}
+// /* Hide scrollbar for Firefox */
+// .overviewsection {
+//     scrollbar-width: none; /* Firefox */
+// }
 
-/* For Internet Explorer, Microsoft Edge */
-.overviewsection {
-    -ms-overflow-style: none; /* IE and Edge */
-}
+// /* For Internet Explorer, Microsoft Edge */
+// .overviewsection {
+//     -ms-overflow-style: none; /* IE and Edge */
+// }
 
-.fixed-nav-pills {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: white;
-    padding: 10px 0;
-}
-ul.fixed-nav-pills {
-    position: relative;
-    z-index: auto; /* Ensure it's not affecting dropdown */
-    overflow: visible; /* Ensure no clipping */
+// .fixed-nav-pills {
+//     position: sticky;
+//     top: 0;
+//     z-index: 1000;
+//     background-color: white;
+//     padding: 10px 0;
+// }
+// ul.fixed-nav-pills {
+//     position: relative;
+//     z-index: auto; /* Ensure it's not affecting dropdown */
+//     overflow: visible; /* Ensure no clipping */
+//   }
+  
+
+// .nav-pills {
+//     display: flex;
+//     background-color: white;
+// }
+
+// .nav-pills a {
+//     padding: 10px 15px;
+//     margin-right: 10px;
+//     cursor: pointer;
+// }
+ 
+// .nav-pills a.active {
+//     background-color: #7367F0;
+//     color: white;
+// }
+
+// .nav-pills a:hover {
+//     background-color: #7367F0;
+//     color: white;
+// }
+
+// .card-body {
+//     padding-top: 50px; /* Adjust based on the height of your fixed header and pills */
+// }
+
+// //
+// .content-wrapper .content-body {
+//     padding-top: 20px;
+// }
+
+// .card {
+//     box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1) !important;
+// }
+
+// .nav-pills .nav-link.active {
+//     background-color: #7367F0;
+//     color: white;
+// }
+
+
+// // .fixheader {
+// //     position: fixed;
+// //     top: 62px;
+// //     width: 83%;
+// //     max-width: 85%; /* Default max-width for smaller screens */
+// //     z-index: 21;
+// //     background-color: white;
+// //     margin-bottom: 15px;
+// //     box-shadow: 0 12px 28px -12px rgba(34, 41, 47, 0.1);
+// //     padding-left: 7px;
+// //     padding-bottom: 0px;
+// //     margin-left: -19px;
+// //     margin-bottom: 0px;
+  
+// //   }
+  
+// .f-preview-overview-content {
+//     margin-top: 11rem !important;
+//     padding: 0 15px;
+// }
+// // section.customer-list-wrapper[_ngcontent-glw-c240]{
+// //     margin-top:10rem !important;
+// // }
+// //   @media (max-width: 770px) {
+// //     .offset-lg-2 {
+// //       margin-left: 0;
+// //     }
+// //     .d-flex {
+// //       flex-wrap: wrap; /* Allow wrapping on smaller screens */
+// //     }
+// //     .col-10, .col-md-12 {
+// //       margin-top: 1rem;
+// //     }
+
+// //   }
+
+@media (max-width: 1440px) {
+    .lead-wrapper h2 {
+      font-size: 1.25rem;
+    }
+    .md-font {
+      font-size: 11px !important;
+    }
+    .md-font ul li a, .md-font-component {
+      font-size: 12px !important;
+    }
+    .lead-wrapper .btn {
+      font-size: 0.85rem;
+      padding: 0.25rem 0.5rem;
+    }
+    .lead-wrapper .nav-pills .nav-link {
+      padding: 0.5rem;
+    }
+    .mar-left {
+      margin-left: -145px !important;
+    }
   }
   
-
-.nav-pills {
-    display: flex;
-    background-color: white;
-}
-
-.nav-pills a {
-    padding: 10px 15px;
-    margin-right: 10px;
-    cursor: pointer;
-}
- 
-.nav-pills a.active {
-    background-color: #7367F0;
-    color: white;
-}
-
-.nav-pills a:hover {
-    background-color: #7367F0;
-    color: white;
-}
-
-.card-body {
-    padding-top: 50px; /* Adjust based on the height of your fixed header and pills */
-}
-
-//
-.content-wrapper .content-body {
-    padding-top: 20px;
-}
-
-.card {
-    box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1) !important;
-}
-
-.nav-pills .nav-link.active {
-    background-color: #7367F0;
-    color: white;
-}
-
-
-// .fixheader {
-//     position: fixed;
-//     top: 62px;
-//     width: 83%;
-//     max-width: 85%; /* Default max-width for smaller screens */
-//     z-index: 21;
-//     background-color: white;
-//     margin-bottom: 15px;
-//     box-shadow: 0 12px 28px -12px rgba(34, 41, 47, 0.1);
-//     padding-left: 7px;
-//     padding-bottom: 0px;
-//     margin-left: -19px;
-//     margin-bottom: 0px;
+  @media (min-width: 1441px) {
+    .mar-left {
+      margin-left: -120px !important;
+    }
+  }
   
-//   }
-  
-.f-preview-overview-content {
-    margin-top: 11rem !important;
-    padding: 0 15px;
-}
-// section.customer-list-wrapper[_ngcontent-glw-c240]{
-//     margin-top:10rem !important;
-// }
-//   @media (max-width: 770px) {
-//     .offset-lg-2 {
-//       margin-left: 0;
-//     }
-//     .d-flex {
-//       flex-wrap: wrap; /* Allow wrapping on smaller screens */
-//     }
-//     .col-10, .col-md-12 {
-//       margin-top: 1rem;
-//     }
-
-//   }
+  @media (min-width: 1024px) and (max-width: 1024px) and (min-height: 600px) and (max-height: 600px) {
+    .mar-left {
+      margin-left: 80px !important;
+    }
+  }

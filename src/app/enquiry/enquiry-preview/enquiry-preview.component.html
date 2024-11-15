@@ -1,26 +1,74 @@
-<!-- <section class="enquiry-wrapper" >
+<section class="enquiry-wrapper">
     <div class="row">
         <div class="fixheader">
-            <div class="row align-items-center liv-margin">
-                <div class="col-lg-5 col-md-10 col-xs-10 col-10 d-flex align-items-center mb-2 mb-md-0">
+            <div class="row align-items-center mb-2">
+                <div class="col-lg-5 col-md-10 col-xs-10 col-10 d-flex align-items-center mb-2 mb-md-0 ml-1">
                     <h2 class="mb-0 flex-shrink-1">
-                         <b>{{currentEnquiry.enquiryId}}</b>
+                        <b>ME{{currentEnquiry.enquiryId}}</b>
                     </h2>
-                    <span class="ml-1 badge badge-warning md-font">{{currentEnquiry.status}}</span> 
+                    <span class="ml-1 badge badge-warning md-font">{{currentEnquiry.status}}</span>
                 </div>
-            <div class="col-lg-6 col-md-10 d-flex justify-content-end align-items-center flex-wrap text-right mar-left" >
-                <div>
-                        <button type="button" class="btn btn-outline-danger mr-1 md-font" ><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i> Edit</button>
+                <div
+                    class="col-lg-6 col-md-10 d-flex justify-content-end align-items-center flex-wrap text-right mar-left">
+                    <!-- <div>
+                        <button type="button" class="btn btn-outline-danger mr-1 md-font"
+                            style="display: inline-flex; align-items: center;"><i class="feather icon-minus-circle"
+                                style="font-size: 16px; margin-right: 8px;"></i>
+                            Edit</button>
 
-                        <button class="btn btn-success mr-1 md-font"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i> Convert</button>
-                        
-                        <button class="btn btn-success md-font"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i>New</button>
-                        
+                        <button class="btn btn-success mr-1 md-font"
+                            style="display: inline-flex; align-items: center;"><i class="feather icon-check"
+                                style="font-size: 16px; margin-right: 8px;"></i> Convert</button>
+
+                        <button class="btn btn-success md-font" style="display: inline-flex; align-items: center;"><i
+                                class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i>New</button>
+                        <div ngbDropdown class="mx-1 flex-shrink-0">
+                            <button ngbDropdownToggle class="btn btn-primary" type="button"
+                                id="dropdownMenuButton" rippleEffect style="font-size: 16px; margin-right: 8px;">
+                                New
+                            </button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                                <a ngbDropdownItem href="javascript:void(0)" >Call Log</a>
+                                <a ngbDropdownItem href="javascript:void(0)" >Task
+                                    Details</a>
+                                <a ngbDropdownItem href="javascript:void(0)"
+                                   >Meeting Information</a>
+                            </div>
+                        </div>
+
+                    </div> -->
+                    <div class="d-flex align-items-center">
+                        <!-- Edit Button -->
+                        <button type="button" class="btn btn-primary  mr-1 md-font"
+                            style="display: inline-flex; align-items: center;">
+                            <i class="feather icon-edit" style="font-size: 16px; margin-right: 8px;"></i>
+                            Edit
+                        </button>
+
+                        <!-- Convert Button -->
+                        <button class="btn btn-success mr-1 md-font" style="display: inline-flex; align-items: center;">
+                            <i class="feather icon-plus" style="font-size: 16px; margin-right: 8px;"></i>
+                            Convert
+                        </button>
+
+                        <!-- New Dropdown Button -->
+                        <div ngbDropdown class="mx-1 flex-shrink-0">
+                            <button ngbDropdownToggle class="btn btn-primary mr-1 md-font" type="button"
+                                id="dropdownMenuButton" rippleEffect
+                                style="display: inline-flex; align-items: center; font-size: 16px;">
+                                <i class="feather icon-plus" style="font-size: 16px; margin-right: 8px;"></i> New
+                            </button>
+                            <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                              <a ngbDropdownItem href="javascript:void(0)">Call Log</a>
+                              <a ngbDropdownItem href="javascript:void(0)">Task Details</a>
+                              <a ngbDropdownItem href="javascript:void(0)">Meeting Information</a>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <span class="close-big mx-1 flex-shrink-0 clickable mr-2" (click)="goBack()">×</span>
                 </div>
-                <span class="close-big mx-1 flex-shrink-0 clickable mr-2" (click)="goBack()">×</span>
             </div>
-            <span class="ml-1 badge badge-secondary">{{message}}</span>
-        </div>
 
             <div class="pl-1 f-pills">
                 <div class="overview md-font">
@@ -33,24 +81,50 @@
                             <a ngbNavLink (click)="setComponent('timeline')"
                                 [class.active]="currentComponent === 'timeline'">Timelines</a>
                         </li>
-                       
+                        <li ngbNavItem>
+                            <a ngbNavLink (click)="setComponent('rates')"
+                                [class.active]="currentComponent === 'rates'">Rates</a>
+                        </li>
+                        <li ngbNavItem>
+                            <a ngbNavLink (click)="setComponent('quotation')"
+                                [class.active]="currentComponent === 'quotation'">Quotation</a>
+                        </li>
+                        <li ngbNavItem>
+                            <a ngbNavLink (click)="setComponent('activities')"
+                                [class.active]="currentComponent === 'activities'">Activities</a>
+                        </li>
+                        <li ngbNavItem>
+                            <a ngbNavLink (click)="setComponent('products')"
+                                [class.active]="currentComponent === 'products'">Products</a>
+                        </li>
+                        <li ngbNavItem>
+                            <a ngbNavLink (click)="setComponent('notes')"
+                                [class.active]="currentComponent === 'notes'">Notes</a>
+                        </li>
                         <li ngbNavItem>
                             <a ngbNavLink (click)="setComponent('documents')"
                                 [class.active]="currentComponent === 'documents'">Documents</a>
                         </li>
-                       
+                        <li ngbNavItem>
+                            <a ngbNavLink (click)="setComponent('reports')"
+                                [class.active]="currentComponent === 'reports'">Reports</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="mt-0 f-preview-overview-content md-font-component p-0" >
-            <app-liv-preview-overview-section *ngIf="currentComponent === 'overview'"  @fade></app-liv-preview-overview-section>
-          
-            <app-liv-preview-timeline-section *ngIf="currentComponent === 'timeline'"  @fade></app-liv-preview-timeline-section>
+        <div class="mt-0 f-preview-overview-content md-font-component p-0">
+            <app-enquiry-preview-overview-section *ngIf="currentComponent === 'overview'"
+                @fade></app-enquiry-preview-overview-section>
+            <app-enquiry-preview-rates *ngIf="currentComponent === 'rates'"
+                @fade></app-enquiry-preview-rates>
 
-            <app-liv-document-section *ngIf="currentComponent === 'documents'"  @fade></app-liv-document-section>
+            <app-liv-preview-timeline-section *ngIf="currentComponent === 'timeline'"
+                @fade></app-liv-preview-timeline-section>
+
+            <app-liv-document-section *ngIf="currentComponent === 'documents'" @fade></app-liv-document-section>
         </div>
-     
+
     </div>
-</section> -->
+</section>

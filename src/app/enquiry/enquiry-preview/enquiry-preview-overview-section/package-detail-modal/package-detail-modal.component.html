@@ -1,0 +1,49 @@
+<!-- The modal content will be rendered by NgbModal -->
+<div class="modal-header">
+    <h5 class="modal-title">
+      <i class="feather icon-package" style="font-size: 16px; margin-right: 8px;"></i>
+      <span>Add Package Details</span>
+    </h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="handleClose()">×</button>
+  </div>
+  
+  <!-- Modal Body -->
+  <div class="modal-body">
+    <div class="row">
+        <!-- Package Type input -->
+        <div class="form-group col-6">
+            <label for="packageType">Package Type</label>
+            <select class="form-control" id="packageType" [(ngModel)]="packageType">
+                <option>Boxes</option>
+                <!-- Add more options as needed -->
+            </select>
+        </div>
+  
+        <!-- Total Gross Weight input -->
+        <div class="form-group col-6">
+            <label for="grossWeight">Total Gross Weight</label>
+            <input type="number" class="form-control" id="grossWeight" [(ngModel)]="grossWeight" readonly />
+        </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="packageDetails">Package Details</label>
+      <div class="input-group">
+        <input type="number" class="form-control" placeholder="Package Count" [(ngModel)]="packageCount" />
+        <input type="number" class="form-control" placeholder="L (mm)" [(ngModel)]="length" />
+        <input type="number" class="form-control" placeholder="W (mm)" [(ngModel)]="width" />
+        <input type="number" class="form-control" placeholder="H (mm)" [(ngModel)]="height" />
+        <input type="number" class="form-control" placeholder="Net Wt" [(ngModel)]="netWeight" />
+        <input type="number" class="form-control" placeholder="Gross Wt" [(ngModel)]="grossWeightDetails" />
+        <input type="number" class="form-control" placeholder="Vol. Wt" [(ngModel)]="volumeWeight" />
+        <input type="number" class="form-control" placeholder="CBM" [(ngModel)]="cbm" />
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal Footer -->
+  <div class="modal-footer d-flex justify-content-end">
+    <button type="button" class="btn btn-secondary" (click)="handleClose()">Cancel</button>
+    <button type="button" class="btn btn-success ml-2" (click)="addPackageDetails()">Add</button>
+  </div>
+  

@@ -1,10 +1,9 @@
-
+<!-- 
 
 
 <div class="p-0 m-0">
   <div class="">
     <section class="lead-list-wrapper">
-      <!-- <div class=""> -->
         <div class="row">
           <div class="fixheader">
             <app-lead-preview-header></app-lead-preview-header>
@@ -55,7 +54,101 @@
             <app-reports *ngIf="currentComponent === 'reports'" @fade></app-reports>
           </div>
         </div>
-      <!-- </div> -->
     </section>
+  </div>
+</div> -->
+<div class="lead-wrapper">
+  <div class="row">
+    <div class="fixheader">
+      <div class="row align-items-center mb-2">
+        <div class="col-lg-5 col-md-10 col-10 d-flex align-items-center mb-2 mb-md-0 ml-2">
+          <h2 class="mb-0 text-truncate flex-shrink-1">
+            <b>{{ leadDetails?.companyName }}</b>
+          </h2>
+          <span class="ml-1 badge md-font" 
+                [ngClass]="{
+                  'badge-warning': leadStatusName === 'Not contacted',
+                  'badge-success': leadStatusName === 'Contacted',
+                  'badge-danger': leadStatusName === 'Lost',
+                  'badge-secondary': leadStatusName === 'Junk',
+                  'badge-info': leadStatusName === 'Not Qualified'
+                }">
+            {{ leadStatusName }}
+          </span>
+        </div>
+
+        <div class="col-lg-6 col-md-10 d-flex justify-content-end align-items-center flex-wrap text-right mar-left">
+          <div class="d-flex align-items-center">
+            <!-- Edit Button -->
+            <button class="btn btn-primary mr-1 md-font" style="display: inline-flex; align-items: center;">
+              <i class="feather icon-edit" style="font-size: 16px; margin-right: 8px;"></i>
+              Edit
+            </button>
+
+            <!-- Convert Button -->
+            <button class="btn btn-success mr-1 md-font" style="display: inline-flex; align-items: center;">
+              <i class="feather icon-plus" style="font-size: 16px; margin-right: 8px;"></i>
+              Convert
+            </button>
+
+            <!-- New Dropdown Button -->
+            <div ngbDropdown class="mx-1 flex-shrink-0">
+              <button ngbDropdownToggle class="btn btn-primary mr-1 md-font" type="button" id="dropdownMenuButton"
+                rippleEffect style="display: inline-flex; align-items: center; font-size: 16px;">
+                <i class="feather icon-plus" style="font-size: 16px; margin-right: 8px;"></i> New
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                <a ngbDropdownItem href="javascript:void(0)" (click)="openCallLogModal()">Call Log</a>
+                <a ngbDropdownItem href="javascript:void(0)" (click)="openTaskDetailModal()">Task Details</a>
+                <a ngbDropdownItem href="javascript:void(0)" (click)="openMeetingInformationModal()">Meeting Information</a>
+              </div>
+            </div>
+          </div>
+
+          <span class="close-big mx-1 flex-shrink-0 clickable mr-2" routerLink="/leadsList">×</span>
+        </div>
+      </div>
+      
+      <!-- Navigation Pills -->
+      <div class="pl-1 f-pills">
+        <div class="overview">
+          <ul ngbNav #nav="ngbNav" class="nav nav-pills fixed-nav-pills p-0" aria-labelledby="dropdownMenuButton">
+            <li ngbNavItem>
+              <a ngbNavLink (click)="setComponent('overview')" [class.active]="currentComponent === 'overview'">Overview</a>
+            </li>
+            <li ngbNavItem>
+              <a ngbNavLink (click)="setComponent('timeLine')" [class.active]="currentComponent === 'timeLine'">TimeLine</a>
+            </li>
+            <li ngbNavItem>
+              <a ngbNavLink (click)="setComponent('activities')" [class.active]="currentComponent === 'activities'">Activities</a>
+            </li>
+            <li ngbNavItem>
+              <a ngbNavLink (click)="setComponent('products')" [class.active]="currentComponent === 'products'">Products</a>
+            </li>
+            <li ngbNavItem>
+              <a ngbNavLink (click)="setComponent('notes')" [class.active]="currentComponent === 'notes'">Notes</a>
+            </li>
+            <li ngbNavItem>
+              <a ngbNavLink (click)="setComponent('documents')" [class.active]="currentComponent === 'documents'">Documents</a>
+            </li>
+            <li ngbNavItem>
+              <a ngbNavLink (click)="setComponent('reports')" [class.active]="currentComponent === 'reports'">Reports</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Conditional Components Display -->
+    <div class="mt-0 f-preview-overview-content md-font-component p-0">
+      <app-lead-preview-overview-section *ngIf="currentComponent === 'overview'" @fade></app-lead-preview-overview-section>
+      <app-lead-preview-activities-section *ngIf="currentComponent === 'activities'" @fade></app-lead-preview-activities-section>
+      <app-transaction *ngIf="currentComponent === 'transaction'" @fade></app-transaction>
+      <app-sales *ngIf="currentComponent === 'sales'" @fade></app-sales>
+      <app-documents *ngIf="currentComponent === 'documents'" @fade></app-documents>
+      <app-reports *ngIf="currentComponent === 'reports'" @fade></app-reports>
+    </div>
+
   </div>
 </div>

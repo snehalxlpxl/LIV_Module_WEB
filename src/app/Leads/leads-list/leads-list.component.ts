@@ -57,22 +57,43 @@ export class LeadsListComponent implements OnInit {
    *
    * @param event
    */
-  filterUpdate(event) {
-    const val = (event.target.value || '').toLowerCase();
+  // filterUpdate(event) {
+  //   const val = (event.target.value || '').toLowerCase();
   
-    // filter our data
-    const temp = this.tempData.filter(d => {
-      return d.status.toLowerCase().includes(val) || !val;
-    });
+  //   // filter our data
+  //   const temp = this.tempData.filter(d => {
+  //     return d.status.toLowerCase().includes(val) || !val;
+  //   });
   
-    // update the rows
-    this.rows = temp;
-    // Whenever the filter changes, always go back to the first page
-    if (this.table) {
-      this.table.offset = 0;
-    }
-  }
+  //   // update the rows
+  //   this.rows = temp;
+  //   // Whenever the filter changes, always go back to the first page
+  //   if (this.table) {
+  //     this.table.offset = 0;
+  //   }
+  // }
+  selectedFilter: string = 'All Filters';
 
+  filterUpdate(event: any): void {
+    const searchValue = event.target.value.trim().toLowerCase();
+    const filters = {
+      'Customer Name': (d) => d.companyName && d.companyName.toLowerCase().includes(searchValue),
+      'Source': (d) => d.leadSource && d.leadSource.toLowerCase().includes(searchValue),
+      'Lead Owner': (d) => d.leadOwner && d.leadOwner.toLowerCase().includes(searchValue),
+      'Status': (d) => d.leadStatus && d.leadStatus.toLowerCase().includes(searchValue),
+      'All Filters': (d) => [
+        d.companyName,
+        d.leadSource,
+        d.leadOwner,
+        d.leadStatus,
+      ].some((field) => field && field.toLowerCase().includes(searchValue)),
+    };
+  
+    const filteredData = this.tempData.filter((d) => filters[this.selectedFilter](d));
+  
+    // Update the rows property of ngx-datatable
+    this.rows = filteredData;
+  }
   /**
    * Filter By Status
    *

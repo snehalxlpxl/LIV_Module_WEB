@@ -1,118 +1,151 @@
-.close-big {
-    float: right;
-    font-size: 37px;
-    font-weight: 400;
-    line-height: 1;
-    color: #000000;
-    text-shadow: 0 1px 0 #fff;
-    opacity: 0.5;
-    cursor: pointer;
-}
+// .close-big {
+//     float: right;
+//     font-size: 37px;
+//     font-weight: 400;
+//     line-height: 1;
+//     color: #000000;
+//     text-shadow: 0 1px 0 #fff;
+//     opacity: 0.5;
+//     cursor: pointer;
+// }
 
-// .row {
-//     width: 100%;
+// // .row {
+// //     width: 100%;
+// //   }
+
+// @media (max-width: 770px) {
+//     .offset-lg-2 {
+//       margin-left: 0;
+//     }
+//     .d-flex {
+//       flex-wrap: wrap; /* Allow wrapping on smaller screens */
+//     }
+//     .col-10, .col-md-12 {
+//       margin-top: 1rem;
+//     }
+
 //   }
 
-@media (max-width: 770px) {
-    .offset-lg-2 {
-      margin-left: 0;
-    }
-    .d-flex {
-      flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    }
-    .col-10, .col-md-12 {
-      margin-top: 1rem;
-    }
+// //   .fixheader {
+// //     position: fixed;
+// //     top: 62px;
+// //     width: 82%;
+// //     // width: 100%;
+// //     max-width: 100%; /* Default max-width for smaller screens */
+// //     z-index: 21;
+// //     background-color: white;
+// //     margin-bottom: 15px;
+// //     box-shadow: 0 12px 28px -12px rgba(34, 41, 47, 0.1);
+// //     padding-left: 7px;
+// //     padding-bottom: 0px;
+// //     margin-left: -19px;
+// //     margin-bottom: 0px;
+  
+// //   }
+  
+// //   .ngb-dropdown-menu {
+// //     z-index: 1050; /* Or a higher value */
+// //     display: block !important; /* Force it to display */
+// //   visibility: visible !important; /* Ensure visibility */
+// //   }
+  
+// // .col-md-6, .col-12 {
+// //   padding: 0.5rem; /* Adjust padding if needed */
+// // }
+// // .row {
+// //   margin-bottom: 0rem; /* Ensure there's space below the row */
+// // }
 
+// // .ng-select .ng-clear-wrapper {
+// //   height: 25px;
+// // }
+
+// .nav-pills a {
+//     padding: 10px 15px;
+//     margin-right: 10px;
+//     cursor: pointer;
+// }
+
+
+
+
+// .badge-custom {
+//     text-transform: uppercase; /* Makes the text uppercase */
+//     display: inline-block;
+//     padding: 0.25em 0.6em; /* Adjust padding as needed */
+//     font-size: 0.875em; /* Adjust font size as needed */
+//     font-weight: bold;
+//     line-height: 1;
+//     color: #fff; /* Default text color */
+//     text-align: center;
+//     white-space: nowrap;
+//     vertical-align: baseline;
+//     border-radius: 0.25rem; /* Adjust border radius as needed */
+//     // &.badge-light-primary {
+//     //   background-color: #e1f0ff; /* Light primary background */
+//     //   color: #1e75bb; /* Darker primary text color */
+//     // }
+  
+//     // &.badge-light-secondary {
+//     //   background-color: #f3f3f9; /* Light secondary background */
+//     //   color: #82868b; /* Darker secondary text color */
+//     // }
+  
+//     // &.badge-light-success {
+//     //   background-color: #e7f8ef; /* Light success background */
+//     //   color: #28c76f; /* Darker success text color */
+//     // }
+  
+//     // &.badge-light-warning {
+//     //   background-color: #fff9e6; /* Light warning background */
+//     //   color: #ff9f43; /* Darker warning text color */
+//     // }
+  
+//     // &.badge-light-danger {
+//     //   background-color: #ffe2e6; /* Light danger background */
+//     //   color: #ea5455; /* Darker danger text color */
+//     // }
+  
+//     // &.badge-light-info {
+//     //   background-color: #e3f7fc; /* Light info background */
+//     //   color: #00cfe8; /* Darker info text color */
+//     // }
+  
+//     // /* Optional: hover effect with a subtle shadow */
+//     // &:hover {
+//     //   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow on hover */
+//     // }
+//     }
+@media (max-width: 1440px) {
+  .lead-wrapper h2 {
+    font-size: 1.25rem;
   }
-
-//   .fixheader {
-//     position: fixed;
-//     top: 62px;
-//     width: 82%;
-//     // width: 100%;
-//     max-width: 100%; /* Default max-width for smaller screens */
-//     z-index: 21;
-//     background-color: white;
-//     margin-bottom: 15px;
-//     box-shadow: 0 12px 28px -12px rgba(34, 41, 47, 0.1);
-//     padding-left: 7px;
-//     padding-bottom: 0px;
-//     margin-left: -19px;
-//     margin-bottom: 0px;
-  
-//   }
-  
-//   .ngb-dropdown-menu {
-//     z-index: 1050; /* Or a higher value */
-//     display: block !important; /* Force it to display */
-//   visibility: visible !important; /* Ensure visibility */
-//   }
-  
-// .col-md-6, .col-12 {
-//   padding: 0.5rem; /* Adjust padding if needed */
-// }
-// .row {
-//   margin-bottom: 0rem; /* Ensure there's space below the row */
-// }
-
-// .ng-select .ng-clear-wrapper {
-//   height: 25px;
-// }
-
-.nav-pills a {
-    padding: 10px 15px;
-    margin-right: 10px;
-    cursor: pointer;
+  .md-font {
+    font-size: 11px !important;
+  }
+  .md-font ul li a, .md-font-component {
+    font-size: 12px !important;
+  }
+  .lead-wrapper .btn {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .lead-wrapper .nav-pills .nav-link {
+    padding: 0.5rem;
+  }
+  .mar-left {
+    margin-left: -145px !important;
+  }
 }
 
+@media (min-width: 1441px) {
+  .mar-left {
+    margin-left: -120px !important;
+  }
+}
 
-
-
-.badge-custom {
-    text-transform: uppercase; /* Makes the text uppercase */
-    display: inline-block;
-    padding: 0.25em 0.6em; /* Adjust padding as needed */
-    font-size: 0.875em; /* Adjust font size as needed */
-    font-weight: bold;
-    line-height: 1;
-    color: #fff; /* Default text color */
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 0.25rem; /* Adjust border radius as needed */
-    // &.badge-light-primary {
-    //   background-color: #e1f0ff; /* Light primary background */
-    //   color: #1e75bb; /* Darker primary text color */
-    // }
-  
-    // &.badge-light-secondary {
-    //   background-color: #f3f3f9; /* Light secondary background */
-    //   color: #82868b; /* Darker secondary text color */
-    // }
-  
-    // &.badge-light-success {
-    //   background-color: #e7f8ef; /* Light success background */
-    //   color: #28c76f; /* Darker success text color */
-    // }
-  
-    // &.badge-light-warning {
-    //   background-color: #fff9e6; /* Light warning background */
-    //   color: #ff9f43; /* Darker warning text color */
-    // }
-  
-    // &.badge-light-danger {
-    //   background-color: #ffe2e6; /* Light danger background */
-    //   color: #ea5455; /* Darker danger text color */
-    // }
-  
-    // &.badge-light-info {
-    //   background-color: #e3f7fc; /* Light info background */
-    //   color: #00cfe8; /* Darker info text color */
-    // }
-  
-    // /* Optional: hover effect with a subtle shadow */
-    // &:hover {
-    //   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow on hover */
-    // }
-    }
+@media (min-width: 1024px) and (max-width: 1024px) and (min-height: 600px) and (max-height: 600px) {
+  .mar-left {
+    margin-left: 80px !important;
+  }
+}

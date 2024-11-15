@@ -2,10 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as snippet from 'app/main/apps/companies/customers/customer-preview/cust.snippetcode';
+import { LeadPreviewService } from 'app/Leads/lead-preview.service';
+import { trigger, transition, animate, style } from '@angular/animations';
+
 @Component({
   selector: 'app-enquiry-preview',
   templateUrl: './enquiry-preview.component.html',
-  styleUrls: ['./enquiry-preview.component.scss']
+  styleUrls: ['./enquiry-preview.component.scss'],
+  animations: [
+    trigger('fade', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('300ms', style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class EnquiryPreviewComponent implements OnInit {
   enquiryRows = [
@@ -22,7 +37,8 @@ export class EnquiryPreviewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private navigationService: LeadPreviewService
   ) { }
 
   ngOnInit(): void {
@@ -39,17 +55,17 @@ export class EnquiryPreviewComponent implements OnInit {
         // Handle the case where the enquiry is not found (optional)
         this.message = "Enquiry not found!";
       }
+      this.navigationService.component$.subscribe(component => {
+        this.currentComponent = component;
+      });
   }
 
   goBack(): void {
     this.location.back(); // Go back to the previous page
-    // this.setComponent("overview");
   }
-  // setComponent(component: string) {
-  //   this.navigationService.setComponent(component);
-  // }
-  setComponent(componentName: string): void {
-    this.currentComponent = componentName;  // Update the active component
+
+  setComponent(component: string): void {
+    this.navigationService.setComponent(component);
   }
 }
 

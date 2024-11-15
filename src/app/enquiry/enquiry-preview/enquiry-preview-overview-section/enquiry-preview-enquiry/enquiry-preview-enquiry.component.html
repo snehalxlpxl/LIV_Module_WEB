@@ -1,0 +1,49 @@
+<!-- Enquiry -->
+<div class="card shadow rounded-corners mb-2">
+    <h5 class="timeline-header">
+        <div class="panel-title">
+            <h5 style="display: flex; align-items: center; margin-top: 20px; margin-left: 20px;">
+                <i class="feather icon-file" style="font-size: 24px; margin-right: 8px;"></i>
+                Enquiry
+              </h5> 
+        </div>
+    </h5>
+    <div class="card-body">
+        <div class="row mb-2">
+            <div class="col-4">Service Type</div>
+            <b class="col-8">{{ currentEnquiry?.serviceType }}</b>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">Inco Terms</div>
+            <b class="col-8">{{ currentEnquiry?.incoTerms }} ExWorks</b>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">POL</div>
+            <b class="col-8">{{ currentEnquiry?.pol }}Nhava Sheva, India</b>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">POD</div>
+            <b class="col-8">{{ currentEnquiry?.pod }}New York, USA</b>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">Commodity</div>
+            <b class="col-8">{{ currentEnquiry?.commodity }}Plastic Moulds</b>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">Required Equipment</div>
+            <b class="col-8">{{ currentEnquiry?.requiredEquipment }}4 x 40HC</b>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">Gross Weight</div>
+            <b class="col-8">{{ currentEnquiry?.grossWeight }} 25 Tons</b>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">Monthly CBM</div>
+            <b class="col-8">{{ currentEnquiry?.monthlyCbm || '-' }}</b>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">Notes</div>
+            <b class="col-8">{{ currentEnquiry?.enquiryNotes }}Stackable & General Cargo</b>
+        </div>
+    </div>
+</div>

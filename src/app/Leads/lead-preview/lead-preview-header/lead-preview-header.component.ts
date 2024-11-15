@@ -8,6 +8,7 @@ import { LeadStatus } from 'app/Leads/lead-create/LeadStatus';
 import { LeadCreateService, LeadSource } from 'app/Leads/lead-create/lead-create.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
+import { LeadPreviewService } from 'app/Leads/lead-preview.service';
 
 @Component({
   selector: 'app-lead-preview-header',
@@ -18,15 +19,20 @@ export class LeadPreviewHeaderComponent implements OnInit {
   leadId:any;
   LeadStatuses:any
   leadDetails: any;
+  currentComponent: string;
 
-  constructor(private modalService: NgbModal,private route: ActivatedRoute,private router: Router, private leadService: LeadCreateService , private _httpClient: HttpClient, private cd: ChangeDetectorRef
+  constructor(private modalService: NgbModal,private route: ActivatedRoute,private router: Router, private leadService: LeadCreateService , private _httpClient: HttpClient, private cd: ChangeDetectorRef,private navigationService: LeadPreviewService
 ) { }
 
   ngOnInit(): void {
+    this.navigationService.component$.subscribe(component => {
+      this.currentComponent = component;
+    });
 this.leadId = this.route.snapshot.paramMap.get('id');
     console.log("leadId",this.leadId);
    
     this.fetchLeadDetails();
+    
     // this.fetchLeadStatuses();
     // this.fetchLeadStatus();
   }
@@ -65,7 +71,9 @@ fetchLeadStatuses(): void {
     }
   );
 }
-
+setComponent(component: string) {
+  this.navigationService.setComponent(component);
+}
 leadStatusMap = new Map<number, string>();
 
 fetchLeadStatus(): void {

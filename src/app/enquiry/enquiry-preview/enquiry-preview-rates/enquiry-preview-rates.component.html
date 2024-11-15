@@ -1,0 +1,56 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <section class="rate-requests-wrapper">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="d-flex justify-content-between align-items-center m-1">
+                            <div class="d-flex align-items-center">
+                                <h4 class="d-flex align-items-center">Rate Requests</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <ngx-datatable [rows]="rateRequests" [rowHeight]="40" class="bootstrap core-bootstrap" [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+                    <ngx-datatable-column name="Rate#" prop="rateId" [width]="100">
+                        <ng-template let-rateId="value" ngx-datatable-cell-template>
+                            <a routerLink="/rate-preview/{{ rateId }}" class="font-weight-bold">{{ rateId }}</a>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Agent / Liner" prop="agent" [width]="200">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span class="font-weight-bold">{{ row.agent }}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Request Dt." prop="requestDate" [width]="120">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.requestDate | date:'dd/MM/yyyy' }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Received Dt." prop="receivedDate" [width]="120">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.receivedDate ? (row.receivedDate | date:'dd/MM/yyyy') : 'Not Received' }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Sent Date" prop="sentDate" [width]="120">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.sentDate ? (row.sentDate | date:'dd/MM/yyyy') : 'Not Sent' }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Status" prop="status" [width]="150">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span [ngClass]="{
+                                'badge-custom': true,
+                                'badge-warning badge-light-warning': row.status === 'Pending',
+                                'badge-info badge-light-info': row.status === 'Awaiting Rates'
+                            }">
+                                {{ row.status }}
+                            </span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </div>
+        </section>
+    </div>
+</div>
