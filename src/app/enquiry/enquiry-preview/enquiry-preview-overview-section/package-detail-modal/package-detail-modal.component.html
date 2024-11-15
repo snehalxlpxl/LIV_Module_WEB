@@ -27,57 +27,18 @@
     </div>
   
     <div class="form-group">
-        <label for="packageDetails">Package Details</label>
-        <div class="row">
-          <!-- Package Count -->
-          <div class="col-6 mb-3">
-            <label for="packageCount">Package Count</label>
-            <input type="number" class="form-control" id="packageCount" placeholder="Package Count" [(ngModel)]="packageCount" />
-          </div>
-      
-          <!-- Length -->
-          <div class="col-6 mb-3">
-            <label for="length">L (mm)</label>
-            <input type="number" class="form-control" id="length" placeholder="L (mm)" [(ngModel)]="length" />
-          </div>
-      
-          <!-- Width -->
-          <div class="col-6 mb-3">
-            <label for="width">W (mm)</label>
-            <input type="number" class="form-control" id="width" placeholder="W (mm)" [(ngModel)]="width" />
-          </div>
-      
-          <!-- Height -->
-          <div class="col-6 mb-3">
-            <label for="height">H (mm)</label>
-            <input type="number" class="form-control" id="height" placeholder="H (mm)" [(ngModel)]="height" />
-          </div>
-      
-          <!-- Net Weight -->
-          <div class="col-6 mb-3">
-            <label for="netWeight">Net Wt</label>
-            <input type="number" class="form-control" id="netWeight" placeholder="Net Wt" [(ngModel)]="netWeight" />
-          </div>
-      
-          <!-- Gross Weight -->
-          <div class="col-6 mb-3">
-            <label for="grossWeightDetails">Gross Wt</label>
-            <input type="number" class="form-control" id="grossWeightDetails" placeholder="Gross Wt" [(ngModel)]="grossWeightDetails" />
-          </div>
-      
-          <!-- Volume Weight -->
-          <div class="col-6 mb-3">
-            <label for="volumeWeight">Vol. Wt</label>
-            <input type="number" class="form-control" id="volumeWeight" placeholder="Vol. Wt" [(ngModel)]="volumeWeight" />
-          </div>
-      
-          <!-- CBM -->
-          <div class="col-6 mb-3">
-            <label for="cbm">CBM</label>
-            <input type="number" class="form-control" id="cbm" placeholder="CBM" [(ngModel)]="cbm" />
-          </div>
-        </div>
-      </div>      
+      <label for="packageDetails">Package Details</label>
+      <div class="input-group">
+        <input type="number" class="form-control" placeholder="Package Count" [(ngModel)]="packageCount" />
+        <input type="number" class="form-control" placeholder="L (mm)" [(ngModel)]="length" />
+        <input type="number" class="form-control" placeholder="W (mm)" [(ngModel)]="width" />
+        <input type="number" class="form-control" placeholder="H (mm)" [(ngModel)]="height" />
+        <input type="number" class="form-control" placeholder="Net Wt" [(ngModel)]="netWeight" />
+        <input type="number" class="form-control" placeholder="Gross Wt" [(ngModel)]="grossWeightDetails" />
+        <input type="number" class="form-control" placeholder="Vol. Wt" [(ngModel)]="volumeWeight" />
+        <input type="number" class="form-control" placeholder="CBM" [(ngModel)]="cbm" />
+      </div>
+    </div>
   </div>
   
   <!-- Modal Footer -->
