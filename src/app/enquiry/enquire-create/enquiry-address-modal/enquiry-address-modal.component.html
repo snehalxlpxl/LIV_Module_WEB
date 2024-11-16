@@ -1,0 +1,237 @@
+<div class="modal-header">
+    <h6 class="modal-title">
+      <span class="icon-left">
+        <i class="feather icon-map-pin" aria-hidden="true" ></i>
+      </span>
+      Edit Address 
+    </h6>
+    <p
+      class="btn-close"
+      aria-label="Close"
+      (click)="close()"
+      aria-hidden="true"
+      class="cursor-pointer"
+    >
+      ×
+    </p>
+    <!-- <button type="button" >
+          
+      </button> -->
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+  
+      <div class="collapse-icon p-0">
+        <div class="collapse-default">
+      <input type="hidden" formControlName="companyAddressId" />
+      <input type="hidden" formControlName="companyId" />
+  
+      <div class="form-group mb-1">
+        <label for="addressType">Address Type</label>
+        <ng-select
+          id="addressType"
+          formControlName="addressType"
+          [items]="addressTypes"
+          bindLabel="label"
+          bindValue="value"
+          placeholder="Primary, Billing, Shipper, Consignee, etc"
+          (change)="onAddressTypeChange($event)"
+        ></ng-select>
+        <!-- Hidden field to store the value -->
+        <input type="hidden" formControlName="addressTypeValue" />
+      
+      </div>
+  
+      <div class="form-group mb-1">
+        <label for="company">Company</label>
+        <input
+        #company
+          id="company"
+          formControlName="company"
+          type="text"
+          class="form-control"
+          placeholder="Company Name"
+          [ngClass]="{
+            'ng-touched': addressForm.get('company').touched,
+            error:
+              addressForm.get('company').invalid &&
+              addressForm.get('company').touched
+          }"
+        />
+        <span
+          *ngIf="
+            addressForm.get('company').invalid &&
+            addressForm.get('company').touched
+          "
+          class="invalid-form"
+        >
+          <small class="form-text text-danger">Please Select Company Name</small>
+        </span>
+      </div>
+  
+      <div class="form-group mb-1">
+        <label for="addressLine1">Address Line 1</label>
+        <input
+          id="addressLine1"
+          formControlName="addressLine1"
+          type="text"
+          class="form-control"
+          placeholder="Enter Address Line"
+          [ngClass]="{
+            'ng-touched': addressForm.get('addressLine1').touched,
+            error:
+              addressForm.get('addressLine1').invalid &&
+              addressForm.get('addressLine1').touched
+          }"
+        />
+        <span
+          *ngIf="
+            addressForm.get('addressLine1').invalid &&
+            addressForm.get('addressLine1').touched
+          "
+          class="invalid-form"
+        >
+          <small class="form-text text-danger">Address Line 1 is required</small>
+        </span>
+      </div>
+  
+      <div class="form-group mb-1">
+        <label for="addressLine2">Address Line 2</label>
+        <input
+          id="addressLine2"
+          formControlName="addressLine2"
+          type="text"
+          class="form-control"
+          placeholder="Enter Address Line 2"
+        />
+      </div>
+  
+      <div class="form-group mb-1">
+        <label for="city">City</label>
+        <input
+          id="city"
+          formControlName="city"
+          type="text"
+          class="form-control"
+          placeholder="Enter City"
+          [ngClass]="{
+            'ng-touched': addressForm.get('city').touched,
+            error:
+              addressForm.get('city').invalid &&
+              addressForm.get('city').touched
+          }"
+        />
+        <span
+          *ngIf="
+            addressForm.get('city').invalid &&
+            addressForm.get('city').touched
+          "
+          class="invalid-form"
+        >
+          <small class="form-text text-danger">City is required</small>
+        </span>
+      </div>
+  
+      <div class="form-group mb-1">
+        <label for="country">Country</label>
+        <ng-select
+          id="country"
+          formControlName="country"
+          [items]="countries"
+          bindLabel="countryName"
+          bindValue="countryId"
+          placeholder="Select Country"
+          [ngClass]="{
+            'ng-touched': addressForm.get('country').touched,
+            error:
+              addressForm.get('country').invalid &&
+              addressForm.get('country').touched
+          }"
+          (change)='onChangeCountry($event)'
+        ></ng-select>
+        <span
+          *ngIf="
+            addressForm.get('country').invalid &&
+            addressForm.get('country').touched
+          "
+          class="invalid-form"
+        >
+          <small class="form-text text-danger">Please Select a Country</small>
+        </span>
+        <input formControlName="CountryName"  type="hidden"/>
+      </div>
+  
+      <div class="row mb-1">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="state">State</label>
+            <ng-select
+            #state
+              id="state"
+              formControlName="state"
+              [items]="states"
+              bindLabel="stateName"
+              bindValue="stateId"
+              placeholder="Select State"
+              [ngClass]="{
+                'ng-touched': addressForm.get('state').touched,
+                error:
+                  addressForm.get('state').invalid &&
+                  addressForm.get('state').touched
+              }"
+              (change)="onChangeState($event)"
+            ></ng-select>
+            <span
+              *ngIf="
+                addressForm.get('state').invalid &&
+                addressForm.get('state').touched
+              "
+              class="invalid-form"
+            >
+              <small class="form-text text-danger">Please Select a State</small>
+            </span>
+        <input formControlName="StateName"  type="hidden"/>
+  
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="zipCode">Zip Code</label>
+            <input
+            #zipCode
+              id="zipCode"
+              formControlName="zipCode"
+              type="text"
+              placeholder="Enter Zip Code"
+              class="form-control"
+              [ngClass]="{
+                'ng-touched': addressForm.get('zipCode').touched,
+                error:
+                  addressForm.get('zipCode').invalid &&
+                  addressForm.get('zipCode').touched
+              }"
+            />
+            <span
+              *ngIf="
+                addressForm.get('zipCode').invalid &&
+                addressForm.get('zipCode').touched
+              "
+              class="invalid-form"
+            >
+              <small class="form-text text-danger">Invalid Zip Code</small>
+            </span>
+          </div>
+        </div>
+      </div>
+  
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" (click)="close()">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-success">Save</button>
+      </div>
+      </div>
+      </div>
+    </form>
+  </div>
+  

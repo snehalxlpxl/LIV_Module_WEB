@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
-import { PackageDetailModalComponent } from '../enquiry-preview/enquiry-preview-overview-section/package-detail-modal/package-detail-modal.component';
-import { RequiredEquipmentModalComponent } from '../enquiry-preview/enquiry-preview-overview-section/required-equipment-modal/required-equipment-modal.component';
+import { PackageDetailModalComponent } from '../enquire-create/package-detail-modal/package-detail-modal.component';
+import { RequiredEquipmentModalComponent } from '../enquire-create/required-equipment-modal/required-equipment-modal.component';
 
 @Component({
   selector: 'app-enquiry-list',
@@ -68,18 +68,5 @@ export class EnquiryListComponent implements OnInit {
     // Implement delete functionality here
   }
 
-  openPackageDetailModal() {
-    console.log("openPackageDetailModal")
-    const modalRef = this.modalService.open(PackageDetailModalComponent, {
-      size: 'md', // Optional: Specify the size of the modal (lg, md, sm)
-      backdrop: 'static', // Optional: Prevent closing the modal by clicking on the backdrop
-    });
-  }
-  openRequiredEquipmentModal(){
-    console.log("openRequiredEquipmentModal")
-    const modalRef = this.modalService.open(RequiredEquipmentModalComponent, {
-      size: 'md', // Optional: Specify the size of the modal (lg, md, sm)
-      backdrop: 'static', // Optional: Prevent closing the modal by clicking on the backdrop
-    });
-  }
+  
 }

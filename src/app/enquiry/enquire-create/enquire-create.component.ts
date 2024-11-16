@@ -4,6 +4,10 @@ import { Location } from '@angular/common';
 import { AppInitService } from 'app/app-init.service';
 import { LeadCreateService, ServiceType } from 'app/Leads/lead-create/lead-create.service';
 import { EnquireCreateService } from './enquire-create.service';
+import { RequiredEquipmentModalComponent } from './required-equipment-modal/required-equipment-modal.component';
+import { PackageDetailModalComponent } from './package-detail-modal/package-detail-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EnquiryAddressModalComponent } from './enquiry-address-modal/enquiry-address-modal.component';
 
 @Component({
   selector: 'app-enquire-create',
@@ -25,7 +29,7 @@ export class EnquireCreateComponent implements OnInit {
   userId: any;
 
 
-  constructor( private location:Location,private fb: FormBuilder,private appInitService: AppInitService, private leadCreateService: LeadCreateService, private enquireCreateServ:EnquireCreateService) { }
+  constructor( private location:Location,private fb: FormBuilder,private appInitService: AppInitService, private leadCreateService: LeadCreateService, private enquireCreateServ:EnquireCreateService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     const userData = JSON.parse(sessionStorage.getItem('userData'));
@@ -127,5 +131,28 @@ export class EnquireCreateComponent implements OnInit {
       this.newEnqiryCreate.patchValue({
         IsHazardous: event.target.checked ? 1 : 0
       });
+  }
+
+  openPackageDetailModal() {
+    console.log("openPackageDetailModal")
+    const modalRef = this.modalService.open(PackageDetailModalComponent, {
+      size: 'md',
+      backdrop: 'static', 
+    });
+  }
+
+  openRequiredEquipmentModal(){
+    console.log("openRequiredEquipmentModal")
+    const modalRef = this.modalService.open(RequiredEquipmentModalComponent, {
+      size: 'md', 
+      backdrop: 'static', 
+    });
+  }
+  openEnquiryAddressesModal(){
+    console.log("EnquiryAddressModalComponent")
+    const modalRef = this.modalService.open(EnquiryAddressModalComponent, {
+      size: 'md', 
+      backdrop: 'static', 
+    });
   }
 }

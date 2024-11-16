@@ -20,8 +20,9 @@ import { EnquiryPreviewEnquiryComponent } from './enquiry-preview/enquiry-previe
 import { EnquiryPreviewAddressComponent } from './enquiry-preview/enquiry-preview-overview-section/enquiry-preview-address/enquiry-preview-address.component';
 import { EnquiryPreviewTimelineComponent } from './enquiry-preview/enquiry-preview-overview-section/enquiry-preview-timeline/enquiry-preview-timeline.component';
 import { EnquiryPreviewRatesComponent } from './enquiry-preview/enquiry-preview-rates/enquiry-preview-rates.component';
-import { PackageDetailModalComponent } from './enquiry-preview/enquiry-preview-overview-section/package-detail-modal/package-detail-modal.component';
-import { RequiredEquipmentModalComponent } from './enquiry-preview/enquiry-preview-overview-section/required-equipment-modal/required-equipment-modal.component';
+import { PackageDetailModalComponent } from './enquire-create/package-detail-modal/package-detail-modal.component';
+import { RequiredEquipmentModalComponent } from './enquire-create/required-equipment-modal/required-equipment-modal.component';
+import { EnquiryAddressModalComponent } from './enquire-create/enquiry-address-modal/enquiry-address-modal.component';
 
 
 const routes = [
@@ -56,6 +57,7 @@ const routes = [
     EnquiryPreviewRatesComponent,
     PackageDetailModalComponent,
     RequiredEquipmentModalComponent,
+    EnquiryAddressModalComponent
     ],
   imports: [
     CommonModule,
