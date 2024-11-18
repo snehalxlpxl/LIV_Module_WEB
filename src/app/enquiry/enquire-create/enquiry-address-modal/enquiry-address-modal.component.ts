@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { AddCustAddressService } from 'app/main/apps/companies/customers/customer-create/add-cust-addr-modal/add-cust-address.service';
+import { EnquiryAddressModalService } from './enquiry-address-modal.service';
 
 @Component({
   selector: 'app-enquiry-address-modal',
@@ -43,7 +44,8 @@ export class EnquiryAddressModalComponent implements OnInit {
     public addAddrSer:AddCustAddressService,
     private toastr: ToastrService,
     private router:Router,
-    private activeroute: ActivatedRoute
+    private activeroute: ActivatedRoute,
+    private enquiryAddrSer:EnquiryAddressModalService
   ) {}
 
   ngOnInit(): void {
@@ -71,7 +73,7 @@ export class EnquiryAddressModalComponent implements OnInit {
     if (this.addressData) {
       // this.patchForm();
       console.log("data for patch",this.addressData);
-      this.patchForm(this.addressData) 
+      // this.patchForm(this.addressData) 
     }
     this.activeroute.paramMap.subscribe(params => {
       this.customerId = +params.get('id');
@@ -79,8 +81,8 @@ export class EnquiryAddressModalComponent implements OnInit {
   }
   patchForm(data:any) {
     this.addressForm.patchValue({
-      companyAddressId:data.companyAddressId,
-      companyId:data.companyId,
+      // companyAddressId:data.companyAddressId,
+      enquiryId:data.enquiryId,
       addressType:data.addressTypeId,
       addressTypeValue:data.addressTypeNick,
       company:data.companyName,
@@ -102,7 +104,9 @@ export class EnquiryAddressModalComponent implements OnInit {
   onSubmit() {
     if (this.addressForm.valid) { 
       console.log(this.addressForm.value)
-      
+      this.enquiryAddrSer.addEnquiryAddressDetails(this.addressForm.value);
+              console.log(this.enquiryAddrSer.getEnquiryAddDetailsList());
+              this.close();
     }
     else{
       this.addressForm.markAllAsTouched();

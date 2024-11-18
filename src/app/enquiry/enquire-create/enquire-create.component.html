@@ -250,23 +250,43 @@
                                                                 </ng-template>
 
                                                                 <ng-template ngbPanelContent>
-                                                                    <!-- <div *ngIf="addrDetailsList && addrDetailsList.length === 0">
-                                                        <input formControlName="address" type="hidden" [value]="addrDetailsList"/>
-                                                        <div class="row pt-1">
-                                                          <div class="col-md-6 text-danger">
-                                                          
-                                                            <p>
-                                                              Please Enter Atleast one Address Details
-                                                            </p>
-                                                          </div>
-                                                          <div class="col-md-6 text-danger">
-                                                              <p class="text-right">!</p>
-                                                          </div>
-                                                        </div>
-                                                      </div>  -->
-                                                                    <div>
-
-                                                                    </div>
+                                                                    <div *ngIf="equipDetailsList && equipDetailsList.length === 0">
+                                                                        <input formControlName="equipment" type="hidden" [value]="equipDetailsList"/>
+                                                                            <div class="row pt-1">
+                                                                                <div class="col-md-6 text-danger">
+                                                                                
+                                                                                    <p>
+                                                                                    Please Enter Atleast one Equipment Details
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="col-md-6 text-danger">
+                                                                                    <p class="text-right">!</p>
+                                                                                </div>
+                                                                            </div>
+                                                                    </div>  
+                                                                    <div *ngIf="equipDetailsList">
+                                                                        <div *ngIf="equipDetailsList && equipDetailsList.length > 0" class="table-responsive">
+                                                                         
+                                                                         
+                                                                         <table class="table-responsive table-hover">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                <th>containerTypes</th>
+                                                                                <th>containerCount</th>
+                                                                                
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr *ngFor="let detail of equipDetailsList" (click)="openAddressFormlByData(detail)">
+                                                                                <td>{{ detail.containerTypes }}</td>
+                                                                                <td>{{ detail.containerCount}}</td>
+                                                                               
+                                                                                </tr>
+                                                                            </tbody>
+                                                                            </table>
+                                                                          
+                                                                        </div>
+                                                                      </div>
 
                                                                 </ng-template>
                                                             </ngb-panel>
@@ -321,24 +341,56 @@
                                                                 </ng-template>
 
                                                                 <ng-template ngbPanelContent>
-                                                                    <!-- <div *ngIf="addrDetailsList && addrDetailsList.length === 0">
-                                                        <input formControlName="address" type="hidden" [value]="addrDetailsList"/>
-                                                        <div class="row pt-1">
-                                                          <div class="col-md-6 text-danger">
-                                                          
-                                                            <p>
-                                                              Please Enter Atleast one Address Details
-                                                            </p>
-                                                          </div>
-                                                          <div class="col-md-6 text-danger">
-                                                              <p class="text-right">!</p>
-                                                          </div>
-                                                        </div>
-                                                      </div>  -->
-                                                                    <div>
-
-                                                                    </div>
-
+                                                                    <div *ngIf="pakagesDetailsList && pakagesDetailsList.length === 0">
+                                                                        <input formControlName="pakage" type="hidden" [value]="pakagesDetailsList"/>
+                                                                            <div class="row pt-1">
+                                                                            <div class="col-md-6 text-danger">
+                                                                            
+                                                                                <p>
+                                                                                Please Enter Atleast one Pakage Details
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-md-6 text-danger">
+                                                                                <p class="text-right">!</p>
+                                                                            </div>
+                                                                            </div>
+                                                                    </div>  
+                                                                    <div *ngIf="pakagesDetailsList">
+                                                                        <div *ngIf="pakagesDetailsList && pakagesDetailsList.length > 0" class="table-responsive">
+                                                                         
+                                                                         
+                                                                         <table class="table-responsive table-hover">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                <th>packageType</th>
+                                                                                <th>packageCount</th>
+                                                                                <th>lengthMm</th>
+                                                                                <th>weightMm</th>
+                                                                                <th>heightMm</th>
+                                                                                <th>netWeight</th>
+                                                                                <th>grossWeight</th>
+                                                                                <th>volumeWeight</th>
+                                                                                <th>volumeWeight</th>
+                                                                                <th>cbm</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr *ngFor="let detail of pakagesDetailsList" (click)="openAddressFormlByData(detail)">
+                                                                                <td>{{ detail.packageType }}</td>
+                                                                                <td>{{ detail.packageCount}}</td>
+                                                                                <td>{{ detail.lengthMm }}</td>
+                                                                                <td>{{ detail.weightMm }}</td>
+                                                                                <td>{{ detail.heightMm }}</td>
+                                                                                <td>{{ detail.netWeight }}</td>
+                                                                                <td>{{ detail.grossWeight}}</td>
+                                                                                <td>{{ detail.volumeWeight}}</td>
+                                                                                <td>{{ detail.cbm}}</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                            </table>
+                                                                          
+                                                                        </div>
+                                                                      </div>
                                                                 </ng-template>
                                                             </ngb-panel>
                                                         </ngb-accordion>
@@ -474,23 +526,52 @@
                                                                 </ng-template>
 
                                                                 <ng-template ngbPanelContent>
-                                                                    <!-- <div *ngIf="addrDetailsList && addrDetailsList.length === 0">
-                                                        <input formControlName="address" type="hidden" [value]="addrDetailsList"/>
-                                                        <div class="row pt-1">
-                                                          <div class="col-md-6 text-danger">
-                                                          
-                                                            <p>
-                                                              Please Enter Atleast one Address Details
-                                                            </p>
-                                                          </div>
-                                                          <div class="col-md-6 text-danger">
-                                                              <p class="text-right">!</p>
-                                                          </div>
-                                                        </div>
-                                                      </div>  -->
-                                                                    <div>
-
-                                                                    </div>
+                                                                    <div *ngIf="enquiryaddrDetailsList && enquiryaddrDetailsList.length === 0">
+                                                                        <input formControlName="address" type="hidden" [value]="enquiryaddrDetailsList"/>
+                                                                        <div class="row pt-1">
+                                                                            <div class="col-md-6 text-danger">
+                                                                            
+                                                                                <p>
+                                                                                Please Enter Atleast one Address Details
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-md-6 text-danger">
+                                                                                <p class="text-right">!</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> 
+                                                                    <div *ngIf="enquiryaddrDetailsList">
+                                                                        <div *ngIf="enquiryaddrDetailsList && enquiryaddrDetailsList.length > 0" class="table-responsive">
+                                                                         
+                                                                         
+                                                                         <div class="mb-1 cursor-pointer" *ngFor="let detail of enquiryaddrDetailsList" (click)="openAddressFormlByData(detail)">
+                                                                          <div class="row">
+                                                                            <div class="col-md-8">
+                                                                              <div class=""><b>{{ detail.addressTypeValue||detail.addressTypeNick }} Address</b></div>
+                                                                              <div class="pt-1">{{ detail.company|| detail.companyName}}, {{ detail.addressLine1 }},{{ detail.addressLine2 }}, {{ detail.city||detail.cityName }}-{{ detail.zipCode|| detail.zipcode}},{{ detail.country }},{{ detail.state ||detail.stateName}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-4 text-right">
+                                                                              
+                                                                              <div class="badge badge-light-success mr-1">{{ detail.addressTypeValue||detail.addressTypeNick }}</div>
+                                                                              <span class="" (click)="copyAddress($event, detail)"><i class="feather icon-copy"></i></span>
+                                                                                <!-- <div class="icon-wrapper">
+                                                                                  <i [data-feather]="data.key" [size]="24"></i>
+                                                                                </div> -->
+                                                                                <i [data-feather]="copy" [size]="24"></i>
+                                                                                <!-- <div *ngIf="showCopiedMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+                                                                                  Address copied to clipboard!
+                                                                                  <button type="button" class="close" (click)="showCopiedMessage = false">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                  </button>
+                                                                                </div> -->
+                                                                            </div>
+                                                                            
+                                                                          </div>
+                                                                          <hr>
+                                                                         </div>
+                                                                          
+                                                                        </div>
+                                                                      </div>
 
                                                                 </ng-template>
                                                             </ngb-panel>

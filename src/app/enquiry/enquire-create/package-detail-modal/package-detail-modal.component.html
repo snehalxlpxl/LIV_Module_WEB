@@ -1,44 +1,45 @@
 <!-- The modal content will be rendered by NgbModal -->
 <div class="modal-header">
-    <h5 class="modal-title">
-      <i class="feather icon-package" style="font-size: 16px; margin-right: 8px;"></i>
-      <span>Add Package Details</span>
-    </h5>
-    <!-- <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()">×</button> -->
-    <p class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true"
-        class="cursor-pointer"> × </p>
-  </div>
-  
+  <h5 class="modal-title">
+    <i class="feather icon-package" style="font-size: 16px; margin-right: 8px;"></i>
+    <span>Add Package Details</span>
+  </h5>
+  <p class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true"
+     class="cursor-pointer"> × </p>
+</div>
+
+<form [formGroup]="newpakagesForm" (ngSubmit)="addPackageDetails(newpakagesForm)">
   <!-- Modal Body -->
-  <div class="modal-body">
+  <div class="modal-body ">
+    
     <div class="row">
-        <!-- Package Type input -->
-        <div class="form-group col-6">
-            <label for="packageType">Package Type</label>
-            <select class="form-control" id="packageType" [(ngModel)]="packageType">
-                <option>Boxes</option>
-                <!-- Add more options as needed -->
-            </select>
-        </div>
-  
-        <!-- Total Gross Weight input -->
-        <div class="form-group col-6">
-            <label for="grossWeight">Total Gross Weight</label>
-            <input type="number" class="form-control" id="grossWeight" [(ngModel)]="grossWeight" readonly />
-        </div>
+      <!-- Package Type input -->
+      <div class="form-group col-6">
+        <label for="packageType">Package Type</label>
+        <ng-select [items]="packageTypes" [selectOnTab]="true" [searchable]="true" 
+                   bindLabel="name" bindValue="id" 
+                   formControlName="packageType">
+        </ng-select>
+      </div>
+      
+      <!-- Total Gross Weight input -->
+      <div class="form-group col-6">
+        <label for="grossWeight">Total Gross Weight</label>
+        <input type="number" class="form-control" id="grossWeight" formControlName="totalGrossWeight"  disabled/>
+      </div>
     </div>
-  
+    
     <div class="form-group">
       <label for="packageDetails">Package Details</label>
       <div class="input-group">
-        <input type="number" class="form-control" placeholder="Package Count" [(ngModel)]="packageCount" />
-        <input type="number" class="form-control" placeholder="L (mm)" [(ngModel)]="length" />
-        <input type="number" class="form-control" placeholder="W (mm)" [(ngModel)]="width" />
-        <input type="number" class="form-control" placeholder="H (mm)" [(ngModel)]="height" />
-        <input type="number" class="form-control" placeholder="Net Wt" [(ngModel)]="netWeight" />
-        <input type="number" class="form-control" placeholder="Gross Wt" [(ngModel)]="grossWeightDetails" />
-        <input type="number" class="form-control" placeholder="Vol. Wt" [(ngModel)]="volumeWeight" />
-        <input type="number" class="form-control" placeholder="CBM" [(ngModel)]="cbm" />
+        <input type="number" class="form-control" placeholder="Package Count" formControlName="packageCount" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
+        <input type="number" class="form-control" placeholder="L (mm)" formControlName="lengthMm" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
+        <input type="number" class="form-control" placeholder="W (mm)" formControlName="weightMm" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
+        <input type="number" class="form-control" placeholder="H (mm)" formControlName="heightMm" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
+        <input type="number" class="form-control" placeholder="Net Wt" formControlName="netWeight" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
+        <input type="number" class="form-control" placeholder="Gross Wt" formControlName="grossWeight" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
+        <input type="number" class="form-control" placeholder="Vol. Wt" formControlName="volumeWeight" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
+        <input type="number" class="form-control" placeholder="CBM" formControlName="cbm" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
       </div>
     </div>
   </div>
@@ -46,6 +47,6 @@
   <!-- Modal Footer -->
   <div class="modal-footer d-flex justify-content-end">
     <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
-    <button type="button" class="btn btn-success ml-2" (click)="addPackageDetails()">Add</button>
+    <button type="submit" class="btn btn-success ml-2" >Add</button>
   </div>
-  
+</form>

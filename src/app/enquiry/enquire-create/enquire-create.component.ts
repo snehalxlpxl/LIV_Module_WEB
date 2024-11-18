@@ -8,6 +8,11 @@ import { RequiredEquipmentModalComponent } from './required-equipment-modal/requ
 import { PackageDetailModalComponent } from './package-detail-modal/package-detail-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EnquiryAddressModalComponent } from './enquiry-address-modal/enquiry-address-modal.component';
+import Swal from 'sweetalert2';
+import { ToastrService } from "ngx-toastr";
+import { EnquiryAddressModalService } from './enquiry-address-modal/enquiry-address-modal.service';
+import { PakageDetailModalService } from './package-detail-modal/pakage-detail-modal.service';
+import { RequiredEquipmentModalService } from './required-equipment-modal/required-equipment-modal.service';
 
 @Component({
   selector: 'app-enquire-create',
@@ -27,9 +32,12 @@ export class EnquireCreateComponent implements OnInit {
     { id: 2, label: 'Lead' }
   ];
   userId: any;
+  enquiryaddrDetailsList: any[];
+  pakagesDetailsList: any[];
+  equipDetailsList: any[];
 
 
-  constructor( private location:Location,private fb: FormBuilder,private appInitService: AppInitService, private leadCreateService: LeadCreateService, private enquireCreateServ:EnquireCreateService,private modalService: NgbModal) { }
+  constructor( private location:Location,private fb: FormBuilder,private appInitService: AppInitService, private leadCreateService: LeadCreateService, private enquireCreateServ:EnquireCreateService,private modalService: NgbModal,private enquiryAddrSer:EnquiryAddressModalService, private toastr: ToastrService,private pakgesSer:PakageDetailModalService,private equipSer:RequiredEquipmentModalService) { }
 
   ngOnInit(): void {
     const userData = JSON.parse(sessionStorage.getItem('userData'));
@@ -68,7 +76,10 @@ export class EnquireCreateComponent implements OnInit {
       CreatedBy:this.userId,
       ModifiedBy:0,
       DeletedBy:0,
-      Isdeleted:0
+      Isdeleted:0,
+      equipment:[''],
+      pakage:[''],
+      address:[''],
      
     });
 
@@ -76,6 +87,9 @@ export class EnquireCreateComponent implements OnInit {
     this.locationMasterData = this.appInitService.locationMasterData; //appinitilizer
     this.getServiceTypes();
     this.getIncoTerm();
+    this.getAllAddrDetailfromModal();
+    this.getAllPakagesfromModal();
+    this.getAllEquipmentfromModal();
   }
   
 
@@ -136,7 +150,7 @@ export class EnquireCreateComponent implements OnInit {
   openPackageDetailModal() {
     console.log("openPackageDetailModal")
     const modalRef = this.modalService.open(PackageDetailModalComponent, {
-      size: 'md',
+      size: 'lg',
       backdrop: 'static', 
     });
   }
@@ -153,6 +167,72 @@ export class EnquireCreateComponent implements OnInit {
     const modalRef = this.modalService.open(EnquiryAddressModalComponent, {
       size: 'md', 
       backdrop: 'static', 
+    });
+  }
+  getAllAddrDetailfromModal() {
+    this.enquiryaddrDetailsList=[];
+    this.enquiryAddrSer.CurrentEnquiryAddressList.subscribe(list => {
+      this.enquiryaddrDetailsList = list;
+      console.log("create addr", this.enquiryaddrDetailsList);
+      this.newEnqiryCreate.get('address').setValue(this.enquiryaddrDetailsList);
+      // this.isAccordionExpanded=true;
+      if (list.length > 0) {
+        // this.isAccordionExpanded=true;
+        Swal.fire({
+          title: 'Success!',
+          text: 'New Address added successfully!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      }
+    });
+  }
+  getAllPakagesfromModal() {
+    this.pakagesDetailsList=[];
+    this.pakgesSer.CurrentPakagesList.subscribe(list => {
+      this.pakagesDetailsList = list;
+      console.log(" create pakage", this.pakagesDetailsList);
+      this.newEnqiryCreate.get('pakage').setValue(this.pakagesDetailsList);
+      // this.isAccordionExpanded=true;
+      if (list.length > 0) {
+        // this.isAccordionExpanded=true;
+        Swal.fire({
+          title: 'Success!',
+          text: 'New Pakage added successfully!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      }
+    });
+  }
+  getAllEquipmentfromModal() {
+    this.equipDetailsList=[];
+    this.equipSer.CurrentEquipmentList.subscribe(list => {
+      this.equipDetailsList = list;
+      console.log(" create equipment", this.equipDetailsList);
+      this.newEnqiryCreate.get('equipment').setValue(this.equipDetailsList);
+      // this.isAccordionExpanded=true;
+      if (list.length > 0) {
+        // this.isAccordionExpanded=true;
+        Swal.fire({
+          title: 'Success!',
+          text: 'New Equipment added successfully!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      }
+    });
+  }
+  copyAddress(event: MouseEvent, detail: any) {
+    event.stopPropagation(); // Prevents the row click event from being triggered
+    const address = `${detail.company|| detail.companyName}, ${detail.addressLine1}, ${detail.addressLine2}, ${detail.city||detail.cityName}-${detail.zipCode|| detail.zipcode}, ${detail.country}, ${detail.state ||detail.stateName}`;
+    navigator.clipboard.writeText(address).then(() => {
+      this.toastr.success('Copied to clipboard!', 'Copied', {
+        timeOut: 2000 // Hide the message after 2 seconds
+      });
+    }).catch((error) => {
+      console.error('Error copying address to clipboard:', error);
+      this.toastr.error('Error copying address to clipboard', 'Error');
     });
   }
 }

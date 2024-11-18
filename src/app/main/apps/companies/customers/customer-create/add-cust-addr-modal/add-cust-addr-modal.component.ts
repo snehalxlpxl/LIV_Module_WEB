@@ -54,7 +54,7 @@ export class AddCustAddrModalComponent implements OnInit {
   ngOnInit(): void {
     this.addressForm = this.fb.group({
       companyAddressId:0,
-      companyId:0||this.customerIdfromPreview,
+      companyId:[0]||this.customerIdfromPreview,
       addressType: [0],
       addressTypeValue: [null] ,// For hidden field
       company: ['', Validators.required],

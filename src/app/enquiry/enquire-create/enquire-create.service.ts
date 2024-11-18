@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EnquireCreateService {
-  private apiUrl = `${environment.apiUrl}/Enquiry`;
+  private apiUrl = `${environment.apiUrl}/Enquiries`;
   
   constructor(private http:HttpClient) { }
 
