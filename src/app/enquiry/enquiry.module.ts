@@ -23,6 +23,7 @@ import { EnquiryPreviewRatesComponent } from './enquiry-preview/enquiry-preview-
 import { PackageDetailModalComponent } from './enquire-create/package-detail-modal/package-detail-modal.component';
 import { RequiredEquipmentModalComponent } from './enquire-create/required-equipment-modal/required-equipment-modal.component';
 import { EnquiryAddressModalComponent } from './enquire-create/enquiry-address-modal/enquiry-address-modal.component';
+import { NewRateRequestModalComponent } from './enquiry-preview/new-rate-request-modal/new-rate-request-modal.component';
 
 
 const routes = [
@@ -57,7 +58,8 @@ const routes = [
     EnquiryPreviewRatesComponent,
     PackageDetailModalComponent,
     RequiredEquipmentModalComponent,
-    EnquiryAddressModalComponent
+    EnquiryAddressModalComponent,
+    NewRateRequestModalComponent
     ],
   imports: [
     CommonModule,

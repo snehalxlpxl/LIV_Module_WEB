@@ -10,33 +10,7 @@
                 </div>
                 <div
                     class="col-lg-6 col-md-10 d-flex justify-content-end align-items-center flex-wrap text-right mar-left">
-                    <!-- <div>
-                        <button type="button" class="btn btn-outline-danger mr-1 md-font"
-                            style="display: inline-flex; align-items: center;"><i class="feather icon-minus-circle"
-                                style="font-size: 16px; margin-right: 8px;"></i>
-                            Edit</button>
-
-                        <button class="btn btn-success mr-1 md-font"
-                            style="display: inline-flex; align-items: center;"><i class="feather icon-check"
-                                style="font-size: 16px; margin-right: 8px;"></i> Convert</button>
-
-                        <button class="btn btn-success md-font" style="display: inline-flex; align-items: center;"><i
-                                class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i>New</button>
-                        <div ngbDropdown class="mx-1 flex-shrink-0">
-                            <button ngbDropdownToggle class="btn btn-primary" type="button"
-                                id="dropdownMenuButton" rippleEffect style="font-size: 16px; margin-right: 8px;">
-                                New
-                            </button>
-                            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
-                                <a ngbDropdownItem href="javascript:void(0)" >Call Log</a>
-                                <a ngbDropdownItem href="javascript:void(0)" >Task
-                                    Details</a>
-                                <a ngbDropdownItem href="javascript:void(0)"
-                                   >Meeting Information</a>
-                            </div>
-                        </div>
-
-                    </div> -->
+                    
                     <div class="d-flex align-items-center">
                         <!-- Edit Button -->
                         <button type="button" class="btn btn-primary  mr-1 md-font"
@@ -58,11 +32,10 @@
                                 style="display: inline-flex; align-items: center; font-size: 16px;">
                                 <i class="feather icon-plus" style="font-size: 16px; margin-right: 8px;"></i> New
                             </button>
-                            <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
-                              <a ngbDropdownItem href="javascript:void(0)">Call Log</a>
-                              <a ngbDropdownItem href="javascript:void(0)">Task Details</a>
-                              <a ngbDropdownItem href="javascript:void(0)">Meeting Information</a>
-                            </div> -->
+                            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                              <a ngbDropdownItem href="javascript:void(0)" (click)="openNewRateRequestModal()">New Rate Request</a>
+                              <a ngbDropdownItem href="javascript:void(0)">Rate Request Revision</a>
+                            </div>
                         </div>
                     </div>
 

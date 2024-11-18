@@ -1,0 +1,72 @@
+<div class="modal-header">
+    <h5 class="modal-title">
+      <i class="feather icon-mail" style="font-size: 16px; margin-right: 8px;"></i>
+      New Rate Request
+    </h5>
+    <p class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true" class="cursor-pointer">×</p>
+  </div>
+  
+  <div class="modal-body">
+    <!-- Select Agent/Liner -->
+    <div class="form-group">
+      <label for="agentLiner">Select Agent / Liner</label>
+      <ng-select
+      [items]="agentOptions"
+      [(ngModel)]="selectedAgent"
+      bindLabel="name"
+      placeholder="Select Agent/Liner"
+      [searchable]="true"
+    >
+    </ng-select>
+    
+    </div>
+  
+    <!-- Send To -->
+    <div class="form-group">
+      <label for="sendTo">Send To</label>
+      <input
+        type="text"
+        class="form-control"
+        id="sendTo"
+        [(ngModel)]="sendTo"
+        placeholder="Enter email addresses separated by commas"
+      />
+    </div>
+  
+    <!-- CC -->
+    <div class="form-group">
+      <label for="cc">CC</label>
+      <input
+        type="text"
+        class="form-control"
+        id="cc"
+        [(ngModel)]="cc"
+        placeholder="Enter CC email addresses separated by commas"
+      />
+    </div>
+  
+    <!-- Draft -->
+    <div class="form-group">
+      <label for="draftContent">Draft</label>
+      <textarea
+        class="form-control"
+        id="draftContent"
+        rows="10"
+        [(ngModel)]="draftContent"
+        placeholder="Enter your draft content here"
+      ></textarea>
+    </div>
+  
+    <hr />
+    <div class="d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="sendRateRequest()"
+      >
+        Send Rate Request
+      </button>
+    </div>
+  </div>
+  

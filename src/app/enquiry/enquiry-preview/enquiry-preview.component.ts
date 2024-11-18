@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as snippet from 'app/main/apps/companies/customers/customer-preview/cust.snippetcode';
 import { LeadPreviewService } from 'app/Leads/lead-preview.service';
 import { trigger, transition, animate, style } from '@angular/animations';
+import { NewRateRequestModalComponent } from './new-rate-request-modal/new-rate-request-modal.component';
 
 @Component({
   selector: 'app-enquiry-preview',
@@ -67,5 +68,10 @@ export class EnquiryPreviewComponent implements OnInit {
   setComponent(component: string): void {
     this.navigationService.setComponent(component);
   }
+  openNewRateRequestModal(): void {
+    const modalRef = this.modalService.open(NewRateRequestModalComponent);
+    // modalRef.componentInstance
+  }
+
 }
 
