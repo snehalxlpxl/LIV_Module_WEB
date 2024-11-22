@@ -24,6 +24,13 @@ export class PakageDetailModalService {
       { responseType: "text" as "json" }
     );
   }
+  insertEnqPakage(data: any): Observable<string> {
+    return this.http.post<string>(
+      `${environment.apiUrl}/Enquiries/insert/EnquiryPakages`,
+      data,
+      { responseType: "text" as "json" }
+    );
+  }
   getPakagesList() {
     return this.pakagesList.value;
   }

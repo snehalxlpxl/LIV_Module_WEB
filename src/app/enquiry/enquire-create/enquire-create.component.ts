@@ -47,6 +47,7 @@ export class EnquireCreateComponent implements OnInit {
   disable: boolean;
   salesPersonOrLeadId: any;
   enquiryId: any;
+  viewMode: any;
 
 
   constructor(private location: Location, private fb: FormBuilder, private appInitService: AppInitService,
@@ -83,6 +84,7 @@ export class EnquireCreateComponent implements OnInit {
       this.getEnquiryCompanyNameId( this.CustomerOrLeadId);
     }else if (params.type === 'edit') {
       this.enquiryId=params.id;
+      this.viewMode=params.type
     }
     else{
       this.CustomerStatus="Customer";
@@ -382,20 +384,26 @@ export class EnquireCreateComponent implements OnInit {
       // });
   }
 
-  openPackageDetailModal() {
+  openPackageDetailModal(enquiryId:number) {
     console.log("openPackageDetailModal")
     const modalRef = this.modalService.open(PackageDetailModalComponent, {
       size: 'lg',
       backdrop: 'static', 
     });
+    modalRef.componentInstance.enquiryIdFromUrl = enquiryId;
+    modalRef.componentInstance.viewType = this.viewMode;
   }
 
-  openRequiredEquipmentModal(){
+  openRequiredEquipmentModal(enquiryId:number){
     console.log("openRequiredEquipmentModal")
+    
     const modalRef = this.modalService.open(RequiredEquipmentModalComponent, {
       size: 'md', 
       backdrop: 'static', 
     });
+    
+    modalRef.componentInstance.enquiryIdFromUrl = enquiryId;
+    modalRef.componentInstance.viewType = this.viewMode;
   }
   openEnquiryAddressesModal(){
     console.log("EnquiryAddressModalComponent")

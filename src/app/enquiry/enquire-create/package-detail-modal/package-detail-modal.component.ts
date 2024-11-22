@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PakageDetailModalService } from './pakage-detail-modal.service';
@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
 export class PackageDetailModalComponent implements OnInit {
   newpakagesForm:FormGroup;
   @Input() pakageData: any;
+  @Input() enquiryIdFromUrl:any;
+  @Input() viewType:any;
   // @Output() packageDetailsAdded = new EventEmitter<void>();
 
   // Define properties for form data binding
@@ -31,7 +33,7 @@ export class PackageDetailModalComponent implements OnInit {
   cbm: number;
   userId: any;
 
-  constructor(public activeModal: NgbActiveModal,private fb: FormBuilder,private pakagesSer:PakageDetailModalService) { }
+  constructor(public activeModal: NgbActiveModal,private fb: FormBuilder,private pakagesSer:PakageDetailModalService,private cdRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
   this.getloggedInUser();
@@ -103,10 +105,20 @@ export class PackageDetailModalComponent implements OnInit {
         console.log("updated obj", this.newpakagesForm.value);
         this.updateContainer(packageTypeId, this.newpakagesForm.value)
       } else {
+        if(this.viewType=='edit'){
+
+          this.newpakagesForm.patchValue({
+            enquiryId: this.enquiryIdFromUrl
+          });
+          console.log("insert",this.newpakagesForm.value);
+          this.insertEnqPakages(this.newpakagesForm.value);
+          
+        }else{
         console.log(this.newpakagesForm.value);
         this.pakagesSer.addPakages(this.newpakagesForm.value);
         console.log(this.pakagesSer.getPakagesList());
         this.close();
+        }
       }
 
     }
@@ -141,6 +153,23 @@ export class PackageDetailModalComponent implements OnInit {
     }
   );
   }
+  insertEnqPakages(data:any){
+    this.pakagesSer.insertEnqPakage(data).subscribe( res => {
+ 
+      this.activeModal.dismiss();
+
+      Swal.fire('Success', 'Pakages added successfully', 'success');
+      window.location.reload();
+    },
+    (err) => {
+      Swal.fire('Error', 'Error Adding Container', 'error');
+      console.error('Error Adding Container:', err);
+     
+        this.activeModal.dismiss(); // Return undefined to parent component
+      
+    }
+  );
+  }
   calculateTotalGrossWeight(form: any) {
     if ( form.value.lengthMm && form.value.weightMm && form.value.heightMm) {
       const totalGrossWeight = (form.value.lengthMm * form.value.weightMm*form.value.heightMm)/6000;
@@ -162,4 +191,6 @@ export class PackageDetailModalComponent implements OnInit {
     //   this.companyField.nativeElement.focus();
     // }, 0);
   }
+
+
 }

@@ -25,7 +25,13 @@ export class RequiredEquipmentModalService {
       { responseType: "text" as "json" }
     );
   }
-
+  insertEnqContainer(data: any): Observable<string> {
+    return this.http.post<string>(
+      `${environment.apiUrl}/Enquiries/insert/EnquiryContainer`,
+      data,
+      { responseType: "text" as "json" }
+    );
+  }
   getEquipementList() {
     return this.equipmentList.value;
   }

@@ -243,7 +243,7 @@
                                                           </button> -->
                                                                             <span class="icon-right">
 
-                                                                                <i class="feather icon-plus-square" (click)="openRequiredEquipmentModal()"></i>
+                                                                                <i class="feather icon-plus-square" (click)="openRequiredEquipmentModal(enquiryId)"></i>
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -268,22 +268,22 @@
                                                                         <div *ngIf="equipDetailsList && equipDetailsList.length > 0" class="table-responsive">
                                                                          
                                                                          
-                                                                         <table class="table-responsive table-hover">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                <th>containerTypes</th>
-                                                                                <th>containerCount</th>
-                                                                                
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr *ngFor="let detail of equipDetailsList" (click)="openAddressFormlByData(detail)">
-                                                                                <td>{{ detail.containerTypes }}</td>
-                                                                                <td>{{ detail.containerCount}}</td>
-                                                                               
-                                                                                </tr>
-                                                                            </tbody>
-                                                                            </table>
+                                                                            <table class="table table-responsive table-hover table-striped table-bordered" style="padding: 10px;">
+                                                                                <thead class="thead-light">
+                                                                                  <tr>
+                                                                                    <th style="padding: 10px;">Container Type</th>
+                                                                                    <th style="padding: 10px;">Container Count</th>
+                                                                                    <th style="padding: 10px;">Gross Weight</th>
+                                                                                  </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                  <tr *ngFor="let detail of equipDetailsList" (click)="openModalContainerByData(detail)" class="cursor-pointer">
+                                                                                    <td style="padding: 10px;">{{ detail.containerTypes }}{{detail.containerType}}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.containerCount}}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.grossWeight}}</td>
+                                                                                  </tr>
+                                                                                </tbody>
+                                                                              </table>
                                                                           
                                                                         </div>
                                                                       </div>
@@ -334,7 +334,7 @@
                                                           </button> -->
                                                                             <span class="icon-right">
 
-                                                                                <i class="feather icon-plus-square" (click)="openPackageDetailModal()"></i>
+                                                                                <i class="feather icon-plus-square" (click)="openPackageDetailModal(enquiryId)"></i>
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -359,35 +359,36 @@
                                                                         <div *ngIf="pakagesDetailsList && pakagesDetailsList.length > 0" class="table-responsive">
                                                                          
                                                                          
-                                                                         <table class="table-responsive table-hover">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                <th>packageType</th>
-                                                                                <th>packageCount</th>
-                                                                                <th>lengthMm</th>
-                                                                                <th>weightMm</th>
-                                                                                <th>heightMm</th>
-                                                                                <th>netWeight</th>
-                                                                                <th>grossWeight</th>
-                                                                                <th>volumeWeight</th>
-                                                                                <th>volumeWeight</th>
-                                                                                <th>cbm</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr *ngFor="let detail of pakagesDetailsList" (click)="openAddressFormlByData(detail)">
-                                                                                <td>{{ detail.packageType }}</td>
-                                                                                <td>{{ detail.packageCount}}</td>
-                                                                                <td>{{ detail.lengthMm }}</td>
-                                                                                <td>{{ detail.weightMm }}</td>
-                                                                                <td>{{ detail.heightMm }}</td>
-                                                                                <td>{{ detail.netWeight }}</td>
-                                                                                <td>{{ detail.grossWeight}}</td>
-                                                                                <td>{{ detail.volumeWeight}}</td>
-                                                                                <td>{{ detail.cbm}}</td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                            </table>
+                                                                            <table class="table table-responsive table-hover table-striped table-bordered" style="width: 100%; table-layout: auto;font-size: 13px;">
+                                                                                <thead class="thead-light">
+                                                                                  <tr style="font-size: 13px;">
+                                                                                    <th style="padding: 10px;">Package Type</th>
+                                                                                    <th style="padding: 10px;">Package Count</th>
+                                                                                    <th style="padding: 10px;">Length (mm)</th>
+                                                                                    <th style="padding: 10px;">Weight (mm)</th>
+                                                                                    <th style="padding: 10px;">Height (mm)</th>
+                                                                                    <th style="padding: 10px;">Net Weight</th>
+                                                                                    <th style="padding: 10px;">Gross Weight</th>
+                                                                                    <th style="padding: 10px;">Volume Weight</th>
+                                                                                    <th style="padding: 10px;">CBM</th>
+                                                                                    <th style="padding: 10px;">delete</th>
+                                                                                  </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                  <tr *ngFor="let detail of pakagesDetailsList" (click)="openModalPakagesByData(detail)" class="cursor-pointer">
+                                                                                    <td style="padding: 10px;">{{ detail.packageType }}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.packageCount}}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.lengthMm }}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.weightMm }}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.heightMm }}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.netWeight }}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.grossWeight}}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.volumeWeight}}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.cbm}}</td>
+                                                                                    <td style="padding: 10px;">delete</td>
+                                                                                  </tr>
+                                                                                </tbody>
+                                                                              </table>
                                                                           
                                                                         </div>
                                                                       </div>
@@ -544,7 +545,7 @@
                                                                         <div *ngIf="enquiryaddrDetailsList && enquiryaddrDetailsList.length > 0" class="table-responsive">
                                                                          
                                                                          
-                                                                         <div class="mb-1 cursor-pointer" *ngFor="let detail of enquiryaddrDetailsList" (click)="openAddressFormlByData(detail)">
+                                                                         <div class="mb-1 cursor-pointer" *ngFor="let detail of enquiryaddrDetailsList" (click)="openModalEnqArressByData(detail)">
                                                                           <div class="row">
                                                                             <div class="col-md-8">
                                                                               <div class=""><b>{{ detail.addressTypeValue||detail.addressTypeNick }} Address</b></div>

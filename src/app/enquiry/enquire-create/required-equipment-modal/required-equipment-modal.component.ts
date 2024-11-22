@@ -13,6 +13,9 @@ import Swal from 'sweetalert2';
 export class RequiredEquipmentModalComponent implements OnInit {
   requiredEquipmentForm: FormGroup;
   @Input() containerData:any;
+  @Input() enquiryIdFromUrl:any;
+  @Input() viewType:any;
+
   containerTypes = [
     { id: 1, name: '40GP' },
     { id: 2, name: '20GP' },
@@ -34,15 +37,17 @@ export class RequiredEquipmentModalComponent implements OnInit {
   } else {
       console.log('No user data found in sessionStorage');
   }
-    this.route.params.subscribe(params => {
-     if (params.type === 'edit') {
-        this.enquiryId=params.id;
-      }
-    });
+    // this.route.params.subscribe(params => {
+    //  if (params.type === 'edit') {
+    //     this.enquiryId=params.id;
+    //     // alert(this.enquiryId)
+
+    //   }
+    // });
     this.initForm();
     if(this.containerData){
-      this.enquiryId=this.containerData.enquiryId;
-      console.log("this.enquiryId",this.enquiryId);
+      // this.enquiryId=this.containerData.enquiryId;
+      // console.log("this.enquiryId",this.enquiryId);
       console.log("data for patch container",this.containerData);
       this.patchForm(this.containerData) 
     }
@@ -82,10 +87,21 @@ export class RequiredEquipmentModalComponent implements OnInit {
         this.updateContainer(containerid, this.requiredEquipmentForm.value)
       } else {
         //add to list
-        console.log(this.requiredEquipmentForm.value);
-        this.requiredEquipeSer.addEquipment(this.requiredEquipmentForm.value);
-        console.log(this.requiredEquipeSer.getEquipementList());
-        this.closeModal();
+        if(this.viewType=='edit'){
+
+          this.requiredEquipmentForm.patchValue({
+            enquiryId: this.enquiryIdFromUrl
+          });
+          console.log("insert",this.requiredEquipmentForm.value);
+          this.insertEnqContainer(this.requiredEquipmentForm.value);
+
+        }else{
+          console.log(this.requiredEquipmentForm.value);
+          this.requiredEquipeSer.addEquipment(this.requiredEquipmentForm.value);
+          console.log(this.requiredEquipeSer.getEquipementList());
+          this.closeModal();
+        }
+       
       }
     }
     else {
@@ -110,6 +126,23 @@ export class RequiredEquipmentModalComponent implements OnInit {
     (err) => {
       Swal.fire('Error', 'Error updating Container', 'error');
       console.error('Error updating Container:', err);
+     
+        this.activeModal.dismiss(); // Return undefined to parent component
+      
+    }
+  );
+  }
+  insertEnqContainer(data:any){
+    this.requiredEquipeSer.insertEnqContainer(data).subscribe( res => {
+ 
+      this.activeModal.dismiss();
+
+      Swal.fire('Success', 'Container added successfully', 'success');
+      window.location.reload();
+    },
+    (err) => {
+      Swal.fire('Error', 'Error Adding Container', 'error');
+      console.error('Error Adding Container:', err);
      
         this.activeModal.dismiss(); // Return undefined to parent component
       
