@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { EnquiryPriviewAddressService } from './enquiry-priview-address.service';
 
 @Component({
   selector: 'app-enquiry-preview-address',
@@ -21,6 +22,7 @@ export class EnquiryPreviewAddressComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private toastr: ToastrService,
+    private enqPreviewAddrSer:EnquiryPriviewAddressService
 
   ) { }
 
@@ -31,14 +33,14 @@ export class EnquiryPreviewAddressComponent implements OnInit {
 
     // Find the matching enquiry from the enquiryRows array
     if (enquiryId) {
-      this.currentEnquiry = this.enquiryRows.find(enquiry => enquiry.enquiryId === enquiryId);
-      console.log("Current Enquiry",this.currentEnquiry);
+      this.getaddrDetail(parseInt(enquiryId));
     }
 
     if (!this.currentEnquiry) {
       // Handle the case where the enquiry is not found (optional)
       this.message = "Enquiry not found!";
     }
+    
   }
   
   copyToClipboard(text: string) {
@@ -54,5 +56,26 @@ export class EnquiryPreviewAddressComponent implements OnInit {
       this.toastr.error('No text to copy.', 'Error');
     }
 
-}
+  }
+
+  enquiryaddrDetailsList: any[];
+  getaddrDetail(id:number){
+    this.enqPreviewAddrSer.getEnqAddressById(id).subscribe((data: any[]) => {
+      this.enquiryaddrDetailsList=data;
+      console.log("addr ", this.enquiryaddrDetailsList);
+   
+    });
+  }
+  copyAddress(event: MouseEvent, detail: any) {
+    event.stopPropagation(); // Prevents the row click event from being triggered
+    const address = `${detail.company|| detail.companyName}, ${detail.addressLine1}, ${detail.addressLine2}, ${detail.city||detail.cityName}-${detail.zipCode|| detail.zipcode}, ${detail.country}, ${detail.state ||detail.stateName}`;
+    navigator.clipboard.writeText(address).then(() => {
+      this.toastr.success('Copied to clipboard!', 'Copied', {
+        timeOut: 2000 // Hide the message after 2 seconds
+      });
+    }).catch((error) => {
+      console.error('Error copying address to clipboard:', error);
+      this.toastr.error('Error copying address to clipboard', 'Error');
+    });
+  }
 }

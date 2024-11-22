@@ -4,9 +4,9 @@
             <div class="row align-items-center mb-2">
                 <div class="col-lg-5 col-md-10 col-xs-10 col-10 d-flex align-items-center mb-2 mb-md-0 ml-1">
                     <h2 class="mb-0 flex-shrink-1">
-                        <b>ME{{currentEnquiry.enquiryId}}</b>
+                        <b>{{basicDtail[0].userDisplayName}}{{enquiryId}}</b>
                     </h2>
-                    <span class="ml-1 badge badge-warning md-font">{{currentEnquiry.status}}</span>
+                    <span class="ml-1 badge badge-warning md-font">Awaiting Approval</span>
                 </div>
                 <div
                     class="col-lg-6 col-md-10 d-flex justify-content-end align-items-center flex-wrap text-right mar-left">
@@ -14,7 +14,7 @@
                     <div class="d-flex align-items-center">
                         <!-- Edit Button -->
                         <button type="button" class="btn btn-primary  mr-1 md-font"
-                            style="display: inline-flex; align-items: center;">
+                            style="display: inline-flex; align-items: center;" [routerLink]="['/enquiry/edit/', enquiryId]">
                             <i class="feather icon-edit" style="font-size: 16px; margin-right: 8px;"></i>
                             Edit
                         </button>

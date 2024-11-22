@@ -24,40 +24,52 @@
                         </div>
                     </div>
                 </div>
-                <ngx-datatable [rows]="enquiryRows" [rowHeight]="40" class="bootstrap core-bootstrap" [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+                <ngx-datatable
+                class="bootstrap core-bootstrap"
+              [rows]="enquiries"
+              [rowHeight]="40"
+              [count]="totalRecords"
+              [offset]="pageNumber - 1"
+              [limit]="pageSize"
+              [columnMode]="ColumnMode.force"
+              [headerHeight]="70"
+              [footerHeight]="30"
+              [scrollbarH]="true"
+              (page)='onPage($event)'
+              >
+                <!-- <ngx-datatable [rows]="enquiryRows" [rowHeight]="40" class="bootstrap core-bootstrap" [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true"> -->
                     <ngx-datatable-column name="ID" prop="enquiryId" [width]="70">
                         <ng-template let-enquiryId="value" ngx-datatable-cell-template>
                             <a routerLink="/enquiry-preview/{{ enquiryId }}" class="font-weight-bold">{{ enquiryId }}</a>
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Customer / Lead" prop="customerName" [width]="200">
-                        <ng-template let-row="row" ngx-datatable-cell-template>
-                            <a [routerLink]="['/enquiry-preview', row.enquiryId]" class="font-weight-bold">
-                                {{ row.customerName }}
+                    <ngx-datatable-column name="CUSTOMER / LEAD" prop="companyName" [width]="200">
+                        <ng-template let-value="value"let-row="row" ngx-datatable-cell-template>
+                            <a [routerLink]="['/enquiry-preview/', row['enquiryId']]" class="font-weight-bold">
+                                {{ value }}
                             </a>
-                            <small class="d-block text-muted">{{ row.industry }}</small>
+                            <small class="d-block text-muted">auto Parts</small>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Service Type" prop="serviceType" [width]="120">
-                        <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row.serviceType }}
+                        <ng-template let-serviceType="value" ngx-datatable-cell-template>
+                            {{ serviceType }}
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Requirement" prop="requirement" [width]="150">
                         <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row.requirement }}
+                            {{ row.containerCount }} <span>×</span> {{ row.containerType}}
+
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Status" prop="status" [width]="150">
+                    <ngx-datatable-column name="Status" prop="enquiryStatus" [width]="150">
                         <ng-template let-row="row" ngx-datatable-cell-template>
                             <span [ngClass]="{
                                 'badge-custom': true,
-                                'badge-success badge-light-success': row.status === 'Closed',
-                                'badge-warning badge-light-warning': row.status === 'Awaiting Rates',
-                                'badge-info badge-light-info': row.status === 'Quotation Sent'
-                            }">
-                                {{ row.status }}
-                            </span>
+                                'badge-success badge-light-success': row.enquiryStatus === 'Closed',
+                                'badge-warning badge-light-warning': row.enquiryStatus === 'Awaiting Approval',
+                                'badge-info badge-light-info': row.enquiryStatus === 'Quotation Sent'
+                              }">{{ row.enquiryStatus }}</span>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Actions" [width]="100" [sortable]="false">
@@ -77,7 +89,7 @@
                                         <a [routerLink]="['/enquiry/edit', row.enquiryId]" ngbDropdownItem>
                                             <i data-feather="edit" class="mr-1"></i>Edit 
                                         </a>
-                                        <a href="javascript:void(0)" ngbDropdownItem (click)="deleteEnquiry(row.enquiryId)">
+                                        <a href="javascript:void(0)" ngbDropdownItem (click)="onDeleteEnquiry(row.enquiryId)">
                                             <i data-feather="trash" class="mr-1"></i>Delete 
                                         </a>
                                     </div>
@@ -86,6 +98,35 @@
                         </ng-template>
                     </ngx-datatable-column>
                 </ngx-datatable>
+                  <!-- Pagination Controls -->
+        <ul class="pagination justify-content-end pr-1">
+            <li class="page-item" [class.disabled]="pageNumber === 1">
+              <a class="page-link" (click)="goToPreviousPage()">Previous</a>
+            </li>
+  
+            <!-- Display page numbers with ellipsis -->
+            <li *ngIf="pages[0] > 1" class="page-item">
+              <a class="page-link" (click)="goToPage(1)">1</a>
+            </li>
+            <li *ngIf="pages[0] > 2" class="page-item disabled">
+              <span class="page-link">...</span>
+            </li>
+  
+            <li *ngFor="let page of pages" class="page-item" [class.active]="page === pageNumber">
+              <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
+            </li>
+  
+            <li *ngIf="pages[pages.length - 1] < totalPages - 1" class="page-item disabled">
+              <span class="page-link">...</span>
+            </li>
+            <li *ngIf="pages[pages.length - 1] < totalPages" class="page-item">
+              <a class="page-link" (click)="goToPage(totalPages)">{{ totalPages }}</a>
+            </li>
+  
+            <li class="page-item" [class.disabled]="pageNumber === totalPages">
+              <a class="page-link" (click)="goToNextPage()">Next</a>
+            </li>
+          </ul>
             </div>
         </section>
     </div>

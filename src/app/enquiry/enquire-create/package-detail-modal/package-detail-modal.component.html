@@ -9,6 +9,10 @@
 </div>
 
 <form [formGroup]="newpakagesForm" (ngSubmit)="addPackageDetails(newpakagesForm)">
+  
+  <input type="hidden" formControlName="enquiryPackageId"/>
+  <input type="hidden" formControlName="enquiryId"/>
+ 
   <!-- Modal Body -->
   <div class="modal-body ">
     
@@ -18,8 +22,10 @@
         <label for="packageType">Package Type</label>
         <ng-select [items]="packageTypes" [selectOnTab]="true" [searchable]="true" 
                    bindLabel="name" bindValue="id" 
-                   formControlName="packageType">
+                   formControlName="packageTypeId"
+                   (change)="onChangePakageType($event)">
         </ng-select>
+        <input type="hidden" formControlName="packageType"/>
       </div>
       
       <!-- Total Gross Weight input -->
@@ -32,14 +38,14 @@
     <div class="form-group">
       <label for="packageDetails">Package Details</label>
       <div class="input-group">
-        <input type="number" class="form-control" placeholder="Package Count" formControlName="packageCount" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
+        <input type="number" class="form-control" placeholder="Package Count" formControlName="packageCount" />
         <input type="number" class="form-control" placeholder="L (mm)" formControlName="lengthMm" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
         <input type="number" class="form-control" placeholder="W (mm)" formControlName="weightMm" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
         <input type="number" class="form-control" placeholder="H (mm)" formControlName="heightMm" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
-        <input type="number" class="form-control" placeholder="Net Wt" formControlName="netWeight" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
-        <input type="number" class="form-control" placeholder="Gross Wt" formControlName="grossWeight" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
-        <input type="number" class="form-control" placeholder="Vol. Wt" formControlName="volumeWeight" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
-        <input type="number" class="form-control" placeholder="CBM" formControlName="cbm" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
+        <input type="number" class="form-control" placeholder="Net Wt" formControlName="netWeight" />
+        <input type="number" class="form-control" placeholder="Gross Wt" formControlName="grossWeight" disabled/>
+        <input type="number" class="form-control" placeholder="Vol. Wt" formControlName="volumeWeight" disabled />
+        <input type="number" class="form-control" placeholder="CBM" formControlName="cbm" />
       </div>
     </div>
   </div>
@@ -48,5 +54,9 @@
   <div class="modal-footer d-flex justify-content-end">
     <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
     <button type="submit" class="btn btn-success ml-2" >Add</button>
+
+    <input type="hidden" formControlName="modifiedBy" value="userId"/>
+    <input type="hidden" formControlName="createdBy" value="userId"/>
+    <input type="hidden" formControlName="deletedBy" value="userId"/>
   </div>
 </form>

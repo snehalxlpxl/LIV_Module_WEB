@@ -13,6 +13,11 @@ import { ToastrService } from "ngx-toastr";
 import { EnquiryAddressModalService } from './enquiry-address-modal/enquiry-address-modal.service';
 import { PakageDetailModalService } from './package-detail-modal/pakage-detail-modal.service';
 import { RequiredEquipmentModalService } from './required-equipment-modal/required-equipment-modal.service';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CustomerCreateService } from 'app/main/apps/companies/customers/customer-create/customer-create.service';
+import { LeadsListComponent } from 'app/Leads/leads-list/leads-list.component';
+import { LeadsListService } from 'app/Leads/leads-list/leads-list.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-enquire-create',
@@ -28,18 +33,33 @@ export class EnquireCreateComponent implements OnInit {
   incoTerm: any;
 
   customerStatusOptions = [
-    { id: 1, label: 'Customer' },
-    { id: 2, label: 'Lead' }
+    { label: 'Lead', value: 'Lead' },
+    { label: 'Customer', value: 'Customer' }
   ];
   userId: any;
-  enquiryaddrDetailsList: any[];
-  pakagesDetailsList: any[];
-  equipDetailsList: any[];
+  enquiryaddrDetailsList: any[]= [];
+  pakagesDetailsList: any[]= [];
+  equipDetailsList: any[]= [];
+  CustomerStatus: any;
+  CustomerOrLeadId: any;
+  companies: any;
+  leaddata: any[] = [];
+  disable: boolean;
+  salesPersonOrLeadId: any;
+  enquiryId: any;
 
 
-  constructor( private location:Location,private fb: FormBuilder,private appInitService: AppInitService, private leadCreateService: LeadCreateService, private enquireCreateServ:EnquireCreateService,private modalService: NgbModal,private enquiryAddrSer:EnquiryAddressModalService, private toastr: ToastrService,private pakgesSer:PakageDetailModalService,private equipSer:RequiredEquipmentModalService) { }
+  constructor(private location: Location, private fb: FormBuilder, private appInitService: AppInitService,
+    private enquireCreateServ: EnquireCreateService, private router: Router,
+    private modalService: NgbModal, private enquiryAddrSer: EnquiryAddressModalService, private toastr: ToastrService,
+    private pakgesSer: PakageDetailModalService, private equipSer: RequiredEquipmentModalService, private route: ActivatedRoute,
+    private newCustcreate: CustomerCreateService, private _leadsListService: LeadsListService) {
+
+  }
 
   ngOnInit(): void {
+
+      
     const userData = JSON.parse(sessionStorage.getItem('userData'));
     if (userData) {
       // this.userName = userData.userName;
@@ -49,40 +69,29 @@ export class EnquireCreateComponent implements OnInit {
   } else {
       console.log('No user data found in sessionStorage');
   }
+  this.route.params.subscribe(params => {
+    if (params.type === 'lead') {
+      this.disable=true;
+      this.CustomerStatus="Lead";
+      this.CustomerOrLeadId=params.id
+      this.salesPersonOrLeadId=params.SalesOrLeadOwerId;
+      this.getEnquiryLeadNameId(this.CustomerOrLeadId);
+    } else if (params.type === 'customer') {
+      this.CustomerStatus="Customer";
+      this.CustomerOrLeadId=params.id;
+      this.salesPersonOrLeadId=params.SalesOrLeadOwerId;
+      this.getEnquiryCompanyNameId( this.CustomerOrLeadId);
+    }else if (params.type === 'edit') {
+      this.enquiryId=params.id;
+    }
+    else{
+      this.CustomerStatus="Customer";
+    }
+    this.initForm(this.CustomerStatus,this.CustomerOrLeadId,this.salesPersonOrLeadId,this.userId);
+  });
+ 
 
-    this.newEnqiryCreate = this.fb.group({
-      CustomerStatus: [''],
-      CompanyOrLeadId:0,
-      CompanyName:[''],
-      LeadOwnerId:0,
-      ServiceTypeId:0,
-      ServiceType: [''],
-      IncoTermsId: [0],
-      IncoTerms:[''],
-      TypeOfMoveId:0,
-      POLId:0,
-      POL:[''],
-      PODId:0,
-      POD:[''],
-      Commodity: [''],
-      FreeTimeOrigin: [''],
-      FreeTimeDestination: [''],
-      Notes:[''],
-      UN_Id:0,
-      UN_Name:[''],
-      RemarksHazardousCargo: [''],
-      EnquiryStatus:[''],
-      IsHazardous: false,
-      CreatedBy:this.userId,
-      ModifiedBy:0,
-      DeletedBy:0,
-      Isdeleted:0,
-      equipment:[''],
-      pakage:[''],
-      address:[''],
-     
-    });
-
+    
     this.salesPerson = this.appInitService.salesPerson;
     this.locationMasterData = this.appInitService.locationMasterData; //appinitilizer
     this.getServiceTypes();
@@ -90,15 +99,231 @@ export class EnquireCreateComponent implements OnInit {
     this.getAllAddrDetailfromModal();
     this.getAllPakagesfromModal();
     this.getAllEquipmentfromModal();
+    this.fetchCompanies();
+    this.getLeadData();
+   
+  if(this.enquiryId){
+    this.loadEnquiryData(this.enquiryId);
+    this.getEnquiryContainertById(this.enquiryId);
+    this.getEnquiryPakagesById(this.enquiryId);
+    this.getEnquiryAddressById(this.enquiryId);
+  }else{
+    this.enquiryId=0;
+    this.clearArray();
   }
-  
 
+  }//end of ngOnit
+  
+  initForm(CustomerStatus:any,CustomerOrLeadId:any,salesPersonOrLeadId:any,userID:number){
+    this.newEnqiryCreate = this.fb.group({
+      EnquiryId:0|| (this.enquiryId ?? 0),
+      CustomerStatus: [CustomerStatus],
+      CompanyOrLeadId:isNaN(parseInt(CustomerOrLeadId)) ? 0 : parseInt(CustomerOrLeadId),
+      CompanyId:isNaN(parseInt(CustomerOrLeadId)) ? 0 : parseInt(CustomerOrLeadId),
+      LeadId:isNaN(parseInt(CustomerOrLeadId)) ? 0 : parseInt(CustomerOrLeadId),
+      LeadName:[''],
+      CompanyName:[''],
+      LeadOwnerId:isNaN(parseInt(salesPersonOrLeadId)) ? 0 : parseInt(salesPersonOrLeadId),
+      ServiceTypeId:0,
+      ServiceType: [''],
+      IncoTermsId: [0],
+      IncoTerms:[''],
+      POLId:0,
+      POL:[''],
+      PODId:0,
+      POD:[''],
+      Commodity: [''],
+      FreeTimeOrigin: [''],
+      FreeTimeDestination: [''],
+      note:[''],
+      UN_Id:0,
+      UN_Name:[''],
+      RemarksHazardousCargo: [''],
+      EnquiryStatus:['Awaiting Approval'],
+      IsHazardous: false,
+      CreatedBy:userID??0,
+      ModifiedBy:userID??0,
+      DeletedBy:userID??0,
+      Isdeleted:false,
+      equipment:[''],
+      pakage:[''],
+      address:[''],
+     
+    });
+  }
+  compareFn(a, b) {
+    return a.companyId === b;
+  }
   saveEnquiry(newEnqiryCreate: FormGroup){
     console.log(newEnqiryCreate.value);
+    if(this.enquiryId){
+  
+      this.updateEnquiry(this.enquiryId,newEnqiryCreate.value);
+      console.log("upadte obj:",newEnqiryCreate.value)
+      // alert("update");
+    }else{
+      this.createNewEnquiry(newEnqiryCreate.value);
+    }
+    
+
+  }
+  createNewEnquiry(enquiry: any) {
+    console.log("Enquiry", enquiry);
+    this.enquireCreateServ.createNewEnquiry(enquiry).subscribe(
+      (data: any) => {
+        console.log("Created Enquiry:", data);
+        if (data) {
+          console.log("Navigating to preview page with company ID:", data);
+          this.router.navigate(['/enquiry-preview/', data.enquiryId]).then(() => {
+            // this.toastr.success("Redirected to Preview", "", {
+            //   timeOut: 3000,
+            // });
+            Swal.fire({
+              title: "Success!",
+              text: "Redirected to Preview",
+              icon: "success",
+              timer: 3000, // The alert will automatically close after 3 seconds
+              showConfirmButton: false // Hides the 'OK' button
+            });
+          });
+        } else {
+          console.error("Company ID not found in response data:");
+        }
+        this.toastr.success("Data Added successfully", "Added !!", {
+          timeOut: 5000,
+        });
+        Swal.fire({
+          title: "Added!",
+          text: "Data Added successfully",
+          icon: "success",
+          timer: 3000, // The alert will automatically close after 3 seconds
+          showConfirmButton: false // Hides the 'OK' button
+        });
+      },
+      (err: any) => {
+        if (err.error && err.error.message) {
+          // Specific error message from the server
+          Swal.fire({
+            title: "Error!",
+            text: err.error.message,
+            icon: "error",
+            timer: 3000,
+            showConfirmButton: false
+          });
+        } else {
+          // General error message
+          Swal.fire({
+            title: "Error!",
+            text: "Please fill all valid details",
+            icon: "error",
+            timer: 3000,
+            showConfirmButton: false
+          });
+        }
+        console.error("Error creating new customer:", err);
+      }
+    );
+  }
+  updateEnquiry(enqid:number,enquiryData:any){
+    this.enquireCreateServ.updateEnquiryById(enqid, enquiryData).subscribe(
+      data => {
+        // this.toastr.success('Customer updated successfully');
+        Swal.fire({
+          title: "Success!",
+          text: "Enquiry updated successfully",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 2000 // The alert will automatically close after 2 seconds
+        });
+        
+      },
+      err => {
+        // this.toastr.error('Error updating customer');
+        Swal.fire({
+          title: "Error!",
+          text: "Error updating Enquiry",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 2000 // The alert will automatically close after 2 seconds
+        });
+        
+        console.error('Error updating Enquiry:', err);
+      }
+    );
+  }
+
+  loadEnquiryData(enquiryId: number) {
+    console.log("load enquiry data for patch",enquiryId);
+
+    this.enquireCreateServ.getEnquiryById(enquiryId).subscribe((enquirydata: any) => {
+   
+      const data=enquirydata; //object
+      console.log("data by id", data);
+      console.log("data by id", data.enquiryId);
+
+        this.newEnqiryCreate.patchValue({
+          CustomerStatus: data.customerStatus,
+          LeadOwnerId:data.leadOwnerId,
+          CompanyOrLeadId:data.companyOrLeadId,
+          CompanyName:data.companyName,
+          CompanyId:data.companyOrLeadId,
+          LeadId:data.companyOrLeadId,
+          LeadName:data.companyName,
+          ServiceTypeId:data.serviceTypeId,
+          ServiceType:data.serviceType,
+          IncoTermsId:data.incoTermsId,
+          IncoTerms:data.incoTerms,
+          POLId:data.polid,
+          POL:data.pol,
+          PODId:data.podid,
+          POD:data.pod,
+          Commodity: data.commodity,
+          FreeTimeOrigin:data.freeTimeOrigin,
+          FreeTimeDestination: data.freeTimeDestination,
+          note:data.notes,
+          UN_Id:data.unId,
+          UN_Name:data.unName,
+          RemarksHazardousCargo:data.remarksHazardousCargo,
+          EnquiryStatus:data.enquiryStatus,
+          IsHazardous: data.isHazardous,
+      });
+    });
+  }
+  getEnquiryContainertById(enquiryID:number){
+    this.enquireCreateServ.getEnquiryContainertById(enquiryID).subscribe(
+      (data: any[]) => {
+        this.equipDetailsList = data
+        console.log("check array: equipDetailsList",Array.isArray(this.equipDetailsList));
+        console.log("equipment patch by Id", this.equipDetailsList)
+      },
+      (error) => console.error('Failed to fetch equipment', error)
+    );
+  }
+  getEnquiryPakagesById(enquiryID:number){
+    this.enquireCreateServ.getEnquiryPakagesById(enquiryID).subscribe(
+      (data: any[]) => {
+        this.pakagesDetailsList = data
+        console.log("pakages patch by Id", this.pakagesDetailsList)
+      },
+      (error) => console.error('Failed to fetch equipment', error)
+    );
+  }
+  getEnquiryAddressById(enquiryID:number){
+    this.enquireCreateServ.getEnquiryAddressById(enquiryID).subscribe(
+      (data: any[]) => {
+        this.enquiryaddrDetailsList = data
+        console.log("Address patch by Id", this.enquiryaddrDetailsList)
+      },
+      (error) => console.error('Failed to fetch Address', error)
+    );
   }
   cancelPreview(){
     this.location.back();
   }
+  clearArray() {
+    // this.equipDetailsList=[];
+  }
+
 
   getServiceTypes() {
     this.enquireCreateServ.getServiceType().subscribe(
@@ -107,6 +332,16 @@ export class EnquireCreateComponent implements OnInit {
         console.log("serviceTypes", this.serviceTypes)
       },
       (error) => console.error('Failed to fetch service types', error)
+    );
+  }
+  fetchCompanies(): void {
+    this.newCustcreate.getCompanies().subscribe(
+      (data:any) => {
+        this.companies = data;
+      },
+      (error: any) => {
+        console.error('Error fetching companies:', error);
+      }
     );
   }
   getIncoTerm(){
@@ -142,9 +377,9 @@ export class EnquireCreateComponent implements OnInit {
       this.newEnqiryCreate.get('POD').setValue(selectedValue);
     }
   onHazardousChange(event: any) {
-      this.newEnqiryCreate.patchValue({
-        IsHazardous: event.target.checked ? 1 : 0
-      });
+      // this.newEnqiryCreate.patchValue({
+      //   IsHazardous: event.target.checked ? 1 : 0
+      // });
   }
 
   openPackageDetailModal() {
@@ -223,6 +458,49 @@ export class EnquireCreateComponent implements OnInit {
       }
     });
   }
+  openModalPakagesByData(data:any){
+    const modalRef = this.modalService.open(PackageDetailModalComponent, { size: 'lg' });
+    // this.isAccordionExpanded = true;
+    // this.activePanelId1 = 'panelBorderBottom1';
+    // Pass data to the modal component
+    modalRef.componentInstance.pakageData = data;
+
+    modalRef.result.then((result) => {
+      console.log('Modal closed with result:', result);
+    }, (reason) => {
+      console.log('Modal dismissed');
+      window.location.reload();
+    });
+
+  }
+  openModalContainerByData(data:any){
+    const modalRef = this.modalService.open(RequiredEquipmentModalComponent, { size: 'lg' });
+    // this.isAccordionExpanded = true;
+    // this.activePanelId1 = 'panelBorderBottom1';
+    // Pass data to the modal component
+    modalRef.componentInstance.containerData = data;
+
+    modalRef.result.then((result) => {
+      console.log('Modal closed with result:', result);
+    }, (reason) => {
+      console.log('Modal dismissed');
+      window.location.reload();
+    });
+  }
+  openModalEnqArressByData(data:any){
+    const modalRef = this.modalService.open(EnquiryAddressModalComponent, { size: 'lg' });
+    // this.isAccordionExpanded = true;
+    // this.activePanelId1 = 'panelBorderBottom1';
+    // Pass data to the modal component
+    modalRef.componentInstance.addressData = data;
+
+    modalRef.result.then((result) => {
+      console.log('Modal closed with result:', result);
+    }, (reason) => {
+      console.log('Modal dismissed');
+      window.location.reload();
+    });
+  }
   copyAddress(event: MouseEvent, detail: any) {
     event.stopPropagation(); // Prevents the row click event from being triggered
     const address = `${detail.company|| detail.companyName}, ${detail.addressLine1}, ${detail.addressLine2}, ${detail.city||detail.cityName}-${detail.zipCode|| detail.zipcode}, ${detail.country}, ${detail.state ||detail.stateName}`;
@@ -235,4 +513,63 @@ export class EnquireCreateComponent implements OnInit {
       this.toastr.error('Error copying address to clipboard', 'Error');
     });
   }
+  onChangeCompany(event:any){
+    const selectedValue = event ? event.companyName : '';
+    this.newEnqiryCreate.get('CompanyName').setValue(selectedValue);
+    // setTimeout(() => {
+    //   this.emailField.nativeElement.focus();
+    // }, 0);
+    }
+    onChangeLeadName(event:any){
+      const selectedValue = event ? event.companyName : '';
+      this.newEnqiryCreate.get('LeadName').setValue(selectedValue);
+      // setTimeout(() => {
+      //   this.emailField.nativeElement.focus();
+      // }, 0);
+    }
+    getLeadData(){
+      this._leadsListService.getDataTableRows().then((rows:any) => {
+        this.leaddata = rows;
+        console.log("Leads",this.leaddata);
+      }).catch(error => {
+        console.error('Error fetching leads data:', error);
+      });
+    }
+    onChangeStatus(event:any){
+      const checkStatus=event ? event.value : '';
+      this.CustomerStatus=checkStatus
+    }
+
+    CustomerName: string;
+    getEnquiryCompanyNameId(companyid: number) {
+      this.enquireCreateServ.getEnquiryCompanyNameId(companyid).subscribe(
+        (name: any) => {
+          this.CustomerName = name.companyName;
+          this.newEnqiryCreate.patchValue({
+            CompanyName: this.CustomerName,
+            LeadName: this.CustomerName,
+          });
+          console.log("Customer NAme",this.CustomerName)
+        },
+        (error: any) => {
+          console.error('Error retrieving company name:', error);
+        }
+      );
+    }
+    LeadName: string;
+    getEnquiryLeadNameId(LeadId: number) {
+      this.enquireCreateServ.getEnquiryLeadNameId(LeadId).subscribe(
+        (name: any) => {
+          this.LeadName = name.companyName;
+          this.newEnqiryCreate.patchValue({
+            LeadName: this.LeadName,
+            CompanyName: this.LeadName,
+          });
+          console.log("Lead Name",this.LeadName)
+        },
+        (error: any) => {
+          console.error('Error retrieving Lead Name:', error);
+        }
+      );
+    }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { EquiryPreviewBasicDetailService } from './equiry-preview-basic-detail.service';
 
 @Component({
   selector: 'app-enquiry-preview-basic-detail',
@@ -8,18 +9,14 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./enquiry-preview-basic-detail.component.scss']
 })
 export class EnquiryPreviewBasicDetailComponent implements OnInit {
-  enquiryRows = [
-    { enquiryId: '250084', customerName: 'Global Motors', industry: 'Automobile Parts', serviceType: 'FCL - Export', requirement: '4 X 40HC', status: 'Awaiting Rates' },
-    { enquiryId: '250085', customerName: 'Classic Marbles', industry: 'Marbles & Stones', serviceType: 'FCL - Import', requirement: '4 X 40HC', status: 'Closed' },
-    { enquiryId: '250086', customerName: 'Budweiser Beverages', industry: 'Beverages & Alcohol', serviceType: 'Air - Export', requirement: '1740 KGS', status: 'Quotation Sent' },
-    // Add more data as required
-  ];
+
   currentEnquiry: any = null; 
   message = "Enquiry Overview"; // Example message
 
   constructor(
     private route: ActivatedRoute,
     private toastr: ToastrService,
+    private apiService:EquiryPreviewBasicDetailService
 
   ) { }
 
@@ -28,8 +25,8 @@ export class EnquiryPreviewBasicDetailComponent implements OnInit {
 
     // Find the matching enquiry from the enquiryRows array
     if (enquiryId) {
-      this.currentEnquiry = this.enquiryRows.find(enquiry => enquiry.enquiryId === enquiryId);
-      console.log("Current Enquiry",this.currentEnquiry);
+ 
+      this.getDetalByVIew(parseInt(enquiryId));
     }
 
     if (!this.currentEnquiry) {
@@ -51,5 +48,44 @@ export class EnquiryPreviewBasicDetailComponent implements OnInit {
       this.toastr.error('No text to copy.', 'Error');
     }
 
+}
+
+basicDtail:any[];
+getDetalByVIew(id:number){
+  this.apiService.getDetalByVIew(id).subscribe((data: any[]) => {
+    this.basicDtail=data;
+    console.log("basic Details ", this.basicDtail);
+    //get company details if company Id
+    // console.log("this.basicDtail[0].conpanyType",this.basicDtail[0].conpanyType)
+    if(this.basicDtail[0].conpanyType=="Customer"){
+      this.getCompanyDataById(id);
+    }else{
+      this.getLeadDataById(id);
+    }
+  });
+}
+
+companyData:any[];
+getCompanyDataById(id:number){
+  if(id){
+    this.apiService.getCompanyDataById(id).subscribe((data: any[]) => {
+      this.companyData=data;
+      console.log("companyData ", this.companyData);
+    
+    });
+  }
+  
+}
+
+leadData:any[];
+getLeadDataById(id:number){
+  if(id){
+    this.apiService.getLeadDataById(id).subscribe((data: any[]) => {
+      this.leadData=data;
+      console.log("leadData ", this.leadData);
+    
+    });
+  }
+  
 }
 }

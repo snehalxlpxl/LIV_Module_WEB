@@ -40,6 +40,17 @@ const routes = [
     data: { path: 'enquiry-create', animation: 'EnquireCreateComponent' }
   },
   {
+    path: 'enquiry/:type/:id',
+    component: EnquireCreateComponent,
+    data: { path: 'enquiry/:type/:id', animation: 'EnquireCreateComponent' }
+  },
+  {
+    path: 'enquiry-create/:type/:id/:SalesOrLeadOwerId',
+    component: EnquireCreateComponent,
+    data: { path: 'enquiry-create/:type/:id/:SalesOrLeadOwerId', animation: 'EnquireCreateComponent' }
+  },
+  // http://localhost:4200/enquiry-preview/250084
+  {
     path: 'enquiry-preview/:id',
     component: EnquiryPreviewComponent,
     data: { path: 'enquiry-preview/:id', animation: 'EnquiryPreviewComponent' }

@@ -9,7 +9,8 @@
 <!-- Modal Body -->
 <form [formGroup]="requiredEquipmentForm" (ngSubmit)="addRequiredEquipment(requiredEquipmentForm)">
 <div class="modal-body">
- 
+ <input type="hidden" formControlName="containerId"/>
+ <input type="hidden" formControlName="enquiryId"/>
     <div class="row">
       <!-- Container Type input -->
       <div class="form-group col-6">
@@ -20,7 +21,7 @@
                    formControlName="containerTypesId"
                    (change)="onChangeContainer($event)">
         </ng-select>
-        <input type="hidden" formControlName="containerTypes"/>
+        <input type="hidden" formControlName="containerType"/>
       </div>
   
       <!-- Count input -->
@@ -36,4 +37,8 @@
     <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
     <button type="submit" class="btn btn-success ml-2" >Add</button>
   </div>
+  <input type="hidden" formControlName="modifiedBy" value="userId"/>
+  <input type="hidden" formControlName="createdBy" value="userId"/>
+  <input type="hidden" formControlName="deletedBy" value="userId"/>
+
 </form>
