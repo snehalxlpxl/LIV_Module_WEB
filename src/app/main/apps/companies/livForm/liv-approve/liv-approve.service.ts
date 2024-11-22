@@ -15,7 +15,7 @@ export class LivApproveService {
     return this.http.get<any[]>(`${environment.apiUrl}/Customer/livApprovebyId/${id}`);
   }
   updateApprovalTask(livrequestId: any, status: any, rejectReason: string,approverId: number ): Observable<any> {
-    const url = `${environment.apiUrl}/Customer/updateApprovalTask`;
+    const url = `${environment.apiUrl}/Customer/updateApprovalTask/updateApprovalTask`;
     const params = { livrequestId, Status: status,  RejectReason: rejectReason ,   approverId: approverId }; // Assuming Status is case-sensitive
     return this.http.post(url, params); // Switched to POST, adjust according to API docs
   }

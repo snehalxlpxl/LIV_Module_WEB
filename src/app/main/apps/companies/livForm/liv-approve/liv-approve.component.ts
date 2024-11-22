@@ -6,6 +6,7 @@ import { CompanyInfo } from '../../customers/customer-create/customer-create-mod
 import { CustomerCreateService } from '../../customers/customer-create/customer-create.service';
 import { CreditLimitRequestModalService } from '../credit-limit-req-list/credit-limit-request-modal/credit-limit-request-modal.service';
 import Swal from 'sweetalert2';
+import { ActivityNotificationService } from 'app/Leads/lead-preview/lead-preview-activities-section/ActivityNotificationService.service';
 
 @Component({
   selector: 'app-liv-approve',
@@ -34,7 +35,9 @@ export class LivApproveComponent implements OnInit {
     private livApproveService:LivApproveService,
     private fb: FormBuilder,
     private apiService: CustomerCreateService,
-    private CreditLimitSer: CreditLimitRequestModalService,) { }
+    private CreditLimitSer: CreditLimitRequestModalService,
+    private activityNotificationService: ActivityNotificationService // Inject service
+) { }
 
   ngOnInit(): void {
     const userData = JSON.parse(localStorage.getItem('currentUser'));
@@ -183,7 +186,9 @@ export class LivApproveComponent implements OnInit {
     this.livApproveService.updateApprovalTask(this.livrequestId, this.status,'', this.userId)
       .subscribe(response => {
         console.log('API response:', response);
-        window.location.reload();
+        this.activityNotificationService.notify('Credit limit request created successfully.');
+
+        // window.location.reload();
       }, error => {
         console.error('Error occurred:', error);
       });

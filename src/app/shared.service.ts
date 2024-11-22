@@ -28,6 +28,9 @@ getUserName(): string | null {
 getUserId(): string | null {
   return this.currentUser ? this.currentUser.userId : null;
 }
+getUserEmail(): string | null {
+  return this.currentUser ? this.currentUser.email : null;
+}
 
 clearUserData(): void {
   localStorage.removeItem('currentUser');

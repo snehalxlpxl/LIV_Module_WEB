@@ -38,6 +38,8 @@ import { catchError } from 'rxjs/operators';
   ]
 })
 export class LivPreviewComponent implements OnInit {
+  isSubmitted = false;
+
   loading: boolean = true;
   taskTimeLineData: any;
   public currentUser: Observable<User>;
@@ -62,6 +64,8 @@ export class LivPreviewComponent implements OnInit {
   isCanceledStatus:any;
 
   constructor(private navigationService: CustomerPreviewService, private modalService: NgbModal,private livRequestService: LivPreviewService, private livApproveService:LivApproveService,  private route: ActivatedRoute, private router: Router,private location: Location,  private activityNotificationService: ActivityNotificationService,    private changeDetector: ChangeDetectorRef,private CreditLimitReqListSer:CreditLimitReqListService,    private http: HttpClient
+    ,  private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
+
   ) {
     const storedUser = localStorage.getItem('currentUser');
     this.currentUserSubject = new BehaviorSubject<User | null>(storedUser ? JSON.parse(storedUser) : null);
@@ -69,6 +73,13 @@ export class LivPreviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activityNotificationService.activity$.subscribe((message: string) => {
+      if (message === 'LIV request canceled successfully.' || message === 'Approval task updated successfully.') {
+        // this.loadLIVRequests(); // Method to refresh the list or data
+        this.refreshLIVRequestData();
+
+      }
+    });
     this.livRequestSubject.subscribe((livRequest) => {
       console.log('Updated livRequest:', livRequest);
       this.livRequest = livRequest;
@@ -121,8 +132,17 @@ export class LivPreviewComponent implements OnInit {
       this.currentComponent = component;
     });
 
+    // Subscribe to refresh notifications
+    this.activityNotificationService.refreshData$.subscribe(() => {
+      // this.loadData(); // Reload data when notified
+    });
     
   }  
+
+refreshLIVRequestData() {
+  // This function will reload or refresh the current LIV request data
+  this.getLIVRequest(this.LIVRequestId); // Assuming getLIVRequest is the method you use to fetch data
+}
   getLivTaskTimeLine(taskId: number) {
     const url = `${environment.apiUrl}/LIVTimeLine/GetLivTaskTimeLine/${taskId}`;
     return this.http.get<any>(url).pipe(
@@ -241,14 +261,10 @@ export class LivPreviewComponent implements OnInit {
   openRejectModal() {
     const modalRef = this.modalService.open(RejectModalComponent);
     modalRef.componentInstance.LIVRequestId = this.LIVRequestId;
-    // modalRef.result.then(
-    //   (result) => {
-    //     console.log('Modal closed with reason:', result);
-    //   },
-    //   (reason) => {
-    //     console.log('Modal dismissed:', reason);
-    //   }
-    // );
+  // Listen for the rejection confirmation event
+  modalRef.componentInstance.rejectConfirmed.subscribe(() => {
+    this.levelStatusFlag = true; // Adjust the flag to remove the button
+  });
 
   }
   openApproveModal(LIVRequestId: number){
@@ -289,7 +305,7 @@ export class LivPreviewComponent implements OnInit {
   onSubmit() {
     // Use the actual request ID
   this.status= 'Approved';        // Use the actual status
-
+console.log(this.LIVRequestId, this.status, '', this.userId)
   this.livApproveService.updateApprovalTask(this.LIVRequestId, this.status, '', this.userId)
     .subscribe(response => {
       console.log('API response:', response);
@@ -300,6 +316,7 @@ export class LivPreviewComponent implements OnInit {
 
       // Notify about the approval change
       this.activityNotificationService.notifyUpdateApprovalChange();
+      // this.cdr.detectChanges();
 
       // Show success SweetAlert after successful API call
       Swal.fire({
@@ -308,9 +325,17 @@ export class LivPreviewComponent implements OnInit {
         text: 'Approval task updated successfully.',
         confirmButtonText: 'OK'
       });
-
+      // Set the flag to true after submission
+      this.isSubmitted = true;
+      this.router.navigate([`/liv-preview/${this.LIVRequestId}`]);
       // Optional: Reload the page or just update the necessary parts
-      window.location.reload(); 
+      // window.location.reload(); 
+      // this.cdr.detectChanges();
+
+      this.activityNotificationService.notify('Approval task updated successfully.');
+      this.getLIVRequest(this.LIVRequestId);
+
+
     }, error => {
       console.error('Error occurred:', error);
 
@@ -321,6 +346,8 @@ export class LivPreviewComponent implements OnInit {
         text: 'Failed to update the approval task.',
         confirmButtonText: 'Try Again'
       });
+      this.activityNotificationService.notify('Approval task failed.');
+
     });
  
   }
@@ -344,13 +371,19 @@ export class LivPreviewComponent implements OnInit {
         this.livRequestService.cancelLivRequest({ LivrequestId: livReqId, UserId: userId }).subscribe(
           (response) => {
             Swal.fire('Canceled!', 'LIV request has been canceled.', 'success');
-            window.location.reload();
+            // window.location.reload();
+            this.isSubmitted = true;
+
+            this.activityNotificationService.notify('LIV request canceled successfully.');
             this.getLIVRequest(livReqId);
+            // this.cdr.detectChanges();
           },
           (error) => {
             if (error.status === 200) {
               Swal.fire('Canceled!', 'LIV request has been canceled.', 'success');
               // window.location.reload();
+              this.activityNotificationService.notify('LIV request canceled successfully.');
+
               this.livRequestSubject.next(updatedLivRequest); //change detection
             } else {
               Swal.fire('Error!', 'Failed to cancel LIV request.', 'error');

@@ -59,3 +59,68 @@ span.padd-add.ng-star-inserted {
 app-liv-preview-timeline-section .timeline-event-time {
   display: none;
 }
+
+
+.timeline-container {
+  position: relative;
+  margin: 2rem 0;
+  padding-left: 2rem;
+}
+
+.timeline-card {
+  position: relative;
+  margin-bottom: 2rem;
+  padding: 1rem 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.timeline-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.timeline-line {
+  position: absolute;
+  top: 0;
+  left: -1rem;
+  height: 100%;
+  width: 2px;
+  background-color: #007bff;
+  z-index: 1;
+}
+
+.timeline-content {
+  position: relative;
+  z-index: 2;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-header h6 {
+  margin: 0;
+}
+
+.timeline-header .text-muted {
+  font-size: 0.875rem;
+}
+
+.timeline-card p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.timeline-card p strong {
+  color: #495057;
+}
+.text-teal {
+  color: teal;
+}

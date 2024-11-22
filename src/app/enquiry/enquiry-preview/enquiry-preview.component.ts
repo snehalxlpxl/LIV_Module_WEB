@@ -6,6 +6,7 @@ import * as snippet from 'app/main/apps/companies/customers/customer-preview/cus
 import { LeadPreviewService } from 'app/Leads/lead-preview.service';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { NewRateRequestModalComponent } from './new-rate-request-modal/new-rate-request-modal.component';
+import { OpenRateRequestRevisionModalComponent } from './open-rate-request-revision-modal/open-rate-request-revision-modal.component';
 
 @Component({
   selector: 'app-enquiry-preview',
@@ -30,7 +31,7 @@ export class EnquiryPreviewComponent implements OnInit {
     { enquiryId: '250086', customerName: 'Budweiser Beverages', industry: 'Beverages & Alcohol', serviceType: 'Air - Export', requirement: '1740 KGS', status: 'Quotation Sent' },
     // Add more data as required
   ];
-  
+
   currentEnquiry: any = null; // Initialize as null
   message = "Enquiry Overview"; // Example message
   currentComponent: string = 'overview'; // Default tab (overview)
@@ -43,22 +44,22 @@ export class EnquiryPreviewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      // Get the 'enquiryId' from the route parameters
-      const enquiryId = this.route.snapshot.paramMap.get('id');
+    // Get the 'enquiryId' from the route parameters
+    const enquiryId = this.route.snapshot.paramMap.get('id');
 
-      // Find the matching enquiry from the enquiryRows array
-      if (enquiryId) {
-        this.currentEnquiry = this.enquiryRows.find(enquiry => enquiry.enquiryId === enquiryId);
-        console.log("Current Enquiry",this.currentEnquiry);
-      }
-  
-      if (!this.currentEnquiry) {
-        // Handle the case where the enquiry is not found (optional)
-        this.message = "Enquiry not found!";
-      }
-      this.navigationService.component$.subscribe(component => {
-        this.currentComponent = component;
-      });
+    // Find the matching enquiry from the enquiryRows array
+    if (enquiryId) {
+      this.currentEnquiry = this.enquiryRows.find(enquiry => enquiry.enquiryId === enquiryId);
+      console.log("Current Enquiry", this.currentEnquiry);
+    }
+
+    if (!this.currentEnquiry) {
+      // Handle the case where the enquiry is not found (optional)
+      this.message = "Enquiry not found!";
+    }
+    this.navigationService.component$.subscribe(component => {
+      this.currentComponent = component;
+    });
   }
 
   goBack(): void {
@@ -72,6 +73,8 @@ export class EnquiryPreviewComponent implements OnInit {
     const modalRef = this.modalService.open(NewRateRequestModalComponent);
     // modalRef.componentInstance
   }
-
+  openRateRequestRevisionModal(): void {
+    const modalRef = this.modalService.open(OpenRateRequestRevisionModalComponent);
+  }
 }
 

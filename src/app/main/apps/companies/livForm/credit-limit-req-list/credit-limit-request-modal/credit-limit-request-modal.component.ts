@@ -8,6 +8,9 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import {  ViewChild, ElementRef } from '@angular/core';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { CreditLimitReqListService } from '../credit-limit-req-list.service';
+import { Router } from '@angular/router';
+import { ActivityNotificationService } from 'app/Leads/lead-preview/lead-preview-activities-section/ActivityNotificationService.service';
 
  
 @Component({
@@ -36,7 +39,12 @@ export class CreditLimitRequestModalComponent implements OnInit {
   private apiService: CustomerCreateService,
   private CreditLimitSer: CreditLimitRequestModalService,
   public activeModal: NgbActiveModal,
-  public toasterSer:ToastrService
+  public toasterSer:ToastrService,
+  private creditLimitReqListSer: CreditLimitReqListService,
+  private router: Router,
+  private activityNotificationService: ActivityNotificationService // Inject service
+
+
   ) { }
  
   ngOnInit(): void {
@@ -204,13 +212,20 @@ export class CreditLimitRequestModalComponent implements OnInit {
       
       if(res){
         this.close();
-        window.location.reload();
+        // window.location.reload();
         Swal.fire({
           title: 'Success!',
           text: 'Your credit limit request has been created successfully.',
           icon: 'success',
           timer: 2000,
           showConfirmButton: false
+        }).then(() => {
+          console.log("userId",this.userId)
+          this.loadLIVRequests(this.userId);
+          this.activityNotificationService.notify('Credit limit request created successfully.');
+
+          // Navigate to the credit-limit-req-list after the alert
+          // this.router.navigate(['/credit-limit-req-list']);
         });
       }
       
@@ -220,6 +235,8 @@ export class CreditLimitRequestModalComponent implements OnInit {
         text: 'Failed to create credit limit request. Please try again.',
         icon: 'error'
       });
+      this.activityNotificationService.notify('Failed to create credit limit request.');
+
     });
   }
  
@@ -234,6 +251,33 @@ export class CreditLimitRequestModalComponent implements OnInit {
  
   close() {
     this.activeModal.dismiss();
+  }
+  livRequests: any[] = [];
+  totalRecords: number = 0;
+  awaitingApprovedCount: number = 0;
+  pageNumber: number = 1;
+  pageSize: number = 10;
+  loading: boolean = false;
+
+  loadLIVRequests(userId: any) {
+    this.loading = true;
+
+    this.creditLimitReqListSer.getLIVRequests(userId, this.pageNumber, this.pageSize).subscribe({
+      next: (response) => {
+        this.livRequests = response.livrequest || [];
+        this.totalRecords = response.totalRecords || 0;
+        this.awaitingApprovedCount = response.awaitingApprovedCount || 0;
+
+        console.log("Awaiting Approval Count:", this.awaitingApprovedCount);
+        console.log("All LIV Data:", this.livRequests);
+
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error fetching LIV requests', error);
+        this.loading = false;
+      }
+    });
   }
 }
  

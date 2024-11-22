@@ -11,14 +11,16 @@ import { CreditLimitRequestModalComponent } from "./credit-limit-request-modal/c
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CreditLimitReqListService } from "./credit-limit-req-list.service";
 import { CustomerCreateService } from "../../customers/customer-create/customer-create.service";
-
+import { ActivityNotificationService } from "app/Leads/lead-preview/lead-preview-activities-section/ActivityNotificationService.service";
+// /Users/pratikshajadhav/Documents/Fretrack_25OCT24 /25Oct_FretrackWeb/src/app/layout/components/navbar/navbar-notification/notifications.service.ts
 @Component({
   selector: 'app-credit-limit-req-list',
   templateUrl: './credit-limit-req-list.component.html',
   styleUrls: ['./credit-limit-req-list.component.scss']
 })
 export class CreditLimitReqListComponent implements OnInit {
-
+  
+  
   private _unsubscribeAll: Subject<any>;
   public data: Company[];
   public rows: Company[];
@@ -63,7 +65,7 @@ export class CreditLimitReqListComponent implements OnInit {
     private modalService: NgbModal,
     private cdr: ChangeDetectorRef,
     private apiService: CustomerCreateService,
-
+    private activityNotificationService: ActivityNotificationService
   ) {}
 
 
@@ -137,8 +139,20 @@ export class CreditLimitReqListComponent implements OnInit {
       this.checkIfDelegate(this.userId );
       
     }
+    this.activityNotificationService.activity$.subscribe((message: string) => {
+      console.log('Notification received:', message);
+
+      if (message === 'Credit limit request created successfully.') {
+        // Reload the requests when notified
+        this.loadLIVRequests(this.userId);
+      }
+    });
   }
-  
+  getRowHeight(row: any): number {
+    // return row.name && row.name.length > 30 ? 80 : 40; // Adjust values based on content length
+    return row.customerName && row.customerName.length > 50 ? 120 : 60;
+
+  }
   deleteCustomerByID(id: any) {
     Swal.fire({
       title: "Are you sure?",
@@ -216,17 +230,15 @@ export class CreditLimitReqListComponent implements OnInit {
         this.livRequests = response.livrequest|| [];
         this.totalRecords = response.totalRecords|| 0;
         this.tempData = response.companies|| [];
+        this.awaitingApprovedCount = response.awaitingApprovedCount || 0; // Global count from API
+        console.log("Count of 'Awaiting Approval' requests:", this.awaitingApprovedCount);
+
       // Initialize filtered data
       this.filteredData = [...this.livRequests];
       console.log("all liv data",this.livRequests);
-      // this.filterByStatus();
 
-      // Count the number of companies with status "Awaiting Approved"
-      // this.awaitingApprovedCount = this.livRequests.filter(company => company.status === "Awaiting Approval").length;
-      // console.log("Count of 'Awaiting Approved' companies:", this.awaitingApprovedCount);
-
-      this.awaitingApprovedCount = this.livRequests.filter(request => request.status === "Awaiting Approval").length;
-      console.log("Count of 'Awaiting Approval' requests:", this.awaitingApprovedCount);
+      // this.awaitingApprovedCount = this.livRequests.filter(request => request.status === "Awaiting Approval").length;
+      // console.log("Count of 'Awaiting Approval' requests:", this.awaitingApprovedCount);
 
       // Calculate the total number of pages
       this.totalPages = Math.ceil(this.totalRecords / this.pageSize);

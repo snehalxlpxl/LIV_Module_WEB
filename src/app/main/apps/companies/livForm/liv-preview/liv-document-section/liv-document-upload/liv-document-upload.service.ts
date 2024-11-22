@@ -17,9 +17,18 @@ export class LivDocumentUploadService {
     formData.append('userId', userId.toString());
     formData.append('sourceName', sourceName);
     formData.append('sourceId', sourceId.toString());
-    return this.http.post<any>(`${environment.apiUrl}/Customer/LivDocUploadFile3`, formData);
+    return this.http.post<any>(`${environment.apiUrl}/Customer/LivDocUploadFile3New`, formData);
   }
 
+  LivDocUploadFile3New1(file: File, livRequestId: number, userId: number,sourceName:string,sourceId:number): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('livRequestId', livRequestId.toString());
+    formData.append('userId', userId.toString());
+    formData.append('sourceName', sourceName);
+    formData.append('sourceId', sourceId.toString());
+    return this.http.post<any>(`${environment.apiUrl}/Customer/LivDocUploadFile3New1`, formData);
+  }
 
   // livUploadFile(file: File, livRequestId: number, userId: number): Observable<any> {
   //   const formData = new FormData();

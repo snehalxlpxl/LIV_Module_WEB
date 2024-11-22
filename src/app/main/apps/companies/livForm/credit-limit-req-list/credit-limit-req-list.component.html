@@ -22,6 +22,9 @@
                 <div class="d-flex align-items-center">
                   <h1 class="mr-2 mb-0">Credit Limit Requests</h1>
                   <span class="badge badge-warning" *ngIf="awaitingApprovedCount">{{awaitingApprovedCount}} Pending</span>
+                  <!-- <span *ngFor="let count of awaitingApprovedCounts; let i = index">
+                    <span class="badge badge-warning" *ngIf="count">Page {{ i + 1 }}: {{ count }} Pending</span>
+                  </span> -->
                 </div>
                 
               </div>
@@ -92,21 +95,20 @@
                       
                     </div> -->
                     
-                    <div ngbDropdown>
+                    <div>
                       <button
-                        ngbDropdownToggle
                         class="btn btn-primary mr-1 ml-1"
                         type="button"
                         id="dropdownMenuButton"
                         rippleEffect
+                        (click)="openCreditLimitReqModal()"
                       >
                         New
                       </button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                      <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
                         <a ngbDropdownItem href="javascript:void(0)" (click)="openCreditLimitReqModal()">New</a>
-                        <!-- <a ngbDropdownItem href="javascript:void(0)" routerLink="/liv-preview">Preview</a> -->
-                        <!-- <a ngbDropdownItem href="javascript:void(0)">Option 3</a> -->
-                      </div>
+                        
+                      </div> -->
                       <!-- <span aria-hidden="true" class="close-big cursor-pointer" routerLink="/customerList">×</span> -->
                       <!-- <div aria-hidden="true" class="close-big cursor-pointer" >×</div> -->
                     </div>
@@ -131,7 +133,7 @@
           <ngx-datatable
           class="bootstrap core-bootstrap"
         [rows]="livRequests"
-        [rowHeight]="40" 
+        [rowHeight]="getRowHeight"
         [count]="totalRecords"
         [offset]="pageNumber - 1"
         [limit]="pageSize"
@@ -148,9 +150,9 @@
             </ngx-datatable-column>
             -->
             
-            <ngx-datatable-column name="Company Name" prop="customerName" [width]="200" [flexGrow]="1">
+            <ngx-datatable-column name="Company Name" prop="customerName" [width]="240" [flexGrow]="1">
               <ng-template ngx-datatable-cell-template let-customerName="value" let-row="row">
-                <div class="font-weight-bold ellipsis-text">
+                <div class="font-weight-bold wrap-text">
                   <a [routerLink]="['/liv-preview', row['livRequestId']]" >
                     {{ customerName }}
                   </a>

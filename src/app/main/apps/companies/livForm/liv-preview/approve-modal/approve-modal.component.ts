@@ -5,6 +5,7 @@ import { ApproveModalService } from './approve-modal.service';
 import { ActivatedRoute } from '@angular/router';
 import { CreditLimitReqListService } from '../../credit-limit-req-list/credit-limit-req-list.service';
 import { LivDocumentUploadService } from '../liv-document-section/liv-document-upload/liv-document-upload.service';
+import { ActivityNotificationService } from 'app/Leads/lead-preview/lead-preview-activities-section/ActivityNotificationService.service';
 
 @Component({
   selector: 'app-approve-modal',
@@ -29,7 +30,7 @@ export class ApproveModalComponent implements OnInit {
   LIVRequestId: any;
   approverId: number;
 
-  constructor(public activeModal: NgbActiveModal,private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService,private LivDocumentUploadSer:LivDocumentUploadService) {}
+  constructor(public activeModal: NgbActiveModal,private activityNotificationService: ActivityNotificationService,  private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService,private LivDocumentUploadSer:LivDocumentUploadService) {}
 
 
   ngOnInit(): void {
@@ -128,7 +129,9 @@ confirmApproval(): void {
           this.ApproveModalSer.updateApprovalTaskForDelegate(approvalData).subscribe(
             (res) => {
               console.log('Task updated successfully', res);
-              window.location.reload();
+              // window.location.reload();
+              this.activityNotificationService.notify('Approval task updated successfully.');
+
             },
             (err) => {
               console.error('Error updating task', err);

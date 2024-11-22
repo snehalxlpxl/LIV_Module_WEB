@@ -93,7 +93,7 @@ export class LivPreviewService {
   private baseUrl = 'http://108.181.191.121:5053/api/CountProfitReport';
 // Method to get Count by Company
 getCountByCompany(companyId: any): Observable<any> {
-  const url = `${this.baseUrl}/CountByCompany/${companyId}`;
+  const url = `${this.baseUrl}/shipmentCountByCompany/${companyId}`;
   const headers = new HttpHeaders({
     'Content-Type': 'application/json', // Add any other headers Swagger might use
   });

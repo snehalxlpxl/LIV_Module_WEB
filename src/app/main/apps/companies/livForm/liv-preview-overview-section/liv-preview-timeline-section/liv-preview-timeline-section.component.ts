@@ -119,7 +119,16 @@ export class LivPreviewTimelineSectionComponent implements OnInit {
     }
   }
   
-
+  getStatusColor(status: string): string {
+    switch (status) {
+      case 'Approved': return 'green';
+      case 'Rejected': return 'red';
+      case 'Awaiting Approval': return 'orange';
+      case 'Canceled': return 'purple'; // Note: Use 'darkblue' as a valid CSS color.
+      default: return 'black';
+    }
+  }
+  
 }
 
 

@@ -68,7 +68,9 @@ const routes = [
     path: 'liv-task-approve-list/:approverId',
     animation: 'LivTaskApproverListComponent'
   }
-}
+},
+{ path: 'upload/:id', component: LivDocumentUploadComponent }
+
 ]
 
 

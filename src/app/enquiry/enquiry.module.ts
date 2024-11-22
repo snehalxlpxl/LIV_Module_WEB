@@ -24,6 +24,7 @@ import { PackageDetailModalComponent } from './enquire-create/package-detail-mod
 import { RequiredEquipmentModalComponent } from './enquire-create/required-equipment-modal/required-equipment-modal.component';
 import { EnquiryAddressModalComponent } from './enquire-create/enquiry-address-modal/enquiry-address-modal.component';
 import { NewRateRequestModalComponent } from './enquiry-preview/new-rate-request-modal/new-rate-request-modal.component';
+import { OpenRateRequestRevisionModalComponent } from './enquiry-preview/open-rate-request-revision-modal/open-rate-request-revision-modal.component';
 
 
 const routes = [
@@ -59,7 +60,8 @@ const routes = [
     PackageDetailModalComponent,
     RequiredEquipmentModalComponent,
     EnquiryAddressModalComponent,
-    NewRateRequestModalComponent
+    NewRateRequestModalComponent,
+    OpenRateRequestRevisionModalComponent
     ],
   imports: [
     CommonModule,

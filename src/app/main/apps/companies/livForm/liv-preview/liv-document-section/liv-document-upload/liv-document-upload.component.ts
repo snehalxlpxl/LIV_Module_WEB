@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApproveModalService } from '../../approve-modal/approve-modal.service';
 import { CreditLimitReqListService } from '../../../credit-limit-req-list/credit-limit-req-list.service';
 import { LivDocumentUploadService } from './liv-document-upload.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivityNotificationService } from 'app/Leads/lead-preview/lead-preview-activities-section/ActivityNotificationService.service';
 
 
 @Component({
@@ -19,6 +20,8 @@ export class LivDocumentUploadComponent implements OnInit {
   @Input() documentId: number;
   selectedSourceId: any;
   uploadForm: FormGroup;
+  LIVRequestId: any;
+
   // approvalSource: string = 'Whatsapp'; // Default approval source
   // approvalSources: string[] = ['Whatsapp', 'Email', 'Phone Call', 'Other'];
   // selectedSource: { id: number; value: string } | null = null; // Initialize as null
@@ -38,7 +41,10 @@ export class LivDocumentUploadComponent implements OnInit {
   userId: any;
   approverId: number;
 
-  constructor(public activeModal: NgbActiveModal,private LivDocumentUploadSer:LivDocumentUploadService,private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService,private fb: FormBuilder) {
+  constructor(public activeModal: NgbActiveModal,private LivDocumentUploadSer:LivDocumentUploadService,private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService,private fb: FormBuilder,
+    private router: Router, // Add Router here
+    private activityNotificationService:ActivityNotificationService
+  ) {
     // this.selectedSource = this.approvalSources[0]; 
     this.initializeDocumentdrp();
 
@@ -66,6 +72,12 @@ export class LivDocumentUploadComponent implements OnInit {
       approvalSource: [''],
       selectedFileName: ['']
     });
+      
+    this.LIVRequestId = this.route.snapshot.paramMap.get('id');
+    console.log(this.LIVRequestId)
+
+  this.getDocumentsList(); 
+    
   }
 
   // Method to handle file selection
@@ -144,14 +156,76 @@ UploadLivDoc(): void {
         (response) => {
           // Swal.fire('Confirmed!', 'Your Document Uploaded Successfully', 'success');
           this.activeModal.close(response);
-          window.location.reload();
           Swal.fire({
             title: 'Confirmed!',
             text: 'Your Document Uploaded Successfully',
             icon: 'success',
             timer: 3000, // 2000 milliseconds = 2 seconds
             showConfirmButton: false // Optional: hides the OK button for a cleaner look
-          });
+          }).then(() => { // Use parentheses for the callback function
+            this.activityNotificationService.notify('LivDocumentSectionComponentUpdated');
+          })
+          
+        },
+        (error) => {
+          console.error('Error uploading file', error);
+          Swal.fire('Error!', 'File upload failed. Please try again.', 'error');
+        }
+      );
+      // Perform any actions like uploading the file or API calls, then close modal
+      console.log('Approval confirmed', approvalData);
+      this.activeModal.close(approvalData);
+
+      // // Optionally show success message
+      // Swal.fire('Confirmed!', 'Your Document Uploaded Successfully', 'success');
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      // If user cancels, show cancellation message
+      Swal.fire('Cancelled', 'Approval was not confirmed.', 'error');
+    }
+  });
+}
+
+
+
+UploadLivDoc1(): void {
+  // Display confirmation dialog
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'Do you want to Upload Document?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, confirm it!',
+    cancelButtonText: 'No, cancel!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      
+      const approvalData = {
+        SourceId: this.SourceId,
+        ApprovalFileName: this.selectedFileName,
+        SorceName:this.sourceName ,
+        UserId: this.userId,
+        ApproverId:this.approverId,
+        Status:"Approved",
+        RejectReason:"",
+        livrequestId:this.livRequestId,
+        // Note: this.notes || `Approval confirmed on ${this.approvalSource}`
+      };
+      console.log(approvalData);
+
+      this.LivDocumentUploadSer.LivDocUploadFile3New1(this.selectedFile,this.livRequestId,this.userId,this.sourceName,this.SourceId).subscribe(
+        (response) => {
+          // Swal.fire('Confirmed!', 'Your Document Uploaded Successfully', 'success');
+          this.activeModal.close(response);
+          Swal.fire({
+            title: 'Confirmed!',
+            text: 'Your Document Uploaded Successfully',
+            icon: 'success',
+            timer: 3000, // 2000 milliseconds = 2 seconds
+            showConfirmButton: false // Optional: hides the OK button for a cleaner look
+          }).then(() => { // Use parentheses for the callback function
+            this.activityNotificationService.notify('LivDocumentSectionComponentUpdated');
+          })
           
         },
         (error) => {
@@ -216,5 +290,24 @@ isDelegate: boolean = false;
       }
     );
   }
+  // documents: any[] = [];
+  getDocumentsList(): void {
+    if (!this.LIVRequestId) {
+      console.error('LIVRequestId is not set.');
+      return;
+    }
+    console.log("LIVRequestId",this.livRequestId)
+    this.LivDocumentUploadSer.getDocuments(this.livRequestId).subscribe(
+      (response) => {
+        this.documents = response;
+        
+        console.log(" this.documents", this.documents);
+      },
+      (error) => {
+        console.error('Error fetching documents', error);
+      }
+    );
+
+}
 
 }

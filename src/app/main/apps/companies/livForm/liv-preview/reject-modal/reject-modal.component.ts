@@ -1,9 +1,10 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { LivApproveService } from '../../liv-approve/liv-approve.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LivPreviewService } from '../liv-preview.service';
 import { CreditLimitReqListService } from '../../credit-limit-req-list/credit-limit-req-list.service';
+import { ActivityNotificationService } from 'app/Leads/lead-preview/lead-preview-activities-section/ActivityNotificationService.service';
 declare var bootstrap: any;
 
 @Component({
@@ -12,12 +13,17 @@ declare var bootstrap: any;
   styleUrls: ['./reject-modal.component.scss']
 })
 export class RejectModalComponent implements OnInit {
+  isSubmitted = false;
+  @Output() rejectConfirmed = new EventEmitter<boolean>();
+
   @Input() LIVRequestId: any; 
   livRequest: any;
   userName: any;
   userId: any;
 
-  constructor(public activeModal: NgbActiveModal,private livApproveService:LivApproveService,private route: ActivatedRoute,private livRequestService: LivPreviewService,private CreditLimitReqListSer:CreditLimitReqListService) { }
+  constructor(public activeModal: NgbActiveModal,private router: Router,private livApproveService:LivApproveService,private route: ActivatedRoute,private livRequestService: LivPreviewService,private CreditLimitReqListSer:CreditLimitReqListService, private activityNotificationService: ActivityNotificationService
+    ,  private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     console.log("BasicDetailLIVRequestId",this.LIVRequestId);
@@ -46,7 +52,13 @@ export class RejectModalComponent implements OnInit {
           // Close the modal after confirming rejection
           this.closeModal();
           this.close();
-          window.location.reload();
+      this.activityNotificationService.notify('Approval task updated successfully.');
+      this.getLIVRequest(this.LIVRequestId);
+      // this.cdr.detectChanges();
+      // this.isSubmitted = true;
+      // Emit an event to the parent component (if needed)
+      this.rejectConfirmed.emit(true);
+
         },
         error => {
           console.error('Error updating approval task:', error);
@@ -58,6 +70,23 @@ export class RejectModalComponent implements OnInit {
     }
   }
  
+  
+  getLIVRequest(id: any): void {
+    // this.isApprover = this.approverList.includes(this.userId);
+    this.livRequestService.getLIVRequest(id).subscribe({
+      next: (data) => {
+        // if (this.isApprover ) {
+          this.livRequest = data;
+          console.log("GetLIVRequest1", data);
+         
+      }
+      ,
+      error: (err) => {
+        console.error('Error fetching LIVRequest', err);
+      },
+    });
+  }
+
   
   closeModal() {
     const modalElement = document.getElementById('rejectModal');

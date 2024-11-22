@@ -66,3 +66,10 @@ h1 {
   }
 
 
+  .wrap-text {
+    word-wrap: break-word; /* Breaks long words */
+    white-space: normal;   /* Allows text to wrap to the next line */
+    overflow-wrap: break-word; /* Ensures compatibility with modern browsers */
+    text-overflow: ellipsis; /* Optional: Adds "..." for very long text */
+  }
+  

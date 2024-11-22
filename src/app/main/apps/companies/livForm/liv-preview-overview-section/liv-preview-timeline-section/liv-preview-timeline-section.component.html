@@ -14,61 +14,14 @@
         </svg>
       </span>
       <span class="padd-add">TimeLine</span>
-      <!-- {{ taskTimeLineData[0] | json }} -->
       <span class="icon-right">
-        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          class="feather feather-more-vertical">
-          <circle cx="12" cy="5" r="1"></circle>
-          <circle cx="12" cy="12" r="1"></circle>
-          <circle cx="12" cy="19" r="1"></circle>
-        </svg> -->
+       
       </span>
     </div>
   </h5>
 
-  <!-- <ul class="timeline mt-2" *ngIf="timelineData && timelineData?.length > 0 && timelineData[0]">
-   
-    <li class="timeline-item">
-      <span class="timeline-point timeline-point-info timeline-point-indicator"></span>
-      <div class="timeline-event">
-        <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
-          <h6>LIV Form Approval Requested</h6>
-          <span class="timeline-event-time">{{ getRelativeTime(taskTimeLineData[0]?.assignedDate) }} </span>
-        </div>
-        <p>Requested Approval - Limit - {{ taskTimeLineData[0].creditLimit }} & {{ taskTimeLineData[0].creditTerms }} Term</p>
-        <div class="media align-items-center">
-          <div class="avatar mr-1">
-            <img src="assets/images/avatars/user.png" alt="Avatar" height="32" width="32" />
-          </div>
-          <div class="media-body">
-            <h6 class="mb-0">Created By {{ taskTimeLineData[0].createdByName }}</h6>
-          </div>
-        </div>
-      </div>
-    </li>
-    <li *ngFor="let item of timelineData" class="timeline-item">
-      <span class="timeline-point timeline-point-indicator" [ngClass]="{
-          'bg-success': item.levelStatus === 'Approved',
-          'bg-danger': item.levelStatus === 'Rejected',
-          'bg-warning': item.levelStatus === 'Awaiting Approved',
-          'bg-dark': item.levelStatus === 'Canceled'
-      }"></span>
-      <div class="timeline-event">
-        <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
-          <h6>{{ item.levelStatus }} - Level {{item.level}} By {{ item.approverName }}</h6>
-          <span class="timeline-event-time">{{ getRelativeTime(item.approvedDate) }}</span>
-          
-        </div>
-        <p *ngIf="showDates">ApprovedDate {{item.approvedDate | date: 'dd-MM-yyyy HH:mm'}}</p>
-          <p *ngIf="showDates">AssignedDate {{item.assignedDate | date: 'dd-MM-yyyy HH:mm'}}</p>
-          <p *ngIf="showDates">RequestedDate {{item.requestedDate | date: 'dd-MM-yyyy HH:mm'}}</p>
-      </div>
-  </ul> -->
-  <!-- {{ timelineData| json}} {{taskTimeLineData|json}} -->
   <ul class="timeline mt-2" *ngIf="taskTimeLineData && taskTimeLineData.length > 0 && taskTimeLineData[0]">
 
-    <!-- First timeline item -->
     <li class="timeline-item" *ngIf="taskTimeLineData[0]">
       <span class="timeline-point timeline-point-info timeline-point-indicator"></span>
       <div class="timeline-event">
@@ -88,7 +41,6 @@
       </div>
     </li>
   
-    <!-- Loop through remaining timeline items -->
     <li *ngFor="let item of taskTimeLineData" class="timeline-item">
       <span class="timeline-point timeline-point-indicator" [ngClass]="{
           'bg-success': item.levelStatus === 'Approved',
@@ -101,11 +53,69 @@
           <h6>{{ item.levelStatus }} - Level {{ item.level }} By {{ item.approverName }}</h6>
           <span class="timeline-event-time">{{ getRelativeTime(item.approvedDate) }}</span>
         </div>
-        <p *ngIf="showDates">ApprovedDate: {{ item.approvedDate | date: 'dd-MM-yyyy HH:mm' }}</p>
-        <p *ngIf="showDates">AssignedDate: {{ item.assignedDate | date: 'dd-MM-yyyy HH:mm' }}</p>
         <p *ngIf="showDates">RequestedDate: {{ item.requestedDate | date: 'dd-MM-yyyy HH:mm' }}</p>
+        <p *ngIf="showDates">AssignedDate: {{ item.assignedDate | date: 'dd-MM-yyyy HH:mm' }}</p>
+        <p *ngIf="showDates && item.approvedDate">ApprovedDate: {{ item.approvedDate | date: 'dd-MM-yyyy HH:mm' }}</p>
       </div>
     </li>
   </ul>
   
 </div>
+<!-- <div class="card-body shadow rounded-corners p-3">
+  <h5 class="timeline-header mb-4 text-center">
+    <div class="d-flex align-items-center justify-content-center">
+      <span class="icon-left me-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+      </span>
+      <span class="fw-bold">Activity Timeline</span>
+    </div>
+  </h5>
+
+  <div class="timeline-container">
+    <div *ngIf="taskTimeLineData[0]" class="timeline-card">
+      <div class="timeline-line"></div>
+      <div class="timeline-content">
+        <div class="timeline-header">
+          <h6 class="fw-bold text-teal">LIV Form Approval Requested</h6>
+          <span class="small text-muted">{{ getRelativeTime(taskTimeLineData[0]?.assignedDate) }}</span>
+        </div>
+        <p class="mb-1">
+          Requested Approval - Limit: <strong>{{ taskTimeLineData[0]?.creditLimit }}</strong>, 
+          Terms: <strong>{{ taskTimeLineData[0]?.creditTerms }}</strong>
+        </p>
+        <div class="media d-flex align-items-center mt-2">
+          <img src="assets/images/avatars/user.png" alt="Avatar" class="rounded-circle me-2" height="32" width="32" />
+          <h6 class="mb-0 small">Created By {{ taskTimeLineData[0]?.createdByName }}</h6>
+        </div>
+      </div>
+    </div>
+
+    <div *ngFor="let item of taskTimeLineData" class="timeline-card">
+      <div class="timeline-line"></div>
+      <div class="timeline-content">
+        <div class="timeline-header">
+          <h6 class="fw-bold" 
+              [style.color]="getStatusColor(item.levelStatus)">
+            {{ item.levelStatus }} - Level {{ item.level }}
+          </h6>
+          <span class="small text-muted">{{ getRelativeTime(item.approvedDate) }}</span>
+        </div>
+        <p class="mb-1">Approver: <strong>{{ item.approverName }}</strong></p>
+        <p class="mb-1" *ngIf="showDates">
+          Requested Date: {{ item.requestedDate | date: 'dd-MM-yyyy HH:mm' }}
+        </p>
+        <p class="mb-1" *ngIf="showDates">
+          Assigned Date: {{ item.assignedDate | date: 'dd-MM-yyyy HH:mm' }}
+        </p>
+        <p class="mb-0" *ngIf="showDates && item.approvedDate">
+          Approved Date: {{ item.approvedDate | date: 'dd-MM-yyyy HH:mm' }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div> -->

@@ -80,12 +80,17 @@ getLIVRequest(id: any): void {
     error: (err) => console.error('Error in getLIVRequest:', err)
   });
 }
-
 extractTitleAndSubtitle(title: string) {
+  // Split the title by " for the " to get parts of the string
   const parts = title.split(" for the ");
-  this.mainTitle = parts[0];
+  
+  // Assuming the main title should be without "Sum of"
+  this.mainTitle = parts[0].replace("Sum of ", "");
+  
+  // Subtitle is the part after " for the "
   this.subTitle = parts[1] || '';
 }
+
 
 ngAfterViewInit() {
   feather.replace();

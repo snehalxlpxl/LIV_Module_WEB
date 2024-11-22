@@ -1,7 +1,7 @@
 <div class="modal-header">
     <h5 class="modal-title">
       <i class="feather icon-mail" style="font-size: 16px; margin-right: 8px;"></i>
-      New Rate Request
+      MSE2500084/R1-Rate Request Revision
     </h5>
     <p class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true" class="cursor-pointer">×</p>
   </div>
@@ -11,12 +11,11 @@
     <div class="form-group">
       <label for="agentLiner">Select Agent / Liner</label>
       <ng-select
-      [items]="companyTypes"
+      [items]="agentOptions"
       [(ngModel)]="selectedAgent"
-      bindLabel="companyType1"
+      bindLabel="name"
       placeholder="Select Agent/Liner"
       [searchable]="true"
-      (change)="onAgentSelect()" 
     >
     </ng-select>
     
@@ -25,16 +24,13 @@
     <!-- Send To -->
     <div class="form-group">
       <label for="sendTo">Send To</label>
-      <ng-select
-      [items]="companyEmails"
-      [(ngModel)]="sendTo"
-      bindLabel="email"
-      placeholder="Select Email"
-      [searchable]="true"
-      [multiple]="true"
-      [addTag]="true"        
-    >
-    </ng-select>
+      <input
+        type="text"
+        class="form-control"
+        id="sendTo"
+        [(ngModel)]="sendTo"
+        placeholder="Enter email addresses separated by commas"
+      />
     </div>
   
     <!-- CC -->

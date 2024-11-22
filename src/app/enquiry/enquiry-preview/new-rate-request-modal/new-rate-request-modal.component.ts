@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { EnquiryService } from 'app/enquiry/enquiry.service';
+import { SharedService } from 'app/shared.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -8,15 +10,34 @@ import Swal from 'sweetalert2';
   styleUrls: ['./new-rate-request-modal.component.scss']
 })
 export class NewRateRequestModalComponent implements OnInit {
-  selectedAgent: string | null = null;
+  selectedAgent: any | null = null;
   sendTo: string = '';
   cc: string = '';
   draftContent: string = '';
-  agentOptions: string[] = ['Maersk', 'CMA CGM', 'Hapag-Lloyd', 'ONE', 'Evergreen'];
+  companyTypes: any[] = [];
+  companyEmails: any;
+  selectedCompanyId:any| null = null;
+  selectedEmail: any;     
+  userName: any | undefined;
+  userId: any | undefined;    
+  userEmail: any | undefined;    
 
-  constructor(public activeModal: NgbActiveModal) { }
+  constructor(public activeModal: NgbActiveModal,private enquiryService: EnquiryService,private userService: SharedService) { }
 
   ngOnInit(): void {
+    const userData = this.userService.getUserData();
+    if (userData) {
+      this.userName = this.userService.getUserName();
+      this.userId = this.userService.getUserId();
+      this.userEmail=this.userService.getUserEmail();
+      console.log('User Data:', userData);
+      console.log('User Name:', this.userName);
+      console.log('User ID:', this.userId);
+      console.log('User Email:', this.userEmail);
+    } else {
+      console.log('No user data found in localStorage');
+    }
+    this.getCompanyType();
   }
   closeModal(): void {
     this.activeModal.dismiss('Modal dismissed');
@@ -51,4 +72,33 @@ export class NewRateRequestModalComponent implements OnInit {
       }
     });
   }
+  getCompanyType(){
+    this.enquiryService.getCompanyType().subscribe(
+      (data) => {
+        this.companyTypes = data;
+        console.log("companyTypes",this.companyTypes);  
+      },
+      (error) => {
+        console.error('Error fetching company types', error);
+      }
+    );
+  }
+  onAgentSelect(): void {
+    if (this.selectedAgent) {
+      // Assuming selectedAgent has 'companyTypeId' as the ID
+      this.getCompaniesEmail(this.selectedAgent.companyTypeId);
+    }
+  }
+  getCompaniesEmail(id: any): void {
+    this.enquiryService.getCompaniesEmail(id).subscribe(
+      (data) => {
+        this.companyEmails = data.filter((email: any) => email && email.email && email.email.trim() !== '');
+        console.log("Filtered Company Emails:", this.companyEmails);
+      },
+      (error) => {
+        console.error('Error fetching company emails', error);
+      }
+    );
+  }
+
 }
