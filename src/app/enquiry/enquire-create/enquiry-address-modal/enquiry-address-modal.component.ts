@@ -17,6 +17,8 @@ import { EnquiryAddressModalService } from './enquiry-address-modal.service';
 export class EnquiryAddressModalComponent implements OnInit {
   @Input() addressData: any; // Data passed from the parent component
   @Output() updatedAddress = new EventEmitter<any>();
+  @Input() enquiryIdFromUrl:any;
+  @Input() viewType:any;
 
   
     @ViewChild('company') companyField!:  ElementRef;
@@ -127,9 +129,19 @@ export class EnquiryAddressModalComponent implements OnInit {
       if (addressId) {
         this.updateEnquiryAddress(addressId,this.addressForm.value);
       } else {
+        if(this.viewType=='edit'){
+
+          this.addressForm.patchValue({
+            enquiryId: this.enquiryIdFromUrl
+          });
+          console.log("insert",this.addressForm.value);
+          this.insertEnquiryAddre(this.addressForm.value);
+
+        }else{
         this.enquiryAddrSer.addEnquiryAddressDetails(this.addressForm.value);
         console.log(this.enquiryAddrSer.getEnquiryAddDetailsList());
         this.close();
+        }
       }
 
     }
@@ -213,8 +225,8 @@ export class EnquiryAddressModalComponent implements OnInit {
       }
     );
   }
-  insertCustAddre(data:any){
-    this.addAddrSer.insertCustAddre(data).subscribe( res => {
+  insertEnquiryAddre(data:any){
+    this.enquiryAddrSer.insertEnquiryAddre(data).subscribe( res => {
  
       this.activeModal.dismiss();
 

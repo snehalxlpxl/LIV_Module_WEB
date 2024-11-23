@@ -27,4 +27,11 @@ export class EnquiryAddressModalService {
   getEnquiryAddDetailsList() {
     return this.EnquiryaddressList.value;
   }
+  insertEnquiryAddre(data: any): Observable<string> {
+    return this.http.post<string>(
+      `${environment.apiUrl}/Enquiries/insert/EnquiryAddresss`,
+      data,
+      { responseType: "text" as "json" }
+    );
+  }
 }

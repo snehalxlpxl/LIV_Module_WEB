@@ -54,6 +54,8 @@
                                                                     </div>
                                                                     <div class="row p-1">
 
+                                                                        <input type="hidden" formControlName="EnquiryId"/>
+                                                                        <input type="hidden" formControlName="CompanyOrLeadId"/>
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
                                                                                 <label>Customer Status</label>
@@ -61,22 +63,98 @@
                                                                                 formControlName="CustomerStatus"
                                                                                 [items]="customerStatusOptions" bindValue="label"
                                                                                 bindLabel="label"
+                                                                                (change)=onChangeStatus($event)
                                                                                 placeholder="Lead / Customer">
-                                                                                   
-                                                                                    <ng-option></ng-option>
+                                                                                
                                                                                 </ng-select>
                                                                             </div>
                                                                         </div>
 
                                                                         <div class="col-md-12">
-                                                                            <div class="form-group">
-                                                                                <label>Customer Name</label>
-                                                                                <input formControlName="CompanyName"
-                                                                                    type="text"
-                                                                                    placeholder="Company Name"
-                                                                                    class="form-control">
+                                                                            <div class="form-group" *ngIf="this.CustomerStatus == 'Customer'">
+                                                                              <label> Company Name</label>
+                                                                              <div class="form-group f-autocomplet-wrapper">
+                                                                                <ng-select id="CompanyId" formControlName="CompanyId" [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'CompanyId'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'CompanyId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'CompanyId'
+                                                                                          ).touched
+                                                                                      }" bindValue="companyId" bindLabel="companyName" 
+                                                                                      (change)="onChangeCompany($event)"
+                                                                                  placeholder="Select Company" [items]="companies" #select>
+                                                                                  <ng-option *ngIf="
+                                                                                          companies.length === 0
+                                                                                        " [disabled]="true">No data</ng-option>
+                                                                                  <ng-option *ngFor="
+                                                                                          let comp of companies
+                                                                                        " [value]="comp.companyId">
+                                                                                    {{ comp.companyName }}
+                                                                                  </ng-option>
+                                                                                </ng-select>
+                                                                                <span *ngIf="
+                                                                                        newEnqiryCreate.get(
+                                                                                          'CompanyId'
+                                                                                        ).invalid &&
+                                                                                        newEnqiryCreate.get(
+                                                                                          'CompanyId'
+                                                                                        ).touched
+                                                                                      " class="invalid-form">
+                                                                                  <small class="form-text text-danger">Please Select 
+                                                                                    Company</small>
+                                                                                </span>
+                                                                                <input type="hidden" formControlName="CompanyName"/>
+                                                                              </div>
                                                                             </div>
-                                                                        </div>
+                                                                            <div class="form-group" *ngIf="this.CustomerStatus == 'Lead'">
+                                                                                <label> Lead Name</label>
+                                                                                <div class="form-group f-autocomplet-wrapper">
+                                                                                  <ng-select id="LeadId" formControlName="LeadId" [ngClass]="{
+                                                                                          'ng-touched':
+                                                                                          newEnqiryCreate.get(
+                                                                                              'CompanyId'
+                                                                                            ).touched,
+                                                                                          error:
+                                                                                          newEnqiryCreate.get(
+                                                                                              'CompanyId'
+                                                                                            ).invalid &&
+                                                                                            newEnqiryCreate.get(
+                                                                                              'LeadId'
+                                                                                            ).touched
+                                                                                        }" bindValue="leadId" bindLabel="companyName" 
+                                                                                        (change)="onChangeLeadName($event)"
+                                                                                    placeholder="Select Lead" [items]="leaddata" #select>
+                                                                                    <ng-option *ngIf="
+                                                                                    leaddata.length === 0
+                                                                                          " [disabled]="true">No data</ng-option>
+                                                                                    <ng-option *ngFor="
+                                                                                            let comp of leaddata
+                                                                                          " [value]="comp.leadId">
+                                                                                      {{ comp.companyName }}
+                                                                                    </ng-option>
+                                                                                  </ng-select>
+                                                                                  <span *ngIf="
+                                                                                          newEnqiryCreate.get(
+                                                                                            'CompanyId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'CompanyId'
+                                                                                          ).touched
+                                                                                        " class="invalid-form">
+                                                                                    <small class="form-text text-danger">Please Select 
+                                                                                      Lead</small>
+                                                                                  </span>
+                                                                                  <input type="hidden" formControlName="LeadName"/>
+                                                                                </div>
+                                                                              </div>
+                                                                          </div>
+
 
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
@@ -184,9 +262,9 @@
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
                                                                                 <label>Notes</label>
-                                                                                <textarea id="Notes" type="text"
+                                                                                <textarea id="Note" type="text"
                                                                                     class="form-control"
-                                                                                    formControlName="Notes"
+                                                                                    formControlName="Note"
                                                                                     placeholder="General & Stackable"></textarea>
                                                                             </div>
                                                                         </div>
@@ -458,13 +536,28 @@
                                                                         <div class="col-md-12">
                                                                         <div class="form-group">
                                                                             <label>UN Number & Proper Shipping Name</label>
-                                                                            <ng-select id="UN_Name"
-                                                                                formControlName="UN_Name"
+                                                                            <ng-select id="UN_Id"
+                                                                                formControlName="UN_Id"
+                                                                                [items]="unNumbers" 
+                                                                                bindLabel="label"
+                                                                                bindValue="value" 
+                                                                                (change)="onChangeUN_Number($event)"
                                                                                 placeholder="Automobile, Marbles, Pharma, etc">
                                                                                 <ng-option></ng-option>
                                                                             </ng-select>
+                                                                            <input type="hidden" formControlName="UN_Name"/>
                                                                         </div>
                                                                     </div>
+                                                                    <!-- <ng-select id="serviceType"
+                                                                    formControlName="ServiceTypeId"
+                                                                    [items]="serviceTypes" 
+                                                                    bindLabel="jobtypeName"
+                                                                    bindValue="jobtypeId" 
+                                                                    (change)="onChangeServiceType($event)"
+                                                                    placeholder="FCL, Air, Etc">
+                                                                    <ng-option></ng-option>
+                                                                </ng-select>
+                                                                <input type="hidden" formControlName="ServiceType"/> -->
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
                                                                             <label>Remarks for Hazardous Cargo</label>
@@ -520,7 +613,7 @@
                                                           </button> -->
                                                                             <span class="icon-right">
 
-                                                                                <i class="feather icon-plus-square" (click)="openEnquiryAddressesModal()"></i>
+                                                                                <i class="feather icon-plus-square" (click)="openEnquiryAddressesModal(enquiryId)"></i>
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -587,7 +680,9 @@
                         </div>
                     </div>
                 </div>
-
+                <input type="hidden" formControlName="CreatedBy" value="userId"/>
+                <input type="hidden" formControlName="ModifiedBy" value="userId"/>
+                <input type="hidden" formControlName="DeletedBy" value="userId"/>
 
             </form>
         </div>

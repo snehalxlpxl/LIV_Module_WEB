@@ -36,6 +36,16 @@ export class EnquireCreateComponent implements OnInit {
     { label: 'Lead', value: 'Lead' },
     { label: 'Customer', value: 'Customer' }
   ];
+  unNumbers = [
+    { value: '1201', label: 'Fusel oil' },
+    { value: '1202', label: '	Gas oil or diesel fuel or heating oil, light' },
+    { value: '1203', label: 'Gasoline or petrol or motor spirit' },
+    { value: '1204', label: 'Nitroglycerin' },
+    { value: '1206', label: 'Heptanes' },
+    { value: '1207', label: 'Hexaldehyde' },
+    { value: '1208', label: 'Hexanes' }
+    // Add more options as needed
+  ];
   userId: any;
   enquiryaddrDetailsList: any[]= [];
   pakagesDetailsList: any[]= [];
@@ -405,12 +415,14 @@ export class EnquireCreateComponent implements OnInit {
     modalRef.componentInstance.enquiryIdFromUrl = enquiryId;
     modalRef.componentInstance.viewType = this.viewMode;
   }
-  openEnquiryAddressesModal(){
+  openEnquiryAddressesModal(enquiryId:number){
     console.log("EnquiryAddressModalComponent")
     const modalRef = this.modalService.open(EnquiryAddressModalComponent, {
       size: 'md', 
       backdrop: 'static', 
     });
+    modalRef.componentInstance.enquiryIdFromUrl = enquiryId;
+    modalRef.componentInstance.viewType = this.viewMode;
   }
   getAllAddrDetailfromModal() {
     this.enquiryaddrDetailsList=[];
@@ -547,7 +559,10 @@ export class EnquireCreateComponent implements OnInit {
       const checkStatus=event ? event.value : '';
       this.CustomerStatus=checkStatus
     }
-
+    onChangeUN_Number(event:any){
+      const unNumber=event ? event.label : '';
+      this.newEnqiryCreate.get('UN_Name').setValue(unNumber);
+    }
     CustomerName: string;
     getEnquiryCompanyNameId(companyid: number) {
       this.enquireCreateServ.getEnquiryCompanyNameId(companyid).subscribe(
