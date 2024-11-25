@@ -44,4 +44,10 @@ export class EnquireCreateService {
   getEnquiryLeadNameId(id:number){
     return this.http.get(`${this.apiUrl}/getEnquiryLeadNameId/${id}`);
   }
+  deleteContainerId(id:any): Observable<any[]> {
+    return this.http.put<any[]>(`${environment.apiUrl}/Enquiries/deleteContainerId/${id}`,null);
+  }
+  deletePakagesId(id:any): Observable<any[]> {
+    return this.http.put<any[]>(`${environment.apiUrl}/Enquiries/deletePakagesId/${id}`,null);
+  }
 }

@@ -122,6 +122,7 @@ export class EnquireCreateComponent implements OnInit {
   }else{
     this.enquiryId=0;
     this.clearArray();
+    this.clearForm();
   }
 
   }//end of ngOnit
@@ -162,6 +163,10 @@ export class EnquireCreateComponent implements OnInit {
       address:[''],
      
     });
+    
+  }
+  clearForm(){
+    this.newEnqiryCreate.reset();
   }
   compareFn(a, b) {
     return a.companyId === b;
@@ -594,5 +599,69 @@ export class EnquireCreateComponent implements OnInit {
           console.error('Error retrieving Lead Name:', error);
         }
       );
+    }
+
+    deleteContainerByID(id: any) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#867ceb",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log("Deleting customer with ID:", id);
+          // Proceed with the deletion logic
+          this.enquireCreateServ.deleteContainerId(id).subscribe(
+            (response) => {
+              console.log("Container deleted successfully");
+              this.toastr.success("Container deleted successfully", "", {
+                timeOut: 3000,
+              });
+            window.location.reload();
+              
+            },
+            (error) => {
+              console.error("Error deleting Container:", error);
+              this.toastr.error("Failed to delete Container", "", {
+                timeOut: 3000,
+              });
+            }
+          );
+        }
+      });
+    }
+    deletePakagesId(id: any) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#867ceb",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log("Deleting Pakages with ID:", id);
+          // Proceed with the deletion logic
+          this.enquireCreateServ.deletePakagesId(id).subscribe(
+            (response) => {
+              console.log("Pakages deleted successfully");
+              this.toastr.success("Pakages deleted successfully", "", {
+                timeOut: 3000,
+              });
+            window.location.reload();
+            },
+            (error) => {
+              console.error("Error deleting Pakages:", error);
+              this.toastr.error("Failed to delete Pakages", "", {
+                timeOut: 3000,
+              });
+            }
+          );
+        }
+      });
     }
 }
