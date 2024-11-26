@@ -38,14 +38,154 @@
     <div class="form-group">
       <label for="packageDetails">Package Details</label>
       <div class="input-group">
-        <input type="number" class="form-control" placeholder="Package Count" formControlName="packageCount" />
-        <input type="number" class="form-control" placeholder="L (mm)" formControlName="lengthMm" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
-        <input type="number" class="form-control" placeholder="W (mm)" formControlName="weightMm" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
-        <input type="number" class="form-control" placeholder="H (mm)" formControlName="heightMm" (change)="calculateTotalGrossWeight(newpakagesForm)"/>
-        <input type="number" class="form-control" placeholder="Net Wt" formControlName="netWeight" />
+        <input type="number" class="form-control" placeholder="Package Count" formControlName="packageCount" 
+        [ngClass]="{
+          'ng-touched':
+          newpakagesForm.get(
+              'packageCount'
+            ).touched,
+          error:
+          newpakagesForm.get(
+              'packageCount'
+            ).invalid &&
+            newpakagesForm.get(
+              'packageCount'
+            ).touched
+        }"/>
+        <!-- <span *ngIf="
+        newpakagesForm.get(
+          'packageCount'
+        ).invalid &&
+        newpakagesForm.get(
+          'packageCount'
+        ).touched
+      " class="invalid-form">
+          <small class="form-text text-danger">Please Select Pakage
+            Count</small>
+        </span> -->
+
+        <input type="number" class="form-control" placeholder="L (mm)" formControlName="lengthMm" (change)="calculateTotalGrossWeight(newpakagesForm)" [ngClass]="{
+          'ng-touched':
+          newpakagesForm.get(
+              'lengthMm'
+            ).touched,
+          error:
+          newpakagesForm.get(
+              'lengthMm'
+            ).invalid &&
+            newpakagesForm.get(
+              'lengthMm'
+            ).touched
+        }"/>
+        <!-- <span *ngIf="
+        newpakagesForm.get(
+          'lengthMm'
+        ).invalid &&
+        newpakagesForm.get(
+          'lengthMm'
+        ).touched
+      " class="invalid-form">
+          <small class="form-text text-danger">Please Select Pakage
+            Count</small>
+        </span> -->
+        <input type="number" class="form-control" placeholder="W (mm)" formControlName="weightMm" (change)="calculateTotalGrossWeight(newpakagesForm)" [ngClass]="{
+          'ng-touched':
+          newpakagesForm.get(
+              'weightMm'
+            ).touched,
+          error:
+          newpakagesForm.get(
+              'weightMm'
+            ).invalid &&
+            newpakagesForm.get(
+              'lengthMm'
+            ).touched
+        }"/>
+        <!-- <span *ngIf="
+        newpakagesForm.get(
+          'weightMm'
+        ).invalid &&
+        newpakagesForm.get(
+          'weightMm'
+        ).touched
+      " class="invalid-form">
+          <small class="form-text text-danger">Please Select Pakage
+            Count</small>
+        </span> -->
+        <input type="number" class="form-control" placeholder="H (mm)" formControlName="heightMm" (change)="calculateTotalGrossWeight(newpakagesForm)"  [ngClass]="{
+          'ng-touched':
+          newpakagesForm.get(
+              'heightMm'
+            ).touched,
+          error:
+          newpakagesForm.get(
+              'heightMm'
+            ).invalid &&
+            newpakagesForm.get(
+              'heightMm'
+            ).touched
+        }"/>
+        <!-- <span *ngIf="
+        newpakagesForm.get(
+          'heightMm'
+        ).invalid &&
+        newpakagesForm.get(
+          'heightMm'
+        ).touched
+      " class="invalid-form">
+          <small class="form-text text-danger">Please Select Pakage
+            Count</small>
+        </span> -->
+        <input type="number" class="form-control" placeholder="Net Wt" formControlName="netWeight" [ngClass]="{
+          'ng-touched':
+          newpakagesForm.get(
+              'netWeight'
+            ).touched,
+          error:
+          newpakagesForm.get(
+              'netWeight'
+            ).invalid &&
+            newpakagesForm.get(
+              'netWeight'
+            ).touched
+        }"/>
+        <!-- <span *ngIf="
+        newpakagesForm.get(
+          'netWeight'
+        ).invalid &&
+        newpakagesForm.get(
+          'netWeight'
+        ).touched
+      " class="invalid-form">
+          <small class="form-text text-danger">Please Select Pakage
+            Count</small>
+        </span> -->
         <input type="number" class="form-control" placeholder="Gross Wt" formControlName="grossWeight" disabled/>
         <input type="number" class="form-control" placeholder="Vol. Wt" formControlName="volumeWeight" disabled />
-        <input type="number" class="form-control" placeholder="CBM" formControlName="cbm" />
+        <input type="number" class="form-control" placeholder="CBM" formControlName="cbm" [ngClass]="{
+          'ng-touched':
+          newpakagesForm.get(
+              'cbm'
+            ).touched,
+          error:
+          newpakagesForm.get(
+              'cbm'
+            ).invalid &&
+            newpakagesForm.get(
+              'cbm'
+            ).touched
+        }"/>
+        <!-- <span *ngIf="
+        newpakagesForm.get(
+          'cbm'
+        ).invalid &&
+        newpakagesForm.get(
+          'cbm'
+        ).touched
+      " class="invalid-form">
+          <small class="form-text text-danger">Please Select Pakage
+            Count</small>
+        </span> -->
       </div>
     </div>
   </div>

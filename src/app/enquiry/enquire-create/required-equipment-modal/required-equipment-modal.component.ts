@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RequiredEquipmentModalService } from './required-equipment-modal.service';
 import { ActivatedRoute } from '@angular/router';
@@ -56,9 +56,9 @@ export class RequiredEquipmentModalComponent implements OnInit {
     this.requiredEquipmentForm = this.fb.group({
       containerId:0,
       enquiryId:0,
-      containerTypesId:0,
+      containerTypesId:['',Validators.required],
       containerType: '',
-      containerCount:0,
+      containerCount:['',Validators.required],
       createdBy:this.userId,
       modifiedBy:this.userId,
       deletedBy:this.userId,
@@ -80,6 +80,7 @@ export class RequiredEquipmentModalComponent implements OnInit {
   addRequiredEquipment(form: any) {
     const containerid = this.requiredEquipmentForm.get('containerId').value;
     if (this.requiredEquipmentForm.valid) {
+      console.log("valid");
       if (containerid) {
         //update
 
@@ -106,13 +107,12 @@ export class RequiredEquipmentModalComponent implements OnInit {
     }
     else {
       this.requiredEquipmentForm.markAllAsTouched();
+      console.log('Form is invalid', this.requiredEquipmentForm.errors);
     }
   }
   updateContainer(id:number,data:any){
     this.requiredEquipeSer.updateContainer(id,data).subscribe( res => {
       console.table(data);
-     
-     
       // window.location.reload();
       // this.router.navigate([`/customer/edit/${data.companyId}`]).then(() => {
       //   this.toastr.success('Address updated successfully', "", {

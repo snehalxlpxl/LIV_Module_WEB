@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PakageDetailModalService } from './pakage-detail-modal.service';
 import Swal from 'sweetalert2';
@@ -59,16 +59,16 @@ export class PackageDetailModalComponent implements OnInit {
       enquiryPackageId:0,
       packageTypeId:[0],
       enquiryId:0,
-      packageType: '',
-      totalGrossWeight: [] ,// For hidden field
-      packageCount: [],
-      lengthMm: [],
-      weightMm: [],
-      heightMm: [],
-      netWeight: [],
+      packageType: ['',Validators.required],
+      totalGrossWeight: ['',Validators.required] ,// For hidden field
+      packageCount: ['',Validators.required],
+      lengthMm: ['',Validators.required],
+      weightMm: ['',Validators.required],
+      heightMm: ['',Validators.required],
+      netWeight: ['',Validators.required],
       grossWeight:[],
       volumeWeight:[],
-      cbm: [],
+      cbm: ['',Validators.required],
       createdBy:this.userId,
       modifiedBy:this.userId,
       deletedBy:this.userId,

@@ -19,15 +19,63 @@
                    bindLabel="name" 
                    bindValue="id" 
                    formControlName="containerTypesId"
-                   (change)="onChangeContainer($event)">
+                   (change)="onChangeContainer($event)"
+                   [ngClass]="{
+                    'ng-touched':
+                    requiredEquipmentForm.get(
+                        'containerTypesId'
+                      ).touched,
+                    error:
+                    requiredEquipmentForm.get(
+                        'containerTypesId'
+                      ).invalid &&
+                      requiredEquipmentForm.get(
+                        'containerTypesId'
+                      ).touched
+                  }">
         </ng-select>
-        <input type="hidden" formControlName="containerType"/>
+        <span *ngIf="
+        requiredEquipmentForm.get(
+          'containerTypesId'
+        ).invalid &&
+        requiredEquipmentForm.get(
+          'containerTypesId'
+        ).touched
+      " class="invalid-form">
+          <small class="form-text text-danger">Please Select Container
+            Type</small>
+        </span>
+        <input type="hidden" formControlName="containerType" />
       </div>
   
       <!-- Count input -->
       <div class="form-group col-6">
         <label for="containerCount">Count</label>
-        <input type="number" class="form-control" formControlName="containerCount" />
+          <input type="number" class="form-control" formControlName="containerCount"  
+          [ngClass]="{
+            'ng-touched':
+            requiredEquipmentForm.get(
+                'containerCount'
+              ).touched,
+            error:
+            requiredEquipmentForm.get(
+                'containerCount'
+              ).invalid &&
+              requiredEquipmentForm.get(
+                'containerCount'
+              ).touched
+          }">
+          <span *ngIf="
+          requiredEquipmentForm.get(
+            'containerCount'
+          ).invalid &&
+          requiredEquipmentForm.get(
+            'containerCount'
+          ).touched
+        " class="invalid-form">
+            <small class="form-text text-danger">Please Select Container
+              Count</small>
+          </span>
       </div>
     </div>
   </div>

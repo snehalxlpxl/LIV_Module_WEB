@@ -18,6 +18,9 @@ import { CustomerCreateService } from 'app/main/apps/companies/customers/custome
 import { LeadsListComponent } from 'app/Leads/leads-list/leads-list.component';
 import { LeadsListService } from 'app/Leads/leads-list/leads-list.service';
 import { Subject } from 'rxjs';
+// import { differentPOLPODValidator, samePOLPODValidator } from './differentPOLPODValidator';
+import { stat } from 'fs';
+import { samePOLPODValidator } from './differentPOLPODValidator';
 
 @Component({
   selector: 'app-enquire-create',
@@ -65,12 +68,13 @@ export class EnquireCreateComponent implements OnInit {
     private modalService: NgbModal, private enquiryAddrSer: EnquiryAddressModalService, private toastr: ToastrService,
     private pakgesSer: PakageDetailModalService, private equipSer: RequiredEquipmentModalService, private route: ActivatedRoute,
     private newCustcreate: CustomerCreateService, private _leadsListService: LeadsListService) {
-
+      this.initForm(this.CustomerStatus,this.CustomerOrLeadId,this.salesPersonOrLeadId,this.userId);
+      // console.log("value",this.newEnqiryCreate.value);
+      // console.log("error",this.newEnqiryCreate.errors);
   }
 
   ngOnInit(): void {
 
-      
     const userData = JSON.parse(sessionStorage.getItem('userData'));
     if (userData) {
       // this.userName = userData.userName;
@@ -122,32 +126,72 @@ export class EnquireCreateComponent implements OnInit {
   }else{
     this.enquiryId=0;
     this.clearArray();
-    this.clearForm();
+    // this.clearForm();
   }
 
   }//end of ngOnit
   
+  // initForm(CustomerStatus:any,CustomerOrLeadId:any,salesPersonOrLeadId:any,userID:number){
+  //   this.newEnqiryCreate = this.fb.group({
+  //     EnquiryId:0|| (this.enquiryId ?? 0),
+  //     CustomerStatus: [CustomerStatus],
+  //     CompanyOrLeadId:isNaN(parseInt(CustomerOrLeadId)) ? 0 : parseInt(CustomerOrLeadId),
+  //     CompanyId:[isNaN(parseInt(CustomerOrLeadId)) ? 0 : parseInt(CustomerOrLeadId)],
+  //     LeadId:isNaN(parseInt(CustomerOrLeadId)) ? 0 : parseInt(CustomerOrLeadId),
+  //     LeadName:[''],
+  //     CompanyName:[''],
+  //     LeadOwnerId:isNaN(parseInt(salesPersonOrLeadId)) ? 0 : parseInt(salesPersonOrLeadId),
+  //     ServiceTypeId:0,
+  //     ServiceType: [''],
+  //     IncoTermsId: [0],
+  //     IncoTerms:[''],
+  //     POLId:0,
+  //     POL:[''],
+  //     PODId:0,
+  //     POD:[''],
+  //     Commodity: [''],
+  //     FreeTimeOrigin: [''],
+  //     FreeTimeDestination: [''],
+  //     note:[''],
+  //     UN_Id:0,
+  //     UN_Name:[''],
+  //     RemarksHazardousCargo: [''],
+  //     EnquiryStatus:['Awaiting Approval'],
+  //     IsHazardous: false,
+  //     CreatedBy:userID??0,
+  //     ModifiedBy:userID??0,
+  //     DeletedBy:userID??0,
+  //     Isdeleted:false,
+  //     equipment:[''],
+  //     pakage:[''],
+  //     address:[''],
+     
+  //   });
+    
+  // }
+  
+
   initForm(CustomerStatus:any,CustomerOrLeadId:any,salesPersonOrLeadId:any,userID:number){
     this.newEnqiryCreate = this.fb.group({
       EnquiryId:0|| (this.enquiryId ?? 0),
-      CustomerStatus: [CustomerStatus],
+      CustomerStatus: [CustomerStatus,[Validators.required]],
       CompanyOrLeadId:isNaN(parseInt(CustomerOrLeadId)) ? 0 : parseInt(CustomerOrLeadId),
-      CompanyId:isNaN(parseInt(CustomerOrLeadId)) ? 0 : parseInt(CustomerOrLeadId),
+      CompanyId:[isNaN(parseInt(CustomerOrLeadId)) ? 0 : parseInt(CustomerOrLeadId)],
       LeadId:isNaN(parseInt(CustomerOrLeadId)) ? 0 : parseInt(CustomerOrLeadId),
       LeadName:[''],
       CompanyName:[''],
       LeadOwnerId:isNaN(parseInt(salesPersonOrLeadId)) ? 0 : parseInt(salesPersonOrLeadId),
-      ServiceTypeId:0,
+      ServiceTypeId:['', [Validators.required]],
       ServiceType: [''],
-      IncoTermsId: [0],
+      IncoTermsId: ['', [Validators.required]],
       IncoTerms:[''],
-      POLId:0,
+      POLId:['', [Validators.required]],
       POL:[''],
-      PODId:0,
+      PODId:['', [Validators.required]],
       POD:[''],
       Commodity: [''],
-      FreeTimeOrigin: [''],
-      FreeTimeDestination: [''],
+      FreeTimeOrigin: ['',Validators.required],
+      FreeTimeDestination: ['',Validators.required],
       note:[''],
       UN_Id:0,
       UN_Name:[''],
@@ -162,8 +206,15 @@ export class EnquireCreateComponent implements OnInit {
       pakage:[''],
       address:[''],
      
-    });
+    },
+    { validators: samePOLPODValidator() }
+  );
     
+  }
+  onChangePOLPOD() {
+    this.newEnqiryCreate.updateValueAndValidity(); 
+    console.log("value",this.newEnqiryCreate.value);
+    console.log("error",this.newEnqiryCreate.errors);
   }
   clearForm(){
     this.newEnqiryCreate.reset();
@@ -172,7 +223,33 @@ export class EnquireCreateComponent implements OnInit {
     return a.companyId === b;
   }
   saveEnquiry(newEnqiryCreate: FormGroup){
-    console.log(newEnqiryCreate.value);
+    if(newEnqiryCreate.valid){
+      //  if(this.newEnqiryCreate.get('ServiceType').value==='AIR'||'LCL'){
+      //   if (this.pakagesDetailsList.length===0) {
+      //       this.toastr.warning('Please add at least one Pakages detail before submitting the form.');
+      //       return; // Prevent form submission
+      //     }
+      //  }else
+      //  {
+      //   if (this.equipDetailsList.length === 0) {
+      //       this.toastr.warning('Please add at least one Container detail before submitting the form.');
+      //       return; // Prevent form submission
+      //     }
+      //  }
+
+      // if (this.equipDetailsList.length === 0) {
+      //   this.toastr.warning('Please add at least one Container detail before submitting the form.');
+      //   return; // Prevent form submission
+      // }
+      //  if (this.pakagesDetailsList.length===0) {
+      //     this.toastr.warning('Please add at least one Pkages detail before submitting the form.');
+      //     return; // Prevent form submission
+      //   }
+      // else if(this.enquiryaddrDetailsList.length===0){
+      //   this.toastr.warning('Please add at least one Address detail before submitting the form.');
+      //   return; // Prevent form submission
+      // }
+    console.log("create",newEnqiryCreate.value);
     if(this.enquiryId){
   
       this.updateEnquiry(this.enquiryId,newEnqiryCreate.value);
@@ -181,6 +258,20 @@ export class EnquireCreateComponent implements OnInit {
     }else{
       this.createNewEnquiry(newEnqiryCreate.value);
     }
+  }else{
+      let key = Object.keys(newEnqiryCreate.controls);
+      console.log(newEnqiryCreate.controls);
+
+      console.log(key);
+      key.filter((data) => {
+        console.log("data", data);
+        let control = newEnqiryCreate.controls[data];
+        if (control.errors != null) {
+          control.markAsTouched();
+        }
+      });
+      return;
+  }
     
 
   }
@@ -190,11 +281,10 @@ export class EnquireCreateComponent implements OnInit {
       (data: any) => {
         console.log("Created Enquiry:", data);
         if (data) {
+          this.clearForm();
           console.log("Navigating to preview page with company ID:", data);
           this.router.navigate(['/enquiry-preview/', data.enquiryId]).then(() => {
-            // this.toastr.success("Redirected to Preview", "", {
-            //   timeOut: 3000,
-            // });
+          
             Swal.fire({
               title: "Success!",
               text: "Redirected to Preview",
@@ -338,7 +428,9 @@ export class EnquireCreateComponent implements OnInit {
     this.location.back();
   }
   clearArray() {
-    // this.equipDetailsList=[];
+    this.equipDetailsList=[];
+    this.pakagesDetailsList=[];
+    this.enquiryaddrDetailsList=[];
   }
 
 
@@ -377,9 +469,10 @@ export class EnquireCreateComponent implements OnInit {
     //   this.custNameField.nativeElement.focus();
     // }, 0);
   }
+  selectedServiceType: string;
   onChangeServiceType(event:any){
-    const selectedValue = event ? event.jobtypeName : '';
-    this.newEnqiryCreate.get('ServiceType').setValue(selectedValue);
+    this.selectedServiceType = event ? event.jobtypeName : '';
+    this.newEnqiryCreate.get('ServiceType').setValue(this.selectedServiceType);
   }
   onChangePOL(event:any){
     const selectedValue = event ? event.locationShortName : '';
@@ -389,10 +482,10 @@ export class EnquireCreateComponent implements OnInit {
     const selectedValue = event ? event.locationShortName : '';
     this.newEnqiryCreate.get('POD').setValue(selectedValue);
   }
-  onChangeCustomerStatus(event:any){
-      const selectedValue = event ? event.locationShortName : '';
-      this.newEnqiryCreate.get('POD').setValue(selectedValue);
-    }
+  // onChangeCustomerStatus(event:any){
+  //     const selectedValue = event ? event.locationShortName : '';
+  //     this.newEnqiryCreate.get('POD').setValue(selectedValue);
+  //   }
   onHazardousChange(event: any) {
       // this.newEnqiryCreate.patchValue({
       //   IsHazardous: event.target.checked ? 1 : 0
@@ -563,7 +656,32 @@ export class EnquireCreateComponent implements OnInit {
     onChangeStatus(event:any){
       const checkStatus=event ? event.value : '';
       this.CustomerStatus=checkStatus
+      // alert("onChangeStatus"+checkStatus)
+      this.setValidator(checkStatus);
+      this.newEnqiryCreate.updateValueAndValidity();
     }
+    setValidator(status:any){
+      // alert(status);
+      const CompanyId = this.newEnqiryCreate.get('CompanyId');
+      const LeadId = this.newEnqiryCreate.get('LeadId');
+      if(CompanyId||LeadId){
+        CompanyId.clearValidators();
+        LeadId.clearValidators();
+        if (status === 'Customer') {
+          // Add validators for 'Customer' status
+          CompanyId.setValidators([Validators.required]);
+        } else if (status === 'Lead') {
+          // Add different validators for 'Lead' status
+          LeadId.setValidators([Validators.required]);
+        } else {
+          // Reset validators if the status is not 'Lead' or 'Customer'
+          this.newEnqiryCreate.get('CompanyId')?.setValidators(null);
+          this.newEnqiryCreate.get('LeadId')?.setValidators(null);
+        }
+      }
+      this.newEnqiryCreate.updateValueAndValidity();
+    }
+
     onChangeUN_Number(event:any){
       const unNumber=event ? event.label : '';
       this.newEnqiryCreate.get('UN_Name').setValue(unNumber);

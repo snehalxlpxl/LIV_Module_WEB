@@ -57,8 +57,8 @@ export class EnquiryAddressModalComponent implements OnInit {
     this.addressForm = this.fb.group({
       enquiryAddressId:0,
       enquiryId:0,
-      AddressTypeId: 0,
-      addressTypeValue: [null] ,// For hidden field
+      addressTypeId: 0,
+      addressTypeValue: [''] ,// For hidden field
       company: ['', Validators.required],
       addressLine1: ['', Validators.required],
       addressLine2: [''],

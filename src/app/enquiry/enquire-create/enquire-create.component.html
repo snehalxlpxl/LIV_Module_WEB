@@ -60,6 +60,19 @@
                                                                             <div class="form-group">
                                                                                 <label>Customer Status</label>
                                                                                 <ng-select id="CustomerStatus"
+                                                                                [ngClass]="{
+                                                                                    'ng-touched':
+                                                                                    newEnqiryCreate.get(
+                                                                                        'CustomerStatus'
+                                                                                      ).touched,
+                                                                                    error:
+                                                                                    newEnqiryCreate.get(
+                                                                                        'CustomerStatus'
+                                                                                      ).invalid &&
+                                                                                      newEnqiryCreate.get(
+                                                                                        'CustomerStatus'
+                                                                                      ).touched
+                                                                                  }"
                                                                                 formControlName="CustomerStatus"
                                                                                 [items]="customerStatusOptions" bindValue="label"
                                                                                 bindLabel="label"
@@ -67,6 +80,9 @@
                                                                                 placeholder="Lead / Customer">
                                                                                 
                                                                                 </ng-select>
+                                                                                <div class="invalid-feedback" *ngIf="newEnqiryCreate.get('CustomerStatus').invalid && newEnqiryCreate.get('CustomerStatus').touched">
+                                                                                    Please select customer status
+                                                                                </div>
                                                                             </div>
                                                                         </div>
 
@@ -88,15 +104,16 @@
                                                                                           ).touched
                                                                                       }" bindValue="companyId" bindLabel="companyName" 
                                                                                       (change)="onChangeCompany($event)"
-                                                                                  placeholder="Select Company" [items]="companies" #select>
+                                                                                      [clearable]="false" placeholder="Select Company"  [items]="companies" #select>
                                                                                   <ng-option *ngIf="
                                                                                           companies.length === 0
                                                                                         " [disabled]="true">No data</ng-option>
-                                                                                  <ng-option *ngFor="
+                                                                                  <!-- <ng-option *ngFor="
                                                                                           let comp of companies
                                                                                         " [value]="comp.companyId">
                                                                                     {{ comp.companyName }}
-                                                                                  </ng-option>
+                                                                                  </ng-option> -->
+                                                                                  <ng-option [value]="null" disabled>select data</ng-option>
                                                                                 </ng-select>
                                                                                 <span *ngIf="
                                                                                         newEnqiryCreate.get(
@@ -118,11 +135,11 @@
                                                                                   <ng-select id="LeadId" formControlName="LeadId" [ngClass]="{
                                                                                           'ng-touched':
                                                                                           newEnqiryCreate.get(
-                                                                                              'CompanyId'
+                                                                                              'LeadId'
                                                                                             ).touched,
                                                                                           error:
                                                                                           newEnqiryCreate.get(
-                                                                                              'CompanyId'
+                                                                                              'LeadId'
                                                                                             ).invalid &&
                                                                                             newEnqiryCreate.get(
                                                                                               'LeadId'
@@ -141,10 +158,10 @@
                                                                                   </ng-select>
                                                                                   <span *ngIf="
                                                                                           newEnqiryCreate.get(
-                                                                                            'CompanyId'
+                                                                                            'LeadId'
                                                                                           ).invalid &&
                                                                                           newEnqiryCreate.get(
-                                                                                            'CompanyId'
+                                                                                            'LeadId'
                                                                                           ).touched
                                                                                         " class="invalid-form">
                                                                                     <small class="form-text text-danger">Please Select 
@@ -164,7 +181,20 @@
                                                                                     formControlName="LeadOwnerId"
                                                                                     [items]="salesPerson" bindValue="userId"
                                                                                     bindLabel="userDisplayName"
-                                                                                    placeholder="Sales Person Name">
+                                                                                    placeholder="Sales Person Name"
+                                                                                    [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'LeadOwnerId'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'LeadOwnerId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'LeadOwnerId'
+                                                                                          ).touched
+                                                                                      }">
                                                                                     <ng-option></ng-option>
                                                                                 </ng-select>
                                                                             </div>
@@ -178,9 +208,32 @@
                                                                                     bindLabel="jobtypeName"
                                                                                     bindValue="jobtypeId" 
                                                                                     (change)="onChangeServiceType($event)"
-                                                                                    placeholder="FCL, Air, Etc">
+                                                                                    placeholder="FCL, Air, Etc" [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'ServiceTypeId'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'ServiceTypeId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'ServiceTypeId'
+                                                                                          ).touched
+                                                                                      }">
                                                                                     <ng-option></ng-option>
                                                                                 </ng-select>
+                                                                                <span *ngIf="
+                                                                                        newEnqiryCreate.get(
+                                                                                        'ServiceTypeId'
+                                                                                        ).invalid &&
+                                                                                        newEnqiryCreate.get(
+                                                                                        'ServiceTypeId'
+                                                                                        ).touched
+                                                                                    " class="invalid-form">
+                                                                                <small class="form-text text-danger">Please Select Service Type </small>
+                                                                                </span>
+                                                                               
                                                                                 <input type="hidden" formControlName="ServiceType"/>
                                                                             </div>
                                                                         </div>
@@ -194,9 +247,32 @@
                                                                                     bindLabel="incotermName"
                                                                                     bindValue="incoTermId" 
                                                                                     (change)="onChangeIncoTerm($event)"
-                                                                                    placeholder="Exworks, FOB, etc">
+                                                                                    placeholder="Exworks, FOB, etc" [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'IncoTermsId'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'IncoTermsId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'IncoTermsId'
+                                                                                          ).touched
+                                                                                      }">
                                                                                     <ng-option></ng-option>
                                                                                 </ng-select>
+                                                                                <span *ngIf="
+                                                                                        newEnqiryCreate.get(
+                                                                                        'IncoTermsId'
+                                                                                        ).invalid &&
+                                                                                        newEnqiryCreate.get(
+                                                                                        'IncoTermsId'
+                                                                                        ).touched
+                                                                                    " class="invalid-form">
+                                                                                <small class="form-text text-danger">Please Select Inco Term </small>
+                                                                                </span>
+                                                                                
                                                                                 <input type="hidden" formControlName="IncoTerms"/>
                                                                             </div>
                                                                         </div>
@@ -208,10 +284,32 @@
                                                                                     [items]="locationMasterData"
                                                                                     bindValue="locationId"
                                                                                     bindLabel="locationShortName"
-                                                                                    (change)="onChangePOL($event)"
-                                                                                    placeholder="Nava Sheva, Mumbai,etc">
+                                                                                    (change)="onChangePOL($event);onChangePOLPOD()"
+                                                                                    placeholder="Nava Sheva, Mumbai,etc"[ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'POLId'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'POLId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'POLId'
+                                                                                          ).touched
+                                                                                      }">
                                                                                     <ng-option></ng-option>
                                                                                 </ng-select>
+                                                                                <span *ngIf="
+                                                                                    newEnqiryCreate.get(
+                                                                                    'POLId'
+                                                                                    ).invalid &&
+                                                                                    newEnqiryCreate.get(
+                                                                                    'POLId'
+                                                                                    ).touched
+                                                                                " class="invalid-form">
+                                                                            <small class="form-text text-danger">Please Select POL </small>
+                                                                            </span>
                                                                                 <input type="hidden" formControlName="POL"/>
 
                                                                             </div>
@@ -224,14 +322,43 @@
                                                                                     [items]="locationMasterData"
                                                                                     bindValue="locationId"
                                                                                     bindLabel="locationShortName"
-                                                                                    (change)="onChangePOD($event)"
-                                                                                    placeholder="Istambul, New York, etc">
+                                                                                    (change)="onChangePOD($event);onChangePOLPOD()"
+                                                                                    placeholder="Istambul, New York, etc" [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'PODId'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'PODId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'PODId'
+                                                                                          ).touched
+                                                                                      }">
                                                                                     <ng-option></ng-option>
                                                                                 </ng-select>
+                                                                                <span *ngIf="
+                                                                                    newEnqiryCreate.get(
+                                                                                    'PODId'
+                                                                                    ).invalid &&
+                                                                                    newEnqiryCreate.get(
+                                                                                    'PODId'
+                                                                                    ).touched
+                                                                                " class="invalid-form">
+                                                                            <small class="form-text text-danger">Please Select POD </small>
+                                                                            </span>
                                                                                 <input type="hidden" formControlName="POD"/>
 
                                                                             </div>
+                                                                            <!-- Show error for same POL and POD -->
+                                                                            <span *ngIf="newEnqiryCreate.hasError('samePOLPOD')">
+                                                                                <span class="invalid-form">
+                                                                                <small class="form-text text-danger">POL and POD should not be the same</small>
+                                                                                </span>
+                                                                            </span>
                                                                         </div>
+
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
                                                                                 <label>Commodity</label>
@@ -247,7 +374,30 @@
                                                                                 <input id="FreeTimeOrigin" type="text"
                                                                                     class="form-control"
                                                                                     formControlName="FreeTimeOrigin"
-                                                                                    placeholder="Auto Parts, Plastics,etc" />
+                                                                                    placeholder="Auto Parts, Plastics,etc" [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'FreeTimeOrigin'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'FreeTimeOrigin'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'FreeTimeOrigin'
+                                                                                          ).touched
+                                                                                      }"/>
+                                                                                      <span *ngIf="
+                                                                                      newEnqiryCreate.get(
+                                                                                        'FreeTimeOrigin'
+                                                                                      ).invalid &&
+                                                                                      newEnqiryCreate.get(
+                                                                                        'FreeTimeOrigin'
+                                                                                      ).touched
+                                                                                    " class="invalid-form">
+                                                                                        <small class="form-text text-danger">Please Select Free time origin
+                                                                                          Count</small>
+                                                                                      </span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
@@ -256,7 +406,29 @@
                                                                                 <input id="FreeTimeDestination"
                                                                                     type="text" class="form-control"
                                                                                     formControlName="FreeTimeDestination"
-                                                                                    placeholder="Auto Parts, Plastics,etc" />
+                                                                                    placeholder="Auto Parts, Plastics,etc" [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'FreeTimeDestination'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'FreeTimeDestination'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'FreeTimeDestination'
+                                                                                          ).touched
+                                                                                      }"/>
+                                                                                      <span *ngIf="
+                                                                                      newEnqiryCreate.get(
+                                                                                        'FreeTimeDestination'
+                                                                                      ).invalid &&
+                                                                                      newEnqiryCreate.get(
+                                                                                        'FreeTimeDestination'
+                                                                                      ).touched
+                                                                                    " class="invalid-form">
+                                                                                        <small class="form-text text-danger">Please Select Free Time Destination</small>
+                                                                                      </span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-12">
@@ -284,8 +456,9 @@
                             </div>
 
                         </div>
-                        <div class="col-md-6">
-                            <div class="rounded-corner-accordian">
+                        <div class="col-md-6" >
+                            <div class="rounded-corner-accordian" *ngIf="!['LCL', 'AIR'].includes(selectedServiceType)">
+                                <!-- <div class="rounded-corner-accordian" > -->
                                 <section id="accordion">
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -384,7 +557,8 @@
                                     </div>
                                 </section>
                             </div>
-                            <div class="rounded-corner-accordian mt-2">
+                            <div class="rounded-corner-accordian" *ngIf="selectedServiceType === 'LCL' || selectedServiceType === 'AIR'">
+                                <!-- <div class="rounded-corner-accordian"> -->
                                 <section id="accordion">
                                     <div class="row">
                                         <div class="col-sm-12">
