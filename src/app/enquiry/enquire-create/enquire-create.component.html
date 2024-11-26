@@ -76,6 +76,7 @@
                                                                                 formControlName="CustomerStatus"
                                                                                 [items]="customerStatusOptions" bindValue="label"
                                                                                 bindLabel="label"
+                                                                                [readonly]="disable" 
                                                                                 (change)=onChangeStatus($event)
                                                                                 placeholder="Lead / Customer">
                                                                                 
@@ -102,7 +103,7 @@
                                                                                           newEnqiryCreate.get(
                                                                                             'CompanyId'
                                                                                           ).touched
-                                                                                      }" bindValue="companyId" bindLabel="companyName" 
+                                                                                      }" bindValue="companyId" bindLabel="companyName" [readonly]="disable" 
                                                                                       (change)="onChangeCompany($event)"
                                                                                       [clearable]="false" placeholder="Select Company"  [items]="companies" #select>
                                                                                   <ng-option *ngIf="
@@ -144,7 +145,7 @@
                                                                                             newEnqiryCreate.get(
                                                                                               'LeadId'
                                                                                             ).touched
-                                                                                        }" bindValue="leadId" bindLabel="companyName" 
+                                                                                        }" bindValue="leadId" bindLabel="companyName" [readonly]="disable" 
                                                                                         (change)="onChangeLeadName($event)"
                                                                                     placeholder="Select Lead" [items]="leaddata" #select>
                                                                                     <ng-option *ngIf="
@@ -179,7 +180,7 @@
                                                                                     Person)</label>
                                                                                 <ng-select id="salesPerson"
                                                                                     formControlName="LeadOwnerId"
-                                                                                    [items]="salesPerson" bindValue="userId"
+                                                                                    [items]="salesPerson" bindValue="userId" [readonly]="disable" 
                                                                                     bindLabel="userDisplayName"
                                                                                     placeholder="Sales Person Name"
                                                                                     [ngClass]="{

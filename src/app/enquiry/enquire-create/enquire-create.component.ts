@@ -86,22 +86,29 @@ export class EnquireCreateComponent implements OnInit {
   }
   this.route.params.subscribe(params => {
     if (params.type === 'lead') {
-      this.disable=true;
+     
       this.CustomerStatus="Lead";
       this.CustomerOrLeadId=params.id
       this.salesPersonOrLeadId=params.SalesOrLeadOwerId;
       this.getEnquiryLeadNameId(this.CustomerOrLeadId);
+      this.disable=true;
+      this.clearArray();
     } else if (params.type === 'customer') {
       this.CustomerStatus="Customer";
       this.CustomerOrLeadId=params.id;
       this.salesPersonOrLeadId=params.SalesOrLeadOwerId;
       this.getEnquiryCompanyNameId( this.CustomerOrLeadId);
+      this.clearArray();
+      this.disable = true;
     }else if (params.type === 'edit') {
       this.enquiryId=params.id;
       this.viewMode=params.type
+      this.disable=false;
+      this.clearArray();
     }
     else{
       this.CustomerStatus="Customer";
+      this.disable=true;
     }
     this.initForm(this.CustomerStatus,this.CustomerOrLeadId,this.salesPersonOrLeadId,this.userId);
   });
@@ -282,6 +289,7 @@ export class EnquireCreateComponent implements OnInit {
         console.log("Created Enquiry:", data);
         if (data) {
           this.clearForm();
+          this.clearArray();
           console.log("Navigating to preview page with company ID:", data);
           this.router.navigate(['/enquiry-preview/', data.enquiryId]).then(() => {
           
@@ -334,13 +342,15 @@ export class EnquireCreateComponent implements OnInit {
   updateEnquiry(enqid:number,enquiryData:any){
     this.enquireCreateServ.updateEnquiryById(enqid, enquiryData).subscribe(
       data => {
-        // this.toastr.success('Customer updated successfully');
-        Swal.fire({
-          title: "Success!",
-          text: "Enquiry updated successfully",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 2000 // The alert will automatically close after 2 seconds
+        this.router.navigate(['/enquiry-preview/', enqid]).then(() => {
+          
+          Swal.fire({
+            title: "Updated Successfully!",
+            text: "Redirected to Preview",
+            icon: "success",
+            timer: 3000, // The alert will automatically close after 3 seconds
+            showConfirmButton: false // Hides the 'OK' button
+          });
         });
         
       },

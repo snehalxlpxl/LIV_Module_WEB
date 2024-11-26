@@ -87,6 +87,7 @@ export class EnquiryAddressModalComponent implements OnInit {
       this.customerId = +params.get('id');
     });
   }
+
   userLogInData(){
     const userData = JSON.parse(sessionStorage.getItem('userData'));
     if (userData) {
@@ -94,10 +95,11 @@ export class EnquiryAddressModalComponent implements OnInit {
       this.userId = userData.userId;
       // console.log('User Name:', this.userName);
       console.log('User ID:', this.userId);
-  } else {
-      console.log('No user data found in sessionStorage');
+      } else {
+          console.log('No user data found in sessionStorage');
+      }
   }
-  }
+  
   patchForm(data:any) {
     this.addressForm.patchValue({
       enquiryAddressId:data.enquiryAddressId,
