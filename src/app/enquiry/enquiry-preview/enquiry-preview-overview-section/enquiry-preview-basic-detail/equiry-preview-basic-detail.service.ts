@@ -14,9 +14,9 @@ export class EquiryPreviewBasicDetailService {
     return this.http.get<any[]>(`${environment.apiUrl}/Enquiries/getDetalByVIew/${id}`);
   }
   getCompanyDataById(id:number): Observable<any[]>{
-    return this.http.get<any[]>(`${environment.apiUrl}/Customer/${id}`);
+    return this.http.get<any[]>(`${environment.apiUrl}/Enquiries/getCustomerData/${id}`);
   }
   getLeadDataById(id:number): Observable<any[]>{
-    return this.http.get<any[]>(`${environment.apiUrl}/Leads/getLeadById/${id}`);
+    return this.http.get<any[]>(`${environment.apiUrl}/Enquiries/getLeadData/${id}`);
   }
 }

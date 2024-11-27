@@ -50,17 +50,19 @@ export class EnquiryPreviewBasicDetailComponent implements OnInit {
 
 }
 
-basicDtail:any[];
+basicDetail:any[];
 getDetalByVIew(id:number){
   this.apiService.getDetalByVIew(id).subscribe((data: any[]) => {
-    this.basicDtail=data;
-    console.log("basic Details ", this.basicDtail);
+    this.basicDetail=data;
+    console.log("basic Details ", this.basicDetail);
     //get company details if company Id
     // console.log("this.basicDtail[0].conpanyType",this.basicDtail[0].conpanyType)
-    if(this.basicDtail[0].conpanyType=="Customer"){
-      this.getCompanyDataById(id);
+    if(this.basicDetail[0].conpanyType=="Customer"){
+      console.log("this.basicDetail[0].companyOrLeadI",this.basicDetail[0].companyOrLeadId)
+      this.getCompanyDataById(this.basicDetail[0].companyOrLeadId);
     }else{
-      this.getLeadDataById(id);
+      console.log("this.basicDetail[0].companyOrLeadI",this.basicDetail[0].companyOrLeadId)
+      this.getLeadDataById(parseInt(this.basicDetail[0].companyOrLeadId));
     }
   });
 }

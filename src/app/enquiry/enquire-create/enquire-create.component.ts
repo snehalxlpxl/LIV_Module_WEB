@@ -40,13 +40,13 @@ export class EnquireCreateComponent implements OnInit {
     { label: 'Customer', value: 'Customer' }
   ];
   unNumbers = [
-    { value: '1201', label: 'Fusel oil' },
-    { value: '1202', label: '	Gas oil or diesel fuel or heating oil, light' },
-    { value: '1203', label: 'Gasoline or petrol or motor spirit' },
-    { value: '1204', label: 'Nitroglycerin' },
-    { value: '1206', label: 'Heptanes' },
-    { value: '1207', label: 'Hexaldehyde' },
-    { value: '1208', label: 'Hexanes' }
+    { value: 1201, label: 'Fusel oil' },
+    { value: 1202, label: '	Gas oil or diesel fuel or heating oil, light' },
+    { value: 1203, label: 'Gasoline or petrol or motor spirit' },
+    { value: 1204, label: 'Nitroglycerin' },
+    { value: 1206, label: 'Heptanes' },
+    { value: 1207, label: 'Hexaldehyde' },
+    { value: 1208, label: 'Hexanes' }
     // Add more options as needed
   ];
   userId: any;
@@ -304,9 +304,9 @@ export class EnquireCreateComponent implements OnInit {
         } else {
           console.error("Company ID not found in response data:");
         }
-        this.toastr.success("Data Added successfully", "Added !!", {
-          timeOut: 5000,
-        });
+        // this.toastr.success("Data Added successfully", "Added !!", {
+        //   timeOut: 5000,
+        // });
         Swal.fire({
           title: "Added!",
           text: "Data Added successfully",
