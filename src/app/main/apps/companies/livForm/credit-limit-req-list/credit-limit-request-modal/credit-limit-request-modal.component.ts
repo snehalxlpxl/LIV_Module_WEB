@@ -69,7 +69,10 @@ export class CreditLimitRequestModalComponent implements OnInit {
       creditTermId: ['', Validators.required],
       creditTermName: [''],
       note: [''],
-      createdBy:[this.userId]
+      createdBy:[this.userId],
+      expectedTurnover: [0, Validators.required],
+      expectedProfit: [0, Validators.required],
+      profitPercentage: [0],
     });
  
     this.loadSalesPerson();
@@ -79,7 +82,18 @@ export class CreditLimitRequestModalComponent implements OnInit {
     this.toggleCustomerType();
  
   }
-  
+   // Method to calculate profit percentage
+   calculateProfitPercentage() {
+    const expectedTurnover = this.CreditLimitReqForm.get('expectedTurnover')?.value;
+    const expectedProfit = this.CreditLimitReqForm.get('expectedProfit')?.value;
+    
+    if (expectedTurnover && expectedProfit) {
+      const profitPercentage = (expectedProfit / expectedTurnover) * 100;
+      this.CreditLimitReqForm.get('profitPercentage')?.setValue(profitPercentage.toFixed(2));
+    } else {
+      this.CreditLimitReqForm.get('profitPercentage')?.setValue(0);
+    }
+  }
   toggleCustomerTypeCheckbox(event: any) {
     this.isExistingCustomer = event.target.checked;
     this.toggleCustomerType(); // Update validation when checkbox is toggled
@@ -211,6 +225,7 @@ export class CreditLimitRequestModalComponent implements OnInit {
     this.CreditLimitSer.createCreditLimitRequest(this.CreditLimitReqForm.value).subscribe((res: any) => {
       
       if(res){
+        console.log(res);
         this.close();
         // window.location.reload();
         Swal.fire({

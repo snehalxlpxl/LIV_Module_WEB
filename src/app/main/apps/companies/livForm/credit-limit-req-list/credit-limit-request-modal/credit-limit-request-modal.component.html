@@ -228,7 +228,51 @@
             />
            
           </div>
+          <!-- new -->
+          <div class="row mb-1 form-group mt-1">
+            <div class="col-6">
+                <label for="expectedTurnover">Expected Turnover</label>
+                <input
+                  id="expectedTurnover"
+                  formControlName="expectedTurnover"
+                  type="number"
+                  class="form-control"
+                  placeholder="Enter Expected Turnover"
+                  (input)="calculateProfitPercentage()"
+                />
+            </div>
+            <div class="col-6">
+                  <label for="expectedProfit">Expected Profit</label>
+                  <input
+                    id="expectedProfit"
+                    formControlName="expectedProfit"
+                    type="number"
+                    class="form-control"
+                    placeholder="Enter Expected Profit"
+                    (input)="calculateProfitPercentage()"
+                  />
+            </div>
+          </div>
         </div>
+        
+        
+        
+     
+      
+        <div class="col-12">
+          <div class="form-group">
+              <label for="profitPercentage">Profit Percentage</label>
+              <input
+                id="profitPercentage"
+                formControlName="profitPercentage"
+                type="text"
+                class="form-control"
+                placeholder="Profit Percentage"
+                readonly
+              />
+      </div>
+        </div>
+      
     </div>
     </div>
     

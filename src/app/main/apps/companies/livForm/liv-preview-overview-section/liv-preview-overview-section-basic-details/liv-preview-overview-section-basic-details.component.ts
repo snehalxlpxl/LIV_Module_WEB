@@ -36,7 +36,7 @@ export class LivPreviewOverviewSectionBasicDetailsComponent implements OnInit {
   
    this.LIVRequestId = this.route.snapshot.paramMap.get('id');
    console.log("BasicDetailLIVRequestId",this.LIVRequestId);
-
+  console.log("LivPreviewOverviewSectionBasicDetailsComponent",this.livRequestData)
   //  this.livRequestService.getLivrequestById(this.LIVRequestId).subscribe({
   //   next: (data) => {
   //     this.livRequestData = data;

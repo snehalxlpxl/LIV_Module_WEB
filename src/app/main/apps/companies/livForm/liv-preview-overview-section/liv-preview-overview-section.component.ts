@@ -53,6 +53,8 @@ export class LivPreviewOverviewSectionComponent implements OnInit {
     console.log("BasicDetailgetAllDataLIVRequestId---------------", this.LIVRequestId);
 
     const livRequest$ = this.livPreviewService.getLivrequestById(LIVRequestId);
+    
+    // const livRequest$ = this.livPreviewService.getLIVRequest(LIVRequestId);
     const taskTimeLine$ = this.getLivTaskTimeLine(LIVRequestId);
     // const sumRevenue$ = this.livPreviewService.getSumOfRealizedRevenueLast60Days(this.customerId);
     // const realizedRevenue$ = this.livPreviewService.getSumRealizedRevenue(this.customerId);
