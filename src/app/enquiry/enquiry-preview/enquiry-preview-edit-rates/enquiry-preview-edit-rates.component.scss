@@ -5,3 +5,22 @@
 .more-options-dropdown {
   white-space: normal;
 }
+.unit-select {
+  width: 100px;
+  background-color: #414047;
+  color: #ffffff;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  border-color: #414047;
+}
+.rate-header {
+ background-color: #7367f0;
+ color: #ffffff;
+ border-radius: 5px;
+}
+.invoice-edit .invoice-preview-card .item-options-menu, .invoice-add .invoice-preview-card .item-options-menu {
+  min-width: 7rem!important;
+}
+
