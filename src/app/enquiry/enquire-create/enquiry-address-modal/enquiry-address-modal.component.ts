@@ -131,7 +131,7 @@ export class EnquiryAddressModalComponent implements OnInit {
       if (addressId) {
         this.updateEnquiryAddress(addressId,this.addressForm.value);
       } else {
-        if(this.viewType=='edit'){
+        if(this.viewType=='edit'||this.viewType=='preview'){
 
           this.addressForm.patchValue({
             enquiryId: this.enquiryIdFromUrl

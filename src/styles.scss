@@ -5,6 +5,7 @@
 @import '@core/scss/angular/libs/select.component.scss';
 @import '~ngx-toastr/toastr.css';
 @import '@core/scss/base/bootstrap-extended/_include'; // Components includes
+@import "~flatpickr/dist/flatpickr.css";
 
 // invoice list
 .invoice-list-wrapper {
@@ -90,3 +91,11 @@ i.code-icon {
 //   position: relative;
 //   width: 0;
 // }
+
+// .collapse-icon [aria-expanded=true]:after, .collapse-icon [aria-expanded=false]:after{
+//   top: 39%!important;
+// }
+
+.ng2-flatpickr {
+  display: block !important;
+}

@@ -50,4 +50,7 @@ export class EnquireCreateService {
   deletePakagesId(id:any): Observable<any[]> {
     return this.http.put<any[]>(`${environment.apiUrl}/Enquiries/deletePakagesId/${id}`,null);
   }
+  deleteAddressId(id:any): Observable<any[]> {
+    return this.http.put<any[]>(`${environment.apiUrl}/Enquiries/deleteEnqAddressId/${id}`,null);
+  }
 }

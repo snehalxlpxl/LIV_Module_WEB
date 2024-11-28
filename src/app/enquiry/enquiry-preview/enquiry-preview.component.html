@@ -3,8 +3,8 @@
         <div class="fixheader">
             <div class="row align-items-center mb-2">
                 <div class="col-lg-5 col-md-10 col-xs-10 col-10 d-flex align-items-center mb-2 mb-md-0 ml-1">
-                    <h2 class="mb-0 flex-shrink-1">
-                        <b>{{basicDtail[0].companyName}}</b>
+                    <h2 class="mb-0 flex-shrink-1" *ngIf="basicDtail && basicDtail.length > 0">
+                        <b>{{basicDtail[0].companyName||"No Name"}}</b>
                     </h2>
                     <span class="ml-1 badge badge-warning md-font">Awaiting Approval</span>
                 </div>
@@ -35,6 +35,7 @@
                             <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
                               <a ngbDropdownItem href="javascript:void(0)" (click)="openNewRateRequestModal()">New Rate Request</a>
                               <a ngbDropdownItem href="javascript:void(0)" (click)="openRateRequestRevisionModal()">Rate Request Revision</a>
+                              <a ngbDropdownItem href="javascript:void(0)" routerLink="/enquiry-rate/edit">Edit Rates</a>
                             </div>
                         </div>
                     </div>

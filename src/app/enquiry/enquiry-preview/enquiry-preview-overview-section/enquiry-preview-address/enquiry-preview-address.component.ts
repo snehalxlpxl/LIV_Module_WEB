@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EnquiryPriviewAddressService } from './enquiry-priview-address.service';
+import { EnquiryAddressModalComponent } from 'app/enquiry/enquire-create/enquiry-address-modal/enquiry-address-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { id } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-enquiry-preview-address',
@@ -9,28 +12,36 @@ import { EnquiryPriviewAddressService } from './enquiry-priview-address.service'
   styleUrls: ['./enquiry-preview-address.component.scss']
 })
 export class EnquiryPreviewAddressComponent implements OnInit {
-  enquiryRows = [
-    { enquiryId: '250084', customerName: 'Global Motors', industry: 'Automobile Parts', serviceType: 'FCL - Export', requirement: '4 X 40HC', status: 'Awaiting Rates' },
-    { enquiryId: '250085', customerName: 'Classic Marbles', industry: 'Marbles & Stones', serviceType: 'FCL - Import', requirement: '4 X 40HC', status: 'Closed' },
-    { enquiryId: '250086', customerName: 'Budweiser Beverages', industry: 'Beverages & Alcohol', serviceType: 'Air - Export', requirement: '1740 KGS', status: 'Quotation Sent' },
-    // Add more data as required
-  ];
+  // enquiryRows = [
+  //   { enquiryId: '250084', customerName: 'Global Motors', industry: 'Automobile Parts', serviceType: 'FCL - Export', requirement: '4 X 40HC', status: 'Awaiting Rates' },
+  //   { enquiryId: '250085', customerName: 'Classic Marbles', industry: 'Marbles & Stones', serviceType: 'FCL - Import', requirement: '4 X 40HC', status: 'Closed' },
+  //   { enquiryId: '250086', customerName: 'Budweiser Beverages', industry: 'Beverages & Alcohol', serviceType: 'Air - Export', requirement: '1740 KGS', status: 'Quotation Sent' },
+  //   // Add more data as required
+  // ];
   address:'702. Suntech Tower, SV Road, Khar West, Mumbai 400052, India Contact: 9890098900';
   currentEnquiry: any = null; 
   message = "Enquiry Overview"; // Example message
+  viewMode: any;
+  enquiryId: any;
 
   constructor(
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private enqPreviewAddrSer:EnquiryPriviewAddressService
+    private enqPreviewAddrSer:EnquiryPriviewAddressService,
+    private modalService: NgbModal
 
   ) { }
 
   ngOnInit(): void {
-    this.address = '702. Suntech Tower, SV Road, Khar West, Mumbai 400052, India Contact: 9890098900';
+    // this.address = '702. Suntech Tower, SV Road, Khar West, Mumbai 400052, India Contact: 9890098900';
 
     const enquiryId = this.route.snapshot.paramMap.get('id');
-
+    this.route.params.subscribe(params => {
+      if(params.type=='preview'){
+        this.viewMode='preview';
+        this.enquiryId=params.id;
+      }
+    });
     // Find the matching enquiry from the enquiryRows array
     if (enquiryId) {
       this.getaddrDetail(parseInt(enquiryId));
@@ -77,5 +88,15 @@ export class EnquiryPreviewAddressComponent implements OnInit {
       console.error('Error copying address to clipboard:', error);
       this.toastr.error('Error copying address to clipboard', 'Error');
     });
+  }
+
+  openEnquiryAddressesModal(enquiryId:number){
+    console.log("EnquiryAddressModalComponent")
+    const modalRef = this.modalService.open(EnquiryAddressModalComponent, {
+      size: 'md', 
+      backdrop: 'static', 
+    });
+    modalRef.componentInstance.enquiryIdFromUrl = enquiryId;
+    modalRef.componentInstance.viewType = this.viewMode;
   }
 }

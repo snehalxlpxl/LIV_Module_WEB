@@ -40,12 +40,12 @@
                 <!-- <ngx-datatable [rows]="enquiryRows" [rowHeight]="40" class="bootstrap core-bootstrap" [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true"> -->
                     <ngx-datatable-column name="ID" prop="enquiryId" [width]="70">
                         <ng-template let-enquiryId="value" ngx-datatable-cell-template>
-                            <a routerLink="/enquiry-preview/{{ enquiryId }}" class="font-weight-bold">{{ enquiryId }}</a>
+                            <a routerLink="/enquiry-preview/preview/{{ enquiryId }}" class="font-weight-bold">{{ enquiryId }}</a>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="CUSTOMER / LEAD" prop="companyName" [width]="200">
                         <ng-template let-value="value"let-row="row" ngx-datatable-cell-template>
-                            <a [routerLink]="['/enquiry-preview/', row['enquiryId']]" class="font-weight-bold">
+                            <a [routerLink]="['/enquiry-preview/preview/', row['enquiryId']]" class="font-weight-bold">
                                 {{ value }}
                             </a>
                             <small class="d-block text-muted">auto Parts</small>

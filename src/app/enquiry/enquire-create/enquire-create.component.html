@@ -54,7 +54,7 @@
                                                                     </div>
                                                                     <div class="row p-1">
 
-                                                                        <input type="hidden" formControlName="EnquiryId"/>
+                                                                        <input type="hidden" formControlName="EnquiryId" value="enquiryId"/>
                                                                         <input type="hidden" formControlName="CompanyOrLeadId"/>
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
@@ -538,7 +538,7 @@
                                                                                     <td style="padding: 10px;"  class="cursor-pointer" (click)="openModalContainerByData(detail)">edit</td>
                                                                                     <td style="padding: 10px;"  class="cursor-pointer">
                                                                                         <a (click)="deleteContainerByID(detail.enquiryContainerId)" href="javascript:void(0)" ngbDropdownItem>
-                                                                                        <i data-feather="trash" class="mr-1"></i>
+                                                                                        <i data-feather="trash" class="mr-1 text-danger"></i>
                                                                                         </a>
                                                                                     </td>
                                                                                   </tr>
@@ -825,35 +825,42 @@
                                                                     </div> 
                                                                     <div *ngIf="enquiryaddrDetailsList">
                                                                         <div *ngIf="enquiryaddrDetailsList && enquiryaddrDetailsList.length > 0" class="table-responsive">
+                                                                       
                                                                          
-                                                                         
-                                                                         <div class="mb-1 cursor-pointer" *ngFor="let detail of enquiryaddrDetailsList" (click)="openModalEnqArressByData(detail)">
-                                                                          <div class="row">
-                                                                            <div class="col-md-8">
-                                                                              <div class=""><b>{{ detail.addressTypeValue||detail.addressTypeNick }} Address</b></div>
-                                                                              <div class="pt-1">{{ detail.company|| detail.companyName}}, {{ detail.addressLine1 }},{{ detail.addressLine2 }}, {{ detail.city||detail.cityName }}-{{ detail.zipCode|| detail.zipcode}},{{ detail.country }},{{ detail.state ||detail.stateName}}</div>
+                                                                        <div class="mb-1 cursor-pointer" *ngFor="let detail of enquiryaddrDetailsList"
+                                                                            >
+                                                                            <div class="row">
+                                                                                <div class="col-md-9" (click)="openModalEnqArressByData(detail)">
+                                                                                    <div class="badge badge-light-success"><b>{{ detail.addressTypeValue||detail.addressTypeNick||detail.addressTypeName }} Address</b>
+                                                                                    </div>
+                                                                                    <div class="pt-1">{{ detail.company|| detail.companyName}}, {{ detail.addressLine1 }},{{ detail.addressLine2
+                                                                                        }}, {{ detail.city||detail.cityName }}-{{ detail.zipCode|| detail.zipcode}},{{ detail.country }},{{
+                                                                                        detail.state ||detail.stateName}}</div>
+                                                                                </div>
+                                                                                <div class="col-md-3 text-right">
+                                                                        
+                                                                                    <!-- <div class="badge badge-light-success mr-1">{{ detail.addressTypeValue||detail.addressTypeNick }}</div> -->
+                                                                                    <span class="mr-1" (click)="copyAddress($event, detail)"><i class="feather icon-copy"></i></span>
+<!--                                                                         
+                                                                                </div>
+                                                                                <div class="col-md-2 text-right"> -->
+                                                                                    <span (click)="deleteAddressId(detail.enquiryAddressId)" href="javascript:void(0)" >
+                                                                                        <i data-feather="trash" class="mr-1 text-danger"></i>
+                                                                                    </span>
+                                                                                </div>
                                                                             </div>
-                                                                            <div class="col-md-4 text-right">
-                                                                              
-                                                                              <div class="badge badge-light-success mr-1">{{ detail.addressTypeValue||detail.addressTypeNick }}</div>
-                                                                              <span class="" (click)="copyAddress($event, detail)"><i class="feather icon-copy"></i></span>
-                                                                                <!-- <div class="icon-wrapper">
-                                                                                  <i [data-feather]="data.key" [size]="24"></i>
-                                                                                </div> -->
-                                                                                <i [data-feather]="copy" [size]="24"></i>
-                                                                                <!-- <div *ngIf="showCopiedMessage" class="alert alert-success alert-dismissible fade show" role="alert">
-                                                                                  Address copied to clipboard!
-                                                                                  <button type="button" class="close" (click)="showCopiedMessage = false">
-                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                  </button>
-                                                                                </div> -->
-                                                                            </div>
-                                                                            
-                                                                          </div>
-                                                                          <hr>
-                                                                         </div>
-                                                                          
+                                                                        
                                                                         </div>
+                                                                    </div>
+                                                                                <!-- <div class="row">
+                                                                                    <div class="col-md-2 text-right">
+                                                                                        <a (click)="deleteAddressId(detail.enquiryAddressId)" href="javascript:void(0)" ngbDropdownItem>
+                                                                                            <i data-feather="trash" class="mr-1 text-danger"></i>
+                                                                                        </a>
+                                                                                    </div>
+                                                                          
+                                                                                </div> -->
+                                                                                <hr>
                                                                       </div>
 
                                                                 </ng-template>

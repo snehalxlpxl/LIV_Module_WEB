@@ -13,6 +13,7 @@ import { NgbModule, NgbNavModule,NgbDropdownModule,NgbNavConfig } from '@ng-boot
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CoreSidebarModule } from '@core/components';
 import { AppComponent } from 'app/app.component';
+import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EnquiryPreviewOverviewSectionComponent } from './enquiry-preview/enquiry-preview-overview-section/enquiry-preview-overview-section.component';
 import { EnquiryPreviewBasicDetailComponent } from './enquiry-preview/enquiry-preview-overview-section/enquiry-preview-basic-detail/enquiry-preview-basic-detail.component';
@@ -25,6 +26,7 @@ import { RequiredEquipmentModalComponent } from './enquire-create/required-equip
 import { EnquiryAddressModalComponent } from './enquire-create/enquiry-address-modal/enquiry-address-modal.component';
 import { NewRateRequestModalComponent } from './enquiry-preview/new-rate-request-modal/new-rate-request-modal.component';
 import { OpenRateRequestRevisionModalComponent } from './enquiry-preview/open-rate-request-revision-modal/open-rate-request-revision-modal.component';
+import { EnquiryPreviewEditRatesComponent } from './enquiry-preview/enquiry-preview-edit-rates/enquiry-preview-edit-rates.component';
 
 
 const routes = [
@@ -50,11 +52,22 @@ const routes = [
     data: { path: 'enquiry-create/:type/:id/:SalesOrLeadOwerId', animation: 'EnquireCreateComponent' }
   },
   // http://localhost:4200/enquiry-preview/250084
+ 
   {
     path: 'enquiry-preview/:id',
     component: EnquiryPreviewComponent,
     data: { path: 'enquiry-preview/:id', animation: 'EnquiryPreviewComponent' }
-  }
+  },
+  {
+    path: 'enquiry-preview/:type/:id',
+    component: EnquiryPreviewComponent,
+    data: { path: 'enquiry-preview/:type/:id', animation: 'EnquiryPreviewComponent' }
+  },
+  {
+    path: 'enquiry-rate/edit',
+    component: EnquiryPreviewEditRatesComponent,
+    data: { path: '', animation: 'EnquiryPreviewEditRatesComponent' }
+  },
 ]
 
 @NgModule({
@@ -72,7 +85,8 @@ const routes = [
     RequiredEquipmentModalComponent,
     EnquiryAddressModalComponent,
     NewRateRequestModalComponent,
-    OpenRateRequestRevisionModalComponent
+    OpenRateRequestRevisionModalComponent,
+    EnquiryPreviewEditRatesComponent
     ],
   imports: [
     CommonModule,
@@ -83,6 +97,7 @@ const routes = [
     FormsModule,
     CorePipesModule,
     NgbModule,
+    Ng2FlatpickrModule,
     NgbDropdownModule,
     NgSelectModule,
     CoreSidebarModule,

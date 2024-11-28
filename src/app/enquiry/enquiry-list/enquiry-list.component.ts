@@ -21,14 +21,15 @@ export class EnquiryListComponent implements OnInit {
   selectedFilter: string = 'All Filters';
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
-  enquiryRows = [
-    { enquiryId: '250084', customerName: 'Global Motors', industry: 'Automobile Parts', serviceType: 'FCL - Export', requirement: '4 X 40HC', status: 'Awaiting Rates' },
-    { enquiryId: '250085', customerName: 'Classic Marbles', industry: 'Marbles & Stones', serviceType: 'FCL - Import', requirement: '4 X 40HC', status: 'Closed' },
-    { enquiryId: '250086', customerName: 'Budweiser Beverages', industry: 'Beverages & Alcohol', serviceType: 'Air - Export', requirement: '1740 KGS', status: 'Quotation Sent' },
-    // Add more data as required
-  ];
+  // enquiryRows = [
+  //   { enquiryId: '250084', customerName: 'Global Motors', industry: 'Automobile Parts', serviceType: 'FCL - Export', requirement: '4 X 40HC', status: 'Awaiting Rates' },
+  //   { enquiryId: '250085', customerName: 'Classic Marbles', industry: 'Marbles & Stones', serviceType: 'FCL - Import', requirement: '4 X 40HC', status: 'Closed' },
+  //   { enquiryId: '250086', customerName: 'Budweiser Beverages', industry: 'Beverages & Alcohol', serviceType: 'Air - Export', requirement: '1740 KGS', status: 'Quotation Sent' },
+  //   // Add more data as required
+  // ];
 
-  tempData = [...this.enquiryRows]; 
+  // tempData = [...this.enquiryRows]; 
+  tempData :any[]=[]; 
   rows: any[];
   constructor(private modalService: NgbModal,private enquiryListSer:EnquiryListService,private cdRef: ChangeDetectorRef) { }
 
@@ -83,7 +84,7 @@ export class EnquiryListComponent implements OnInit {
   totalRecords: number = 0;
   totalRecords2: any[]=[]
   pageNumber: number = 1;
-  pageSize: number = 50;
+  pageSize: number = 10;
   totalPages: number = 0;
   pages: number[] = [];
   filteredData: any[] = [];

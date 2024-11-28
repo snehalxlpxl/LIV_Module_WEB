@@ -108,7 +108,9 @@ export class EnquireCreateComponent implements OnInit {
     }
     else{
       this.CustomerStatus="Customer";
-      this.disable=true;
+      this.disable=false;
+      this.clearArray();
+      this.enquiryId=0;
     }
     this.initForm(this.CustomerStatus,this.CustomerOrLeadId,this.salesPersonOrLeadId,this.userId);
   });
@@ -131,9 +133,11 @@ export class EnquireCreateComponent implements OnInit {
     this.getEnquiryPakagesById(this.enquiryId);
     this.getEnquiryAddressById(this.enquiryId);
   }else{
-    this.enquiryId=0;
+   
     this.clearArray();
     // this.clearForm();
+
+    this.enquiryId=0;
   }
 
   }//end of ngOnit
@@ -224,38 +228,73 @@ export class EnquireCreateComponent implements OnInit {
     console.log("error",this.newEnqiryCreate.errors);
   }
   clearForm(){
-    this.newEnqiryCreate.reset();
+    // this.newEnqiryCreate.reset();
+    this.newEnqiryCreate = this.fb.group({
+      EnquiryId:0,
+      CustomerStatus:null,
+      CompanyOrLeadId:0,
+      CompanyId:0,
+      LeadId:0,
+      LeadName:[''],
+      CompanyName:[''],
+      LeadOwnerId:null,
+      ServiceTypeId:[null],
+      ServiceType: [null],
+      IncoTermsId: [null],
+      IncoTerms:[''],
+      POLId:[null],
+      POL:[''],
+      PODId:[null],
+      POD:[''],
+      Commodity: [''],
+      FreeTimeOrigin: [''],
+      FreeTimeDestination: [''],
+      note:[''],
+      UN_Id:null,
+      UN_Name:[''],
+      RemarksHazardousCargo: [''],
+      EnquiryStatus:[''],
+      IsHazardous: false,
+      CreatedBy:0,
+      ModifiedBy:0,
+      DeletedBy:0,
+      Isdeleted:false,
+      equipment:[],
+      pakage:[],
+      address:[],
+     
+    }
+  );
   }
   compareFn(a, b) {
     return a.companyId === b;
   }
+//   saveEnquiry(newEnqiryCreate: FormGroup){
+//     console.log("newEnqiryCreate", newEnqiryCreate);
+//     console.log("newEnqiryCreate.get('ServiceType')", newEnqiryCreate.get('ServiceTypeId'));
+//     console.log("newEnqiryCreate.get('ServiceType').value", newEnqiryCreate.get('ServiceTypeId').value);
+// }
   saveEnquiry(newEnqiryCreate: FormGroup){
+    console.log(newEnqiryCreate.get('ServiceTypeId').value);
     if(newEnqiryCreate.valid){
-      //  if(this.newEnqiryCreate.get('ServiceType').value==='AIR'||'LCL'){
-      //   if (this.pakagesDetailsList.length===0) {
-      //       this.toastr.warning('Please add at least one Pakages detail before submitting the form.');
-      //       return; // Prevent form submission
-      //     }
-      //  }else
-      //  {
-      //   if (this.equipDetailsList.length === 0) {
-      //       this.toastr.warning('Please add at least one Container detail before submitting the form.');
-      //       return; // Prevent form submission
-      //     }
-      //  }
+      if (newEnqiryCreate.get('ServiceTypeId').value == 1007 || newEnqiryCreate.get('ServiceTypeId').value == 1008) {
+        if (this.pakagesDetailsList.length === 0) {
+            this.toastr.warning('Please add at least one Pakages detail before submitting the form.');
+            return; // Prevent form submission
+        }
+    } else {
+        if (this.equipDetailsList.length === 0) {
+            this.toastr.warning('Please add at least one Container detail before submitting the form.');
+            return; // Prevent form submission
+        }
+    }
+    
+    if (this.enquiryaddrDetailsList.length === 0) {
+        this.toastr.warning('Please add at least one Address detail before submitting the form.');
+        return; // Prevent form submission
+    }
 
-      // if (this.equipDetailsList.length === 0) {
-      //   this.toastr.warning('Please add at least one Container detail before submitting the form.');
-      //   return; // Prevent form submission
-      // }
-      //  if (this.pakagesDetailsList.length===0) {
-      //     this.toastr.warning('Please add at least one Pkages detail before submitting the form.');
-      //     return; // Prevent form submission
-      //   }
-      // else if(this.enquiryaddrDetailsList.length===0){
-      //   this.toastr.warning('Please add at least one Address detail before submitting the form.');
-      //   return; // Prevent form submission
-      // }
+   
     console.log("create",newEnqiryCreate.value);
     if(this.enquiryId){
   
@@ -778,6 +817,37 @@ export class EnquireCreateComponent implements OnInit {
             (response) => {
               console.log("Pakages deleted successfully");
               this.toastr.success("Pakages deleted successfully", "", {
+                timeOut: 3000,
+              });
+            window.location.reload();
+            },
+            (error) => {
+              console.error("Error deleting Pakages:", error);
+              this.toastr.error("Failed to delete Pakages", "", {
+                timeOut: 3000,
+              });
+            }
+          );
+        }
+      });
+    }
+    deleteAddressId(id: any) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#867ceb",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log("Deleting Pakages with ID:", id);
+          // Proceed with the deletion logic
+          this.enquireCreateServ.deleteAddressId(id).subscribe(
+            (response) => {
+              console.log("Address deleted successfully");
+              this.toastr.success("Address deleted successfully", "", {
                 timeOut: 3000,
               });
             window.location.reload();
