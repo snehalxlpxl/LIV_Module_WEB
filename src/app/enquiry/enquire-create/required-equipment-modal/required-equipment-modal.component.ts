@@ -59,9 +59,10 @@ export class RequiredEquipmentModalComponent implements OnInit {
       containerTypesId:['',Validators.required],
       containerType: '',
       containerCount:['',Validators.required],
-      createdBy:this.userId,
-      modifiedBy:this.userId,
-      deletedBy:this.userId,
+      createdBy:11049,
+      modifiedBy:11049,
+      deletedBy:11049
+      
     });
   }
   patchForm(data:any){

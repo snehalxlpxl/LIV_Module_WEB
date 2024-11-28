@@ -443,7 +443,9 @@ export class EnquireCreateComponent implements OnInit {
           EnquiryStatus:data.enquiryStatus,
           IsHazardous: data.isHazardous,
       });
+      this.selectedServiceType=data.serviceType;
     });
+    
   }
   getEnquiryContainertById(enquiryID:number){
     this.enquireCreateServ.getEnquiryContainertById(enquiryID).subscribe(
