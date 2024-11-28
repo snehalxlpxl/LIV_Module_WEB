@@ -54,29 +54,125 @@
                                                                     </div>
                                                                     <div class="row p-1">
 
+                                                                        <input type="hidden" formControlName="EnquiryId" value="enquiryId"/>
+                                                                        <input type="hidden" formControlName="CompanyOrLeadId"/>
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
                                                                                 <label>Customer Status</label>
                                                                                 <ng-select id="CustomerStatus"
+                                                                                [ngClass]="{
+                                                                                    'ng-touched':
+                                                                                    newEnqiryCreate.get(
+                                                                                        'CustomerStatus'
+                                                                                      ).touched,
+                                                                                    error:
+                                                                                    newEnqiryCreate.get(
+                                                                                        'CustomerStatus'
+                                                                                      ).invalid &&
+                                                                                      newEnqiryCreate.get(
+                                                                                        'CustomerStatus'
+                                                                                      ).touched
+                                                                                  }"
                                                                                 formControlName="CustomerStatus"
                                                                                 [items]="customerStatusOptions" bindValue="label"
                                                                                 bindLabel="label"
+                                                                                [readonly]="disable" 
+                                                                                (change)=onChangeStatus($event)
                                                                                 placeholder="Lead / Customer">
-                                                                                   
-                                                                                    <ng-option></ng-option>
+                                                                                
                                                                                 </ng-select>
+                                                                                <div class="invalid-feedback" *ngIf="newEnqiryCreate.get('CustomerStatus').invalid && newEnqiryCreate.get('CustomerStatus').touched">
+                                                                                    Please select customer status
+                                                                                </div>
                                                                             </div>
                                                                         </div>
 
                                                                         <div class="col-md-12">
-                                                                            <div class="form-group">
-                                                                                <label>Customer Name</label>
-                                                                                <input formControlName="CompanyName"
-                                                                                    type="text"
-                                                                                    placeholder="Company Name"
-                                                                                    class="form-control">
+                                                                            <div class="form-group" *ngIf="this.CustomerStatus == 'Customer'">
+                                                                              <label> Company Name</label>
+                                                                              <div class="form-group f-autocomplet-wrapper">
+                                                                                <ng-select id="CompanyId" formControlName="CompanyId" [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'CompanyId'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'CompanyId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'CompanyId'
+                                                                                          ).touched
+                                                                                      }" bindValue="companyId" bindLabel="companyName" [readonly]="disable" 
+                                                                                      (change)="onChangeCompany($event)"
+                                                                                      [clearable]="false" placeholder="Select Company"  [items]="companies" #select>
+                                                                                  <ng-option *ngIf="
+                                                                                          companies.length === 0
+                                                                                        " [disabled]="true">No data</ng-option>
+                                                                                  <!-- <ng-option *ngFor="
+                                                                                          let comp of companies
+                                                                                        " [value]="comp.companyId">
+                                                                                    {{ comp.companyName }}
+                                                                                  </ng-option> -->
+                                                                                  <ng-option [value]="null" disabled>select data</ng-option>
+                                                                                </ng-select>
+                                                                                <span *ngIf="
+                                                                                        newEnqiryCreate.get(
+                                                                                          'CompanyId'
+                                                                                        ).invalid &&
+                                                                                        newEnqiryCreate.get(
+                                                                                          'CompanyId'
+                                                                                        ).touched
+                                                                                      " class="invalid-form">
+                                                                                  <small class="form-text text-danger">Please Select 
+                                                                                    Company</small>
+                                                                                </span>
+                                                                                <input type="hidden" formControlName="CompanyName"/>
+                                                                              </div>
                                                                             </div>
-                                                                        </div>
+                                                                            <div class="form-group" *ngIf="this.CustomerStatus == 'Lead'">
+                                                                                <label> Lead Name</label>
+                                                                                <div class="form-group f-autocomplet-wrapper">
+                                                                                  <ng-select id="LeadId" formControlName="LeadId" [ngClass]="{
+                                                                                          'ng-touched':
+                                                                                          newEnqiryCreate.get(
+                                                                                              'LeadId'
+                                                                                            ).touched,
+                                                                                          error:
+                                                                                          newEnqiryCreate.get(
+                                                                                              'LeadId'
+                                                                                            ).invalid &&
+                                                                                            newEnqiryCreate.get(
+                                                                                              'LeadId'
+                                                                                            ).touched
+                                                                                        }" bindValue="leadId" bindLabel="companyName" [readonly]="disable" 
+                                                                                        (change)="onChangeLeadName($event)"
+                                                                                    placeholder="Select Lead" [items]="leaddata" #select>
+                                                                                    <ng-option *ngIf="
+                                                                                    leaddata.length === 0
+                                                                                          " [disabled]="true">No data</ng-option>
+                                                                                    <ng-option *ngFor="
+                                                                                            let comp of leaddata
+                                                                                          " [value]="comp.leadId">
+                                                                                      {{ comp.companyName }}
+                                                                                    </ng-option>
+                                                                                  </ng-select>
+                                                                                  <span *ngIf="
+                                                                                          newEnqiryCreate.get(
+                                                                                            'LeadId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'LeadId'
+                                                                                          ).touched
+                                                                                        " class="invalid-form">
+                                                                                    <small class="form-text text-danger">Please Select 
+                                                                                      Lead</small>
+                                                                                  </span>
+                                                                                  <input type="hidden" formControlName="LeadName"/>
+                                                                                </div>
+                                                                              </div>
+                                                                          </div>
+
 
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
@@ -84,9 +180,22 @@
                                                                                     Person)</label>
                                                                                 <ng-select id="salesPerson"
                                                                                     formControlName="LeadOwnerId"
-                                                                                    [items]="salesPerson" bindValue="userId"
+                                                                                    [items]="salesPerson" bindValue="userId" [readonly]="disable" 
                                                                                     bindLabel="userDisplayName"
-                                                                                    placeholder="Sales Person Name">
+                                                                                    placeholder="Sales Person Name"
+                                                                                    [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'LeadOwnerId'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'LeadOwnerId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'LeadOwnerId'
+                                                                                          ).touched
+                                                                                      }">
                                                                                     <ng-option></ng-option>
                                                                                 </ng-select>
                                                                             </div>
@@ -100,9 +209,32 @@
                                                                                     bindLabel="jobtypeName"
                                                                                     bindValue="jobtypeId" 
                                                                                     (change)="onChangeServiceType($event)"
-                                                                                    placeholder="FCL, Air, Etc">
+                                                                                    placeholder="FCL, Air, Etc" [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'ServiceTypeId'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'ServiceTypeId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'ServiceTypeId'
+                                                                                          ).touched
+                                                                                      }">
                                                                                     <ng-option></ng-option>
                                                                                 </ng-select>
+                                                                                <span *ngIf="
+                                                                                        newEnqiryCreate.get(
+                                                                                        'ServiceTypeId'
+                                                                                        ).invalid &&
+                                                                                        newEnqiryCreate.get(
+                                                                                        'ServiceTypeId'
+                                                                                        ).touched
+                                                                                    " class="invalid-form">
+                                                                                <small class="form-text text-danger">Please Select Service Type </small>
+                                                                                </span>
+                                                                               
                                                                                 <input type="hidden" formControlName="ServiceType"/>
                                                                             </div>
                                                                         </div>
@@ -116,9 +248,32 @@
                                                                                     bindLabel="incotermName"
                                                                                     bindValue="incoTermId" 
                                                                                     (change)="onChangeIncoTerm($event)"
-                                                                                    placeholder="Exworks, FOB, etc">
+                                                                                    placeholder="Exworks, FOB, etc" [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'IncoTermsId'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'IncoTermsId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'IncoTermsId'
+                                                                                          ).touched
+                                                                                      }">
                                                                                     <ng-option></ng-option>
                                                                                 </ng-select>
+                                                                                <span *ngIf="
+                                                                                        newEnqiryCreate.get(
+                                                                                        'IncoTermsId'
+                                                                                        ).invalid &&
+                                                                                        newEnqiryCreate.get(
+                                                                                        'IncoTermsId'
+                                                                                        ).touched
+                                                                                    " class="invalid-form">
+                                                                                <small class="form-text text-danger">Please Select Inco Term </small>
+                                                                                </span>
+                                                                                
                                                                                 <input type="hidden" formControlName="IncoTerms"/>
                                                                             </div>
                                                                         </div>
@@ -130,10 +285,32 @@
                                                                                     [items]="locationMasterData"
                                                                                     bindValue="locationId"
                                                                                     bindLabel="locationShortName"
-                                                                                    (change)="onChangePOL($event)"
-                                                                                    placeholder="Nava Sheva, Mumbai,etc">
+                                                                                    (change)="onChangePOL($event);onChangePOLPOD()"
+                                                                                    placeholder="Nava Sheva, Mumbai,etc"[ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'POLId'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'POLId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'POLId'
+                                                                                          ).touched
+                                                                                      }">
                                                                                     <ng-option></ng-option>
                                                                                 </ng-select>
+                                                                                <span *ngIf="
+                                                                                    newEnqiryCreate.get(
+                                                                                    'POLId'
+                                                                                    ).invalid &&
+                                                                                    newEnqiryCreate.get(
+                                                                                    'POLId'
+                                                                                    ).touched
+                                                                                " class="invalid-form">
+                                                                            <small class="form-text text-danger">Please Select POL </small>
+                                                                            </span>
                                                                                 <input type="hidden" formControlName="POL"/>
 
                                                                             </div>
@@ -146,14 +323,43 @@
                                                                                     [items]="locationMasterData"
                                                                                     bindValue="locationId"
                                                                                     bindLabel="locationShortName"
-                                                                                    (change)="onChangePOD($event)"
-                                                                                    placeholder="Istambul, New York, etc">
+                                                                                    (change)="onChangePOD($event);onChangePOLPOD()"
+                                                                                    placeholder="Istambul, New York, etc" [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'PODId'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'PODId'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'PODId'
+                                                                                          ).touched
+                                                                                      }">
                                                                                     <ng-option></ng-option>
                                                                                 </ng-select>
+                                                                                <span *ngIf="
+                                                                                    newEnqiryCreate.get(
+                                                                                    'PODId'
+                                                                                    ).invalid &&
+                                                                                    newEnqiryCreate.get(
+                                                                                    'PODId'
+                                                                                    ).touched
+                                                                                " class="invalid-form">
+                                                                            <small class="form-text text-danger">Please Select POD </small>
+                                                                            </span>
                                                                                 <input type="hidden" formControlName="POD"/>
 
                                                                             </div>
+                                                                            <!-- Show error for same POL and POD -->
+                                                                            <span *ngIf="newEnqiryCreate.hasError('samePOLPOD')">
+                                                                                <span class="invalid-form">
+                                                                                <small class="form-text text-danger">POL and POD should not be the same</small>
+                                                                                </span>
+                                                                            </span>
                                                                         </div>
+
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
                                                                                 <label>Commodity</label>
@@ -169,7 +375,30 @@
                                                                                 <input id="FreeTimeOrigin" type="text"
                                                                                     class="form-control"
                                                                                     formControlName="FreeTimeOrigin"
-                                                                                    placeholder="Auto Parts, Plastics,etc" />
+                                                                                    placeholder="Auto Parts, Plastics,etc" [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'FreeTimeOrigin'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'FreeTimeOrigin'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'FreeTimeOrigin'
+                                                                                          ).touched
+                                                                                      }"/>
+                                                                                      <span *ngIf="
+                                                                                      newEnqiryCreate.get(
+                                                                                        'FreeTimeOrigin'
+                                                                                      ).invalid &&
+                                                                                      newEnqiryCreate.get(
+                                                                                        'FreeTimeOrigin'
+                                                                                      ).touched
+                                                                                    " class="invalid-form">
+                                                                                        <small class="form-text text-danger">Please Select Free time origin
+                                                                                          Count</small>
+                                                                                      </span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
@@ -178,15 +407,37 @@
                                                                                 <input id="FreeTimeDestination"
                                                                                     type="text" class="form-control"
                                                                                     formControlName="FreeTimeDestination"
-                                                                                    placeholder="Auto Parts, Plastics,etc" />
+                                                                                    placeholder="Auto Parts, Plastics,etc" [ngClass]="{
+                                                                                        'ng-touched':
+                                                                                        newEnqiryCreate.get(
+                                                                                            'FreeTimeDestination'
+                                                                                          ).touched,
+                                                                                        error:
+                                                                                        newEnqiryCreate.get(
+                                                                                            'FreeTimeDestination'
+                                                                                          ).invalid &&
+                                                                                          newEnqiryCreate.get(
+                                                                                            'FreeTimeDestination'
+                                                                                          ).touched
+                                                                                      }"/>
+                                                                                      <span *ngIf="
+                                                                                      newEnqiryCreate.get(
+                                                                                        'FreeTimeDestination'
+                                                                                      ).invalid &&
+                                                                                      newEnqiryCreate.get(
+                                                                                        'FreeTimeDestination'
+                                                                                      ).touched
+                                                                                    " class="invalid-form">
+                                                                                        <small class="form-text text-danger">Please Select Free Time Destination</small>
+                                                                                      </span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
                                                                                 <label>Notes</label>
-                                                                                <textarea id="Notes" type="text"
+                                                                                <textarea id="Note" type="text"
                                                                                     class="form-control"
-                                                                                    formControlName="Notes"
+                                                                                    formControlName="note"
                                                                                     placeholder="General & Stackable"></textarea>
                                                                             </div>
                                                                         </div>
@@ -206,8 +457,9 @@
                             </div>
 
                         </div>
-                        <div class="col-md-6">
-                            <div class="rounded-corner-accordian">
+                        <div class="col-md-6" >
+                            <div class="rounded-corner-accordian" *ngIf="!['LCL', 'AIR'].includes(selectedServiceType)">
+                                <!-- <div class="rounded-corner-accordian" > -->
                                 <section id="accordion">
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -243,7 +495,7 @@
                                                           </button> -->
                                                                             <span class="icon-right">
 
-                                                                                <i class="feather icon-plus-square" (click)="openRequiredEquipmentModal()"></i>
+                                                                                <i class="feather icon-plus-square" (click)="openRequiredEquipmentModal(enquiryId)"></i>
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -268,22 +520,30 @@
                                                                         <div *ngIf="equipDetailsList && equipDetailsList.length > 0" class="table-responsive">
                                                                          
                                                                          
-                                                                         <table class="table-responsive table-hover">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                <th>containerTypes</th>
-                                                                                <th>containerCount</th>
-                                                                                
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr *ngFor="let detail of equipDetailsList" (click)="openAddressFormlByData(detail)">
-                                                                                <td>{{ detail.containerTypes }}</td>
-                                                                                <td>{{ detail.containerCount}}</td>
-                                                                               
-                                                                                </tr>
-                                                                            </tbody>
-                                                                            </table>
+                                                                            <table class="table table-responsive table-hover table-striped table-bordered" style="padding: 10px;">
+                                                                                <thead class="thead-light">
+                                                                                  <tr>
+                                                                                    <th style="padding: 10px;">Container Type</th>
+                                                                                    <th style="padding: 10px;">Container Count</th>
+                                                                                    <th style="padding: 10px;">Gross Weight</th>
+                                                                                    <th style="padding: 10px;">Edit</th>
+                                                                                    <th style="padding: 10px;">Delete</th>
+                                                                                  </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                  <tr *ngFor="let detail of equipDetailsList" >
+                                                                                    <td style="padding: 10px;">{{ detail.containerTypes }}{{detail.containerType}}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.containerCount}}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.grossWeight}}</td>
+                                                                                    <td style="padding: 10px;"  class="cursor-pointer" (click)="openModalContainerByData(detail)">edit</td>
+                                                                                    <td style="padding: 10px;"  class="cursor-pointer">
+                                                                                        <a (click)="deleteContainerByID(detail.enquiryContainerId)" href="javascript:void(0)" ngbDropdownItem>
+                                                                                        <i data-feather="trash" class="mr-1 text-danger"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                  </tr>
+                                                                                </tbody>
+                                                                              </table>
                                                                           
                                                                         </div>
                                                                       </div>
@@ -298,7 +558,8 @@
                                     </div>
                                 </section>
                             </div>
-                            <div class="rounded-corner-accordian mt-2">
+                            <div class="rounded-corner-accordian" *ngIf="selectedServiceType === 'LCL' || selectedServiceType === 'AIR'">
+                                <!-- <div class="rounded-corner-accordian"> -->
                                 <section id="accordion">
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -334,7 +595,7 @@
                                                           </button> -->
                                                                             <span class="icon-right">
 
-                                                                                <i class="feather icon-plus-square" (click)="openPackageDetailModal()"></i>
+                                                                                <i class="feather icon-plus-square" (click)="openPackageDetailModal(enquiryId)"></i>
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -359,35 +620,42 @@
                                                                         <div *ngIf="pakagesDetailsList && pakagesDetailsList.length > 0" class="table-responsive">
                                                                          
                                                                          
-                                                                         <table class="table-responsive table-hover">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                <th>packageType</th>
-                                                                                <th>packageCount</th>
-                                                                                <th>lengthMm</th>
-                                                                                <th>weightMm</th>
-                                                                                <th>heightMm</th>
-                                                                                <th>netWeight</th>
-                                                                                <th>grossWeight</th>
-                                                                                <th>volumeWeight</th>
-                                                                                <th>volumeWeight</th>
-                                                                                <th>cbm</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr *ngFor="let detail of pakagesDetailsList" (click)="openAddressFormlByData(detail)">
-                                                                                <td>{{ detail.packageType }}</td>
-                                                                                <td>{{ detail.packageCount}}</td>
-                                                                                <td>{{ detail.lengthMm }}</td>
-                                                                                <td>{{ detail.weightMm }}</td>
-                                                                                <td>{{ detail.heightMm }}</td>
-                                                                                <td>{{ detail.netWeight }}</td>
-                                                                                <td>{{ detail.grossWeight}}</td>
-                                                                                <td>{{ detail.volumeWeight}}</td>
-                                                                                <td>{{ detail.cbm}}</td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                            </table>
+                                                                            <table class="table table-responsive table-hover table-striped table-bordered" style="width: 100%; table-layout: auto;font-size: 13px;">
+                                                                                <thead class="thead-light">
+                                                                                  <tr style="font-size: 13px;">
+                                                                                    <th style="padding: 10px;">Package Type</th>
+                                                                                    <th style="padding: 10px;">Package Count</th>
+                                                                                    <th style="padding: 10px;">Length (mm)</th>
+                                                                                    <th style="padding: 10px;">Weight (mm)</th>
+                                                                                    <th style="padding: 10px;">Height (mm)</th>
+                                                                                    <th style="padding: 10px;">Net Weight</th>
+                                                                                    <th style="padding: 10px;">Gross Weight</th>
+                                                                                    <th style="padding: 10px;">Volume Weight</th>
+                                                                                    <th style="padding: 10px;">CBM</th>
+                                                                                    <th style="padding: 10px;">Edit</th>
+                                                                                    <th style="padding: 10px;">Delete</th>
+                                                                                  </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                  <tr *ngFor="let detail of pakagesDetailsList" >
+                                                                                    <td style="padding: 10px;">{{ detail.packageType }}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.packageCount}}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.lengthMm }}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.weightMm }}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.heightMm }}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.netWeight }}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.grossWeight}}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.volumeWeight}}</td>
+                                                                                    <td style="padding: 10px;">{{ detail.cbm}}</td>
+                                                                                    <td style="padding: 10px;" (click)="openModalPakagesByData(detail)" class="cursor-pointer">Edit</td>
+                                                                                    <td style="padding: 10px;" class="cursor-pointer">
+                                                                                        <a (click)="deletePakagesId(detail.enquiryPackageId)" href="javascript:void(0)" ngbDropdownItem>
+                                                                                            <i data-feather="trash" class="mr-1"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                  </tr>
+                                                                                </tbody>
+                                                                              </table>
                                                                           
                                                                         </div>
                                                                       </div>
@@ -457,13 +725,28 @@
                                                                         <div class="col-md-12">
                                                                         <div class="form-group">
                                                                             <label>UN Number & Proper Shipping Name</label>
-                                                                            <ng-select id="UN_Name"
-                                                                                formControlName="UN_Name"
+                                                                            <ng-select id="UN_Id"
+                                                                                formControlName="UN_Id"
+                                                                                [items]="unNumbers" 
+                                                                                bindLabel="label"
+                                                                                bindValue="value" 
+                                                                                (change)="onChangeUN_Number($event)"
                                                                                 placeholder="Automobile, Marbles, Pharma, etc">
                                                                                 <ng-option></ng-option>
                                                                             </ng-select>
+                                                                            <input type="hidden" formControlName="UN_Name"/>
                                                                         </div>
                                                                     </div>
+                                                                    <!-- <ng-select id="serviceType"
+                                                                    formControlName="ServiceTypeId"
+                                                                    [items]="serviceTypes" 
+                                                                    bindLabel="jobtypeName"
+                                                                    bindValue="jobtypeId" 
+                                                                    (change)="onChangeServiceType($event)"
+                                                                    placeholder="FCL, Air, Etc">
+                                                                    <ng-option></ng-option>
+                                                                </ng-select>
+                                                                <input type="hidden" formControlName="ServiceType"/> -->
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
                                                                             <label>Remarks for Hazardous Cargo</label>
@@ -519,7 +802,7 @@
                                                           </button> -->
                                                                             <span class="icon-right">
 
-                                                                                <i class="feather icon-plus-square" (click)="openEnquiryAddressesModal()"></i>
+                                                                                <i class="feather icon-plus-square" (click)="openEnquiryAddressesModal(enquiryId)"></i>
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -542,35 +825,42 @@
                                                                     </div> 
                                                                     <div *ngIf="enquiryaddrDetailsList">
                                                                         <div *ngIf="enquiryaddrDetailsList && enquiryaddrDetailsList.length > 0" class="table-responsive">
+                                                                       
                                                                          
-                                                                         
-                                                                         <div class="mb-1 cursor-pointer" *ngFor="let detail of enquiryaddrDetailsList" (click)="openAddressFormlByData(detail)">
-                                                                          <div class="row">
-                                                                            <div class="col-md-8">
-                                                                              <div class=""><b>{{ detail.addressTypeValue||detail.addressTypeNick }} Address</b></div>
-                                                                              <div class="pt-1">{{ detail.company|| detail.companyName}}, {{ detail.addressLine1 }},{{ detail.addressLine2 }}, {{ detail.city||detail.cityName }}-{{ detail.zipCode|| detail.zipcode}},{{ detail.country }},{{ detail.state ||detail.stateName}}</div>
+                                                                        <div class="mb-1 cursor-pointer" *ngFor="let detail of enquiryaddrDetailsList"
+                                                                            >
+                                                                            <div class="row">
+                                                                                <div class="col-md-9" (click)="openModalEnqArressByData(detail)">
+                                                                                    <div class="badge badge-light-success"><b>{{ detail.addressTypeValue||detail.addressTypeNick||detail.addressTypeName }} Address</b>
+                                                                                    </div>
+                                                                                    <div class="pt-1">{{ detail.company|| detail.companyName}}, {{ detail.addressLine1 }},{{ detail.addressLine2
+                                                                                        }}, {{ detail.city||detail.cityName }}-{{ detail.zipCode|| detail.zipcode}},{{ detail.country }},{{
+                                                                                        detail.state ||detail.stateName}}</div>
+                                                                                </div>
+                                                                                <div class="col-md-3 text-right">
+                                                                        
+                                                                                    <!-- <div class="badge badge-light-success mr-1">{{ detail.addressTypeValue||detail.addressTypeNick }}</div> -->
+                                                                                    <span class="mr-1" (click)="copyAddress($event, detail)"><i class="feather icon-copy"></i></span>
+<!--                                                                         
+                                                                                </div>
+                                                                                <div class="col-md-2 text-right"> -->
+                                                                                    <span (click)="deleteAddressId(detail.enquiryAddressId)" href="javascript:void(0)" >
+                                                                                        <i data-feather="trash" class="mr-1 text-danger"></i>
+                                                                                    </span>
+                                                                                </div>
                                                                             </div>
-                                                                            <div class="col-md-4 text-right">
-                                                                              
-                                                                              <div class="badge badge-light-success mr-1">{{ detail.addressTypeValue||detail.addressTypeNick }}</div>
-                                                                              <span class="" (click)="copyAddress($event, detail)"><i class="feather icon-copy"></i></span>
-                                                                                <!-- <div class="icon-wrapper">
-                                                                                  <i [data-feather]="data.key" [size]="24"></i>
-                                                                                </div> -->
-                                                                                <i [data-feather]="copy" [size]="24"></i>
-                                                                                <!-- <div *ngIf="showCopiedMessage" class="alert alert-success alert-dismissible fade show" role="alert">
-                                                                                  Address copied to clipboard!
-                                                                                  <button type="button" class="close" (click)="showCopiedMessage = false">
-                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                  </button>
-                                                                                </div> -->
-                                                                            </div>
-                                                                            
-                                                                          </div>
-                                                                          <hr>
-                                                                         </div>
-                                                                          
+                                                                        
                                                                         </div>
+                                                                    </div>
+                                                                                <!-- <div class="row">
+                                                                                    <div class="col-md-2 text-right">
+                                                                                        <a (click)="deleteAddressId(detail.enquiryAddressId)" href="javascript:void(0)" ngbDropdownItem>
+                                                                                            <i data-feather="trash" class="mr-1 text-danger"></i>
+                                                                                        </a>
+                                                                                    </div>
+                                                                          
+                                                                                </div> -->
+                                                                                <hr>
                                                                       </div>
 
                                                                 </ng-template>
@@ -586,7 +876,9 @@
                         </div>
                     </div>
                 </div>
-
+                <input type="hidden" formControlName="CreatedBy" value="userId"/>
+                <input type="hidden" formControlName="ModifiedBy" value="userId"/>
+                <input type="hidden" formControlName="DeletedBy" value="userId"/>
 
             </form>
         </div>

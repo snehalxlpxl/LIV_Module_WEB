@@ -17,6 +17,8 @@ import { EnquiryAddressModalService } from './enquiry-address-modal.service';
 export class EnquiryAddressModalComponent implements OnInit {
   @Input() addressData: any; // Data passed from the parent component
   @Output() updatedAddress = new EventEmitter<any>();
+  @Input() enquiryIdFromUrl:any;
+  @Input() viewType:any;
 
   
     @ViewChild('company') companyField!:  ElementRef;
@@ -35,6 +37,7 @@ export class EnquiryAddressModalComponent implements OnInit {
   countries : any[];
   states = [];
   customerId: number;
+  userId: any;
  
 
 
@@ -42,6 +45,7 @@ export class EnquiryAddressModalComponent implements OnInit {
     private fb: FormBuilder,
     public activeModal: NgbActiveModal,
     public addAddrSer:AddCustAddressService,
+    private enqAddrSer:EnquiryAddressModalService,
     private toastr: ToastrService,
     private router:Router,
     private activeroute: ActivatedRoute,
@@ -49,20 +53,24 @@ export class EnquiryAddressModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userLogInData();
     this.addressForm = this.fb.group({
-      AddressTypeId:[0],
-      addressType: '',
-      addressTypeValue: [null] ,// For hidden field
+      enquiryAddressId:0,
+      enquiryId:0,
+      addressTypeId: 0,
+      addressTypeValue: [''] ,// For hidden field
       company: ['', Validators.required],
       addressLine1: ['', Validators.required],
       addressLine2: [''],
       city: ['', Validators.required],
       country: ['', Validators.required],
       CountryName:[''],
-      StateId:0,
       state: ['', Validators.required],
       StateName:[''],
       zipCode: ['', [Validators.required]], // Example for US ZIP code
+      createdBy:this.userId??0,
+      modifiedBy:this.userId??0,
+      deletedBy:this.userId??0,
     });
     this.getCountry();
      // Watch for changes on the country form control
@@ -73,24 +81,37 @@ export class EnquiryAddressModalComponent implements OnInit {
     if (this.addressData) {
       // this.patchForm();
       console.log("data for patch",this.addressData);
-      // this.patchForm(this.addressData) 
+      this.patchForm(this.addressData) 
     }
     this.activeroute.paramMap.subscribe(params => {
       this.customerId = +params.get('id');
     });
   }
+
+  userLogInData(){
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    if (userData) {
+      // this.userName = userData.userName;
+      this.userId = userData.userId;
+      // console.log('User Name:', this.userName);
+      console.log('User ID:', this.userId);
+      } else {
+          console.log('No user data found in sessionStorage');
+      }
+  }
+  
   patchForm(data:any) {
     this.addressForm.patchValue({
-      // companyAddressId:data.companyAddressId,
+      enquiryAddressId:data.enquiryAddressId,
       enquiryId:data.enquiryId,
-      addressType:data.addressTypeId,
+      addressTypeId:data.addressTypeId,
       addressTypeValue:data.addressTypeNick,
       company:data.companyName,
       addressLine1:data.addressLine1,
       addressLine2:data.addressLine2,
-      city:data.cityName,
+      city:data.city,
       country:data.countryId,
-      CountryName:data.country,
+      CountryName:data.countryName,
       state:data.stateId,
       StateName:data.stateName,
       zipCode:data.zipcode,
@@ -102,13 +123,31 @@ export class EnquiryAddressModalComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.addressForm.valid) { 
+    const addressId = this.addressForm.get('enquiryAddressId').value;
+
+    if (this.addressForm.valid) {
+
       console.log(this.addressForm.value)
-      this.enquiryAddrSer.addEnquiryAddressDetails(this.addressForm.value);
-              console.log(this.enquiryAddrSer.getEnquiryAddDetailsList());
-              this.close();
+      if (addressId) {
+        this.updateEnquiryAddress(addressId,this.addressForm.value);
+      } else {
+        if(this.viewType=='edit'||this.viewType=='preview'){
+
+          this.addressForm.patchValue({
+            enquiryId: this.enquiryIdFromUrl
+          });
+          console.log("insert",this.addressForm.value);
+          this.insertEnquiryAddre(this.addressForm.value);
+
+        }else{
+        this.enquiryAddrSer.addEnquiryAddressDetails(this.addressForm.value);
+        console.log(this.enquiryAddrSer.getEnquiryAddDetailsList());
+        this.close();
+        }
+      }
+
     }
-    else{
+    else {
       this.addressForm.markAllAsTouched();
     }
   }
@@ -172,32 +211,24 @@ export class EnquiryAddressModalComponent implements OnInit {
       this.zipcodeField.nativeElement.focus();
     }, 0);
   }
-  updateCustAddre(id:number,data:any){
-    this.addAddrSer.updateCustAddre(id,data).subscribe( res => {
-      console.table(data.companyId);
-     
-     
-      // window.location.reload();
-      // this.router.navigate([`/customer/edit/${data.companyId}`]).then(() => {
-      //   this.toastr.success('Address updated successfully', "", {
-      //     timeOut: 3000,
-      //   });
-      // });
+  updateEnquiryAddress(id: number, data: any) {
+    this.enqAddrSer.updateEnquiryAddress(id, data).subscribe(res => {
+
       this.activeModal.dismiss();
-      Swal.fire('Success', 'Address updated successfully', 'success');
-      
+      Swal.fire('Success', 'Enquiry Address updated successfully', 'success');
+
     },
-    (err) => {
-      Swal.fire('Error', 'Error updating Address', 'error');
-      console.error('Error updating Address:', err);
-     
+      (err) => {
+        Swal.fire('Error', 'Error updating Enquiry Address', 'error');
+        console.error('Error updating Enquiry Address:', err);
+
         this.activeModal.dismiss(); // Return undefined to parent component
-      
-    }
-  );
+
+      }
+    );
   }
-  insertCustAddre(data:any){
-    this.addAddrSer.insertCustAddre(data).subscribe( res => {
+  insertEnquiryAddre(data:any){
+    this.enquiryAddrSer.insertEnquiryAddre(data).subscribe( res => {
  
       this.activeModal.dismiss();
 

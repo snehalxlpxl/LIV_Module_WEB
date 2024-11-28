@@ -2,10 +2,12 @@
 <div class="card shadow rounded-corners mb-2">
     <h5 class="timeline-header">
         <div class="panel-title">
-            <h5 style="display: flex; align-items: center; margin-top: 20px; margin-left: 20px;">
-                <i class="feather icon-file" style="font-size: 24px; margin-right: 8px;"></i>
-                Enquiry
-              </h5> 
+           <div class="d-flex align-items-center">
+                <h5 style="display: flex; align-items: center; margin-top: 20px; margin-left: 20px;">
+                    <i class="feather icon-file" style="font-size: 24px; margin-right: 8px;"></i>
+                    Enquiry
+                  </h5>  
+            </div>
         </div>
     </h5>
     <div class="card-body">
@@ -15,35 +17,35 @@
         </div>
         <div class="row mb-2">
             <div class="col-4">Inco Terms</div>
-            <b class="col-8">{{ currentEnquiry?.incoTerms }} ExWorks</b>
+            <b class="col-8">{{ currentEnquiry.incoTerms }}</b>
         </div>
         <div class="row mb-2">
             <div class="col-4">POL</div>
-            <b class="col-8">{{ currentEnquiry?.pol }}Nhava Sheva, India</b>
+            <b class="col-8">{{ currentEnquiry.pol }}</b>
         </div>
         <div class="row mb-2">
             <div class="col-4">POD</div>
-            <b class="col-8">{{ currentEnquiry?.pod }}New York, USA</b>
+            <b class="col-8">{{ currentEnquiry.pod }}</b>
         </div>
         <div class="row mb-2">
             <div class="col-4">Commodity</div>
-            <b class="col-8">{{ currentEnquiry?.commodity }}Plastic Moulds</b>
+            <b class="col-8">{{ currentEnquiry.commodity }}</b>
         </div>
         <div class="row mb-2">
             <div class="col-4">Required Equipment</div>
-            <b class="col-8">{{ currentEnquiry?.requiredEquipment }}4 x 40HC</b>
+            <b class="col-8" ><span *ngFor="let container of ContainerData">{{ container.containerCount }} x {{container.containerType}}</span></b>
         </div>
         <div class="row mb-2">
             <div class="col-4">Gross Weight</div>
-            <b class="col-8">{{ currentEnquiry?.grossWeight }} 25 Tons</b>
+            <b class="col-8">{{ grossWeightTotal }}  Tons</b>
         </div>
         <div class="row mb-2">
             <div class="col-4">Monthly CBM</div>
-            <b class="col-8">{{ currentEnquiry?.monthlyCbm || '-' }}</b>
+            <b class="col-8">{{ cbmTotal || '-' }}</b>
         </div>
         <div class="row mb-2">
             <div class="col-4">Notes</div>
-            <b class="col-8">{{ currentEnquiry?.enquiryNotes }}Stackable & General Cargo</b>
+            <b class="col-8">{{ currentEnquiry.notes }}</b>
         </div>
     </div>
 </div>

@@ -1,77 +1,79 @@
 <div class="card shadow rounded-corners mb-2">
-    <h5 class="timeline-header">
-      <div class="panel-title">
-        <h5 style="display: flex; align-items: center; margin-top: 20px; margin-left: 20px;">
-            <i class="feather icon-list" style="font-size: 24px; margin-right: 8px;"></i>
-            Basic Details
-          </h5>          
-      </div>
-    </h5>
-    <!-- <div class="card-body">
-      <div class="row mb-2">
-        <div class="col-6">Enquiry ID</div>
-        <b class="col-6">{{ currentEnquiry.enquiryId }}</b>
-      </div>
-      <div class="row mb-2">
-        <div class="col-6">Customer Name</div>
-        <b class="col-6">{{ currentEnquiry.customerName }}</b>
-      </div>
-      <div class="row mb-2">
-        <div class="col-6">Industry</div>
-        <b class="col-6">{{ currentEnquiry.industry }}</b>
-      </div>
-      <div class="row mb-2">
-        <div class="col-6">Service Type</div>
-        <b class="col-6">{{ currentEnquiry.serviceType }}</b>
-      </div>
-      <div class="row mb-2">
-        <div class="col-6">Requirement</div>
-        <b class="col-6">{{ currentEnquiry.requirement }}</b>
-      </div>
-      <div class="row mb-2">
-        <div class="col-6">Status</div>
-        <b class="col-6">{{ currentEnquiry.status }}</b>
-      </div>
-    </div> -->
-    <div class="card-body">
-      <div class="row mb-2">
-          <div class="col-4">Sales Person</div>
-          <b class="col-8">Edwin Xavier</b>
-      </div>
-      <div class="row mb-2">
-          <div class="col-4">Customer Type</div>
-          <b class="col-8">Company</b>
-      </div>
-      <div class="row mb-2">
-          <div class="col-4">Company Name</div>
-          <b class="col-8">Global Motors Ltd</b>
+  <h5 class="timeline-header">
+    <div class="panel-title">
+      <h5 style="display: flex; align-items: center; margin-top: 20px; margin-left: 20px;">
+          <i class="feather icon-list" style="font-size: 24px; margin-right: 8px;"></i>
+          Basic Details
+        </h5>          
+    </div>
+  </h5>
+ 
+  <div class="card-body">
+      <div *ngIf="basicDetail[0]">
+        <div class="row mb-2" >
+            <div class="col-4">Sales Person</div>
+            <b class="col-8">{{basicDetail[0].userDisplayName}}</b>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">Customer Type</div>
+            <b class="col-8">{{basicDetail[0].conpanyType}}</b>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">Company Name</div>
+            <b class="col-8">{{basicDetail[0].companyName}}</b>
+        </div>
       </div>
       <hr>
-      <div class="row mb-2">
-          <div class="col-4">Contact</div>
-          <b class="col-8">Rakesh Kumar (Logistics Manager)</b>
+      <div *ngIf="leadData && leadData.length > 0">
+        <div class="row mb-2">
+            <div class="col-4">Contact</div>
+            <b class="col-8">{{ leadData[0].firstName }} ( {{ leadData[0].title }} )</b>
+        </div> 
+        <div class="row mb-2">
+            <div class="col-4">Email</div>
+            <b class="col-8">
+              <i class="feather icon-copy" style="margin-right: 8px; cursor: pointer;" (click)="copyToClipboard('')"></i>{{ leadData[0].email }}
+            </b>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">Mobile</div>
+            <b class="col-8">
+              <i class="feather icon-copy" style="margin-right: 8px; cursor: pointer;" (click)="copyToClipboard('')"></i>{{ leadData[0].phone1 }} / {{ leadData[0].phone1 }} 
+            </b>
+        </div>
+        <hr>
+        <div class="row mb-2">
+            <div class="col-4">Lead Status</div>
+            <b class="col-8">{{basicDetail[0].leadStatusName}}</b>
+        </div>
       </div>
-      <div class="row mb-2">
-          <div class="col-4">Email</div>
-          <b class="col-8">
-            <i class="feather icon-copy" style="margin-right: 8px; cursor: pointer;" (click)="copyToClipboard('')"></i>rakesh.k@customerdomain.com
-          </b>
-      </div>
-      <div class="row mb-2">
-          <div class="col-4">Mobile</div>
-          <b class="col-8">
-            <i class="feather icon-copy" style="margin-right: 8px; cursor: pointer;" (click)="copyToClipboard('')"></i>+91 9890098900
-          </b>
-      </div>
-      <hr>
-      <div class="row mb-2">
-          <div class="col-4">Lead Status</div>
-          <b class="col-8">Contacted</b>
-      </div>
-      <div class="row mb-2">
-          <div class="col-4">Notes</div>
-          <b class="col-8">-</b>
-      </div>
+      
+    
+        <div *ngIf="companyData && companyData.length > 0">
+        <div class="row mb-2">
+            <div class="col-4">Contact</div>
+            <b class="col-8">{{ companyData[0].displayName }} ( {{ companyData[0].designation }}  {{ companyData[0].department }})</b>
+        </div> 
+        <div class="row mb-2">
+            <div class="col-4">Email</div>
+            <b class="col-8">
+              <i class="feather icon-copy" style="margin-right: 8px; cursor: pointer;" (click)="copyToClipboard('')"></i>{{ companyData[0].email }}
+            </b>
+        </div>
+         <div class="row mb-2">
+            <div class="col-4">Mobile</div>
+            <b class="col-8">
+              <i class="feather icon-copy" style="margin-right: 8px; cursor: pointer;" (click)="copyToClipboard('')"></i>{{ companyData[0].mobile }}  
+            </b>
+        </div>
+        <hr>
+        <!--<div class="row mb-2">
+            <div class="col-4">Lead Status</div>
+            <b class="col-8">{{companyData[0].companyData}}</b>
+        </div> -->
+    </div>
+    <div class="row mb-2">
+      <div class="col-4">Notes</div>
+      <b class="col-8">{{basicDetail[0].notes}}</b>
   </div>
-  </div>
-  
+</div>
