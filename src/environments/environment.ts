@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   hmr: false,
-  apiUrl: 'http://108.181.191.121:5054/api'
-  // apiUrl: 'http://localhost:5269/api'
+  // apiUrl: 'http://108.181.191.121:5054/api'
+  apiUrl: 'http://localhost:5269/api'
 };
 
 /*

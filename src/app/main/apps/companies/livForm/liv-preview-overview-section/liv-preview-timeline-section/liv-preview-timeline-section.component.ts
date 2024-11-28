@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LivPreviewTimelineSectionService } from './liv-preview-timeline-section.service';
 import { ActivatedRoute } from '@angular/router';
+import { ActivityNotificationService } from 'app/Leads/lead-preview/lead-preview-activities-section/ActivityNotificationService.service';
 
 @Component({
   selector: 'app-liv-preview-timeline-section',
@@ -17,10 +18,11 @@ export class LivPreviewTimelineSectionComponent implements OnInit {
 
 
   constructor(private timelineService: LivPreviewTimelineSectionService,
-    private route: ActivatedRoute 
+    private route: ActivatedRoute , private activityNotificationService: ActivityNotificationService
   ) { }
 
   ngOnInit(): void {
+   
     const userData = JSON.parse(localStorage.getItem('currentUser'));
     if (userData) {
       this.userName = userData.userName;
@@ -38,6 +40,13 @@ export class LivPreviewTimelineSectionComponent implements OnInit {
       // this.loadLivTaskTimeLine(this.taskId); 
     });
     // this.isApprover = this.approverList.includes(this.userId);
+    this.activityNotificationService.activity$.subscribe((message: string) => {
+      if (message === 'LIV request canceled successfully.' || message === 'Approval task updated successfully.') {
+        // this.loadLIVRequests(); // Method to refresh the list or data
+        this.loadLivTaskTimeLine(this.taskId);
+
+      }
+    });
   }
   
   // error:true;
@@ -71,51 +80,23 @@ export class LivPreviewTimelineSectionComponent implements OnInit {
       }
     );
   }
-  // getRelativeTime(requestedDate: string): string {
-  //   if (!requestedDate) {
-  //     return ''; 
-  // }
-  //   const now = new Date();
-  //   const pastDate = new Date(requestedDate);
-  //   const diffInMs = now.getTime() - pastDate.getTime();
-  //   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-
-  //   if (diffInDays === 0) {
-  //     return 'Today';
-  //   } else if (diffInDays === 1) {
-  //     return '1 day ago';
-  //   } else if (diffInDays > 1) {
-  //     return `${diffInDays} days ago`;
-  //   } else {
-  //     return 'In the future'; // In case the date is in the future
-  //   }
-  // }
-  getRelativeTime(date: string | Date): string {
-    if (!date) {
-      return ''; // Return empty string if date is null or undefined
-    }
-  
-    const givenDate = new Date(date);
-    
-    // Check if the date is invalid
-    if (isNaN(givenDate.getTime())) {
-      return ''; // Return empty string if the date is invalid
-    }
-  
+  getRelativeTime(requestedDate: string): string {
+    if (!requestedDate) {
+      return ''; 
+  }
     const now = new Date();
-    const secondsAgo = Math.floor((now.getTime() - givenDate.getTime()) / 1000);
-  
-    if (secondsAgo < 60) {
-      return `${secondsAgo} second${secondsAgo > 1 ? 's' : ''} ago`;
-    } else if (secondsAgo < 3600) {
-      const minutesAgo = Math.floor(secondsAgo / 60);
-      return `${minutesAgo} minute${minutesAgo > 1 ? 's' : ''} ago`;
-    } else if (secondsAgo < 86400) {
-      const hoursAgo = Math.floor(secondsAgo / 3600);
-      return `${hoursAgo} hour${hoursAgo > 1 ? 's' : ''} ago`;
+    const pastDate = new Date(requestedDate);
+    const diffInMs = now.getTime() - pastDate.getTime();
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+    if (diffInDays === 0) {
+      return 'Today';
+    } else if (diffInDays === 1) {
+      return '1 day ago';
+    } else if (diffInDays > 1) {
+      return `${diffInDays} days ago`;
     } else {
-      const daysAgo = Math.floor(secondsAgo / 86400);
-      return `${daysAgo} day${daysAgo > 1 ? 's' : ''} ago`;
+      return 'In the future'; // In case the date is in the future
     }
   }
   

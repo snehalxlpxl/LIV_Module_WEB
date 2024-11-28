@@ -24,6 +24,8 @@ import { LivTaskApproverListComponent } from './liv-task-approver-list/liv-task-
 import { LoadListSaleOrApproverComponent } from './load-list-sale-or-approver/load-list-sale-or-approver.component';
 import { LivDocumentSectionComponent } from './liv-preview/liv-document-section/liv-document-section.component';
 import { LivDocumentUploadComponent } from './liv-preview/liv-document-section/liv-document-upload/liv-document-upload.component';
+import { ApprovemsgpageComponent } from './approvemsgpage/approvemsgpage.component';
+import { RejectmsgpageComponent } from './rejectmsgpage/rejectmsgpage.component';
 
 const routes = [ 
   
@@ -60,6 +62,9 @@ const routes = [
     canActivate: [AuthGuard]     
 
   },
+  { path: 'Approve', component: ApprovemsgpageComponent },
+  { path: 'Reject', component: RejectmsgpageComponent },
+
   {
   path: 'liv-task-approve-list/:approverId',
   component: LivTaskApproverListComponent,
@@ -80,7 +85,7 @@ const routes = [
     , LivPreviewDocumentsSectionComponent, 
     LivPreviewOverviewSectionBasicDetailsComponent, LivPreviewTimelineSectionComponent, 
     LivOverviewSectionSummaryComponent, RejectModalComponent, ApproveModalComponent, 
-    LivApproveComponent,LivTaskApproverListComponent,LoadListSaleOrApproverComponent, LivDocumentUploadComponent, LivDocumentSectionComponent
+    LivApproveComponent,LivTaskApproverListComponent,LoadListSaleOrApproverComponent, LivDocumentUploadComponent, LivDocumentSectionComponent, ApprovemsgpageComponent, RejectmsgpageComponent
   ],
   imports: [
     CommonModule,
