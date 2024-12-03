@@ -185,7 +185,7 @@ export class EnquiryListComponent implements OnInit {
     this.enquiryListSer.getEnquiryList(this.pageNumber, this.pageSize, val).subscribe(
       (response: any) => {
         // Update the table data with the filtered data from the server
-        this.enquiries = response.enquire;
+        this.enquiries = response.enquires;
         this.totalRecords = response.totalRecords;
         this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
         this.updatePagination();
