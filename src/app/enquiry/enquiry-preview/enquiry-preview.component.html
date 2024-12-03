@@ -14,7 +14,7 @@
                     <div class="d-flex align-items-center" style="height: 40px;">
                         <!-- Edit Button -->
                         <button type="button" class="btn btn-primary  mr-1 md-font"
-                            style="display: inline-flex; align-items: center;" [routerLink]="['/enquiry/edit/', enquiryId]">
+                            style="display: inline-flex; align-items: center;" [routerLink]="['/enquiry/edit/', enquiryId]" (click)="resetAllList()">
                             <i class="feather icon-edit" style="font-size: 16px; margin-right: 8px;"></i>
                             Edit
                         </button>

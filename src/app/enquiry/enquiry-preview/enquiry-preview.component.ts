@@ -8,6 +8,9 @@ import { trigger, transition, animate, style } from '@angular/animations';
 import { NewRateRequestModalComponent } from './new-rate-request-modal/new-rate-request-modal.component';
 import { OpenRateRequestRevisionModalComponent } from './open-rate-request-revision-modal/open-rate-request-revision-modal.component';
 import { EquiryPreviewBasicDetailService } from './enquiry-preview-overview-section/enquiry-preview-basic-detail/equiry-preview-basic-detail.service';
+import { RequiredEquipmentModalService } from '../enquire-create/required-equipment-modal/required-equipment-modal.service';
+import { PakageDetailModalService } from '../enquire-create/package-detail-modal/pakage-detail-modal.service';
+import { EnquiryAddressModalService } from '../enquire-create/enquiry-address-modal/enquiry-address-modal.service';
 
 @Component({
   selector: 'app-enquiry-preview',
@@ -44,7 +47,10 @@ export class EnquiryPreviewComponent implements OnInit {
     private location: Location,
     private modalService: NgbModal,
     private navigationService: LeadPreviewService,
-    private servBasicPreview:EquiryPreviewBasicDetailService
+    private servBasicPreview:EquiryPreviewBasicDetailService,
+    private requiredEquipmentModalService:RequiredEquipmentModalService,
+    private pakageDetailModalService:PakageDetailModalService,
+    private enquiryAddressModalService:EnquiryAddressModalService
   ) { }
 
   ngOnInit(): void {
@@ -101,6 +107,10 @@ export class EnquiryPreviewComponent implements OnInit {
   openRateRequestRevisionModal(): void {
     const modalRef = this.modalService.open(OpenRateRequestRevisionModalComponent);
   }
-  
+  resetAllList(){
+    this.requiredEquipmentModalService.resetEquipmentList();
+    this.pakageDetailModalService.resetPakagesList();
+    this.enquiryAddressModalService.resetAddressList();
+  }
 }
 
