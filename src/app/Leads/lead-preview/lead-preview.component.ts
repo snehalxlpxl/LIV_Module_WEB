@@ -34,6 +34,7 @@ export class LeadPreviewComponent implements OnInit {
   leadId:any;
   LeadStatuses:any
   leadDetails: any;
+  isDropdownReady = false;
   // snippet code variables
   public _snippetCodeBasic = snippet.snippetCodeBasic;
   public _snippetCodeFilled = snippet.snippetCodeFilled;
@@ -54,6 +55,7 @@ this.leadId = this.route.snapshot.paramMap.get('id');
 console.log("leadId",this.leadId);
 
 this.fetchLeadDetails();
+this.initializeDropdown();
   }
  
   openCallLogModal() {
@@ -136,5 +138,11 @@ fetchLeadStatusName(leadStatusId: number): void {
       console.error('Error fetching lead status:', error);
     }
   );
+}
+initializeDropdown() {
+  // Simulate async operation or wait for data to load
+  setTimeout(() => {
+    this.isDropdownReady = true;
+  }, 500); // Adjust delay as needed
 }
 }

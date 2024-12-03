@@ -37,7 +37,7 @@
                           >
                             New
                           </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                          <div ngbDropdownMenu aria-labelledby="dropdownMenuButton" *ngIf="isDropdownReady">
                             <a ngbDropdownItem routerLink="/enquiry-create/customer/{{customerId}}/{{companydatafromParent.ownerId}}">Submit to Pricing</a>
                             <!-- <a ngbDropdownItem href="javascript:void(0)">Option 2</a>
                             <a ngbDropdownItem href="javascript:void(0)">Option 3</a> -->

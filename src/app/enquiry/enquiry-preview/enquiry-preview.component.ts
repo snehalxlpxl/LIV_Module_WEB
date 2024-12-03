@@ -37,6 +37,7 @@ export class EnquiryPreviewComponent implements OnInit {
   message = "Enquiry Overview"; // Example message
   currentComponent: string = 'overview'; // Default tab (overview)
   enquiryId: any;
+  isDropdownReady = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -67,6 +68,14 @@ export class EnquiryPreviewComponent implements OnInit {
     this.navigationService.component$.subscribe(component => {
       this.currentComponent = component;
     });
+    this.initializeDropdown();
+  }
+
+  initializeDropdown() {
+    // Simulate async operation or wait for data to load
+    setTimeout(() => {
+      this.isDropdownReady = true;
+    }, 500); // Adjust delay as needed
   }
 
   goBack(): void {

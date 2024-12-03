@@ -33,6 +33,7 @@ export class CustomerPreviewComponent implements OnInit {
   addrDetails: any[];
   contactDetails: any[];
   companyName: any;
+  isDropdownReady = false;
 
   constructor(private navigationService: CustomerPreviewService,
     private activeroute: ActivatedRoute,
@@ -58,10 +59,19 @@ export class CustomerPreviewComponent implements OnInit {
         
       }
   });
+
+  this.initializeDropdown();
 }
 
   setComponent(component: string) {
     this.navigationService.setComponent(component);
+  }
+
+  initializeDropdown() {
+    // Simulate async operation or wait for data to load
+    setTimeout(() => {
+      this.isDropdownReady = true;
+    }, 500); // Adjust delay as needed
   }
 
   loadCustomerData(customerId: number) {

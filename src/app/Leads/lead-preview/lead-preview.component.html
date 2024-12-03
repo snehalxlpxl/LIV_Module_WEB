@@ -77,8 +77,8 @@
           </span>
         </div>
 
-        <div class="col-lg-6 col-md-10 d-flex justify-content-end align-items-center flex-wrap text-right mar-left">
-          <div class="d-flex align-items-center">
+        <div class="col-lg-6 col-md-10 d-flex justify-content-end align-items-center flex-wrap text-right mar-left" style="height: 40px;">
+          <div class="d-flex align-items-center" style="height: 40px;">
             <!-- Edit Button -->
             <button class="btn btn-primary mr-1 md-font" style="display: inline-flex; align-items: center;">
               <i class="feather icon-edit" style="font-size: 16px; margin-right: 8px;"></i>
@@ -92,12 +92,12 @@
             </button>
 
             <!-- New Dropdown Button -->
-            <div ngbDropdown class="mx-1 flex-shrink-0">
+            <div ngbDropdown class="mx-1 flex-shrink-0" >
               <button ngbDropdownToggle class="btn btn-primary mr-1 md-font" type="button" id="dropdownMenuButton"
                 rippleEffect style="display: inline-flex; align-items: center; font-size: 16px;">
                 <i class="feather icon-plus" style="font-size: 16px; margin-right: 8px;"></i> New
               </button>
-              <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+              <div ngbDropdownMenu aria-labelledby="dropdownMenuButton" >
                 <a ngbDropdownItem href="javascript:void(0)" (click)="openCallLogModal()">Call Log</a>
                 <a ngbDropdownItem href="javascript:void(0)" (click)="openTaskDetailModal()">Task Details</a>
                 <a ngbDropdownItem href="javascript:void(0)" (click)="openMeetingInformationModal()">Meeting Information</a>
