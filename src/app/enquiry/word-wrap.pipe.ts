@@ -28,6 +28,6 @@ export class WordWrapPipe implements PipeTransform {
     wrappedText.push(currentLine);
     console.log(wrappedText.join('\n'))
     this.cdr.detectChanges();
-    return wrappedText.join('\n');
+    return wrappedText.join('<br>');
   }
 }

@@ -62,7 +62,7 @@
             <ngx-datatable
             class="bootstrap core-bootstrap"
           [rows]="companies"
-          [rowHeight]="40"
+          [rowHeight]="'auto'"
           [count]="totalRecords"
           [offset]="pageNumber - 1"
           [limit]="pageSize"
@@ -82,7 +82,7 @@
               <ngx-datatable-column name="Company Name" prop="companyName" [width]="200">
                 <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
                   <a [routerLink]="['/customer/preview/', row['companyId']]" class="font-weight-bold">
-                    {{ value | ellipsis:20}}
+                    <div [innerHTML]="wrapText(value, 30)"></div>
                   </a>
                 </ng-template>
               </ngx-datatable-column>

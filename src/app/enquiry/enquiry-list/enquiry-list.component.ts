@@ -253,8 +253,9 @@ export class EnquiryListComponent implements OnInit {
     }
   
     wrappedText.push(currentLine);
-    return wrappedText.join('\n');
+    return wrappedText.join('<br>');
   }
+  
   resetAllList(){
     this.requiredEquipmentModalService.resetEquipmentList();
     this.pakageDetailModalService.resetPakagesList();

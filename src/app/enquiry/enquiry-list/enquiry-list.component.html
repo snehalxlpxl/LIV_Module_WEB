@@ -27,7 +27,7 @@
                 <ngx-datatable
                 class="bootstrap core-bootstrap"
               [rows]="enquiries"
-              [rowHeight]="50"
+              [rowHeight]="'auto'"
               [count]="totalRecords"
               [offset]="pageNumber - 1"
               [limit]="pageSize"
@@ -46,7 +46,7 @@
                     <ngx-datatable-column name="CUSTOMER / LEAD" prop="companyName" [width]="200">
                         <ng-template let-value="value"let-row="row" ngx-datatable-cell-template>
                             <a [routerLink]="['/enquiry-preview/preview/', row['enquiryId']]" class="font-weight-bold ">
-                                {{ value |wordWrap:10}}
+                                <div [innerHTML]="wrapText(value, 30)"></div>
                             </a>
                             <small class="d-block text-muted">auto Parts</small>
                         </ng-template>
