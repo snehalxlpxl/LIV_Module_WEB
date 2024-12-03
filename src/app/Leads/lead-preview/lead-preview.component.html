@@ -135,6 +135,9 @@
             <li ngbNavItem>
               <a ngbNavLink (click)="setComponent('reports')" [class.active]="currentComponent === 'reports'">Reports</a>
             </li>
+            <li ngbNavItem>
+              <a ngbNavLink (click)="setComponent('enquiryList')" [class.active]="currentComponent === 'enquiryList'">Enquiry List</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -149,6 +152,7 @@
       <app-sales *ngIf="currentComponent === 'sales'" @fade></app-sales>
       <app-documents *ngIf="currentComponent === 'documents'" @fade></app-documents>
       <app-reports *ngIf="currentComponent === 'reports'" @fade></app-reports>
+      <app-lead-preview-enquiry-list-section [LeadId]="leadId" *ngIf="currentComponent === 'enquiryList'" @fade></app-lead-preview-enquiry-list-section>
     </div>
 
   </div>

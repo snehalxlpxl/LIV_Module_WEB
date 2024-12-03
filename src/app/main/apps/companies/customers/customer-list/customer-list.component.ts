@@ -9,6 +9,9 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import Swal from "sweetalert2";
 import { CustomerListService } from "./customer-list.service";
+import { TaxDetailsService } from "../customer-create/add-cust-gst-details/tax-details.service";
+import { AddContactDetailService } from "../customer-create/add-cust-contact-modal/add-contact-detail.service";
+import { AddCustAddressService } from "../customer-create/add-cust-addr-modal/add-cust-address.service";
 
 @Component({
   selector: "app-customer-list",
@@ -54,7 +57,12 @@ export class CustomerListComponent implements OnInit {
     private _customerListService: CustomerListService,
     private _coreConfigService: CoreConfigService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private taxDetailsService:TaxDetailsService,
+    private addContactDetailService:AddContactDetailService,
+    private addCustAddressService:AddCustAddressService
+
+
   ) {}
 
   // Public Methods
@@ -319,6 +327,10 @@ export class CustomerListComponent implements OnInit {
     );
   }
   
-  
 
+  resetAllList(){
+    this.taxDetailsService.resetTaxList();
+    this.addContactDetailService.resetcontactList();
+    this.addCustAddressService.resetaddressList();
+  }
 }

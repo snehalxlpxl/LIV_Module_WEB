@@ -19,6 +19,7 @@ export class EnquiryAddressModalComponent implements OnInit {
   @Output() updatedAddress = new EventEmitter<any>();
   @Input() enquiryIdFromUrl:any;
   @Input() viewType:any;
+  @Input() companyName:any;
 
   
     @ViewChild('company') companyField!:  ElementRef;
@@ -59,7 +60,7 @@ export class EnquiryAddressModalComponent implements OnInit {
       enquiryId:0,
       addressTypeId: 0,
       addressTypeValue: [''] ,// For hidden field
-      company: ['', Validators.required],
+      company: [this.companyName, Validators.required],
       addressLine1: ['', Validators.required],
       addressLine2: [''],
       city: ['', Validators.required],

@@ -8,6 +8,7 @@
   
   <div class="modal-body">
     <!-- Select Agent/Liner -->
+     <form [formGroup]="newRateRequestForm" (ngSubmit)="onSubmit(newRateRequestForm)">
     <div class="form-group">
       <label for="agentLiner">Select Agent / Liner</label>
       <ng-select
@@ -16,6 +17,7 @@
       bindLabel="companyType1"
       placeholder="Select Agent/Liner"
       [searchable]="true"
+      formControlName="companyTypes"
       (change)="onAgentSelect()" 
     >
     </ng-select>
@@ -27,12 +29,12 @@
       <label for="sendTo">Send To</label>
       <ng-select
       [items]="companyEmails"
-      [(ngModel)]="sendTo"
       bindLabel="email"
       placeholder="Select Email"
       [searchable]="true"
       [multiple]="true"
-      [addTag]="true"        
+      [addTag]="true"  
+      formControlName="sendTo"      
     >
     </ng-select>
     </div>
@@ -44,7 +46,7 @@
         type="text"
         class="form-control"
         id="cc"
-        [(ngModel)]="cc"
+        formControlName="cc"
         placeholder="Enter CC email addresses separated by commas"
       />
     </div>
@@ -56,9 +58,19 @@
         class="form-control"
         id="draftContent"
         rows="10"
-        [(ngModel)]="draftContent"
+        formControlName="draftContent"
         placeholder="Enter your draft content here"
-      ></textarea>
+        hidden
+      >
+    </textarea>
+    <div formControlName="draftContent" class="border p-1">
+      <div *ngIf="pakagesDetailsList.length>=0 && pakagesDetailsList">
+        <div *ngFor="let container of pakagesDetailsList">
+          containerType : {{container.containerType}}
+        </div>
+      </div>
+    </div>
+     
     </div>
   
     <hr />
@@ -72,5 +84,6 @@
         Send Rate Request
       </button>
     </div>
+    </form>
   </div>
   

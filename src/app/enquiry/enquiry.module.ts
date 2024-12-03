@@ -27,6 +27,8 @@ import { EnquiryAddressModalComponent } from './enquire-create/enquiry-address-m
 import { NewRateRequestModalComponent } from './enquiry-preview/new-rate-request-modal/new-rate-request-modal.component';
 import { OpenRateRequestRevisionModalComponent } from './enquiry-preview/open-rate-request-revision-modal/open-rate-request-revision-modal.component';
 import { EnquiryPreviewEditRatesComponent } from './enquiry-preview/enquiry-preview-edit-rates/enquiry-preview-edit-rates.component';
+import { WordWrapPipe } from './word-wrap.pipe';
+
 
 
 const routes = [
@@ -72,6 +74,7 @@ const routes = [
 
 @NgModule({
   declarations: [
+    WordWrapPipe,
     EnquiryListComponent,
     EnquireCreateComponent,
     EnquiryPreviewComponent,
@@ -106,10 +109,11 @@ const routes = [
     NoopAnimationsModule,
     NgbNavModule
   ],
-  providers:[NgbNavConfig],
+  providers:[NgbNavConfig,WordWrapPipe],
   exports:[
+    WordWrapPipe,
     RouterModule,
-    EnquiryListComponent
+    EnquiryListComponent,
   ]
 })
 export class EnquiryModule {

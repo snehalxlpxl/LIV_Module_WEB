@@ -66,6 +66,9 @@
                       <a ngbNavLink (click)="setComponent('transaction')" [class.active]="currentComponent === 'transaction'">Transaction</a>
                     </li>
                     <li ngbNavItem>
+                      <a ngbNavLink (click)="setComponent('enquiryList')" [class.active]="currentComponent === 'enquiryList'">Enquiry List</a>
+                    </li>
+                    <li ngbNavItem>
                       <a ngbNavLink (click)="setComponent('sales')" [class.active]="currentComponent === 'sales'">Sales</a>
                     </li>
                     <li ngbNavItem>
@@ -86,7 +89,7 @@
               <!-- <app-customer-preview-overview-section [customerData]="companydatafromParent" [gstData]="taxDetails" [addrData]="addrDetails" [contactData]="contactDetails" *ngIf="currentComponent === 'overview'" @fade></app-customer-preview-overview-section> -->
               <app-customer-preview-shipment-section [companyId]="customerId"  *ngIf="currentComponent === 'shipment'" @fade></app-customer-preview-shipment-section>
               <app-customer-preview-transac-section [companyId]="customerId" *ngIf="currentComponent === 'transaction'" @fade></app-customer-preview-transac-section>
-             
+             <app-customer-enquiry-list-section [companyId]="customerId" *ngIf="currentComponent === 'enquiryList'" @fade></app-customer-enquiry-list-section>
               <app-sales *ngIf="currentComponent === 'sales'" @fade></app-sales>
               <app-documents *ngIf="currentComponent === 'documents'" @fade></app-documents>
               <app-reports *ngIf="currentComponent === 'reports'" @fade></app-reports>

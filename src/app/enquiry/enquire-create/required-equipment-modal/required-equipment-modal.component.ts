@@ -64,6 +64,7 @@ export class RequiredEquipmentModalComponent implements OnInit {
       deletedBy:11049
       
     });
+   
   }
   patchForm(data:any){
     this.requiredEquipmentForm.patchValue({

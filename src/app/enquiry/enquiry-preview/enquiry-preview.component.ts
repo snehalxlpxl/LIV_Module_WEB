@@ -85,12 +85,13 @@ export class EnquiryPreviewComponent implements OnInit {
     });
   }
 
-  openNewRateRequestModal(): void {
+  openNewRateRequestModal(enquiryId:number): void {
     const modalRef = this.modalService.open(NewRateRequestModalComponent);
-    // modalRef.componentInstance
+    modalRef.componentInstance.enquiryID=enquiryId;
   }
   openRateRequestRevisionModal(): void {
     const modalRef = this.modalService.open(OpenRateRequestRevisionModalComponent);
   }
+  
 }
 

@@ -18,11 +18,12 @@ import { LeadPreviewOverviewSectionComponent } from './lead-preview-overview-sec
 import { LeadPreviewOverviewSectionModule } from './lead-preview-overview-section/lead-preview-overview-section.module';
 import { LeadPreviewActivitiesSectionComponent } from './lead-preview-activities-section/lead-preview-activities-section.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { LeadPreviewEnquiryListSectionComponent } from './lead-preview-enquiry-list-section/lead-preview-enquiry-list-section.component';
 
 
 
 @NgModule({
-  declarations: [LeadPreviewComponent, LeadPreviewActivitiesSectionComponent],
+  declarations: [LeadPreviewComponent, LeadPreviewActivitiesSectionComponent, LeadPreviewEnquiryListSectionComponent],
   imports: [
     CommonModule,
     LeadPreviewHeaderModule,

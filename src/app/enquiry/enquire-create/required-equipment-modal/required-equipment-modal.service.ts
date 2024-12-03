@@ -35,4 +35,7 @@ export class RequiredEquipmentModalService {
   getEquipementList() {
     return this.equipmentList.value;
   }
+  resetEquipmentList() {
+    this.equipmentList.next([]); // Clear the equipment list
+  }
 }
