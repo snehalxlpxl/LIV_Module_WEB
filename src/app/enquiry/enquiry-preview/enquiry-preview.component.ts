@@ -8,6 +8,9 @@ import { trigger, transition, animate, style } from '@angular/animations';
 import { NewRateRequestModalComponent } from './new-rate-request-modal/new-rate-request-modal.component';
 import { OpenRateRequestRevisionModalComponent } from './open-rate-request-revision-modal/open-rate-request-revision-modal.component';
 import { EquiryPreviewBasicDetailService } from './enquiry-preview-overview-section/enquiry-preview-basic-detail/equiry-preview-basic-detail.service';
+import { RequiredEquipmentModalService } from '../enquire-create/required-equipment-modal/required-equipment-modal.service';
+import { PakageDetailModalService } from '../enquire-create/package-detail-modal/pakage-detail-modal.service';
+import { EnquiryAddressModalService } from '../enquire-create/enquiry-address-modal/enquiry-address-modal.service';
 
 @Component({
   selector: 'app-enquiry-preview',
@@ -37,13 +40,17 @@ export class EnquiryPreviewComponent implements OnInit {
   message = "Enquiry Overview"; // Example message
   currentComponent: string = 'overview'; // Default tab (overview)
   enquiryId: any;
+  isDropdownReady = false;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private modalService: NgbModal,
     private navigationService: LeadPreviewService,
-    private servBasicPreview:EquiryPreviewBasicDetailService
+    private servBasicPreview:EquiryPreviewBasicDetailService,
+    private requiredEquipmentModalService:RequiredEquipmentModalService,
+    private pakageDetailModalService:PakageDetailModalService,
+    private enquiryAddressModalService:EnquiryAddressModalService
   ) { }
 
   ngOnInit(): void {
@@ -67,6 +74,14 @@ export class EnquiryPreviewComponent implements OnInit {
     this.navigationService.component$.subscribe(component => {
       this.currentComponent = component;
     });
+    this.initializeDropdown();
+  }
+
+  initializeDropdown() {
+    // Simulate async operation or wait for data to load
+    setTimeout(() => {
+      this.isDropdownReady = true;
+    }, 500); // Adjust delay as needed
   }
 
   goBack(): void {
@@ -85,12 +100,17 @@ export class EnquiryPreviewComponent implements OnInit {
     });
   }
 
-  openNewRateRequestModal(): void {
+  openNewRateRequestModal(enquiryId:number): void {
     const modalRef = this.modalService.open(NewRateRequestModalComponent);
-    // modalRef.componentInstance
+    modalRef.componentInstance.enquiryID=enquiryId;
   }
   openRateRequestRevisionModal(): void {
     const modalRef = this.modalService.open(OpenRateRequestRevisionModalComponent);
+  }
+  resetAllList(){
+    this.requiredEquipmentModalService.resetEquipmentList();
+    this.pakageDetailModalService.resetPakagesList();
+    this.enquiryAddressModalService.resetAddressList();
   }
 }
 

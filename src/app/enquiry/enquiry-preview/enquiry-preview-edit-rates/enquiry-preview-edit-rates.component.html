@@ -71,15 +71,16 @@
                         <div class="col-12 d-flex product-details-border position-relative pr-0">
                           <div class="row w-100 pr-lg-0 pr-1 py-2">
                             <div class="col-lg-3 col-12 mb-lg-0 mb-2 mt-lg-0 mt-2">
-                              <!-- <p class="card-text col-title mb-md-50 mb-0">Charge Item</p> -->
-                              <select class="form-control item-details">
-                                <option value="Ocean Freight">Ocean Freight</option>
-                                <option value="Air Frieght" selected>Air Frieght</option>
-                              </select>
-                              <!-- <textarea class="form-control mt-2" rows="1">Customization & Bug Fixes</textarea> -->
+                              <ng-select
+                                [items]="['Ocean Freight', 'Air Freight']"
+                                bindLabel="label"
+                                [(ngModel)]="item.chargeItem"
+                                placeholder="Select Charge Item"
+                                class="item-details"
+                              >
+                              </ng-select>
                             </div>
-                            <div class="col-lg-2 col-12 mb-lg-0 mb-2 mt-lg-0 mt-2">
-                                <!-- <p class="card-text col-title mb-md-50 mb-0">Qty</p> -->
+                            <!-- <div class="col-lg-2 col-12 mb-lg-0 mb-2 mt-lg-0 mt-2">
                                 <div class="input-group">
                                   <input type="number"  id="quantity" class="form-control">
                                   <select id="unit" class="form-control unit-select">
@@ -89,18 +90,31 @@
                                     <option value="50GP">50GP</option>
                                   </select>
                                 </div>
+                              </div> -->
+                              <div class="col-lg-2 col-12 mb-lg-0 mb-2 mt-lg-0 mt-2">
+                                <div class="input-group">
+                                  <input type="number" id="quantity" class="form-control" placeholder="Qty">
+                                  <ng-select 
+                                    [items]="['20GP', '30GP', '40GP', '50GP']" 
+                                    bindLabel="label"
+                                    placeholder="Select Unit"
+                                    class="unit-select">
+                                  </ng-select>
+                                </div>
                               </div>
+                              
                             <div class="col-lg-2 col-12 mb-lg-0 mb-2 mt-lg-0 mt-2">
                                 <!-- <p class="card-text col-title mb-md-50 mb-0">Rate</p> -->
                                 <div class="input-group">
                                   <input type="number"  id="quantity" class="form-control">
-                                  <select  id="unit" class="form-control unit-select">
-                                  
-                                    <option value="INR">INR (₹)</option>
-                                    <option value="USD" selected>USD ($)</option>
-                                    <option value="EUR">EUR (€)</option>
-                                    <option value="GBP">GBP (£)</option>
-                                  </select>
+                                  <ng-select
+                                  [items]="['INR (₹)', 'USD ($)', 'EUR (€)', 'GBP (£)']"
+                                  bindLabel="label"
+                                  [(ngModel)]="item.currency"
+                                  placeholder="Select Currency"
+                                  class="unit-select"
+                                >
+                                </ng-select>
                                 </div>
                               </div>
                             <div class="col-lg-2 col-12 my-lg-0 my-2">
@@ -115,20 +129,14 @@
                               />
                             </div>
                             <div class="col-lg-2 col-12 my-lg-0 my-2">
-                                <!-- <p class="card-text col-title mb-md-2 mb-0">Tax</p> -->
-                                <select
-                                  class="form-control"
-                                  [(ngModel)]="item.itemCost"
-                                  name="itemCost{{ i }}"
-                                  id="itemCost{{ i }}"
-                                >
-                                  <option value="0">0%</option>
-                                  <option value="5">5%</option>
-                                  <option value="10">10%</option>
-                                  <option value="15">15%</option>
-                                  <option value="20">20%</option>
-                                </select>
-                              </div>
+                              <ng-select
+                                [items]="[0, 5, 10, 15, 20]"
+                                bindLabel="label"
+                                [(ngModel)]="item.tax"
+                                placeholder="Select Tax %"
+                              >
+                              </ng-select>
+                            </div>
                             <div class="col-lg-1 col-12 mt-lg-0 mt-2">
                               <!-- <p class="card-text col-title mb-md-50 mb-0">Total</p> -->
                               <p class="card-text mb-0">$24.00</p>

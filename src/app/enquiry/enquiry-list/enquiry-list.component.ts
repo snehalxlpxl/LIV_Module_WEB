@@ -7,6 +7,9 @@ import { EnquiryListService } from './enquiry-list.service';
 import Swal from 'sweetalert2';
 
 import { ChangeDetectorRef } from '@angular/core';
+import { RequiredEquipmentModalService } from '../enquire-create/required-equipment-modal/required-equipment-modal.service';
+import { PakageDetailModalService } from '../enquire-create/package-detail-modal/pakage-detail-modal.service';
+import { EnquiryAddressModalService } from '../enquire-create/enquiry-address-modal/enquiry-address-modal.service';
 
 @Component({
   selector: 'app-enquiry-list',
@@ -31,10 +34,14 @@ export class EnquiryListComponent implements OnInit {
   // tempData = [...this.enquiryRows]; 
   tempData :any[]=[]; 
   rows: any[];
-  constructor(private modalService: NgbModal,private enquiryListSer:EnquiryListService,private cdRef: ChangeDetectorRef) { }
+  constructor(private modalService: NgbModal,private enquiryListSer:EnquiryListService,private cdRef: ChangeDetectorRef,private requiredEquipmentModalService:RequiredEquipmentModalService,
+    private pakageDetailModalService:PakageDetailModalService,private enquiryAddressModalService:EnquiryAddressModalService
+  ) { }
 
   ngOnInit(): void {
     this.loadEnquiries();
+
+    
 
   }
 
@@ -178,7 +185,7 @@ export class EnquiryListComponent implements OnInit {
     this.enquiryListSer.getEnquiryList(this.pageNumber, this.pageSize, val).subscribe(
       (response: any) => {
         // Update the table data with the filtered data from the server
-        this.enquiries = response.enquire;
+        this.enquiries = response.enquires;
         this.totalRecords = response.totalRecords;
         this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
         this.updatePagination();
@@ -230,5 +237,28 @@ export class EnquiryListComponent implements OnInit {
       // Calculate the total number of pages
       this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
     });
+  }
+  wrapText(text: string, width: number): string {
+    const words = text.split(' ');
+    const wrappedText = [];
+    let currentLine = '';
+  
+    for (const word of words) {
+      if (currentLine.length + word.length > width) {
+        wrappedText.push(currentLine);
+        currentLine = word;
+      } else {
+        currentLine += (currentLine ? ' ' : '') + word;
+      }
+    }
+  
+    wrappedText.push(currentLine);
+    return wrappedText.join('<br>');
+  }
+  
+  resetAllList(){
+    this.requiredEquipmentModalService.resetEquipmentList();
+    this.pakageDetailModalService.resetPakagesList();
+    this.enquiryAddressModalService.resetAddressList();
   }
 }

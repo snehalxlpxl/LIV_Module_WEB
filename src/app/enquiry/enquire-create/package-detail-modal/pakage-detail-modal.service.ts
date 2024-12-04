@@ -34,4 +34,7 @@ export class PakageDetailModalService {
   getPakagesList() {
     return this.pakagesList.value;
   }
+  resetPakagesList() {
+    this.pakagesList.next([]); // Clear the equipment list
+  }
 }

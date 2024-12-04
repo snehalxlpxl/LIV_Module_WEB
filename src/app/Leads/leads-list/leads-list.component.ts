@@ -243,4 +243,22 @@ export class LeadsListComponent implements OnInit {
       console.log("sales Person", this.salesPerson);
     });
   }
+
+  wrapText(text: string, width: number): string {
+    const words = text.split(' ');
+    const wrappedText = [];
+    let currentLine = '';
+  
+    for (const word of words) {
+      if (currentLine.length + word.length > width) {
+        wrappedText.push(currentLine);
+        currentLine = word;
+      } else {
+        currentLine += (currentLine ? ' ' : '') + word;
+      }
+    }
+  
+    wrappedText.push(currentLine);
+    return wrappedText.join('<br>');
+  }
 }

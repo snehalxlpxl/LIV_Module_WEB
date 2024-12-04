@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { EnquireCreateService } from 'app/enquiry/enquire-create/enquire-create.service';
 import { EnquiryService } from 'app/enquiry/enquiry.service';
 import { SharedService } from 'app/shared.service';
 import Swal from 'sweetalert2';
@@ -10,6 +12,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./new-rate-request-modal.component.scss']
 })
 export class NewRateRequestModalComponent implements OnInit {
+
+  @Input() enquiryID:number;
+  newRateRequestForm:FormGroup;
   selectedAgent: any | null = null;
   sendTo: string = '';
   cc: string = '';
@@ -21,8 +26,12 @@ export class NewRateRequestModalComponent implements OnInit {
   userName: any | undefined;
   userId: any | undefined;    
   userEmail: any | undefined;    
+  pakagesDetailsList: any[];
+  containerTypes: string;
 
-  constructor(public activeModal: NgbActiveModal,private enquiryService: EnquiryService,private userService: SharedService) { }
+  constructor(public activeModal: NgbActiveModal,private enquiryService: EnquiryService,private userService: SharedService,
+    public enquireCreateService:EnquireCreateService,private fb:FormBuilder
+  ) { }
 
   ngOnInit(): void {
     const userData = this.userService.getUserData();
@@ -37,7 +46,21 @@ export class NewRateRequestModalComponent implements OnInit {
     } else {
       console.log('No user data found in localStorage');
     }
+    this.formInit();
     this.getCompanyType();
+    this.getEnquiryPakagesById(this.enquiryID);
+    this.getEnquiryContainertById(this.enquiryID);
+    
+  }
+  formInit(){
+    this.newRateRequestForm = this.fb.group({
+      companyTypes:0,
+      sendTo:0,
+      cc:'',
+      draftContent: ['']
+
+  
+    });
   }
   closeModal(): void {
     this.activeModal.dismiss('Modal dismissed');
@@ -101,4 +124,30 @@ export class NewRateRequestModalComponent implements OnInit {
     );
   }
 
+  getEnquiryPakagesById(enquiryID:number){
+    this.enquireCreateService.getEnquiryPakagesById(enquiryID).subscribe(
+      (data: any[]) => {
+        this.pakagesDetailsList = data
+        console.log("pakages patch by Id", this.pakagesDetailsList)
+      },
+      (error) => console.error('Failed to fetch equipment', error)
+    );
+  }
+  getEnquiryContainertById(enquiryID:number){
+    this.enquireCreateService.getEnquiryContainertById(enquiryID).subscribe(
+      (data: any[]) => {
+        this.pakagesDetailsList = data;
+      
+        console.log("Container patch by Id", this.pakagesDetailsList)
+        
+        // this.newRateRequestForm.patchValue({
+        //   draftContent:data[0].containerType,
+        // })
+      },
+      (error) => console.error('Failed to fetch equipment', error)
+    );
+  }
+  onSubmit(newRateRequest:any){
+    console.log(newRateRequest.value);
+  }
 }

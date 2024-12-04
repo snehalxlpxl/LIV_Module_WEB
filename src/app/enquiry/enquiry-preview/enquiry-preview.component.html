@@ -9,12 +9,12 @@
                     <span class="ml-1 badge badge-warning md-font">Awaiting Approval</span>
                 </div>
                 <div
-                    class="col-lg-6 col-md-10 d-flex justify-content-end align-items-center flex-wrap text-right mar-left">
+                    class="col-lg-6 col-md-10 d-flex justify-content-end align-items-center flex-wrap text-right mar-left" style="height: 40px;">
                     
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center" style="height: 40px;">
                         <!-- Edit Button -->
                         <button type="button" class="btn btn-primary  mr-1 md-font"
-                            style="display: inline-flex; align-items: center;" [routerLink]="['/enquiry/edit/', enquiryId]">
+                            style="display: inline-flex; align-items: center;" [routerLink]="['/enquiry/edit/', enquiryId]" (click)="resetAllList()">
                             <i class="feather icon-edit" style="font-size: 16px; margin-right: 8px;"></i>
                             Edit
                         </button>
@@ -26,20 +26,52 @@
                         </button>
 
                         <!-- New Dropdown Button -->
-                        <div ngbDropdown class="mx-1 flex-shrink-0">
+                        <!-- <div ngbDropdown class="mx-1 flex-shrink-0" *ngIf="isDropdownReady">
                             <button ngbDropdownToggle class="btn btn-primary mr-1 md-font" type="button"
                                 id="dropdownMenuButton" rippleEffect
                                 style="display: inline-flex; align-items: center; font-size: 16px;">
-                                <i class="feather icon-plus" style="font-size: 16px; margin-right: 8px;"></i> New
+                                <i class="feather icon-plus" style="font-size: 16px; margin-right: 8px;" ></i> New
                             </button>
                             <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
-                              <a ngbDropdownItem href="javascript:void(0)" (click)="openNewRateRequestModal()">New Rate Request</a>
+                              <a ngbDropdownItem href="javascript:void(0)" (click)="openNewRateRequestModal(enquiryId)">New Rate Request</a>
                               <a ngbDropdownItem href="javascript:void(0)" (click)="openRateRequestRevisionModal()">Rate Request Revision</a>
                               <a ngbDropdownItem href="javascript:void(0)" routerLink="/enquiry-rate/edit">Edit Rates</a>
                             </div>
-                        </div>
+                        </div> -->
+                        <div ngbDropdown class="mx-1 flex-shrink-0" container="body">
+                            <button
+                              ngbDropdownToggle
+                              class="btn btn-primary d-flex align-items-center"
+                              id="dropdownMenuButton"
+                              type="button"
+                            >
+                              <i class="feather icon-plus mr-2"></i> New
+                            </button>
+                            <div ngbDropdownMenu *ngIf="isDropdownReady" aria-labelledby="dropdownMenuButton">
+                              <a
+                                ngbDropdownItem
+                                href="javascript:void(0)"
+                                (click)="openNewRateRequestModal(enquiryId)"
+                              >
+                                New Rate Request
+                              </a>
+                              <a
+                                ngbDropdownItem
+                                href="javascript:void(0)"
+                                (click)="openRateRequestRevisionModal()"
+                              >
+                                Rate Request Revision
+                              </a>
+                              <a
+                                ngbDropdownItem
+                                routerLink="/enquiry-rate/edit"
+                              >
+                                Edit Rates
+                              </a>
+                            </div>
+                          </div>
+                          
                     </div>
-
                     <span class="close-big mx-1 flex-shrink-0 clickable mr-2" (click)="goBack()">×</span>
                 </div>
             </div>
@@ -74,6 +106,10 @@
                         <li ngbNavItem>
                             <a ngbNavLink (click)="setComponent('notes')"
                                 [class.active]="currentComponent === 'notes'">Notes</a>
+                        </li>
+                        <li ngbNavItem>
+                            <a ngbNavLink (click)="setComponent('notes')"
+                                [class.active]="currentComponent === 'notes'">Enquiry List</a>
                         </li>
                         <li ngbNavItem>
                             <a ngbNavLink (click)="setComponent('documents')"

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { AppInitService } from 'app/app-init.service';
@@ -67,7 +67,8 @@ export class EnquireCreateComponent implements OnInit {
     private enquireCreateServ: EnquireCreateService, private router: Router,
     private modalService: NgbModal, private enquiryAddrSer: EnquiryAddressModalService, private toastr: ToastrService,
     private pakgesSer: PakageDetailModalService, private equipSer: RequiredEquipmentModalService, private route: ActivatedRoute,
-    private newCustcreate: CustomerCreateService, private _leadsListService: LeadsListService) {
+    private newCustcreate: CustomerCreateService, private _leadsListService: LeadsListService,private cdf:ChangeDetectorRef,
+    private requiredEquipeSer:RequiredEquipmentModalService) {
       this.initForm(this.CustomerStatus,this.CustomerOrLeadId,this.salesPersonOrLeadId,this.userId);
       // console.log("value",this.newEnqiryCreate.value);
       // console.log("error",this.newEnqiryCreate.errors);
@@ -107,6 +108,7 @@ export class EnquireCreateComponent implements OnInit {
       this.clearArray();
     }
     else{
+      this.cdf.detectChanges();
       this.CustomerStatus="Customer";
       this.disable=false;
       this.clearArray();
@@ -115,8 +117,7 @@ export class EnquireCreateComponent implements OnInit {
     this.initForm(this.CustomerStatus,this.CustomerOrLeadId,this.salesPersonOrLeadId,this.userId);
   });
  
-
-    
+  this.clearArray();
     this.salesPerson = this.appInitService.salesPerson;
     this.locationMasterData = this.appInitService.locationMasterData; //appinitilizer
     this.getServiceTypes();
@@ -136,7 +137,8 @@ export class EnquireCreateComponent implements OnInit {
    
     this.clearArray();
     // this.clearForm();
-
+    this.cdf.detectChanges();
+    this.requiredEquipeSer.resetEquipmentList(); 
     this.enquiryId=0;
   }
 
@@ -477,6 +479,9 @@ export class EnquireCreateComponent implements OnInit {
   }
   cancelPreview(){
     this.location.back();
+    if(!this.CustomerOrLeadId){
+      this.clearArray();
+    }
   }
   clearArray() {
     this.equipDetailsList=[];
@@ -564,7 +569,7 @@ export class EnquireCreateComponent implements OnInit {
     modalRef.componentInstance.enquiryIdFromUrl = enquiryId;
     modalRef.componentInstance.viewType = this.viewMode;
   }
-  openEnquiryAddressesModal(enquiryId:number){
+  openEnquiryAddressesModal(enquiryId:number,companyName:any){
     console.log("EnquiryAddressModalComponent")
     const modalRef = this.modalService.open(EnquiryAddressModalComponent, {
       size: 'md', 
@@ -572,15 +577,16 @@ export class EnquireCreateComponent implements OnInit {
     });
     modalRef.componentInstance.enquiryIdFromUrl = enquiryId;
     modalRef.componentInstance.viewType = this.viewMode;
+    modalRef.componentInstance.companyName = companyName;
   }
   getAllAddrDetailfromModal() {
-    this.enquiryaddrDetailsList=[];
+   this.clearArray();
     this.enquiryAddrSer.CurrentEnquiryAddressList.subscribe(list => {
       this.enquiryaddrDetailsList = list;
       console.log("create addr", this.enquiryaddrDetailsList);
       this.newEnqiryCreate.get('address').setValue(this.enquiryaddrDetailsList);
       // this.isAccordionExpanded=true;
-      if (list.length > 0) {
+      if (this.enquiryaddrDetailsList.length > 0) {
         // this.isAccordionExpanded=true;
         Swal.fire({
           title: 'Success!',
@@ -592,13 +598,13 @@ export class EnquireCreateComponent implements OnInit {
     });
   }
   getAllPakagesfromModal() {
-    this.pakagesDetailsList=[];
+    this.clearArray();
     this.pakgesSer.CurrentPakagesList.subscribe(list => {
       this.pakagesDetailsList = list;
       console.log(" create pakage", this.pakagesDetailsList);
       this.newEnqiryCreate.get('pakage').setValue(this.pakagesDetailsList);
       // this.isAccordionExpanded=true;
-      if (list.length > 0) {
+      if (this.pakagesDetailsList.length > 0) {
         // this.isAccordionExpanded=true;
         Swal.fire({
           title: 'Success!',
@@ -610,13 +616,13 @@ export class EnquireCreateComponent implements OnInit {
     });
   }
   getAllEquipmentfromModal() {
-    this.equipDetailsList=[];
+    this.clearArray();
     this.equipSer.CurrentEquipmentList.subscribe(list => {
       this.equipDetailsList = list;
       console.log(" create equipment", this.equipDetailsList);
       this.newEnqiryCreate.get('equipment').setValue(this.equipDetailsList);
       // this.isAccordionExpanded=true;
-      if (list.length > 0) {
+      if ( this.equipDetailsList.length > 0) {
         // this.isAccordionExpanded=true;
         Swal.fire({
           title: 'Success!',
@@ -682,16 +688,21 @@ export class EnquireCreateComponent implements OnInit {
       this.toastr.error('Error copying address to clipboard', 'Error');
     });
   }
+  companyName:any
   onChangeCompany(event:any){
-    const selectedValue = event ? event.companyName : '';
-    this.newEnqiryCreate.get('CompanyName').setValue(selectedValue);
+    this.companyName = event ? event.companyName : '';
+    this.newEnqiryCreate.get('CompanyName').setValue(this.companyName);
     // setTimeout(() => {
     //   this.emailField.nativeElement.focus();
     // }, 0);
     }
+
+    leadName:any;
     onChangeLeadName(event:any){
-      const selectedValue = event ? event.companyName : '';
-      this.newEnqiryCreate.get('LeadName').setValue(selectedValue);
+     
+      this.leadName = event ? event.companyName : '';
+      // alert(this.leadName)
+      this.newEnqiryCreate.get('LeadName').setValue(this.leadName);
       // setTimeout(() => {
       //   this.emailField.nativeElement.focus();
       // }, 0);
@@ -706,8 +717,7 @@ export class EnquireCreateComponent implements OnInit {
     }
     onChangeStatus(event:any){
       const checkStatus=event ? event.value : '';
-      this.CustomerStatus=checkStatus
-      // alert("onChangeStatus"+checkStatus)
+      this.CustomerStatus=checkStatus;
       this.setValidator(checkStatus);
       this.newEnqiryCreate.updateValueAndValidity();
     }

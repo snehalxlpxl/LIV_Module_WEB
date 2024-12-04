@@ -47,4 +47,7 @@ export class AddCustAddressService {
       { responseType: "text" as "json" }
     );
   }
+  resetaddressList() {
+    this.addressList.next([]); // Clear the equipment list
+  }
 }

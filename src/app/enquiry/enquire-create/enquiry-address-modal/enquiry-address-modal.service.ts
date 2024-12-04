@@ -34,4 +34,7 @@ export class EnquiryAddressModalService {
       { responseType: "text" as "json" }
     );
   }
+  resetAddressList() {
+    this.EnquiryaddressList.next([]); // Clear the equipment list
+  }
 }

@@ -37,5 +37,7 @@ export class TaxDetailsService {
     const body = JSON.stringify(gstdata);
     return this.http.post<any>(`${environment.apiUrl}/Customer/insert/Gst`, body, { headers });
   }
-
+  resetTaxList() {
+    this.taxDetailsList.next([]); // Clear the equipment list
+  }
 }

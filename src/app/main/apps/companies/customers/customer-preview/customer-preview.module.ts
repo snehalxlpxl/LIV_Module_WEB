@@ -10,9 +10,10 @@ import { RouterModule } from '@angular/router';
 import { CustomerPreviewShipmentSectionModule } from './cutomer-preview-shipment-section/customer-preview-shipment-section.module';
 import { CustomerPreviewTransacSectionComponent } from './customer-preview-transac-section/customer-preview-transac-section.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { CustomerEnquiryListSectionComponent } from './customer-enquiry-list-section/customer-enquiry-list-section.component';
 
 @NgModule({
-  declarations: [CustomerPreviewComponent, CustomerPreviewTransacSectionComponent],
+  declarations: [CustomerPreviewComponent, CustomerPreviewTransacSectionComponent, CustomerEnquiryListSectionComponent],
   imports: [
     CommonModule,
     CustomerPreviewHeaderModule,

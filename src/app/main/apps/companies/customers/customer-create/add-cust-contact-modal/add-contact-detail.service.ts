@@ -46,4 +46,7 @@ export class AddContactDetailService {
       { responseType: "text" as "json" }
     );
   }
+  resetcontactList() {
+    this.contactList.next([]); // Clear the equipment list
+  }
 }
