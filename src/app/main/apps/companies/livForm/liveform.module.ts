@@ -26,6 +26,7 @@ import { LivDocumentSectionComponent } from './liv-preview/liv-document-section/
 import { LivDocumentUploadComponent } from './liv-preview/liv-document-section/liv-document-upload/liv-document-upload.component';
 import { ApprovemsgpageComponent } from './approvemsgpage/approvemsgpage.component';
 import { RejectmsgpageComponent } from './rejectmsgpage/rejectmsgpage.component';
+import { InvalidmsgpageComponent } from './invalidmsgpage/invalidmsgpage.component';
 
 const routes = [ 
   
@@ -85,7 +86,7 @@ const routes = [
     , LivPreviewDocumentsSectionComponent, 
     LivPreviewOverviewSectionBasicDetailsComponent, LivPreviewTimelineSectionComponent, 
     LivOverviewSectionSummaryComponent, RejectModalComponent, ApproveModalComponent, 
-    LivApproveComponent,LivTaskApproverListComponent,LoadListSaleOrApproverComponent, LivDocumentUploadComponent, LivDocumentSectionComponent, ApprovemsgpageComponent, RejectmsgpageComponent
+    LivApproveComponent,LivTaskApproverListComponent,LoadListSaleOrApproverComponent, LivDocumentUploadComponent, LivDocumentSectionComponent, ApprovemsgpageComponent, RejectmsgpageComponent, InvalidmsgpageComponent
   ],
   imports: [
     CommonModule,
