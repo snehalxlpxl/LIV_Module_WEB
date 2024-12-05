@@ -65,6 +65,7 @@ const routes = [
   },
   { path: 'Approve', component: ApprovemsgpageComponent },
   { path: 'Reject', component: RejectmsgpageComponent },
+  { path: 'Invalid', component: InvalidmsgpageComponent },
 
   {
   path: 'liv-task-approve-list/:approverId',
