@@ -42,8 +42,8 @@ export class CreditLimitRequestModalComponent implements OnInit {
   public toasterSer:ToastrService,
   private creditLimitReqListSer: CreditLimitReqListService,
   private router: Router,
-  private activityNotificationService: ActivityNotificationService // Inject service
-
+  private activityNotificationService: ActivityNotificationService ,// Inject service
+  private creditLimitRequestModalService:CreditLimitRequestModalService
 
   ) { }
  
@@ -161,10 +161,12 @@ export class CreditLimitRequestModalComponent implements OnInit {
     });
   }
  
+  // http://108.181.191.121:5000/api/Company/cust
   fetchCompanies(): void {
-    this.apiService.getCompanies().subscribe(
+    this.creditLimitRequestModalService.getCompaniesliv().subscribe(
       (data: CompanyInfo[]) => {
         this.companies = data;
+        console.log("comp",this.companies)
       },
       (error: any) => {
         console.error('Error fetching companies:', error);

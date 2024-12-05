@@ -91,52 +91,52 @@ export class LivPreviewService {
   }
   // private baseUrl =  'http://localhost:5116/api/CountProfitReport';
   private baseUrl = 'http://108.181.191.121:5053/api/CountProfitReport';
-// Method to get Count by Company
-getCountByCompany(companyId: any): Observable<any> {
-  const url = `${this.baseUrl}/shipmentCountByCompany/${companyId}`;
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json', // Add any other headers Swagger might use
-  });
-  return this.http.get<any>(url).pipe(
-    catchError(this.handleError)
-  );
-}
+  // Method to get Count by Company
+  getCountByCompany(companyId: any): Observable<any> {
+    const url = `${this.baseUrl}/shipmentCountByCompany/${companyId}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Add any other headers Swagger might use
+    });
+    return this.http.get<any>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
 
-// Method to get Sum of Realized Revenue
-getSumRealizedRevenue(companyId: any): Observable<any> {
-  const url = `${this.baseUrl}/SumRealizedRevenue/${companyId}`;
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json', // Add any other headers Swagger might use
-  });
-  return this.http.get<any>(url).pipe(
-    catchError(this.handleError)
-  );
-}
+  // Method to get Sum of Realized Revenue
+  getSumRealizedRevenue(companyId: any): Observable<any> {
+    const url = `${this.baseUrl}/SumRealizedRevenue/${companyId}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Add any other headers Swagger might use
+    });
+    return this.http.get<any>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
 
-// Method to get Sum of Realized Revenue for the Last 60 Days
-getSumOfRealizedRevenueLast60Days(companyId: any): Observable<any> {
-  const url = `${this.baseUrl}/SumOfRealizedRevenueLast60Days/${companyId}`;
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json', // Add any other headers Swagger might use
-  });
-  return this.http.get<any>(url).pipe(
-    catchError(this.handleError)
-  );
-}
+  // Method to get Sum of Realized Revenue for the Last 60 Days
+  getSumOfRealizedRevenueLast60Days(companyId: any): Observable<any> {
+    const url = `${this.baseUrl}/SumOfRealizedRevenueLast60Days/${companyId}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Add any other headers Swagger might use
+    });
+    return this.http.get<any>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
 
-// Method to get Sum of Realized Revenue for the Last N Days
-getSumOfRealizedRevenueLastNDays(companyId: number, days: number): Observable<any> {
-  const url = `${this.baseUrl}/SumOfRealizedRevenueLastNDays/${companyId}/${days}`;
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json', // Add any other headers Swagger might use
-  });
-  return this.http.get<any>(url).pipe(
-    catchError(this.handleError)
-  );
-}
+  // Method to get Sum of Realized Revenue for the Last N Days
+  getSumOfRealizedRevenueLastNDays(companyId: number, days: number): Observable<any> {
+    const url = `${this.baseUrl}/SumOfRealizedRevenueLastNDays/${companyId}/${days}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Add any other headers Swagger might use
+    });
+    return this.http.get<any>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
 
-getLivrequestById(livRequestId: number): Observable<VwLivrequest> {
-  return this.http.get<VwLivrequest>(`${this.apiUrl}/GetLiv/${livRequestId}`);
-}
+  getLivrequestById(livRequestId: number): Observable<VwLivrequest> {
+    return this.http.get<VwLivrequest>(`${this.apiUrl}/GetLiv/${livRequestId}`);
+  }
 
 }
