@@ -1,20 +1,20 @@
-.scroll-container {
-    overflow-x: auto;
-    white-space: nowrap;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    margin-left: -13px;
-    height: 230px;
-    margin-top: -13px;
-}
+// .scroll-container {
+//     overflow-x: auto;
+//     white-space: nowrap;
+//     -ms-overflow-style: none;
+//     scrollbar-width: none;
+//     margin-left: -13px;
+//     height: 230px;
+//     margin-top: -13px;
+// }
 
-.scroll-container::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for webkit browsers */
-}
+// .scroll-container::-webkit-scrollbar {
+//     display: none; /* Hide scrollbar for webkit browsers */
+// }
 
-.scroll-container .d-flex {
-    flex-wrap: nowrap; /* Prevent wrapping to new lines */
-}
+// .scroll-container .d-flex {
+//     flex-wrap: nowrap; /* Prevent wrapping to new lines */
+// }
 .rounded-corners{
     border-radius: 9px;
     background-color: white;
@@ -100,20 +100,20 @@ h6 {
 
 
 /* General styling for the card */
-.totalsale {
-    background-color: #f9f9f9;  /* Light grey background */
-    padding: 20px;               /* Padding inside the card */
-    border-radius: 12px;         /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow for elevation */
-    transition: box-shadow 0.3s ease; /* Smooth shadow transition */
-  }
+// .totalsale {
+//     background-color: #f9f9f9;  /* Light grey background */
+//     padding: 20px;               /* Padding inside the card */
+//     border-radius: 12px;         /* Rounded corners */
+//     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow for elevation */
+//     // transition: box-shadow 0.3s ease; /* Smooth shadow transition */
+//   }
   
   /* Hover effect for the card */
-  .totalsale:hover {
-    transform: translateY(-5px); /* Hover lift */
+//   .totalsale:hover {
+//     transform: translateY(-5px); /* Hover lift */
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
-  }
+//     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+//   }
   
   /* Avatar icon container */
   .avatar-content {
@@ -158,8 +158,12 @@ h6 {
   transform-origin: center;  /* Ensures the icon scales from its center */
 }
 
-.scroll-container {
-  overflow-x: auto;
-  padding: 10px;
-}
+// .scroll-container {
+//   overflow-x: auto;
+//   padding: 10px;
+// }
 
+.count{
+    font-size: 13px;
+    padding: 5px;
+}

@@ -1,38 +1,40 @@
 <div class="scroll-container">
     <div class="d-flex mt-1">
-        <div class="col-md-4 pr-0">
+        <div class="col-md-4 p-0">
             <div class="totalsale rounded-corners">
-                <div class=" d-flex flex-column align-items-left">
-                    <div class=" pb-0">
-                        <!-- <div class="avatar-content">
-                            <i data-feather="package" class="avatar-icon" style="width: 50px; height: 50px; stroke-width: 2;"></i>
-                        </div> -->
-                        <div class="title-container">
-                        <h4 class="mt-1 title">
-                            <b>{{ totalSales?.title   }}</b>
-                        </h4>
+                <div class=" d-flex flex-column align-items-center">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="avatar bg-light-success rounded">
+                            <div class="avatar-content">
+                              <i data-feather="briefcase" class="avatar-icon font-medium-3"></i>
+                            </div>
+                          </div>
+                        <div class="title-container mb-1 mt-1">
+                            <h4 class="card-title"><b>{{ totalSales?.title}}</b></h4>
+                        </div>
                     </div>
-                    </div>
-                    <div class=" mt-1">
-                        <p class="value">{{totalSales?.shipmentCount}}</p>
+                    <div class="mt-1">
+                        <p class="badge badge-light-success count">{{totalSales?.shipmentCount}}</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-4 pr-0">
             <div class="totalsale rounded-corners">
-                <div class=" d-flex flex-column align-items-left">
-                    <div class=" pb-0">
-                        <!-- <div class="avatar-content-red">
-                            <i data-feather="bar-chart-2" class="avatar-icon" style="width: 50px; height: 50px;" ></i>
-                        </div> -->
-                        <div class="title-container">
-                            <h4 class="mt-1 title"><b>{{ realizedRevenue?.title }}</b></h4>
+                <div class=" d-flex flex-column align-items-center">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="avatar bg-light-success rounded">
+                            <div class="avatar-content">
+                              <i data-feather="dollar-sign" class="avatar-icon font-medium-3"></i>
+                            </div>
+                          </div>
+                        <div class="title-container mb-1 mt-1 d-flex d-flex flex-column">
+                            <h4 class="card-title"><b>{{ realizedRevenue?.title }}</b></h4><small class="text-center">INR</small>
+                            
                         </div>                        
                     </div>
-                    <div class=" mt-0">
-                        <p class="value">INR</p>
-                        <p class="value">{{realizedRevenue?.totalRealizedRevenue | number:'1.2-2'}}</p>
+                    <div class="mt-0">
+                        <p class="badge badge-light-success count">{{realizedRevenue?.totalRealizedRevenue | number:'1.2-2'}}</p>
                     </div>
                 </div>
             </div>
@@ -40,21 +42,24 @@
        
         <div class="col-md-4 pr-0">
             <div class="totalsale rounded-corners">
-                <div class=" d-flex flex-column align-items-left">
-                    <div class=" pb-0">
-                        <!-- <div class="avatar-content-red">
-                            <i data-feather="dollar-sign" class="avatar-icon" style="width: 50px; height: 50px;" ></i>
-                        </div> -->
-                        <div class="title-container ">
-                        <h4 class="mt-1 title">
-                                <b>{{ mainTitle }}</b><span class="sub-title">{{ subTitle }}</span>
-                        </h4>
-                        
+                <div class=" d-flex flex-column align-items-center">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="avatar bg-light-success rounded">
+                            <div class="avatar-content">
+                              <i data-feather="dollar-sign" class="avatar-icon font-medium-3"></i>
+                            </div>
+                          </div>
+                        <div class="title-container mb-1 mt-1 d-flex d-flex flex-column">
+                            <h4 class="mt-1 title">
+                                    <b>{{ mainTitle }}</b><span class="sub-title">{{ subTitle }}</span>
+                            </h4>
+                            <small class="text-center">INR</small>
                         </div>
                     </div>
-                    <div class=" mt-0">
-                        <p class="value">INR</p>
-                        <p class="value">{{sumOfRealizedRevenueLast60Days?.totalRealizedRevenueLast60Days | number:'1.2-2'}}</p>
+                    <div class="mt-0">
+                        <!-- <p class="value">INR</p> -->
+                        <div class=" badge badge-light-success count">{{sumOfRealizedRevenueLast60Days?.totalRealizedRevenueLast60Days | number:'1.2-2'}}</div>
+                        <!-- <p class="font-large-1 font-weight-bold">{{sumOfRealizedRevenueLast60Days?.totalRealizedRevenueLast60Days | number:'1.2-2'}}</p> -->
                     </div>
                 </div>
             </div>
