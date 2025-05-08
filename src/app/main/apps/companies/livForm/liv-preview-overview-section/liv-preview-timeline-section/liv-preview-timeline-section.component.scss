@@ -124,3 +124,11 @@ app-liv-preview-timeline-section .timeline-event-time {
 .text-teal {
   color: teal;
 }
+.timeline .timeline-item .timeline-event {
+  position: relative;
+  width: 100%;
+  min-height: 1rem!important;
+}
+.timeline .timeline-item:not(:last-child) {
+  padding-bottom: 1.5rem!important;
+}

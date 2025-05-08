@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LivPreviewService } from '../liv-preview/liv-preview.service';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { ActivityNotificationService } from 'app/Leads/lead-preview/lead-preview-activities-section/ActivityNotificationService.service';
 
 @Component({
   selector: 'app-liv-preview-overview-section',
@@ -23,18 +24,27 @@ export class LivPreviewOverviewSectionComponent implements OnInit {
   mainTitle: string = '';
   subTitle: string = '';
   taskTimeLineData: any;
+  finalStatus: string='';
 
   constructor(
     private route: ActivatedRoute,
     private livPreviewService: LivPreviewService,
-    private http: HttpClient
+    private http: HttpClient,private activityNotificationService: ActivityNotificationService
   ) { }
 
   ngOnInit(): void {
     this.LIVRequestNumber = this.route.snapshot.paramMap.get('id');
     this.LIVRequestId=Number(this.LIVRequestNumber);
     console.log("BasicDetailLIVRequestId-", this.LIVRequestId);
-    
+    this.activityNotificationService.activity$.subscribe((message: string) => {
+      console.log("activityNotificationService Call;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",message)
+      if (message) {
+        // this.loadLIVRequests(); // Method to refresh the list or data
+        this.getAllData(this.LIVRequestId);
+        
+      }
+
+    });
     if (this.LIVRequestId) {
       this.getAllData(this.LIVRequestId);
       // // Step 1: Retrieve livRequestData to get companyId
@@ -68,13 +78,16 @@ export class LivPreviewOverviewSectionComponent implements OnInit {
           // , sumRevenueData, realizedRevenueData, companyCountData
           ]) => {
           this.livRequestData = livRequestData;
-          this.taskTimeLineData = taskTimeLineData; 
+          // this.taskTimeLineData = taskTimeLineData; 
+          this.taskTimeLineData = taskTimeLineData
+
           // this.sumOfRealizedRevenueLast60Days = sumRevenueData;
           // this.realizedRevenue = realizedRevenueData;
           // this.totalSales = companyCountData;
   
           console.log('Fetched LivRequest Data:', this.livRequestData);
-          console.log('Fetched Task TimeLine Data:', taskTimeLineData);
+          this.finalStatus = this.livRequestData.status;
+          console.log('Processed Task TimeLine Data: ____&&&&&&&&&&&&&&&&&&&', taskTimeLineData);
           // console.log('Fetched Revenue Data:==============', sumRevenueData);
           // console.log('Fetched Realized Revenue Data:=================', realizedRevenueData);
           // console.log('Fetched Company Count:=================', companyCountData);
@@ -88,43 +101,13 @@ export class LivPreviewOverviewSectionComponent implements OnInit {
         }
       });
   }
-  // getAllData(LIVRequestId: any, companyId: any): void {
-  //   console.log("Fetching data for LIVRequestId:", LIVRequestId, "and companyId:", companyId);
-
-  //   const taskTimeLine$ = this.getLivTaskTimeLine(LIVRequestId);
-  //   const sumRevenue$ = this.livPreviewService.getSumOfRealizedRevenueLast60Days(companyId);
-  //   const realizedRevenue$ = this.livPreviewService.getSumRealizedRevenue(companyId);
-  //   const companyCount$ = this.livPreviewService.getCountByCompany(companyId);
-
-  //   forkJoin([taskTimeLine$, sumRevenue$, realizedRevenue$, companyCount$])
-  //     .pipe(
-  //       catchError((error) => {
-  //         console.error('Error fetching data:', error);
-  //         return of([]);
-  //       })
-  //     )
-  //     .subscribe(([taskTimeLineData, sumRevenueData, realizedRevenueData, companyCountData]) => {
-  //       this.taskTimeLineData = taskTimeLineData;
-  //       this.sumOfRealizedRevenueLast60Days = sumRevenueData;
-  //       this.realizedRevenue = realizedRevenueData;
-  //       this.totalSales = companyCountData;
-
-  //       console.log('Fetched Task TimeLine Data:', taskTimeLineData);
-  //       console.log('Fetched Revenue Data:', sumRevenueData);
-  //       console.log('Fetched Realized Revenue Data:', realizedRevenueData);
-  //       console.log('Fetched Company Count:', companyCountData);
-
-  //       if (this.sumOfRealizedRevenueLast60Days) {
-  //         this.extractTitleAndSubtitle(this.sumOfRealizedRevenueLast60Days.title);
-  //       }
-  //     });
-  // }
   getLivTaskTimeLine(taskId: number) {
     const url = `${environment.apiUrl}/LIVTimeLine/GetLivTaskTimeLine/${taskId}`;
     return this.http.get<any>(url).pipe(
       catchError(this.handleError)
     );
   }
+
 
 
   extractTitleAndSubtitle(title: string) {
@@ -139,3 +122,35 @@ export class LivPreviewOverviewSectionComponent implements OnInit {
     return [];
   }
 }
+
+
+
+// Function to process approval status
+// private processApprovalStatus(taskTimeLineData: any[]): any[] {
+//   // Explicitly define the accumulator type as a Record<number, any[]>
+//   const groupedByLevel: Record<number, any[]> = taskTimeLineData.reduce((acc, curr) => {
+//     if (!acc[curr.level]) {
+//       acc[curr.level] = [];
+//     }
+//     acc[curr.level].push(curr);
+//     return acc;
+//   }, {} as Record<number, any[]>);
+
+//   // Process each level and flatten the result without using .flat()
+//   return Object.values(groupedByLevel).reduce((result, levelEntries) => {
+//     const approvedEntry = levelEntries.find(entry => entry.levelStatus === 'Approved');
+
+//     if (approvedEntry) {
+//       // If an approval exists, add only the approved entry
+//       result.push(approvedEntry);
+//     } else {
+//       // If no approvals, show all as "Awaiting Approval"
+//       // result.push(...levelEntries.map(entry => ({
+//       //   ...entry,
+//       //   levelStatus: 'Awaiting Approval'
+//       // })));
+//     }
+
+//     return result;
+//   }, [] as any[]);
+// }

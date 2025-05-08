@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { ApproveModalService } from './approve-modal.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CreditLimitReqListService } from '../../credit-limit-req-list/credit-limit-req-list.service';
 import { LivDocumentUploadService } from '../liv-document-section/liv-document-upload/liv-document-upload.service';
 import { ActivityNotificationService } from 'app/Leads/lead-preview/lead-preview-activities-section/ActivityNotificationService.service';
@@ -30,7 +30,8 @@ export class ApproveModalComponent implements OnInit {
   LIVRequestId: any;
   approverId: number;
 
-  constructor(public activeModal: NgbActiveModal,private activityNotificationService: ActivityNotificationService,  private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService,private LivDocumentUploadSer:LivDocumentUploadService) {}
+  constructor(public activeModal: NgbActiveModal,private activityNotificationService: ActivityNotificationService,  private ApproveModalSer:ApproveModalService,private route: ActivatedRoute,private CreditLimitReqListSer:CreditLimitReqListService,
+    private LivDocumentUploadSer:LivDocumentUploadService,private cdr: ChangeDetectorRef,private router: Router) {}
 
 
   ngOnInit(): void {
@@ -129,8 +130,21 @@ confirmApproval(): void {
           this.ApproveModalSer.updateApprovalTaskForDelegate(approvalData).subscribe(
             (res) => {
               console.log('Task updated successfully', res);
-              // window.location.reload();
               this.activityNotificationService.notify('Approval task updated successfully.');
+              this.activityNotificationService.notifyUpdateApprovalChange();
+             
+
+                 // Perform any actions like uploading the file or API calls, then close modal
+            console.log('Approval confirmed', approvalData);
+            this.activeModal.close(approvalData);
+
+            // // Optionally show success message
+            Swal.fire('Confirmed!', 'Your approval has been confirmed.', 'success');
+
+            this.router.navigate([`/liv-preview/${this.livRequestId}`]).then(() => {
+              window.location.reload();
+              this.cdr.detectChanges();
+            });
 
             },
             (err) => {
@@ -142,12 +156,7 @@ confirmApproval(): void {
           console.error('Error uploading file', fileErr);
         }
       );
-      // Perform any actions like uploading the file or API calls, then close modal
-      console.log('Approval confirmed', approvalData);
-      this.activeModal.close(approvalData);
-
-      // Optionally show success message
-      Swal.fire('Confirmed!', 'Your approval has been confirmed.', 'success');
+   
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       // If user cancels, show cancellation message
       Swal.fire('Cancelled', 'Approval was not confirmed.', 'error');

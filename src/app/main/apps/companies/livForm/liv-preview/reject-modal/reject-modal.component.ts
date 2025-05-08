@@ -17,6 +17,7 @@ export class RejectModalComponent implements OnInit {
   @Output() rejectConfirmed = new EventEmitter<boolean>();
 
   @Input() LIVRequestId: any; 
+  @Input() token:any;
   livRequest: any;
   userName: any;
   userId: any;
@@ -26,6 +27,10 @@ export class RejectModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    // if(this.token){
+    //   this.GetLivRequestIdbyToken(this.token);
+    // }
     console.log("BasicDetailLIVRequestId",this.LIVRequestId);
     const userData = JSON.parse(localStorage.getItem('currentUser'));
     if (userData) {
@@ -38,6 +43,14 @@ export class RejectModalComponent implements OnInit {
   }
   this.checkIfDelegate(this.userId);
   }
+  // GetLivRequestIdbyToken(token:any){
+  //   this.CreditLimitReqListSer.updateRejectGetlivRequestId(token).subscribe({
+  //     next: (response) => {
+  //       console.log("LIVRequestId Info", response);
+  //      this.LIVRequestId=response;
+  //     }
+  //   });
+  // }
   confirmRejection() {
     const rejectionReason = (document.getElementById('rejectionReason') as HTMLInputElement).value;
     
@@ -56,12 +69,15 @@ export class RejectModalComponent implements OnInit {
       this.getLIVRequest(this.LIVRequestId);
       // this.cdr.detectChanges();
       // this.isSubmitted = true;
+      // this.router.navigate(['/credit-limit-req-list']); // Redirect to the list page
+      window.location.reload();
       // Emit an event to the parent component (if needed)
       this.rejectConfirmed.emit(true);
 
         },
         error => {
           console.error('Error updating approval task:', error);
+          window.location.reload();
           alert('There was an error processing your request. Please try again.');
         }
       );
@@ -116,4 +132,5 @@ export class RejectModalComponent implements OnInit {
       console.log('Is Delegate:', this.isDelegate); // For debugging
     });
   }
+  
 }

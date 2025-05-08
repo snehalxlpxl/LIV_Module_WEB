@@ -19,6 +19,10 @@ import { forkJoin, of } from 'rxjs';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+import { CreditLimitRequestModalService } from '../credit-limit-req-list/credit-limit-request-modal/credit-limit-request-modal.service';
+import { CreditLimitRequestModalComponent } from '../credit-limit-req-list/credit-limit-request-modal/credit-limit-request-modal.component';
+import { LivPreviewTimelineSectionService } from '../liv-preview-overview-section/liv-preview-timeline-section/liv-preview-timeline-section.service';
+import { RevisionModalComponent } from './revision-modal/revision-modal.component';
 
 
 @Component({
@@ -63,8 +67,9 @@ export class LivPreviewComponent implements OnInit {
   // approverList = [113057, 113058, 113059, 113060, 113061, 113062];
   isCanceledStatus:any;
 
-  constructor(private navigationService: CustomerPreviewService, private modalService: NgbModal,private livRequestService: LivPreviewService, private livApproveService:LivApproveService,  private route: ActivatedRoute, private router: Router,private location: Location,  private activityNotificationService: ActivityNotificationService,    private changeDetector: ChangeDetectorRef,private CreditLimitReqListSer:CreditLimitReqListService,    private http: HttpClient
-    ,  private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
+  constructor(private navigationService: CustomerPreviewService, private modalService: NgbModal,private livRequestService: LivPreviewService, private livApproveService:LivApproveService,  private route: ActivatedRoute, 
+    private router: Router,private location: Location,  private activityNotificationService: ActivityNotificationService,    private changeDetector: ChangeDetectorRef,private CreditLimitReqListSer:CreditLimitReqListService,    
+    private http: HttpClient,private livPreviewService:LivPreviewService,private CreditLimitSer:CreditLimitRequestModalService,  private timelineService: LivPreviewTimelineSectionService,  private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
 
   ) {
     const storedUser = localStorage.getItem('currentUser');
@@ -73,17 +78,20 @@ export class LivPreviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.activityNotificationService.activity$.subscribe((message: string) => {
       if (message === 'LIV request canceled successfully.' || message === 'Approval task updated successfully.') {
         // this.loadLIVRequests(); // Method to refresh the list or data
+        console.log("notify--------------------------------------init");
         this.refreshLIVRequestData();
+       
 
       }
     });
     this.livRequestSubject.subscribe((livRequest) => {
       console.log('Updated livRequest:', livRequest);
       this.livRequest = livRequest;
-      console.log('Task Timeline Data:+++++++++++++++++++++', this.taskTimeLineData);
+      console.log('Task Timeline Data for tab:+++++++++++++++++++++', this.taskTimeLineData);
     });
 
     const userData = JSON.parse(localStorage.getItem('currentUser'));
@@ -108,12 +116,12 @@ export class LivPreviewComponent implements OnInit {
       // this.checkLevelStatus(this.LIVRequestId,this.userId);
       // this.getDelegatesApprover(this.LIVRequestId);
 
-  } else {
-      console.log('No user data found in sessionStorage');
-  }
+    } else {
+        console.log('No user data found in sessionStorage');
+    }
   
-  // this.isApprover = this.approverList.includes(this.userId);
-  // console.log("approver:",this.isApprover)
+    // this.isApprover = this.approverList.includes(this.userId);
+    // console.log("approver:",this.isApprover)
 
     this.LIVRequestId = this.route.snapshot.paramMap.get('id');
     // this.loadLIVApprovalTasks(this.userId,this.LIVRequestId);
@@ -121,10 +129,18 @@ export class LivPreviewComponent implements OnInit {
     
     // this.checkLevelStatus(this.LIVRequestId,this.userId);
     this.getDelegatesApprover(this.LIVRequestId);
-  //  console.log("BasicDetailLIVRequestId",this.LIVRequestId);
+    //  console.log("BasicDetailLIVRequestId",this.LIVRequestId);
+  
   
     this.getLIVRequest(this.LIVRequestId);
-    
+    if(this.LIVRequestId){
+    this.router.navigate([`/liv-preview/${this.LIVRequestId}`]).then(() => {
+      // window.location.reload();
+      this.cdr.detectChanges();
+    });
+
+    this.GetButtonRightsProc(this.userId,this.LIVRequestId);
+  }
     
     this.isCanceledStatus=this.getLIVRequest(this.LIVRequestId);
 
@@ -139,9 +155,32 @@ export class LivPreviewComponent implements OnInit {
     
   }  
 
+  buttonRights: any = {}; // Store API response
+  isEdit: boolean = false;
+  isReject: boolean = false;
+  isRevise: boolean = false;
+  isApprove: boolean = false;
+  isCancel: boolean = false;
+  GetButtonRightsProc(userId: number, livId: number) {
+    this.livPreviewService.GetButtonRightsProc(userId,livId).subscribe(response => {
+      
+      console.log("button status",response);
+      if (response.length > 0) {
+        let permissions = response[0]; // Assuming only one object per user
+        this.userId = permissions.userId;
+        this.isEdit = permissions.isEdit;
+        this.isReject = permissions.isReject;
+        this.isRevise = permissions.isRevise;
+        this.isApprove = permissions.isApprove;
+        this.isCancel = permissions.isCancel;
+      }
+    });
+  }
+
 refreshLIVRequestData() {
   // This function will reload or refresh the current LIV request data
   this.getLIVRequest(this.LIVRequestId); // Assuming getLIVRequest is the method you use to fetch data
+  console.log("notify--------------------------------------init");
 }
   getLivTaskTimeLine(taskId: number) {
     const url = `${environment.apiUrl}/LIVTimeLine/GetLivTaskTimeLine/${taskId}`;
@@ -186,7 +225,7 @@ refreshLIVRequestData() {
       console.log("this.isDelegate",this.isDelegate);
 
       if(this.isDelegate==true){
-
+        // this.isDelegate=true;
         this.CreditLimitReqListSer.getDelegatesApprover(userId).subscribe(response => {
           this.message=`You have logged in as delegate for Mr. `+response[0].approverName;
           });
@@ -239,7 +278,7 @@ refreshLIVRequestData() {
           
 
         }else {
-          console.log("yyyyyyyyyyyyyyyyyyy")
+          // console.log("yyyyyyyyyyyyyyyyyyy")
           this.levelStatusFlag=true;
           this.showApprovalbtn=true;
         }
@@ -264,25 +303,55 @@ refreshLIVRequestData() {
   // Listen for the rejection confirmation event
   modalRef.componentInstance.rejectConfirmed.subscribe(() => {
     this.levelStatusFlag = true; // Adjust the flag to remove the button
+    this.activityNotificationService.notify('Approval task updated successfully.');
   });
-
+  this.activityNotificationService.notifyUpdateApprovalChange();
   }
+  openRevisionModal(){
+    const modalRef = this.modalService.open(RevisionModalComponent);
+    modalRef.componentInstance.LIVRequestId = this.LIVRequestId;
+  // Listen for the rejection confirmation event
+  // modalRef.componentInstance.rejectConfirmed.subscribe(() => {
+  //   this.levelStatusFlag = true; // Adjust the flag to remove the button
+  //   this.activityNotificationService.notify('Approval task updated successfully.');
+  // });
+  this.activityNotificationService.notifyUpdateApprovalChange();
+  
+  }
+
   openApproveModal(LIVRequestId: number){
     const modalRef = this.modalService.open(ApproveModalComponent);
     // Pass the LIVRequestId to the modal instance
     modalRef.componentInstance.livRequestId = LIVRequestId;
+    this.activityNotificationService.notify('Approval task updated successfully.');
+
+    this.activityNotificationService.notifyUpdateApprovalChange();
+
+    this.router.navigate([`/liv-preview/${LIVRequestId}`]).then(() => {
+      // window.location.reload();
+      this.cdr.detectChanges();
+    });
+
   }
   
   // error:true;
 
   getLIVRequest(id: any): void {
+
+    console.log("notify--------------------------------------init inside func");
     // this.isApprover = this.approverList.includes(this.userId);
     this.livRequestService.getLIVRequest(id).subscribe({
       next: (data) => {
         // if (this.isApprover ) {
           this.livRequest = data;
           console.log("GetLIVRequest1", data);
+         
           this.finalStatus=this.livRequest.status;
+          console.log("finalStatus", this.finalStatus);
+          this.router.navigate([`/liv-preview/${id}`]).then(() => {
+            // window.location.reload();
+            this.cdr.detectChanges();
+          });
         // }else if(data.createdBy === this.userId){
         //   this.livRequest = data;
         //   console.log("GetLIVRequest", data);
@@ -303,34 +372,45 @@ refreshLIVRequestData() {
 
   status: string;
   onSubmit() {
-    // Use the actual request ID
-  this.status= 'Approved';        // Use the actual status
-console.log(this.LIVRequestId, this.status, '', this.userId)
-  this.livApproveService.updateApprovalTask(this.LIVRequestId, this.status, '', this.userId)
+
+    if(this.isDelegate==true){
+      this.openApproveModal(this.LIVRequestId)
+    }else{
+          // Use the actual request ID
+    this.status= 'Approved';        // Use the actual status
+    console.log(this.LIVRequestId, this.status, '', this.userId)
+    this.livApproveService.updateApprovalTask(this.LIVRequestId, this.status, '', this.userId)
     .subscribe(response => {
       console.log('API response:', response);
 
       // Call the method to refresh the data after approval
       this.getLIVRequest(this.LIVRequestId);
+      this.getLivTaskTimeLine(this.LIVRequestId);
       // console.log("LIV request data updated+++++++++++++");
 
       // Notify about the approval change
       this.activityNotificationService.notifyUpdateApprovalChange();
       // this.cdr.detectChanges();
+      this.activityNotificationService.notify('Approval task updated successfully.');
 
-      // Show success SweetAlert after successful API call
       Swal.fire({
         icon: 'success',
         title: 'Success!',
-        text: 'Approval task updated successfully.',
+        text: 'Request has been Approved Successfully.',
         confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Set the flag to true after submission
+          this.isSubmitted = true;
+          
+          // Navigate first, then reload after navigation completes
+          this.router.navigate([`/liv-preview/${this.LIVRequestId}`]).then(() => {
+            window.location.reload();
+            this.cdr.detectChanges();
+          });
+        }
       });
-      // Set the flag to true after submission
-      this.isSubmitted = true;
-      this.router.navigate([`/liv-preview/${this.LIVRequestId}`]);
-      // Optional: Reload the page or just update the necessary parts
-      // window.location.reload(); 
-      // this.cdr.detectChanges();
+     
 
       this.activityNotificationService.notify('Approval task updated successfully.');
       this.getLIVRequest(this.LIVRequestId);
@@ -343,12 +423,14 @@ console.log(this.LIVRequestId, this.status, '', this.userId)
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Failed to update the approval task.',
+        text: 'Failed to update the Approval Request.',
         confirmButtonText: 'Try Again'
       });
       this.activityNotificationService.notify('Approval task failed.');
 
     });
+    }
+  
  
   }
   
@@ -371,20 +453,25 @@ console.log(this.LIVRequestId, this.status, '', this.userId)
         this.livRequestService.cancelLivRequest({ LivrequestId: livReqId, UserId: userId }).subscribe(
           (response) => {
             Swal.fire('Canceled!', 'LIV request has been canceled.', 'success');
-            // window.location.reload();
+            
             this.isSubmitted = true;
+            this.activityNotificationService.notifyUpdateApprovalChange();
 
             this.activityNotificationService.notify('LIV request canceled successfully.');
             this.getLIVRequest(livReqId);
-            // this.cdr.detectChanges();
+            this.cdr.detectChanges();
+            window.location.reload();
           },
           (error) => {
             if (error.status === 200) {
               Swal.fire('Canceled!', 'LIV request has been canceled.', 'success');
-              // window.location.reload();
+              window.location.reload();
+              this.activityNotificationService.notifyUpdateApprovalChange();
+
               this.activityNotificationService.notify('LIV request canceled successfully.');
 
               this.livRequestSubject.next(updatedLivRequest); //change detection
+              this.cdr.detectChanges();
             } else {
               Swal.fire('Error!', 'Failed to cancel LIV request.', 'error');
             }
@@ -476,7 +563,114 @@ console.log(this.LIVRequestId, this.status, '', this.userId)
       );
   }
   
+  deleteLIVApprovalTask(id: number,userId:number,revisionStatus:any): void {
+    this.livRequestService.deleteLIVApprovalTask(id,userId,revisionStatus).subscribe({
+      next: (response) => {
+        console.log('Task deleted successfully:', response);
+        Swal.fire({
+          icon: 'success',
+          title: 'Request Revised',
+          text: 'The request has Revised successfully!',
+          confirmButtonText: 'OK',
+        }).then(() => {
+          this.router.navigate(['/credit-limit-req-list']); // Navigate after confirmation
+        });
+        // alert('LIV approval task deleted successfully.');
+      },
+      error: (error) => {
+        console.error('Error deleting task:', error);
+        alert('Failed to delete the LIV approval task.');
+      }
+    });
+  }
+
+  loadLivTaskTimeLine(livRequestId: any): void {
+    // console.log("loadLivTaskTimeLine call"+rowData.livRequestId);
+    // console.log("taskId:", rowData.livRequestId);
+    // console.log("row call",rowData);
+
+    this.timelineService.getLivTaskTimeLine(livRequestId).subscribe(
+      data => {
+        console.log("API Response Data:", data);
+        console.log(data[0].levelStatus)
+      if (data.length === 1) {
+        const levelStatus = data[0]?.levelStatus?.trim(); // Trim to remove extra spaces
+
+        console.log("levelStatus:", levelStatus);
+        
+        if (levelStatus === "Approved") { // Corrected comparison
+          console.warn("Record is already approved. Modal will not open.");
+          Swal.fire({
+            icon: 'info',
+            title: 'Already Approved',
+            text: 'This request has already been approved.',
+            confirmButtonColor: '#007bff'
+          });
+          return;
+       
+        }
+        console.log("Only one record found, opening modal...");
+        this.openCreditLimitReqModal(livRequestId);
+      } else {
+        if(this.finalStatus=="Approved"){
+          this.openLIVModalForApprovedStatus(livRequestId);
+        }else{
+          console.warn("More than one record found, modal will not open.");
+          Swal.fire({
+            icon: 'warning',
+            title: 'This request has been process, you can not edit',
+            confirmButtonColor: '#dc3545'
+          });
+        }
+        
+        
+      }
+      },
+      error => {
+        console.error('There was an error!', error);
+      }
+    );
+  }
+   openCreditLimitReqModal(livRequestId: any) {
+      const modalRef = this.modalService.open(CreditLimitRequestModalComponent);
+      modalRef.componentInstance.livRequestData = livRequestId;  // Passing data to modal
   
+    }
 
+  livoldStatus:any;
+  openLIVModalForApprovedStatus(livrequestId: any) {
+    console.log("rowData",livrequestId);
+    this.livPreviewService.getLIVRequest(livrequestId).subscribe((data) => {
+      console.log("livRequestData approve++++++++++++++++++++++", data);
+      this.livoldStatus=data.status;
+      this.CreditLimitSer.CheckCustomerExistsApprove(this.livoldStatus,livrequestId).subscribe((exists: boolean) => {
+        console.log('Customer exists with Approve status:', exists);
+        if (exists) {
+          console.log("exist with approve status",exists);
+          this.CheckForOldLIVRequest(livrequestId);
 
+        } 
+      });
+    
+
+    });
+  }
+  CheckForOldLIVRequest(livrequestId:any){
+        this.CreditLimitSer.CheckOldLivRequest(livrequestId).subscribe((exists: boolean) => {
+          console.log('Old Request exists:', exists);
+          if (exists) {
+            console.log("Old Request exists ---------",exists)
+            Swal.fire({
+              title: 'Error!',
+              text: 'LIV Request Already in process',
+              icon: 'error'
+            });
+            this.activityNotificationService.notify('Failed to create LIV Request.');
+          }
+          else{
+            const modalRef = this.modalService.open(CreditLimitRequestModalComponent);
+            modalRef.componentInstance.livRequestDataApprove = livrequestId;  // Passing data to modal
+          }
+        });
+  }
 }

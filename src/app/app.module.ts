@@ -96,9 +96,9 @@ export function initializeApp(appInitService: AppInitService): () => Promise<any
     LayoutModule,
     SampleModule,
     CustomersModule,
-    LeadsModule,
-    LiveformModule,
-    EnquiryModule
+    // LeadsModule,
+    LiveformModule
+    // EnquiryModule
     
   ],
   providers: [

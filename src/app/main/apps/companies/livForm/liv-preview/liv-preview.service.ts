@@ -49,7 +49,7 @@ export class LivPreviewService {
     getLIVApprovalTasks(userId: number, LIVRequestId: number): Observable<any> {
      
       const params = new HttpParams()
-        .set('userId', userId)
+        .set('userId', userId)  
         .set('LIVRequestId', LIVRequestId);
   
       return this.http.get<any>(`${environment.apiUrl}/LIVRequests/LIVApprovalTask1`, { params });
@@ -124,9 +124,19 @@ export class LivPreviewService {
     );
   }
 
+  shipmentCountByCompanyLast60Days(companyId: any): Observable<any> {
+    const url = `${this.baseUrl}/shipmentCountByCompanyLast60Days/${companyId}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Add any other headers Swagger might use
+    });
+    return this.http.get<any>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   // Method to get Sum of Realized Revenue for the Last N Days
   getSumOfRealizedRevenueLastNDays(companyId: number, days: number): Observable<any> {
-    const url = `${this.baseUrl}/SumOfRealizedRevenueLastNDays/${companyId}/${days}`;
+    const url = `${this.baseUrl}/SumOfRealizedRevenueLast60Days/${companyId}/${days}`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json', // Add any other headers Swagger might use
     });
@@ -138,5 +148,16 @@ export class LivPreviewService {
   getLivrequestById(livRequestId: number): Observable<VwLivrequest> {
     return this.http.get<VwLivrequest>(`${this.apiUrl}/GetLiv/${livRequestId}`);
   }
+  // deleteLIVApprovalTask(id: number,revisionStatus:any): Observable<any> {
+  //   const url = `${this.apiUrl}/DeleteLIVApprovalTask/${id}/${revisionStatus}`;
+  //   return this.http.delete(url);
+  // }
+  deleteLIVApprovalTask(id: number,userId:number,revisionStatus:any): Observable<any> {
+    const url = `${environment.apiUrl}/Customer/DeleteLIVApprovalTask/${id}/${userId}/${revisionStatus}`;
+    return this.http.delete(url);
+  }
 
+  GetButtonRightsProc(userId:number,livRequestId:number): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/LIVRequests/GetButtonRightsProc/?userId=${userId}&livRequestId=${livRequestId}`);
+  }
 }

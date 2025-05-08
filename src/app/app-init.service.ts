@@ -67,24 +67,24 @@ loadInitialData(): Promise<any> {
         console.error('Error loading sales person data', error);
         return of([]); // Default value
       })),
-      locationMasterData: this.leadCreateService.getAllLocationMaster().pipe(catchError(error => {
-        console.error('Error loading location master data', error);
-        return of(null); // Default value
-      })),
-      countries: this.leadCreateService.getCountries().pipe(catchError(error => {
-        console.error('Error loading countries data', error);
-        return of([]); // Default value
-      })),
+      // locationMasterData: this.leadCreateService.getAllLocationMaster().pipe(catchError(error => {
+      //   console.error('Error loading location master data', error);
+      //   return of(null); // Default value
+      // })),
+      // countries: this.leadCreateService.getCountries().pipe(catchError(error => {
+      //   console.error('Error loading countries data', error);
+      //   return of([]); // Default value
+      // })),
     }).subscribe({
       next: (results) => {
         // Assign results to class variables
         this.salesPerson = results.salesPerson;
-        this.locationMasterData = results.locationMasterData;
-        this.countries = results.countries;
+        // this.locationMasterData = results.locationMasterData;
+        // this.countries = results.countries;
 
         console.log('Sales Person', this.salesPerson);
-        console.log('Location Master Data', this.locationMasterData);
-        console.log('Countries', this.countries);
+        // console.log('Location Master Data', this.locationMasterData);
+        // console.log('Countries', this.countries);
 
         this.isDataLoaded = true; // Mark data as loaded
         this.loaderService.requestEnded(); // Stop the loader

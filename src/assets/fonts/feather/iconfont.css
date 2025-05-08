@@ -527,7 +527,12 @@
 
 .icon-database:before { content: "\e916"; }
 
-.icon-dollar-sign:before { content: "\e917"; }
+.icon-dollar-sign:before { content: "\20B9"; }
+/* .icon-dollar-sign:before { content: "\e917"; } */
+.icon-rupee-sign:before {
+  content: "\20B9";
+}
+
 
 .icon-folder-plus:before { content: "\e918"; }
 

@@ -1,0 +1,34 @@
+
+<!-- Approved Message -->
+<div *ngIf="approvalMessage?.message === 'Approval task updated successfully.'" class="thank-you-container">
+    <h1>Thank You!</h1>
+    <p>You successfully <span class="status">Approved</span> the request.</p>
+</div>
+
+<!-- Rejected Message -->
+<div *ngIf="rejectedMessage === 'Rejected'" class="thank-you-container">
+    <h1>Thank You!</h1>
+    <p>You successfully <span class="status text-danger">Rejected</span> the request.</p>
+</div>
+
+<!-- Cancelled Message -->
+
+<div *ngIf="approvalException === 'Canceled'" class="thank-you-container">
+     <h2>Already {{approvalException}}</h2>
+     <p>Please check <span class="status">link</span> is expired or invalid.</p>
+</div>
+<!-- Invalid Link -->
+<div *ngIf="(approvalMessage?.message === 'Rejected' || approvalMessage?.message === 'Approved' )" 
+     class="thank-you-container">
+    <h1>Link Already {{approvalMessage?.message}}</h1>
+    <p>Please check <span class="status">link</span> is expired or invalid.</p>
+</div>
+
+
+<!-- Invalid Link -->
+<div *ngIf="(rejectedException === 'Rejected' || rejectedException === 'Approved' || rejectedException !== '' ||approvalMessage?.message ==='')" 
+     class="thank-you-container">
+    <!-- <h1>Invalid Link!</h1> -->
+    <!-- <h2>Already {{rejectedException}}</h2> -->
+   <h3>Please check <span class="status">link</span> is expired or invalid.</h3>
+</div>

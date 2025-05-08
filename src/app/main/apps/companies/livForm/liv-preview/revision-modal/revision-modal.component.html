@@ -1,0 +1,25 @@
+<div>
+    <div class="modal-header">
+        <h5 class="modal-title">
+            <i class="feather icon-map-pin" style="font-size: 16px; margin-right: 8px;"></i><span>Reason For Revision</span>
+        </h5>
+
+        <p class="btn-close cursor-pointer" aria-label="Close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true"
+            > × </p>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="revisionReason">Reason</label>
+            <input type="text" class="form-control" id="revisionReason" placeholder="Enter reason for revision">
+        </div>
+        <hr>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary mr-2" (click)="close()">Cancel</button>
+            <button type="button" class="btn btn-info" (click)="confirmRevision()">Requested Revision</button>
+        </div>
+        <br>
+        <div class="text-center mb-1"><span class="badge badge-secondary " style="font-size: 12px;">{{message}}</span></div>
+        
+    </div>
+   
+</div>

@@ -21,7 +21,8 @@ export class ActivityNotificationService {
     }
 
 
-  private activitySubject = new Subject<any>(); // Holds the activity message
+  // private activitySubject = new Subject<any>(); // Holds the activity message
+  private activitySubject = new BehaviorSubject<string>(null); 
 
   // Observable that other components can subscribe to
   activity$ = this.activitySubject.asObservable();

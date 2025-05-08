@@ -87,6 +87,12 @@ export class CustomerCreateService {
     );
   }
   
+  // Method to get CreditTermId by name
+  getCreditTermIdByName(creditTermName: string): Observable<{ creditTermId: number }> {
+    // const params = new HttpParams().set('creditTermName', creditTermName);
+
+    return this.http.get<{ creditTermId: number }>(`${environment.apiUrl}/Customer/GetCreditTermIdByName?creditTermName=${creditTermName}`);
+  }
 }
 export interface UniqueCheckResponse {
   isExsist: boolean;

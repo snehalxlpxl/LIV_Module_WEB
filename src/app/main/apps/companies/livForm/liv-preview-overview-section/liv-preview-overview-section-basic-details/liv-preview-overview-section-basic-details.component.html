@@ -1,5 +1,5 @@
 
-     <div class="card-body shadow rounded-corners">
+     <div class="card-body shadow rounded-corners pb-1" style="height: 459px;">
         <h5 class="timeline-header">
             <div class="panel-title">
                 <h5 style="display: flex; align-items: center;">
@@ -8,45 +8,163 @@
                 </h5>
             </div>
         </h5>
-        <div class="card-body">
-            <div class="row mb-2">
+        <!-- {{livRequestData | json}} -->
+        <div class="p-1">
+            <div class="row mb-1">
+                <div class="col-6 p-0">
+                    <div class="row mb-1">
+                        <div class="col-6">Requested Date</div>
+                        <b class="col-6">{{ livRequestData?.requestedDate | date: 'dd-MMM-yyyy' }}</b>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-6">Sales Person</div>
+                        <b class="col-6">{{ livRequestData?.salesPersonName }}</b>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-6">Customer Type</div>
+                        <b class="col-6">{{ livRequestData?.isNewCustomer ? 'Existing' : 'New' }}</b>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-6">Branch</div>
+                        <b class="col-6">{{ livRequestData?.branch}}</b>
+                    </div>
+                </div>
+                <div class="col-6">
+                   
+                    <div class="row mb-1">
+                        <div class="col-6">Current Limit</div>
+                        <b class="col-6"></b>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-6">Requested Limit</div>
+                        <b class="col-6">₹ {{formatNumber(livRequestData?.creditLimit)}}</b>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-7">Current Payment Terms</div>
+                        <b class="col-5"></b>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-6">Payment Terms</div>
+                        <b class="col-6">{{livRequestData?.creditTerms}}</b>
+                    </div>
+                </div>
+                
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-6 p-0">
+                    <div class="row mb-1">
+                        <div class="col-6">Expected Turnover</div>
+                        <b class="col-6 ">₹ {{formatNumber(livRequest?.expectedTurnover)}}</b>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-6">Expected Profit</div>
+                        <b class="col-6">₹ {{formatNumber(livRequest?.expectedProfit)}}</b>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-6">Profit Percentage</div>
+                        <b class="col-6">{{livRequest?.profitPercentage}} %</b>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row mb-1">
+                        <div class="col-6">Frequency</div>
+                        <b class="col-6">{{(livRequest?.frequency)}}</b>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-6">Segment</div>
+                        <b class="col-6">{{(livRequest?.segment)}}</b>
+                    </div>
+                    <div class="row ">
+                        <div class="col-6">Expiry Date</div>
+                        <!-- <b class="col-6">{{(livRequest?.expiryDate)}}</b> -->
+                        <b class="col-6">{{(livRequest?.expiryDate)|date:'dd-MM-yyyy' }}</b>
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            <div class="row">
+                <div class="col-6">
+                    <div class="row mb-1">
+                        <div class="col-6 p-0">Created By</div>
+                        <b class="col-6">{{livRequestData?.createdByName}}</b>
+                    </div>
+                </div>
+                <div class="col-6 ">
+                    <div class="row mb-1" *ngIf="livRequest?.status == 'Rejected'">
+                      <div class="col-6">Rejected Reason</div>
+                      <b class="col-6">{{ livRequest?.reviseReason }}</b>
+                    </div>
+                    <div class="row mb-1" *ngIf="livRequest?.status == 'Revision Requested'">
+                        <div class="col-6">Revision Reason</div>
+                        <b class="col-6">{{ livRequestData?.rejetedReason }}</b>
+                      </div>
+                </div>
+                  
+            </div>
+            
+            <div class="row">
+                <div class="col-3 p-0">Notes</div>
+                <b class="col-9">{{livRequestData?.notes}}</b>
+            </div>
+          
+        </div>
+    </div>
+  <!-- <div class="row mb-1">
+                <div class="col-6">Expected Turnover</div>
+                <b class="col-6">{{formatNumber(livRequest?.expectedTurnover)}}</b>
+            </div>
+            <div class="row mb-1">
+                <div class="col-6">Expected Profit</div>
+                <b class="col-6">{{formatNumber(livRequest?.expectedProfit)}}</b>
+            </div>
+            <div class="row mb-1">
+                <div class="col-6">Profit Percentage</div>
+                <b class="col-6">{{formatNumber(livRequest?.profitPercentage)}}</b>
+            </div> -->
+            <!-- <div class="row mb-1">
+                <div class="col-6">Frequency</div>
+                <b class="col-6">{{(livRequest?.frequency)}}</b>
+            </div>
+            <div class="row mb-1">
+                <div class="col-6">Segment</div>
+                <b class="col-6">{{(livRequest?.segment)}}</b>
+            </div>
+            <div class="row ">
+                <div class="col-6">Expiry Date</div>
+                <b class="col-6">{{(livRequest?.expiryDate)}}</b>
+            </div> -->
+    <!-- <div class="row mb-1">
                 <div class="col-6">Requested Date</div>
                 <b class="col-6">{{ livRequestData?.requestedDate | date: 'dd-MMM-yyyy' }}</b>
             </div>
-            <div class="row mb-2">
+            <div class="row mb-1">
                 <div class="col-6">Sales Person</div>
                 <b class="col-6">{{ livRequestData?.salesPersonName }}</b>
             </div>
-            <div class="row mb-2">
+            <div class="row mb-1">
                 <div class="col-6">Customer Type</div>
-                <!-- <b class="col-6">{{ livRequest.isNewCustomer}}</b> -->
                 <b class="col-6">{{ livRequestData?.isNewCustomer ? 'Existing' : 'New' }}</b>
-            </div>
-            <hr>
-            <div class="row mb-2">
+            </div> -->
+            <!-- <hr> -->
+            <!-- <div class="row mb-1">
                 <div class="col-6">Branch</div>
                 <b class="col-6">{{ livRequestData?.branch}}</b>
             </div>
-            <div class="row mb-2">
+            <div class="row mb-1">
                 <div class="col-6">Current Limit</div>
                 <b class="col-6"></b>
             </div>
-            <div class="row mb-2">
+            <div class="row mb-1">
                 <div class="col-6">Requested Limit</div>
-                <b class="col-6">₹ {{livRequestData?.creditLimit}}</b>
+                <b class="col-6">₹ {{formatNumber(livRequestData?.creditLimit)}}</b>
             </div>
-            <div class="row mb-2">
+            <div class="row mb-1">
                 <div class="col-6">Current Payment Terms</div>
                 <b class="col-6"></b>
             </div>
-            <div class="row mb-2">
+            <div class="row mb-1">
                 <div class="col-6">Payment Terms</div>
                 <b class="col-6">{{livRequestData?.creditTerms}}</b>
-            </div>
-            <hr>
-            <div class="row mb-2">
-                <div class="col-6">Notes</div>
-                <b class="col-6">{{livRequestData?.notes}}</b>
-            </div>
-        </div>
-    </div>
+            </div> -->

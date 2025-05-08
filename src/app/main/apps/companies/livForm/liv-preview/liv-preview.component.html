@@ -28,50 +28,45 @@
                 </div>
 
 
-        
-
-                    <!--      
-                    <div class="col-lg-5 col-md-10 col-10 d-flex justify-content-end align-items-center flex-wrap text-right">
-
-                        <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()"  *ngIf="!isSaleOrCreatedByApprover && !isSalesPersonOrCreatedBy || showApprovalbtn"> Reject</button>
-
-                        <button class="btn btn-success mr-1" type="submit" (click)="openApproveModal()" *ngIf="isDelegate">Approve</button>
-                        
-                        <button class="btn btn-success" type="submit" (click)="onSubmit()" *ngIf="showApprovalbtn && !isDelegate ">Approve</button>
-                    
-                        <button type="button" class="btn btn-outline-danger ml-1 mr-1" (click)="cancelLivRequest(LIVRequestId,userId)"  *ngIf="isSalesPersonOrCreatedBy || isSaleOrCreatedByApprover">Cancel</button>
-                        <span class="close-big mx-1 flex-shrink-0 clickable" (click)="goBack()">×</span>
-                    </div>
-                </div> -->
-
-
-                <!-- <div class="col-lg-5 col-md-10 col-10 d-flex justify-content-end align-items-center flex-wrap text-right">
-
-                    <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" *ngIf="showApprovalbtn || !ApprovalLevelStatus"> Reject</button>
-
-                    <button class="btn btn-success mr-1" type="submit" (click)="openApproveModal(LIVRequestId)" *ngIf="isDelegate && !ApprovalLevelStatus">delegate Approve</button>
-                    
-                    <button class="btn btn-success" type="submit" (click)="onSubmit()" *ngIf="showApprovalbtn && !isDelegate || !ApprovalLevelStatus">Approve</button>
-                
-                    <button type="button" class="btn btn-outline-danger ml-1 mr-1" (click)="cancelLivRequest(LIVRequestId,userId)"  *ngIf="isSalesPersonOrCreatedBy || isSaleOrCreatedByApprover &&  !ApprovalLevelStatus">Cancel</button>
-                    <span class="close-big mx-1 flex-shrink-0 clickable" (click)="goBack()">×</span>
-                </div> -->
-
             <div class="col-lg-6 col-md-10 d-flex justify-content-end align-items-center flex-wrap text-right mar-left" >
-              <!-- <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" > <span [data-feather]="'circle-minus'" [class]="'mr-25'"></span> Reject</button> -->
                 <div *ngIf="!loading">
-                        <button type="button" class="btn btn-outline-danger mr-1 md-font" (click)="openRejectModal()" *ngIf="!isSalesPersonOrCreatedBy && !levelStatusFlag  && !isSubmitted && !levelStatusFlag  && livRequest.status !== 'Canceled'"><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i> Reject</button>
+                        <!-- <button type="button" class="btn btn-outline-danger mr-1 md-font" (click)="openRejectModal()" *ngIf="!isSalesPersonOrCreatedBy && !levelStatusFlag  && !isSubmitted && !levelStatusFlag  && livRequest.status !== 'Canceled'"><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i> Reject</button>
 
                         <button class="btn btn-success mr-1 md-font" type="submit" (click)="openApproveModal(LIVRequestId)" *ngIf="isDelegate && !levelStatusFlag  && !isSubmitted && !levelStatusFlag  && livRequest.status !== 'Canceled'"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i> Approve</button>
                         
-                        <button class="btn btn-success md-font" type="submit" (click)="onSubmit()" *ngIf="!isSalesPersonOrCreatedBy && !isDelegate && !levelStatusFlag  && !isSubmitted  && livRequest.status !== 'Canceled'"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i>Approve</button>
-                    
-                        <!-- <button type="button" class="btn btn-danger ml-1 mr-1" (click)="cancelLivRequest(LIVRequestId,userId)"  *ngIf="(isSalesPersonOrCreatedBy || isSaleOrCreatedByApprover) && (livRequest.status=='Awaiting Approval' || !levelStatusFlag) "><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i>  Cancel Request</button> -->
+                        <button class="btn btn-success mr-1 md-font" type="submit" (click)="onSubmit()" *ngIf="!isSalesPersonOrCreatedBy && !isDelegate && !levelStatusFlag  && !isSubmitted  && livRequest.status !== 'Canceled'"><i class="feather icon-check" style="font-size: 16px; margin-right: 8px;"></i>Approve</button>
+                        <button class="btn btn-info md-font" type="submit" *ngIf="!isSalesPersonOrCreatedBy && !isDelegate && !levelStatusFlag  && !isSubmitted  && livRequest.status !== 'Canceled'" (click)="deleteLIVApprovalTask(LIVRequestId)"><i class="feather icon-alert-circle" style="font-size: 16px; margin-right: 8px;"></i>Revise</button>
+
                         <button type="button" class="btn btn-danger ml-1 mr-1 md-font" (click)="cancelLivRequest(LIVRequestId,userId)"  *ngIf="(isSalesPersonOrCreatedBy || isSaleOrCreatedByApprover) && 
                         (livRequest.status === 'Awaiting Approval' || !levelStatusFlag) && 
                         livRequest.status !== 'Approved' && 
                         livRequest.status !== 'Canceled' && 
-                        livRequest.status !== 'Rejected'"><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i>  Cancel Request</button>
+                        livRequest.status !== 'Rejected'"><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i>  Cancel Request</button> -->
+
+                        <button class="btn btn-success mr-1 md-font" type="submit" (click)="loadLivTaskTimeLine(this.LIVRequestId)" *ngIf="isEdit">
+                            <i class="fa fa-edit" style="margin-right: 5px;"></i> Edit
+                        </button>
+                        <!-- Reject Button -->
+                        <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" *ngIf="isReject">
+                            <i class="feather icon-minus-circle"></i> Reject
+                        </button>
+
+                        <!-- Approve Button -->
+                        <button class="btn btn-success mr-1 md-font" type="submit" (click)="onSubmit()" *ngIf="isApprove">
+                            <i class="feather icon-check"></i> Approve
+                        </button>
+
+                        <!-- Revise Button -->
+                        <!-- <button class="btn btn-info md-font" type="submit" (click)="deleteLIVApprovalTask(LIVRequestId)" *ngIf="isRevise"> -->
+                            <button class="btn btn-info md-font" type="submit" (click)="openRevisionModal()" *ngIf="isRevise">
+                            <i class="feather icon-alert-circle"></i> Revise
+                        </button>
+
+                        <!-- Cancel Button -->
+                        <button type="button" class="btn btn-danger ml-1 mr-1 md-font" (click)="cancelLivRequest(LIVRequestId, userId)" *ngIf="isCancel && !isSubmitted">
+                            <i class="feather icon-minus-circle"></i> Cancel Request
+                        </button>
+
                 </div>
                 <span class="close-big mx-1 flex-shrink-0 clickable mr-2" (click)="goBack()">×</span>
             </div>
@@ -101,10 +96,10 @@
             </div>
         </div>
 
-        <div class="mt-0 f-preview-overview-content md-font-component p-0" >
+        <div class="f-preview-overview-content md-font-component p-0" [ngStyle]="{'margin-top': isDelegate ? '7.2rem' : '6rem'}">
             <app-liv-preview-overview-section *ngIf="currentComponent === 'overview'"  @fade></app-liv-preview-overview-section>
           
-            <app-liv-preview-timeline-section  [taskTimeLineData]="taskTimeLineData"
+            <app-liv-preview-timeline-section  [taskTimeLineData]="taskTimeLineData" [finalStatus]="finalStatus"
             *ngIf="currentComponent === 'timeline'" 
             @fade
             ></app-liv-preview-timeline-section>
@@ -114,3 +109,39 @@
      
     </div>
 </section>
+
+
+
+
+                    <!--      
+                    <div class="col-lg-5 col-md-10 col-10 d-flex justify-content-end align-items-center flex-wrap text-right">
+
+                        <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()"  *ngIf="!isSaleOrCreatedByApprover && !isSalesPersonOrCreatedBy || showApprovalbtn"> Reject</button>
+
+                        <button class="btn btn-success mr-1" type="submit" (click)="openApproveModal()" *ngIf="isDelegate">Approve</button>
+                        
+                        <button class="btn btn-success" type="submit" (click)="onSubmit()" *ngIf="showApprovalbtn && !isDelegate ">Approve</button>
+                    
+                        <button type="button" class="btn btn-outline-danger ml-1 mr-1" (click)="cancelLivRequest(LIVRequestId,userId)"  *ngIf="isSalesPersonOrCreatedBy || isSaleOrCreatedByApprover">Cancel</button>
+                        <span class="close-big mx-1 flex-shrink-0 clickable" (click)="goBack()">×</span>
+                    </div>
+                </div> -->
+
+
+                <!-- <div class="col-lg-5 col-md-10 col-10 d-flex justify-content-end align-items-center flex-wrap text-right">
+
+                    <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" *ngIf="showApprovalbtn || !ApprovalLevelStatus"> Reject</button>
+
+                    <button class="btn btn-success mr-1" type="submit" (click)="openApproveModal(LIVRequestId)" *ngIf="isDelegate && !ApprovalLevelStatus">delegate Approve</button>
+                    
+                    <button class="btn btn-success" type="submit" (click)="onSubmit()" *ngIf="showApprovalbtn && !isDelegate || !ApprovalLevelStatus">Approve</button>
+                
+                    <button type="button" class="btn btn-outline-danger ml-1 mr-1" (click)="cancelLivRequest(LIVRequestId,userId)"  *ngIf="isSalesPersonOrCreatedBy || isSaleOrCreatedByApprover &&  !ApprovalLevelStatus">Cancel</button>
+                    <span class="close-big mx-1 flex-shrink-0 clickable" (click)="goBack()">×</span>
+                </div> -->
+
+
+              <!-- <button type="button" class="btn btn-outline-danger mr-1" (click)="openRejectModal()" > <span [data-feather]="'circle-minus'" [class]="'mr-25'"></span> Reject</button> -->
+
+
+                        <!-- <button type="button" class="btn btn-danger ml-1 mr-1" (click)="cancelLivRequest(LIVRequestId,userId)"  *ngIf="(isSalesPersonOrCreatedBy || isSaleOrCreatedByApprover) && (livRequest.status=='Awaiting Approval' || !levelStatusFlag) "><i class="feather icon-minus-circle" style="font-size: 16px; margin-right: 8px;"></i>  Cancel Request</button> -->

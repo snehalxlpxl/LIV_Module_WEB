@@ -1,70 +1,209 @@
-<div class="scroll-container">
-    <div class="d-flex mt-1">
-        <div class="col-md-4 p-0">
-            <div class="totalsale rounded-corners">
-                <div class=" d-flex flex-column align-items-center">
-                    <div class="d-flex flex-column align-items-center">
-                        <div class="avatar bg-light-success rounded">
-                            <div class="avatar-content">
-                              <i data-feather="briefcase" class="avatar-icon font-medium-3"></i>
-                            </div>
-                          </div>
-                        <div class="title-container mb-1 mt-1">
-                            <h4 class="card-title"><b>{{ totalSales?.title}}</b></h4>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <p class="badge badge-light-success count">{{totalSales?.shipmentCount}}</p>
-                    </div>
-                </div>
+<!-- <div class="scroll-container">
+  <div class="d-flex mt-1">
+    <div class="col-md-4 p-0">
+      <div class="totalsale rounded-corners">
+        <div class="d-flex flex-column align-items-center">
+          <div class="d-flex flex-column align-items-center">
+            <div class="avatar bg-light-success rounded">
+              <div class="avatar-content">
+                <i
+                  data-feather="briefcase"
+                  class="avatar-icon font-medium-3"
+                ></i>
+              </div>
             </div>
+            <div class="title-container mb-1 mt-1">
+              <h4 class="card-title">
+                <b>{{ totalSales?.title }}</b>
+              </h4>
+            </div>
+          </div>
+          <div class="mt-1">
+            <p class="font-large-1 font-weight-bold">
+              {{ totalSales?.shipmentCount }}
+            </p>
+          </div>
         </div>
-        <div class="col-md-4 pr-0">
-            <div class="totalsale rounded-corners">
-                <div class=" d-flex flex-column align-items-center">
-                    <div class="d-flex flex-column align-items-center">
-                        <div class="avatar bg-light-success rounded">
-                            <div class="avatar-content">
-                              <i data-feather="dollar-sign" class="avatar-icon font-medium-3"></i>
-                            </div>
-                          </div>
-                        <div class="title-container mb-1 mt-1 d-flex d-flex flex-column">
-                            <h4 class="card-title"><b>{{ realizedRevenue?.title }}</b></h4><small class="text-center">INR</small>
-                            
-                        </div>                        
-                    </div>
-                    <div class="mt-0">
-                        <p class="badge badge-light-success count">{{realizedRevenue?.totalRealizedRevenue | number:'1.2-2'}}</p>
-                    </div>
-                </div>
+      </div>
+    </div>
+    <div class="col-md-4 pr-0">
+      <div class="totalsale rounded-corners">
+        <div class="d-flex flex-column align-items-center">
+          <div class="d-flex flex-column align-items-center">
+            <div class="avatar bg-light-success rounded">
+              <div class="avatar-content">
+                <i
+                  data-feather="dollar-sign"
+                  class="avatar-icon font-medium-3"
+                ></i>
+              </div>
             </div>
+            <div class="title-container mb-1 mt-1 d-flex d-flex flex-column">
+              <h4 class="card-title">
+                <b>{{ realizedRevenue?.title }}</b>
+              </h4>
+              <small class="text-center">INR</small>
+            </div>
+          </div>
+          <div class="mt-0">
+
+            <p class="font-large-1 font-weight-bold">
+              {{ realizedRevenue?.totalRealizedRevenue | number : "1.2-2" }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 pr-0">
+      <div class="totalsale rounded-corners">
+        <div class="d-flex flex-column align-items-center">
+          <div class="d-flex flex-column align-items-center">
+            <div class="avatar bg-light-success rounded">
+              <div class="avatar-content">
+                <i
+                  data-feather="dollar-sign"
+                  class="avatar-icon font-medium-3"
+                ></i>
+              </div>
+            </div>
+            <div class="title-container mb-1 mt-1 d-flex d-flex flex-column">
+              <h4 class="mt-1 title">
+                <b>{{ mainTitle }}</b
+                ><span class="sub-title">{{ subTitle }}</span>
+              </h4>
+              <small class="text-center">INR</small>
+            </div>
+          </div>
+          <div class="mt-0">
+            
+            <p class="font-large-1 font-weight-bold">
+              {{
+                sumOfRealizedRevenueLast60Days?.totalRealizedRevenueLast60Days
+                  | number : "1.2-2"
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  
+</div> -->
+<div class="row">
+  <div class="col-md-3">
+    <div class="card shadow-2 p-1 border-round">
+      <div class="d-flex justify-content-between mb-1">
+        <div>
+          <span class="block text-gray-500 font-medium-2 mb-3">{{ totalSales?.title || 'Shipment Count'}}</span>
+          <div class="text-900 font-bold text-xl">Total</div>
+        </div>
+        <div
+          class="d-flex align-items-center justify-content-center bg-blue-100 border-round"
+          
+        >
+       
+      <div class="avatar-content">
+        <i
+          data-feather="briefcase"
+          class="avatar-icon "
+        ></i>
+      </div>
+        </div>
+      </div>
+      <span class="text-green-500 font-large-1 font-weight-bold">{{ totalSales?.shipmentCount ||0}} </span
+      >
+      <!-- <span class="text-500">since last visit</span> -->
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-2 p-1 border-round">
+      <div class="d-flex justify-content-between mb-1">
+        <div>
+          <!-- <span class="block text-gray-500 font-medium-2 mb-3">{{ shipmentCountByCompanyLast60Days?.title ||'Shipment Count' }}</span> -->
+          <span class="block text-gray-500 font-medium-2 mb-3">{{'Shipment Count' }}</span>
+          <div class="text-900 font-medium text-xl">{{ 'Last 60 Days'}}</div>
+        </div>
+        <div
+          class="d-flex align-items-center justify-content-center bg-cyan-100 border-round"
+         
+        >
+        <div class="avatar-content">
+          <i
+          data-feather="briefcase"
+          class="avatar-icon "
+        ></i>
+        </div>
+        </div>
+      </div>
+     
+      <span class="text-green-500 font-large-1 font-weight-bold">{{
+        (shipmentCountByCompanyLast60Days?.shipmentCount
+          ) || 0
+      }} </span
+      >
+      <!-- <span class="text-500">{{ subTitle }}</span> -->
+    </div>
+  </div>
+  <div class="col-md-3 ">
+    <div class="card shadow-2 p-1 border-round">
+      <div class="d-flex justify-content-between mb-1">
+        <div>
+          <span class="block text-gray-500 font-medium-2 mb-3">{{ realizedRevenue?.title ||'Revenue'}}</span>
+          <div class="text-900 font-medium text-xl">Total</div>
+        </div>
+        <div
+          class="d-flex align-items-center justify-content-center bg-orange-100 border-round"
+          
+        >
+        <div class="avatar-content">
+          <!-- <i
+            data-feather="dollar-sign"
+            class="avatar-icon "
+          ></i> -->
+          <i>₹</i>
         </div>
        
-        <div class="col-md-4 pr-0">
-            <div class="totalsale rounded-corners">
-                <div class=" d-flex flex-column align-items-center">
-                    <div class="d-flex flex-column align-items-center">
-                        <div class="avatar bg-light-success rounded">
-                            <div class="avatar-content">
-                              <i data-feather="dollar-sign" class="avatar-icon font-medium-3"></i>
-                            </div>
-                          </div>
-                        <div class="title-container mb-1 mt-1 d-flex d-flex flex-column">
-                            <h4 class="mt-1 title">
-                                    <b>{{ mainTitle }}</b><span class="sub-title">{{ subTitle }}</span>
-                            </h4>
-                            <small class="text-center">INR</small>
-                        </div>
-                    </div>
-                    <div class="mt-0">
-                        <!-- <p class="value">INR</p> -->
-                        <div class=" badge badge-light-success count">{{sumOfRealizedRevenueLast60Days?.totalRealizedRevenueLast60Days | number:'1.2-2'}}</div>
-                        <!-- <p class="font-large-1 font-weight-bold">{{sumOfRealizedRevenueLast60Days?.totalRealizedRevenueLast60Days | number:'1.2-2'}}</p> -->
-                    </div>
-                </div>
-            </div>
         </div>
+      </div>
+      <span class="text-green-500 font-large-1 font-weight-bold">{{ (realizedRevenue?.totalRealizedRevenue | number : "1.2-2")||0 }} </span
+      >
+      <!-- <span class="text-500">since last week</span> -->
     </div>
+  </div>
+  
+  <div class="col-md-3 ">
+    <div class="card shadow-2 p-1 border-round">
+      <div class="d-flex justify-content-between mb-1">
+        <div>
+          <span class="block text-gray-500 font-medium-2 mb-3">{{ mainTitle ||'Revenue'}}</span>
+          <!-- <div class="text-900 font-medium text-xl">{{ subTitle || '0 days' }}</div> -->
+          <div class="text-900 font-medium text-xl">{{ subTitle || 'Last 60 days' }}</div>
+        </div>
+        <div
+          class="d-flex align-items-center justify-content-center bg-cyan-100 border-round"
+         
+        >
+        <div class="avatar-content">
+          <!-- <i
+            data-feather="dollar-sign"
+            class="avatar-icon "
+          ></i> -->
+          <i >₹</i>
+        </div>
+        </div>
+      </div>
+     
+      <span class="text-green-500 font-large-1 font-weight-bold">{{
+       ( sumOfRealizedRevenueLast60Days?.totalRealizedRevenueLast60Days | number : "1.2-2"
+          )||0
+      }} </span
+      >
+      <!-- <span class="text-500">{{ subTitle }}</span> -->
+    </div>
+  </div>
 </div>
 <!-- <div class="scroll-container">
   <div class="card-container d-flex flex-nowrap gap-3">
@@ -95,3 +234,7 @@
     </div>
   </div>
 </div> -->
+
+            <!-- <p class="badge badge-light-success count">{{totalSales?.shipmentCount}}</p> -->
+                         <!-- <p class="badge badge-light-success count">{{realizedRevenue?.totalRealizedRevenue | number:'1.2-2'}}</p> -->
+                          <!-- <div class=" badge badge-light-success count">{{sumOfRealizedRevenueLast60Days?.totalRealizedRevenueLast60Days | number:'1.2-2'}}</div> -->

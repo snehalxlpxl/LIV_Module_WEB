@@ -34,7 +34,7 @@
     <!--/ Toggle skin -->
 
     <!--icon search -->
-    <div class="nav navbar-nav align-items-center ml-auto" style="width: 300px;">
+    <!-- <div class="nav navbar-nav align-items-center ml-auto" style="width: 300px;">
            <div class="input-group input-group-merge">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon-search2"><i data-feather="search"></i></span>
@@ -48,7 +48,7 @@
               aria-describedby="basic-addon-search2"
             />
           </div>
-     </div>
+     </div> -->
     
     <!-- search -->
   </div>
@@ -73,10 +73,10 @@
     
     <!--/ Search -->
     <!-- plus  -->
-      <app-navbar-plus></app-navbar-plus>
+      <!-- <app-navbar-plus></app-navbar-plus> -->
     <!-- end plus -->
     <!-- Notification -->
-    <app-navbar-notification></app-navbar-notification>
+    <!-- <app-navbar-notification></app-navbar-notification> -->
     <!--/ Notification -->
     <!-- User Dropdown -->
     <li ngbDropdown class="nav-item dropdown-user">
@@ -94,20 +94,23 @@
          
         </div>
         <span class="avatar"
-          ><img
+          >
+          <!-- <img
             class="round"
             src="../../../../assets/images/portrait/small/avatar-s-11.jpg"
             alt="avatar"
             height="40"
-            width="40" /><span class="avatar-status-online"></span
+            width="40" /> -->
+            <i class="feather icon-user" style="font-size: 40px;" height="40" width="40"></i>
+            <span class="avatar-status-online"></span
         ></span>
       </a>
       <div ngbDropdownMenu aria-labelledby="navbarUserDropdown" class="dropdown-menu dropdown-menu-right">
-        <a ngbDropdownItem [routerLink]="['/']"><span [data-feather]="'user'" [class]="'mr-50'"></span> Profile</a
-        ><a ngbDropdownItem [routerLink]="['/']"><span [data-feather]="'mail'" [class]="'mr-50'"></span> Inbox</a
-        ><a ngbDropdownItem [routerLink]="['/']"><span [data-feather]="'check-square'" [class]="'mr-50'"></span> Task</a
-        ><a ngbDropdownItem [routerLink]="['/']"
-          ><span [data-feather]="'message-square'" [class]="'mr-50'"></span> Chats</a
+        <!-- <a ngbDropdownItem [routerLink]="['/']"><span [data-feather]="'user'" [class]="'mr-50'"></span> Profile</a -->
+        <!-- ><a ngbDropdownItem [routerLink]="['/']"><span [data-feather]="'mail'" [class]="'mr-50'"></span> Inbox</a -->
+        <!-- ><a ngbDropdownItem [routerLink]="['/']"><span [data-feather]="'check-square'" [class]="'mr-50'"></span> Task</a> -->
+          <a ngbDropdownItem [routerLink]="['/']" (click)="modalOpen(modalBasic)"
+          ><span [data-feather]="'message-square'"  [class]="'mr-50'"></span> Support</a
         >
         <div class="dropdown-divider"></div>
         <a ngbDropdownItem (click)="logout()"
@@ -118,3 +121,26 @@
     <!--/ User Dropdown -->
   </ul>
 </div>
+
+<!-- Modal -->
+<ng-template #modalBasic let-modal>
+  <div class="modal-header">
+   
+    <h4 class="modal-title" id="myModalLabel1">Support</h4>
+    <!-- <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+    <p  aria-label="Close" (click)="modal.dismiss('Cross click')" aria-hidden="true" class="cursor-pointer" style="font-size: 20px;">
+      ×
+    </p>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <!-- <h5>Check First Paragraph</h5> -->
+    <p style="font-weight: 400;"> 
+      Get in touch with us! If you have any queries or need support, 
+      please contact us. We're looking forward to hearing from you.
+    </p>
+  </div>
+  
+</ng-template>
+<!-- / Modal -->

@@ -14,6 +14,7 @@ export class LivOverviewSectionSummaryComponent implements OnInit {
   @Input() sumOfRealizedRevenueLast60Days: any;
   @Input() realizedRevenue: any;
   @Input() totalSales: any;
+  shipmentCountByCompanyLast60Days:any
   livRequest: any;
   customerId: any;
   LIVRequestId: any;
@@ -60,17 +61,25 @@ getLIVRequest(id: any): void {
             return of(null);
           })
         ),
+        shipmentCountByCompanyLast60Days: this.LivPreviewService.shipmentCountByCompanyLast60Days(this.customerId).pipe(
+          catchError((error) => {
+            console.error('Error fetching sum of realized revenue:', error);
+            return of(null);
+          })
+        ),
       });
     })
   ).subscribe({
-    next: ({ companyCount, realizedRevenue, sumOfRealizedRevenueLast60Days }) => {
+    next: ({ companyCount, realizedRevenue, sumOfRealizedRevenueLast60Days,shipmentCountByCompanyLast60Days }) => {
       this.totalSales = companyCount;
       this.realizedRevenue = realizedRevenue;
       this.sumOfRealizedRevenueLast60Days = sumOfRealizedRevenueLast60Days;
+      this.shipmentCountByCompanyLast60Days=shipmentCountByCompanyLast60Days
 
-      console.log('Fetched Company Count:', this.totalSales);
-      console.log('Fetched Realized Revenue:', this.realizedRevenue);
-      console.log('Fetched Sum of Realized Revenue Last 60 Days:', this.sumOfRealizedRevenueLast60Days);
+      // console.log('Fetched Company Count:', this.totalSales);
+      // console.log('Fetched Realized Revenue:', this.realizedRevenue);
+      // console.log('Fetched Sum of Realized Revenue Last 60 Days:', this.sumOfRealizedRevenueLast60Days);
+      // console.log('Fetched shipment Count By Company Last60Days:', this.shipmentCountByCompanyLast60Days);
 
       // Extract title and subtitle if sumOfRealizedRevenueLast60Days data exists
       if (this.sumOfRealizedRevenueLast60Days) {

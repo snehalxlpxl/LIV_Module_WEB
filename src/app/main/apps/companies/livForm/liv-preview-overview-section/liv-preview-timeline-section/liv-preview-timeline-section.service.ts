@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'environments/environment';
@@ -31,5 +31,14 @@ export class LivPreviewTimelineSectionService {
     }
     return throwError(errorMessage);
   }
+  private apiUrl = `${environment.apiUrl}/Customer/get-approver-levels`;
+  getApproverLevels(creditLimit: any, branchName: any): Observable<any> {
+    const params = new HttpParams()
+      .set('creditLimit', creditLimit.toString())
+      .set('branchName', branchName);
+
+    return this.http.get(this.apiUrl, { params });
+  }
+
 
 }

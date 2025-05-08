@@ -1,3 +1,16 @@
 p.cursor-pointer {
     font-size: 2rem;
 }
+.position-relative {
+    position: relative;
+  }
+  
+  .percentage-sign {
+    position: absolute;
+    right: 10px;
+    top: 65%;
+    transform: translateY(-50%);
+    color: #555;
+    font-weight: bold;
+  }
+  

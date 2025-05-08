@@ -1,23 +1,23 @@
 import { CoreMenu } from '@core/types'
 
 export const menu: CoreMenu[] = [
-  {
-    id: 'dashboard',
-    title: 'Dashboard',
-    translate: 'Dashboard',
-    type: 'item',
-    icon: 'home',
-    url: 'home'
+  // {
+  //   id: 'dashboard',
+  //   title: 'Dashboard',
+  //   translate: 'Dashboard',
+  //   type: 'item',
+  //   icon: 'home',
+  //   url: 'home'
 
-  },
-    {
-    id: 'Calendar',
-    title: 'Calendar',
-    translate: 'Calendar',
-    type: 'item',
-    icon: 'calendar',
-    url: 'Calendar'
-  },
+  // },
+  //   {
+  //   id: 'Calendar',
+  //   title: 'Calendar',
+  //   translate: 'Calendar',
+  //   type: 'item',
+  //   icon: 'calendar',
+  //   url: 'Calendar'
+  // },
   {
     id: 'livs',
     title: 'LIV Form',
@@ -27,109 +27,109 @@ export const menu: CoreMenu[] = [
     url: 'credit-limit-req-list'
   },
  
-  {
-    id: 'Task',
-    type: 'collapsible',
-    title: 'Tasks',
-    icon: 'check-square',
-    children: [
+  // {
+  //   id: 'Task',
+  //   type: 'collapsible',
+  //   title: 'Tasks',
+  //   icon: 'check-square',
+  //   children: [
      
-      {
-              id: 'Overdue',
-              title: 'Overdue',
-              translate: 'Overdue',
-              type: 'item',
-              icon: 'alert-triangle',
-              url: 'Overdue'
-            }, 
-            {
-              id: 'Pending',
-              title: 'Pending',
-              translate: 'Pending',
-              type: 'item',
-              icon: 'clock',
-              url: 'Pending'
-            },
-            {
-              id: 'Completed',
-              title: 'Completed',
-              translate: 'Completed',
-              type: 'item',
-              icon: 'check-circle',
-              url: 'Completed'
-            }
+  //     {
+  //             id: 'Overdue',
+  //             title: 'Overdue',
+  //             translate: 'Overdue',
+  //             type: 'item',
+  //             icon: 'alert-triangle',
+  //             url: 'Overdue'
+  //           }, 
+  //           {
+  //             id: 'Pending',
+  //             title: 'Pending',
+  //             translate: 'Pending',
+  //             type: 'item',
+  //             icon: 'clock',
+  //             url: 'Pending'
+  //           },
+  //           {
+  //             id: 'Completed',
+  //             title: 'Completed',
+  //             translate: 'Completed',
+  //             type: 'item',
+  //             icon: 'check-circle',
+  //             url: 'Completed'
+  //           }
 
-    ]
-  },
-  {
-    id: 'Companies',
-    type: 'collapsible',
-    title: 'Companies',
-    icon: 'trello',
-    children: [
+  //   ]
+  // },
+  // {
+  //   id: 'Companies',
+  //   type: 'collapsible',
+  //   title: 'Companies',
+  //   icon: 'trello',
+  //   children: [
      
-      {
-        id: 'Customers',
-        title: 'Customers',
-        translate: 'Customers',
-        type: 'item',
-        icon: 'arrow-right',
-        url: 'customerList'
-      }, 
-      {
-        id: 'Vendors',
-        title: 'Vendors',
-        translate: 'Vendors',
-        type: 'item',
-        icon: 'shopping-bag',
-        url: 'Vendors'
-      }
+  //     {
+  //       id: 'Customers',
+  //       title: 'Customers',
+  //       translate: 'Customers',
+  //       type: 'item',
+  //       icon: 'arrow-right',
+  //       url: 'customerList'
+  //     }, 
+  //     {
+  //       id: 'Vendors',
+  //       title: 'Vendors',
+  //       translate: 'Vendors',
+  //       type: 'item',
+  //       icon: 'shopping-bag',
+  //       url: 'Vendors'
+  //     }
       
 
-    ]
-  },
-  {
-    id: 'Sales',
-    type: 'collapsible',
-    title: 'Sales',
-    icon: 'zap',
-    children: [
-      {
-        id: 'leadsList',
-        title: 'Leads',
-        translate: 'Leads',
-        type: 'item',
-        icon: 'arrow-right',
-        url: 'leadsList'
-      },
-      {
-        id: 'appointments',
-        title: 'Appointments',
-        translate: 'Appointments',
-        type: 'item',
-        icon: 'arrow-right',
-        url: 'appointments'
-      },
+  //   ]
+  // },
+  // {
+  //   id: 'Sales',
+  //   type: 'collapsible',
+  //   title: 'Sales',
+  //   icon: 'zap',
+  //   children: [
+  //     {
+  //       id: 'leadsList',
+  //       title: 'Leads',
+  //       translate: 'Leads',
+  //       type: 'item',
+  //       icon: 'arrow-right',
+  //       url: 'leadsList'
+  //     },
+  //     {
+  //       id: 'appointments',
+  //       title: 'Appointments',
+  //       translate: 'Appointments',
+  //       type: 'item',
+  //       icon: 'arrow-right',
+  //       url: 'appointments'
+  //     },
     
-      {
-        id: 'sales-quotes',
-        title: 'sales-quotes',
-        translate: 'Sales Quotes',
-        type: 'item',
-        icon: 'arrow-right',
-        url: 'sales-quotes'
-      },
-      {
-        id: 'Enquiry',
-        title: 'Enquiry',
-        translate: 'Enquiry',
-        type: 'item',
-        icon: 'search',
-        url: 'enquiry-list'
-      },
+  //     {
+  //       id: 'sales-quotes',
+  //       title: 'sales-quotes',
+  //       translate: 'Sales Quotes',
+  //       type: 'item',
+  //       icon: 'arrow-right',
+  //       url: 'sales-quotes'
+  //     },
+  //     {
+  //       id: 'Enquiry',
+  //       title: 'Enquiry',
+  //       translate: 'Enquiry',
+  //       type: 'item',
+  //       icon: 'search',
+  //       url: 'enquiry-list'
+  //     },
 
-    ]
-  },
+  //   ]
+  // },
 
 
   // {
@@ -161,122 +161,122 @@ export const menu: CoreMenu[] = [
  
 
 
-  {
-    id: 'Shipments',
-    type: 'collapsible',
-    title: 'Shipments',
-    // translate: 'MENU.CM.SECTION',
-    icon: 'package',
-    children: [
-      {
-        id: 'Oceanexport',
-        title: 'Ocean Export',
-        // translate: 'MENU.TASKS',
-        type: 'item',
-        icon: 'arrow-right',
-        url: 'ocean-export'
-      },
-      {
-        id: 'oceanimport',
-        title: 'Ocean Import',
-        // translate: 'MENU.TASKS',
-        type: 'item',
-        icon: 'arrow-left',
-        url: 'ocean-import'
-      },
-      {
-        id: 'air-export',
-        title: 'Air Export',
-        // translate: 'MENU.TASKS',
-        type: 'item',
-        icon: 'arrow-right',
-        url: 'air-export'
-      },
-      {
-        id: 'air-import',
-        title: 'Air Import',
-        // translate: 'MENU.TASKS',
-        type: 'item',
-        icon: 'arrow-left',
-        url: 'air-import'
-      },
-      {
-        id: 'tracking',
-        title: 'Tracking',
-        // translate: 'MENU.TASKS',
-        type: 'item',
-        icon: 'compass',
-        url: 'tracking'
-      },
-      {
-        id: 'documentation',
-        title: 'Documentation',
-        // translate: 'MENU.TASKS',
-        type: 'item',
-        icon: 'book-open',
-        url: 'Documentation'
-      },
-    ]
-  },
+//   {
+//     id: 'Shipments',
+//     type: 'collapsible',
+//     title: 'Shipments',
+//     // translate: 'MENU.CM.SECTION',
+//     icon: 'package',
+//     children: [
+//       {
+//         id: 'Oceanexport',
+//         title: 'Ocean Export',
+//         // translate: 'MENU.TASKS',
+//         type: 'item',
+//         icon: 'arrow-right',
+//         url: 'ocean-export'
+//       },
+//       {
+//         id: 'oceanimport',
+//         title: 'Ocean Import',
+//         // translate: 'MENU.TASKS',
+//         type: 'item',
+//         icon: 'arrow-left',
+//         url: 'ocean-import'
+//       },
+//       {
+//         id: 'air-export',
+//         title: 'Air Export',
+//         // translate: 'MENU.TASKS',
+//         type: 'item',
+//         icon: 'arrow-right',
+//         url: 'air-export'
+//       },
+//       {
+//         id: 'air-import',
+//         title: 'Air Import',
+//         // translate: 'MENU.TASKS',
+//         type: 'item',
+//         icon: 'arrow-left',
+//         url: 'air-import'
+//       },
+//       {
+//         id: 'tracking',
+//         title: 'Tracking',
+//         // translate: 'MENU.TASKS',
+//         type: 'item',
+//         icon: 'compass',
+//         url: 'tracking'
+//       },
+//       {
+//         id: 'documentation',
+//         title: 'Documentation',
+//         // translate: 'MENU.TASKS',
+//         type: 'item',
+//         icon: 'book-open',
+//         url: 'Documentation'
+//       },
+//     ]
+//   },
   
-  {
-    id: 'accounts',
-    type: 'collapsible',
-    title: 'Accounts',
-    // translate: 'MENU.CM.SECTION',
-    icon: 'briefcase',
-    children: [
-      {
-        id: 'invoices',
-        title: 'Invoices',
-        // translate: 'MENU.TASKS',
-        type: 'item',
-        icon: 'arrow-right',
-        url: 'invoices'
-      },
-      {
-        id: 'customer_payments',
-        title: 'Customer Payments',
-        // translate: 'MENU.TASKS',
-        type: 'item',
-        icon: 'arrow-right',
-        url: 'customer_payments'
-      },
-      {
-        id: 'bills',
-        title: 'Bills',
-        // translate: 'MENU.TASKS',
-        type: 'item',
-        icon: 'arrow-right',
-        url: 'bill'
-      },
-      {
-        id: 'vendor_payments',
-        title: 'Vendor Payments',
-        // translate: 'MENU.TASKS',
-        type: 'item',
-        icon: 'arrow-right',
-        url: 'vendor_payments'
-      },
-      {
-        id: 'exchange-rates',
-        title: 'Exchange Rates',
-        // translate: 'MENU.TASKS',
-        type: 'item',
-        icon: 'map',
-        url: 'exchange-rates'
-      },
+//   {
+//     id: 'accounts',
+//     type: 'collapsible',
+//     title: 'Accounts',
+//     // translate: 'MENU.CM.SECTION',
+//     icon: 'briefcase',
+//     children: [
+//       {
+//         id: 'invoices',
+//         title: 'Invoices',
+//         // translate: 'MENU.TASKS',
+//         type: 'item',
+//         icon: 'arrow-right',
+//         url: 'invoices'
+//       },
+//       {
+//         id: 'customer_payments',
+//         title: 'Customer Payments',
+//         // translate: 'MENU.TASKS',
+//         type: 'item',
+//         icon: 'arrow-right',
+//         url: 'customer_payments'
+//       },
+//       {
+//         id: 'bills',
+//         title: 'Bills',
+//         // translate: 'MENU.TASKS',
+//         type: 'item',
+//         icon: 'arrow-right',
+//         url: 'bill'
+//       },
+//       {
+//         id: 'vendor_payments',
+//         title: 'Vendor Payments',
+//         // translate: 'MENU.TASKS',
+//         type: 'item',
+//         icon: 'arrow-right',
+//         url: 'vendor_payments'
+//       },
+//       {
+//         id: 'exchange-rates',
+//         title: 'Exchange Rates',
+//         // translate: 'MENU.TASKS',
+//         type: 'item',
+//         icon: 'map',
+//         url: 'exchange-rates'
+//       },
 
-  ]
-   },
- {
-    id: 'report',
-    title: 'Reports',
-    translate: 'Reports',
-    type: 'item',
-    icon: 'trending-up',
-    url: 'report'
-  },
+//   ]
+//    },
+//  {
+//     id: 'report',
+//     title: 'Reports',
+//     translate: 'Reports',
+//     type: 'item',
+//     icon: 'trending-up',
+//     url: 'report'
+//   },
 
 
   // {

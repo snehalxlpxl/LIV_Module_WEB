@@ -14,6 +14,7 @@ import { CoreMediaService } from '@core/services/media.service';
 import { User } from 'app/auth/models';
 import { coreConfig } from 'app/app-config';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-navbar',
@@ -84,7 +85,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private _coreSidebarService: CoreSidebarService,
     private _mediaObserver: MediaObserver,
     public _translateService: TranslateService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private modalService: NgbModal
+    
   ) {
     this._authenticationService.currentUser.subscribe(x => (this.currentUser = x));
 
@@ -251,5 +254,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (searchBar) {
       searchBar.focus();
     }
+  }
+  // modal Basic
+  modalOpen(modalBasic) {
+    this.modalService.open(modalBasic);
+    console.log('Modal Opened');
   }
 }

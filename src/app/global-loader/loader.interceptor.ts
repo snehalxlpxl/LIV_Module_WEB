@@ -11,7 +11,7 @@ export class LoaderInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.loaderService.requestStarted();
-    console.log('Request started:', request.url);
+    // console.log('Request started:', request.url);
     return this.handler(next, request);
   }
 
@@ -21,7 +21,7 @@ export class LoaderInterceptor implements HttpInterceptor {
         (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
             this.loaderService.requestEnded();
-            console.log('Request ended:', request.url);
+            // console.log('Request ended:', request.url);
           }
         },
         (error: HttpErrorResponse) => {

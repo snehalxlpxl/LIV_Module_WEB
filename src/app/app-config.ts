@@ -16,9 +16,9 @@ import { CoreConfig } from '@core/types';
 // prettier-ignore
 export const coreConfig: CoreConfig = {
   app: {
-    appName     : 'Fretrack',                                        // App Name
-    appTitle    : 'Fretrack', // App Title
-    appLogoImage: 'assets/images/logo/fretrack.svg',                  // App Logo
+    appName     : '',                                        // App Name
+    appTitle    : 'Fretlog', // App Title
+    appLogoImage: 'assets/images/logo/logo-white.svg',                  // App Logo
     appLanguage : 'en',                                           // App Default Language (en, fr, de, pt etc..)
   },
   layout: {

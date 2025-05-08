@@ -27,6 +27,8 @@ import { LivDocumentUploadComponent } from './liv-preview/liv-document-section/l
 import { ApprovemsgpageComponent } from './approvemsgpage/approvemsgpage.component';
 import { RejectmsgpageComponent } from './rejectmsgpage/rejectmsgpage.component';
 import { InvalidmsgpageComponent } from './invalidmsgpage/invalidmsgpage.component';
+import { LivStatusComponent } from './liv-status/liv-status.component';
+import { RevisionModalComponent } from './liv-preview/revision-modal/revision-modal.component';
 
 const routes = [ 
   
@@ -66,7 +68,9 @@ const routes = [
   { path: 'Approve', component: ApprovemsgpageComponent },
   { path: 'Reject', component: RejectmsgpageComponent },
   { path: 'Invalid', component: InvalidmsgpageComponent },
-
+  // { path: 'LivStatus/Approve/:token', component: LivStatusComponent },
+  // { path: 'LivStatus/Reject/:token', component: LivStatusComponent },
+  { path: 'LivStatus/:status/:token', component: LivStatusComponent },
   {
   path: 'liv-task-approve-list/:approverId',
   component: LivTaskApproverListComponent,
@@ -87,7 +91,7 @@ const routes = [
     , LivPreviewDocumentsSectionComponent, 
     LivPreviewOverviewSectionBasicDetailsComponent, LivPreviewTimelineSectionComponent, 
     LivOverviewSectionSummaryComponent, RejectModalComponent, ApproveModalComponent, 
-    LivApproveComponent,LivTaskApproverListComponent,LoadListSaleOrApproverComponent, LivDocumentUploadComponent, LivDocumentSectionComponent, ApprovemsgpageComponent, RejectmsgpageComponent, InvalidmsgpageComponent
+    LivApproveComponent,LivTaskApproverListComponent,LoadListSaleOrApproverComponent, LivDocumentUploadComponent, LivDocumentSectionComponent, ApprovemsgpageComponent, RejectmsgpageComponent, InvalidmsgpageComponent, LivStatusComponent, RevisionModalComponent
   ],
   imports: [
     CommonModule,

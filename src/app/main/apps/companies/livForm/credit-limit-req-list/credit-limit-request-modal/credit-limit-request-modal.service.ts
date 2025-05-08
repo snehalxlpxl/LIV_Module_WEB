@@ -12,7 +12,9 @@ export class CreditLimitRequestModalService {
   constructor(private http: HttpClient) { }
 
   getBranch(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.apiUrl}/Customer/branch`);
+    // return this.http.get<any[]>(`${environment.apiUrl}/Customer/branch`);
+    return this.http.get<any[]>(`http://108.181.191.121:5000/api/Company/branch`);
+    
   }
   createCreditLimitRequest(data:any): Observable<any[]> {
     return this.http.post<any[]>(`${environment.apiUrl}/Customer/liv`,data);
@@ -42,4 +44,29 @@ export class CreditLimitRequestModalService {
       })
     );
   }
+   // Function to update credit limit request
+   updateCreditLimitRequest(id: number, requestData: any): Observable<any> {
+    return this.http.put(`${environment.apiUrl}/Customer/liv/${id}`, requestData);
+  }
+  checkCustomerExists(customerName: string,branch:string): Observable<boolean> {
+    // http://localhost:5269/api/LIVRequests/check-exists?name=MSOURCE%20SOLUTIONS
+
+    return this.http.get<boolean>(`${environment.apiUrl}/LIVRequests/check-exists?name=${customerName}&branch=${branch}`);
+  }
+  CheckCustomerExistsApprove(status: string,LivrequestId:string): Observable<boolean> {
+
+    return this.http.get<boolean>(`${environment.apiUrl}/LIVRequests/check-exists-Approve-status?status=${status}&LivrequestId=${LivrequestId}`);
+  }
+  CheckOldLivRequest(LivrequestId:string): Observable<boolean> {
+
+    return this.http.get<boolean>(`${environment.apiUrl}/LIVRequests/check-exists-old-request?LivrequestId=${LivrequestId}`);
+  }
+  getNextDecemberDate(date: string): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/Customer/GetNextDecemberDate?date=${date}`);
+  }
+  getSegmentByProfit(profit: number): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/Customer/GetSegmentByProfit/${profit}`);
+  }
+
+  // http://localhost:5269/api/LIVRequests/check-exists-Approve-status?status=Approved&LivrequestId=181
 }

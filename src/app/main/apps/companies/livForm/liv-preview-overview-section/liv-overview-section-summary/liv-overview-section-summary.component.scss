@@ -22,30 +22,31 @@
 .totalsale {
     height: 214px;
     box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
-    padding: 17px;
+    padding-top: 17px;
+    padding-bottom: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.avatar-content, .avatar-content-red {
-    width: 50px; /* Size of the avatar container */
-    height: 50px; /* Size of the avatar container */
-    border-radius: 8px; /* Rounded corners to make it square with slight rounding */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+// .avatar-content, .avatar-content-red {
+//     width: 50px; /* Size of the avatar container */
+//     height: 50px; /* Size of the avatar container */
+//     border-radius: 8px; /* Rounded corners to make it square with slight rounding */
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
 
-.avatar-content {
-    background-color: rgb(221, 247, 231); /* Parrot green background color */
-    color: green;
-}
+// .avatar-content {
+//     background-color: rgb(221, 247, 231); /* Parrot green background color */
+//     color: green;
+// }
 
-.avatar-content-red {
-    background-color: rgb(249, 217, 217);
-    color: red;
-}
+// .avatar-content-red {
+//     background-color: rgb(249, 217, 217);
+//     color: red;
+// }
 
 h4 {
     font-size: 16px;
@@ -120,11 +121,11 @@ h6 {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e0f7fa;  /* Light cyan background for icon */
+    background-color: #d9d7ff;  /* Light cyan background for icon */
     border-radius: 50%;          /* Circular background */
-    padding: 15px;
-    width: 60px;
-    height: 60px;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
   }
   
   /* Icon styling */

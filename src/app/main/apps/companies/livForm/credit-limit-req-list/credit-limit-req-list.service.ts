@@ -64,10 +64,24 @@ export class CreditLimitReqListService {
   isDelegate(userId: number): Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}/LIVRequests/IsDelegate/${userId}`);
   }
+  IsApproverDelegate(userId: number): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/LIVRequests/IsApproverDelegate/${userId}`);
+  }
   getDelegatesApprover(userId:number): Observable<any[]> {
     return this.http.get<any[]>(`${environment.apiUrl}/LIVRequests/getApproverByDelegate/${userId}`);
   }
   
-  
+  deleteLivTask(livRequestId: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/LIVRequests/DeleteLIVRequestByLIVRequestId/${livRequestId}`);
+  }
 
+  UpdateApprove(token:any): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiUrl}/Customer/updateApprove?token=${token}`);
+  }
+  updateReject(token:any): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/Customer/updateReject?token=${token}`);
+  }
+  updateRejectGetlivRequestId(token:any): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/Customer/updateRejectGetlivRequestId?token=${token}`);
+  }
 }

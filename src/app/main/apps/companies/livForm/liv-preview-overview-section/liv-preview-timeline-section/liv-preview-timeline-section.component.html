@@ -1,17 +1,13 @@
-<div class="card-body shadow rounded-corners">
+<div class="card-body shadow rounded-corners" *ngIf="!showDates" style="height: 459px;">
   <h5 class="timeline-header">
     <div class="panel-title">
       <span class="icon-left">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          class="feather feather-list">
-          <line x1="8" y1="6" x2="21" y2="6"></line>
-          <line x1="8" y1="12" x2="21" y2="12"></line>
-          <line x1="8" y1="18" x2="21" y2="18"></line>
-          <line x1="3" y1="6" x2="3.01" y2="6"></line>
-          <line x1="3" y1="12" x2="3.01" y2="12"></line>
-          <line x1="3" y1="18" x2="3.01" y2="18"></line>
-        </svg>
+        <i  class="feather feather-list"></i>
+        <i
+                  data-feather="list"
+                  class="font-medium-5"
+                ></i>
+     
       </span>
       <span class="padd-add">TimeLine</span>
       <span class="icon-right">
@@ -29,7 +25,7 @@
           <h6>LIV Form Approval Requested</h6>
           <span class="timeline-event-time">{{ getRelativeTime(taskTimeLineData[0]?.assignedDate) }}</span>
         </div>
-        <p>Requested Approval - Limit - {{ taskTimeLineData[0]?.creditLimit }} & {{ taskTimeLineData[0]?.creditTerms }} Term</p>
+        <p>Requested Approval - Limit - ₹ {{ formatNumber(taskTimeLineData[0]?.creditLimit) }} & {{ taskTimeLineData[0]?.creditTerms }} Term</p>
         <div class="media align-items-center">
           <div class="avatar mr-1">
             <img src="assets/images/avatars/user.png" alt="Avatar" height="32" width="32" />
@@ -48,19 +44,134 @@
           'bg-warning': item.levelStatus === 'Awaiting Approved',
           'bg-dark': item.levelStatus === 'Canceled'
       }"></span>
-      <div class="timeline-event">
+      <div class="timeline-event" *ngIf="item.approverId">
         <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
-          <h6>{{ item.levelStatus }} - Level {{ item.level }} By {{ item.approverName }}</h6>
+          <h6>{{ item.levelStatus }} - Level {{ item.level }} By1 {{ item.approverName }}</h6>
           <span class="timeline-event-time">{{ getRelativeTime(item.approvedDate) }}</span>
         </div>
-        <p *ngIf="showDates">RequestedDate: {{ item.requestedDate | date: 'dd-MM-yyyy HH:mm' }}</p>
-        <p *ngIf="showDates">AssignedDate: {{ item.assignedDate | date: 'dd-MM-yyyy HH:mm' }}</p>
-        <p *ngIf="showDates && item.approvedDate">ApprovedDate: {{ item.approvedDate | date: 'dd-MM-yyyy HH:mm' }}</p>
+        <!-- <p *ngIf="showDates">RequestedDate: {{ item.requestedDate | date: 'dd-MM-yyyy HH:mm' }}</p> -->
+        <!-- <p *ngIf="showDates">AssignedDate: {{ item.assignedDate | date: 'dd-MM-yyyy HH:mm' }}</p> -->
+        <div class="badge badge-light-primary mr-2" *ngIf="showDates">Assigned Date: {{ item.assignedDate | date: 'dd-MM-yyyy HH:mm'}}</div>
+        <div class="badge badge-light-success" *ngIf="showDates && item.approvedDate">Approved Date: {{ item.approvedDate | date: 'dd-MM-yyyy HH:mm' }}</div>
+
+        <!-- <p *ngIf="showDates && item.approvedDate">ApprovedDate: {{ item.approvedDate | date: 'dd-MM-yyyy HH:mm' }}</p> -->
       </div>
     </li>
   </ul>
+  <div *ngIf="finalStatus === 'Canceled'" class="badge badge-light-danger mt-2">
+    <h6 class="text-danger">{{ finalStatus }} By {{ taskTimeLineData[0]?.createdByName }}</h6>
+  </div>
   
 </div>
+<div class="row" *ngIf="showDates" >
+  <div class="col-6">
+    <div class="card-body shadow rounded-corners" style="height: 570px;">
+      <h5 class="timeline-header">
+        <div class="panel-title">
+          <span class="icon-left">
+            <i  class="feather feather-list"></i>
+            <i data-feather="list"
+                      class="font-medium-5"
+                    ></i>
+           
+          </span>
+          <span class="padd-add">TimeLine</span>
+          <span class="icon-right">
+           
+          </span>
+        </div>
+      </h5>
+    
+      <ul class="timeline mt-2" *ngIf="taskTimeLineData && taskTimeLineData.length > 0 && taskTimeLineData[0]">
+    
+        <li class="timeline-item" *ngIf="taskTimeLineData[0]">
+          <span class="timeline-point timeline-point-info timeline-point-indicator"></span>
+          <div class="timeline-event">
+            <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+              <h6>LIV Form Approval Requested</h6>
+              <span class="timeline-event-time">{{ getRelativeTime(taskTimeLineData[0]?.assignedDate) }}</span>
+            </div>
+            <p>Requested Approval - Limit - ₹ {{ formatNumber(taskTimeLineData[0]?.creditLimit) }} & {{ taskTimeLineData[0]?.creditTerms }} Term</p>
+            <div class="media align-items-center">
+              <div class="avatar mr-1">
+                <img src="assets/images/avatars/user.png" alt="Avatar" height="32" width="32" />
+              </div>
+              <div class="media-body">
+                <h6 class="mb-0">Created By {{ taskTimeLineData[0]?.createdByName }}</h6>
+              </div>
+            </div>
+          </div>
+        </li>
+      
+        <li *ngFor="let item of taskTimeLineData" class="timeline-item">
+          <span class="timeline-point timeline-point-indicator" [ngClass]="{
+              'bg-success': item.levelStatus === 'Approved',
+              'bg-danger': item.levelStatus === 'Rejected',
+              'bg-warning': item.levelStatus === 'Awaiting Approved',
+              'bg-dark': item.levelStatus === 'Canceled'
+          }"></span>
+          <div class="timeline-event">
+            <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+              <h6>{{ item.levelStatus }} - Level {{ item.level }} By {{ item.approverName }}</h6>
+              <span class="timeline-event-time">{{ getRelativeTime(item.approvedDate) }}</span>
+            </div>
+            <!-- <p *ngIf="showDates">RequestedDate: {{ item.requestedDate | date: 'dd-MM-yyyy HH:mm' }}</p> -->
+            <!-- <p *ngIf="showDates">AssignedDate: {{ item.assignedDate | date: 'dd-MM-yyyy HH:mm' }}</p> -->
+            <div class="badge badge-light-primary mr-2" *ngIf="showDates">Assigned Date: {{ item.assignedDate | date: 'dd-MM-yyyy HH:mm'}}</div>
+            <div class="badge badge-light-success" *ngIf="showDates && item.approvedDate">Approved Date: {{ item.approvedDate | date: 'dd-MM-yyyy HH:mm' }}</div>
+    
+            <!-- <p *ngIf="showDates && item.approvedDate">ApprovedDate: {{ item.approvedDate | date: 'dd-MM-yyyy HH:mm' }}</p> -->
+          </div>
+        </li>
+
+        
+      </ul>
+      <div *ngIf="finalStatus === 'Canceled'" class="badge badge-light-danger mt-2">
+        <h6>{{ finalStatus }} By {{ taskTimeLineData[0]?.createdByName }}</h6>
+      </div>
+      
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card-body shadow rounded-corners" style="height: 570px;" >
+      <h3>Approver Levels</h3>
+    
+      <table class="table table-bordered table-striped mt-2">
+        <thead>
+          <tr>
+            <th>Approver Level</th>
+            <th>Approver Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let approver of approverLevels">
+            <td>{{ approver.level }}</td>
+            <td>{{ approver.approvers }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- <div class="card-body shadow rounded-corners mt-3" *ngIf="showDates">
+  <h3>Approver Levels</h3>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Approver Level</th>
+        <th>Approver Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let approver of approverLevels">
+        <td>{{ approver.level }}</td>
+        <td>{{ approver.approverName }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->
+
 <!-- <div class="card-body shadow rounded-corners p-3">
   <h5 class="timeline-header mb-4 text-center">
     <div class="d-flex align-items-center justify-content-center">
