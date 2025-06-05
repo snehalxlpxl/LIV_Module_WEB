@@ -353,6 +353,7 @@ export class CreditLimitRequestModalComponent implements OnInit {
   }
 
   onChangeBranch(event: any) {
+    console.log("branch change", event);
     const selectedValue = event ? event.companyName : '';
     this.CreditLimitReqForm.get('branchName').setValue(selectedValue);
 
@@ -387,7 +388,8 @@ export class CreditLimitRequestModalComponent implements OnInit {
   }
 
   onCompanyNameChange(event: any) {
-    const selectedValue = event ? event.companyName : '';
+    console.log("company name change", event);
+    const selectedValue = event ? event.livCompanyName : '';
     this.CreditLimitReqForm.get('customerName').setValue(selectedValue);
     setTimeout(() => {
       this.branchIdField.focus();

@@ -30,7 +30,7 @@ export class CreditLimitRequestModalService {
     }
 
     // Define the API URL and add search term if provided
-    let url = `http://108.181.191.121:5000/api/Company/cust`;
+    let url = `${environment.apiUrl}/LIVRequests/GetLIVCustomers`;
     if (searchTerm) {
       url += `?search=${searchTerm}`;
     }
@@ -43,6 +43,10 @@ export class CreditLimitRequestModalService {
         }
       })
     );
+  }
+  //GET all LIV customers
+  GetLIVCustomers(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiUrl}/LIVRequests/GetLIVCustomers`);
   }
    // Function to update credit limit request
    updateCreditLimitRequest(id: number, requestData: any): Observable<any> {
@@ -70,3 +74,29 @@ export class CreditLimitRequestModalService {
 
   // http://localhost:5269/api/LIVRequests/check-exists-Approve-status?status=Approved&LivrequestId=181
 }
+
+
+//  private readonly storageKey = 'companiesCache';
+//   getCompaniesliv(searchTerm?: string): Observable<any[]> {
+//     const cachedData = localStorage.getItem(this.storageKey);
+
+//     // If no search term and cached data is available, return cached data
+//     if (!searchTerm && cachedData) {
+//       return of(JSON.parse(cachedData));
+//     }
+
+//     // Define the API URL and add search term if provided
+//     let url = `http://108.181.191.121:5000/api/Company/cust`;
+//     if (searchTerm) {
+//       url += `?search=${searchTerm}`;
+//     }
+
+//     // Fetch data from API and cache it if there's no search term
+//     return this.http.get<any[]>(url).pipe(
+//       tap(data => {
+//         if (!searchTerm) {
+//           localStorage.setItem(this.storageKey, JSON.stringify(data));
+//         }
+//       })
+//     );
+//   }

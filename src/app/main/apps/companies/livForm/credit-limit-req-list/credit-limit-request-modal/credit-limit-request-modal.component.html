@@ -47,7 +47,7 @@
         <div *ngIf="isExistingCustomer" class="form-group mb-1">
           <label for="customerId">Existing Customer List</label>
           <ng-select #customerId id="customerId" formControlName="customerId" [items]="companies"
-            bindLabel="companyName" bindValue="companyId" placeholder="Select Company Name" (change)="onCompanyNameChange($event)"
+            bindLabel="livCompanyName" bindValue="livCompanyId" placeholder="Select Company Name" (change)="onCompanyNameChange($event)"
             [ngClass]="{
               'ng-touched': CreditLimitReqForm.get('customerName').touched,
               error:
